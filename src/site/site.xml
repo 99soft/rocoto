@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2009 The iBaGuice Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    author: Simone Tripodi (simone.tripodi)
+    version: $Id$
+-->
+<project name="${project.name}">
+
+    <skin>
+        <groupId>com.fluido</groupId>
+        <artifactId>fluido-skin</artifactId>
+        <version>1.1</version>
+    </skin>
+
+    <bannerLeft>
+        <name>iBaGuice: enjoy the power of iBatis + Google Guice</name>
+        <src>images/logo.png</src>
+        <href>http://ibaguice.googlecode.com/svn/site/${project.version}/index.html</href>
+    </bannerLeft>
+
+    <version position="left"/>
+
+    <body>
+        <menu name="${project.name}">
+            <item name="Introduction" href="index.html"/>
+            <item name="The Core components" href="core.html"/>
+            <item name="Supported Data Sources" href="datasource.html">
+                <item name="Unpooled Data Source Provider" href="datasource.html#Unpooled_Data_Source_Provider"/>
+                <item name="Pooled Data Source Provider" href="datasource.html#Pooled_Data_Source_Provider"/>
+                <item name="JNDI Data Source Provider" href="datasource.html#JNDI_Data_Source_Provider"/>
+                <item name="Basic Data Source Provider" href="datasource.html#Basic_Data_Source_Provider"/>
+                <item name="Shared Pool Data Source" href="datasource.html#Shared_Pool_Data_Source"/>
+                <item name="Per User Pool DataSource" href="datasource.html#Per_User_Pool_DataSource"/>
+                <item name="Connection Pool Data Source driver adapter" href="datasource.html#Connection_Pool_Data_Source_driver_adapter"/>
+                <item name="C3P0 Provider" href="datasource.html#C3P0_Provider"/>
+            </item>
+            <item name="Caching support" href="caching.html">
+                <item name="OSCache" href="caching.html#OSCache"/>
+                <item name="Memcached" href="caching.html#Memcached"/>
+                <item name="JBoss Cache" href="caching.html#JBoss_Cache"/>
+                <item name="Ehcache" href="caching.html#Ehcache"/>
+            </item>
+            <item name="DAO" href="dao.html"/>
+        </menu>
+
+        <menu ref="reports"/>
+
+        <menu ref="modules"/>
+
+        <menu name="External Links">
+            <item name="Project Page" href="http://code.google.com/p/ibaguice/"/>
+            <item name="iBatis" href="http://ibatis.apache.org/"/>
+            <item name="Google Guice" href="http://code.google.com/p/google-guice/"/>
+        </menu>
+    </body>
+
+</project>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2009 The iBaGuice Team
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+
+<!--
+    author: Simone Tripodi
+    version: $Id$
+-->
+<rdf:RDF xml:lang="en" xmlns="http://usefulinc.com/ns/doap#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+    <Project rdf:about="http://Maven.rdf.apache.org/">
+        <created>2009</created>
+        <license rdf:resource="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+        <name>rocoto</name>
+        <homepage rdf:resource="http://code.google.com/p/rocoto/"/>
+        <shortdesc>An easy-to-use Google Guice 2 bridge for Apache iBatis 3.</shortdesc>
+        <description>An easy-to-use Google Guice 2 bridge for Apache iBatis 3.</description>
+        <bug-database rdf:resource="http://code.google.com/p/rocoto/issues/list"/>
+        <mailing-list rdf:resource="http://code.google.com/p/rocoto/mail-lists.html"/>
+        <download-page rdf:resource="http://code.google.com/p/rocoto/download.html"/>
+        <programming-language>Java</programming-language>
+        <category rdf:resource="http://projects.apache.org/category/network-server"/>
+        <repository>
+            <SVNRepository>
+                <location rdf:resource="http://rocoto.googlecode.com/svn/trunk"/>
+                <browse rdf:resource="http://code.google.com/p/rocoto/source/browse/#svn/trunk"/>
+            </SVNRepository>
+        </repository>
+        <maintainer>
+            <foaf:Person>
+                <foaf:name>Simone Tripodi</foaf:name>
+                <foaf:mbox rdf:resource="mailto:simone dot tripodi at gmail dot com"/>
+            </foaf:Person>
+            <foaf:Person>
+                <foaf:name>Marco Speranza</foaf:name>
+                <foaf:mbox rdf:resource="mailto:marco dot speranza79 at gmail dot com"/>
+            </foaf:Person>
+        </maintainer>
+    </Project>
+</rdf:RDF>
