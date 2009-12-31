@@ -25,7 +25,7 @@ package com.rocoto.system;
 final class SystemPropertyImpl extends AbstractInitParamImpl implements SystemProperty {
 
     public SystemPropertyImpl(final String name) {
-        super(name, SystemProperty.class);
+        super(name);
     }
 
 }

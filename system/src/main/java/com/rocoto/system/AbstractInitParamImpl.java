@@ -47,9 +47,10 @@ abstract class AbstractInitParamImpl implements Annotation {
      * @param name the init-param name.
      * @param annotationType the init-param type.
      */
-    public AbstractInitParamImpl(final String name, final Class<? extends Annotation> annotationType) {
+    @SuppressWarnings("unchecked")
+    public AbstractInitParamImpl(final String name) {
         this.name = name;
-        this.annotationType = annotationType;
+        this.annotationType = this.getClass().getInterfaces()[0];
     }
 
     /**

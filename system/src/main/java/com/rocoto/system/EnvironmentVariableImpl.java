@@ -25,7 +25,7 @@ package com.rocoto.system;
 final class EnvironmentVariableImpl extends AbstractInitParamImpl implements EnvironmentVariable {
 
     public EnvironmentVariableImpl(final String name) {
-        super(name, EnvironmentVariable.class);
+        super(name);
     }
 
 }
