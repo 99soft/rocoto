@@ -15,14 +15,17 @@
  */
 package com.rocoto.simpleconfig;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
@@ -34,6 +37,10 @@ import com.google.inject.name.Names;
  * @version $Id$
  */
 public final class SimpleConfigurationModule extends AbstractModule {
+
+    private static final Pattern PROPERTIES_PATTERN = Pattern.compile(".*\\.properties", Pattern.CASE_INSENSITIVE);
+
+    private static final Pattern XML_PROPERTIES_PATTERN = Pattern.compile(".*\\.xml", Pattern.CASE_INSENSITIVE);
 
     /**
      * The stored load configurations.
@@ -76,6 +83,44 @@ public final class SimpleConfigurationModule extends AbstractModule {
         }
 
         this.addProperties(classLoader.getResource(classpathConfigurationUrl), isXML);
+    }
+
+    public void addProperties(File configurationFile) {
+        if (configurationFile == null) {
+            throw new IllegalArgumentException("'configurationFile' argument can't be null");
+        }
+        if (!configurationFile.exists()) {
+            throw new RuntimeException("Impossible to load properties file '"
+                    + configurationFile
+                    + " because it doesn't exist");
+        }
+
+        if (configurationFile.isDirectory()) {
+            // if it is a directory, traverse it
+            File[] childs = configurationFile.listFiles();
+            if (childs == null || childs.length == 0) {
+                // no need to traverse
+                return;
+            }
+            for (File file : childs) {
+                this.addProperties(file);
+            }
+            return;
+        }
+
+        boolean isXML = XML_PROPERTIES_PATTERN.matcher(configurationFile.getName()).matches();
+        if (!isXML && !PROPERTIES_PATTERN.matcher(configurationFile.getName()).matches()) {
+            // not *.xml and not *.properties, skipping file
+            return;
+        }
+
+        try {
+            this.addProperties(configurationFile.toURL(), isXML);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Impossible to load properties file '"
+                    + configurationFile
+                    + ", see nested exceptions", e);
+        }
     }
 
     public void addProperties(URL configurationUrl) {
