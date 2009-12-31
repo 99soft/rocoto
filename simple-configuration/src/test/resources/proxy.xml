@@ -21,6 +21,6 @@
     version: $Id$
 -->
 <properties version="1.0">
-    <entry key="username">simone.tripodi</entry>
-    <entry key="password">rocoto2010</entry>
+    <entry key="proxy.host">localhost</entry>
+    <entry key="proxy.port">8180</entry>
 </properties>
