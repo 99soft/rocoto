@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <!--
-    Copyright 2009-2010 The Rocoto Teameam
+    Copyright 2009-2010 The Rocoto Team
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
     author: Simone Tripodi (simone.tripodi)
     version: $Id$
 -->
-<properties>
+<properties version="1.0">
     <entry key="username">simone.tripodi</entry>
     <entry key="password">rocoto2010</entry>
 </properties>
