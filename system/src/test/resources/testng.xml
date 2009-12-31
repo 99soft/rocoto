@@ -22,4 +22,16 @@
 -->
 <suite name="rocoto-system">
 
+    <test name="environment-variables">
+        <classes>
+            <class name="com.rocoto.system.EnvironmentVariablesModuleTestCase"/>
+        </classes>
+    </test>
+
+    <test name="system-properties">
+        <classes>
+            <class name="com.rocoto.system.SystemPropertiesModuleTestCase"/>
+        </classes>
+    </test>
+
 </suite>
