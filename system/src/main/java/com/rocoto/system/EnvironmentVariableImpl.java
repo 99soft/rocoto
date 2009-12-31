@@ -15,25 +15,16 @@
  */
 package com.rocoto.system;
 
-import java.util.Map.Entry;
-
-import com.google.inject.AbstractModule;
-
 /**
  * 
  *
- * @author Simone Tripodi
+ * @author Simone Tripodi (simone.tripodi)
  * @version $Id$
  */
-public final class EnvironmentVariablesModule extends AbstractModule {
+final class EnvironmentVariableImpl extends AbstractInitParamImpl {
 
-    @Override
-    protected void configure() {
-        for (Entry<String, String> envVar : System.getenv().entrySet()) {
-            this.bindConstant()
-                .annotatedWith(new EnvironmentVariableImpl(envVar.getKey()))
-                .to(envVar.getValue());
-        }
+    public EnvironmentVariableImpl(final String name) {
+        super(name, EnvironmentVariable.class);
     }
 
 }
