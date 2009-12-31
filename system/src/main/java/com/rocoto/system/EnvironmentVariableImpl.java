@@ -21,7 +21,8 @@ package com.rocoto.system;
  * @author Simone Tripodi (simone.tripodi)
  * @version $Id$
  */
-final class EnvironmentVariableImpl extends AbstractInitParamImpl {
+@SuppressWarnings("all")
+final class EnvironmentVariableImpl extends AbstractInitParamImpl implements EnvironmentVariable {
 
     public EnvironmentVariableImpl(final String name) {
         super(name, EnvironmentVariable.class);

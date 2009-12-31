@@ -21,7 +21,8 @@ package com.rocoto.system;
  * @author Simone Tripodi (simone.tripodi)
  * @version $Id$
  */
-final class SystemPropertyImpl extends AbstractInitParamImpl {
+@SuppressWarnings("all")
+final class SystemPropertyImpl extends AbstractInitParamImpl implements SystemProperty {
 
     public SystemPropertyImpl(final String name) {
         super(name, SystemProperty.class);
