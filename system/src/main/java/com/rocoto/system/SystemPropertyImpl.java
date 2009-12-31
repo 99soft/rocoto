@@ -15,25 +15,16 @@
  */
 package com.rocoto.system;
 
-import java.util.Map.Entry;
-
-import com.google.inject.AbstractModule;
-
 /**
  * 
  *
- * @author Simone Tripodi
+ * @author Simone Tripodi (simone.tripodi)
  * @version $Id$
  */
-public final class SystemPropertiesModule extends AbstractModule {
+final class SystemPropertyImpl extends AbstractInitParamImpl {
 
-    @Override
-    protected void configure() {
-        for (Entry<Object, Object> systemProperty : System.getProperties().entrySet()) {
-            this.bindConstant()
-                .annotatedWith(new SystemPropertyImpl(systemProperty.getKey().toString()))
-                .to(systemProperty.getValue().toString());
-        }
+    public SystemPropertyImpl(final String name) {
+        super(name, SystemProperty.class);
     }
 
 }

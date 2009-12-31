@@ -15,9 +15,13 @@
  */
 package com.rocoto.system;
 
-import java.util.Map.Entry;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import com.google.inject.AbstractModule;
+import com.google.inject.BindingAnnotation;
 
 /**
  * 
@@ -25,15 +29,12 @@ import com.google.inject.AbstractModule;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class SystemPropertiesModule extends AbstractModule {
+@BindingAnnotation
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
+public @interface SystemProperty {
 
-    @Override
-    protected void configure() {
-        for (Entry<Object, Object> systemProperty : System.getProperties().entrySet()) {
-            this.bindConstant()
-                .annotatedWith(new SystemPropertyImpl(systemProperty.getKey().toString()))
-                .to(systemProperty.getValue().toString());
-        }
-    }
+    String value();
 
 }
