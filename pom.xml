@@ -330,6 +330,7 @@
     </build>
 
     <modules>
+        <module>simple-configuration</module>
         <module>system</module>
     </modules>
 
