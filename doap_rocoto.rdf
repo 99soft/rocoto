@@ -25,8 +25,8 @@
         <license rdf:resource="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
         <name>rocoto</name>
         <homepage rdf:resource="http://code.google.com/p/rocoto/"/>
-        <shortdesc>An easy-to-use Google Guice 2 bridge for Apache iBatis 3.</shortdesc>
-        <description>An easy-to-use Google Guice 2 bridge for Apache iBatis 3.</description>
+        <shortdesc>Adds some spice to Google Guice through configuration files!</shortdesc>
+        <description>Adds some spice to Google Guice through configuration files!</description>
         <bug-database rdf:resource="http://code.google.com/p/rocoto/issues/list"/>
         <mailing-list rdf:resource="http://code.google.com/p/rocoto/mail-lists.html"/>
         <download-page rdf:resource="http://code.google.com/p/rocoto/download.html"/>
