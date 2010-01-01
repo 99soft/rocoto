@@ -19,25 +19,36 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.regex.Pattern;
 
+import lombok.Data;
+
 /**
  * 
  *
  * @author Simone Tripodi
  * @version $Id$
  */
-final class PropertiesFileFilter implements FileFilter {
+@Data
+public abstract class AbstractPropertiesFileFilter implements FileFilter {
 
-    private static final Pattern PROPERTIES_PATTERN = Pattern.compile(".*\\.properties", Pattern.CASE_INSENSITIVE);
+    private final Pattern propertiesPattern;
 
-    private static final Pattern XML_PROPERTIES_PATTERN = Pattern.compile(".*\\.xml", Pattern.CASE_INSENSITIVE);
+    private final Pattern xmlPropertiesPattern;
 
     /**
      * {@inheritDoc}
      */
     public boolean accept(File pathname) {
         return pathname.isDirectory()
-                || matches(pathname, PROPERTIES_PATTERN)
-                || matches(pathname, XML_PROPERTIES_PATTERN);
+                || this.isXMLProperties(pathname)
+                || this.isProperties(pathname);
+    }
+
+    protected final boolean isXMLProperties(File pathname) {
+        return matches(pathname, this.xmlPropertiesPattern);
+    }
+
+    protected final boolean isProperties(File pathname) {
+        return matches(pathname, this.propertiesPattern);
     }
 
     /**

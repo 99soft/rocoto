@@ -22,10 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import java.util.regex.Pattern;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
@@ -38,19 +35,20 @@ import com.google.inject.name.Names;
  */
 public final class SimpleConfigurationModule extends AbstractModule {
 
-    private static final Pattern PROPERTIES_PATTERN = Pattern.compile(".*\\.properties", Pattern.CASE_INSENSITIVE);
-
-    private static final Pattern XML_PROPERTIES_PATTERN = Pattern.compile(".*\\.xml", Pattern.CASE_INSENSITIVE);
-
     /**
      * The stored load configurations.
      */
-    private final List<Properties> configuration = new ArrayList<Properties>();
+    private final Properties configuration = new Properties();
 
     /**
      * This class loader.
      */
-    private final ClassLoader thisClassLoader = this.getClass().getClassLoader();
+    private final ClassLoader defaultClassLoader = this.getClass().getClassLoader();
+
+    /**
+     * 
+     */
+    private final AbstractPropertiesFileFilter defaultFileFilter = new DefaultPropertiesFileFilter();
 
     /**
      * Adds a {@link Properties} to the Guice Binder by loading the properties
@@ -59,7 +57,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param classpathConfigurationUrl
      */
     public void addProperties(String classpathConfigurationUrl) {
-        this.addProperties(classpathConfigurationUrl, this.thisClassLoader);
+        this.addProperties(classpathConfigurationUrl, this.defaultClassLoader);
     }
 
     public void addProperties(String classpathConfigurationUrl, ClassLoader classLoader) {
@@ -67,11 +65,11 @@ public final class SimpleConfigurationModule extends AbstractModule {
     }
 
     public void addXMLProperties(String classpathConfigurationUrl) {
-        this.addProperties(classpathConfigurationUrl, this.thisClassLoader);
+        this.addProperties(classpathConfigurationUrl, this.defaultClassLoader);
     }
 
     public void addXMLProperties(String classpathConfigurationUrl, ClassLoader classLoader) {
-        this.addProperties(classpathConfigurationUrl, this.thisClassLoader, true);
+        this.addProperties(classpathConfigurationUrl, this.defaultClassLoader, true);
     }
 
     private void addProperties(String classpathConfigurationUrl, ClassLoader classLoader, boolean isXML) {
@@ -82,10 +80,18 @@ public final class SimpleConfigurationModule extends AbstractModule {
             throw new IllegalArgumentException("'classLoader' argument can't be null");
         }
 
+        if ('/' == classpathConfigurationUrl.charAt(0)) {
+            classpathConfigurationUrl = classpathConfigurationUrl.substring(1);
+        }
+
         this.addProperties(classLoader.getResource(classpathConfigurationUrl), isXML);
     }
 
     public void addProperties(File configurationFile) {
+        this.addProperties(configurationFile, this.defaultFileFilter);
+    }
+
+    public void addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
         if (configurationFile == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
         }
@@ -97,19 +103,19 @@ public final class SimpleConfigurationModule extends AbstractModule {
 
         if (configurationFile.isDirectory()) {
             // if it is a directory, traverse it
-            File[] childs = configurationFile.listFiles();
+            File[] childs = configurationFile.listFiles(filter);
             if (childs == null || childs.length == 0) {
                 // no need to traverse
                 return;
             }
             for (File file : childs) {
-                this.addProperties(file);
+                this.addProperties(file, filter);
             }
             return;
         }
 
-        boolean isXML = XML_PROPERTIES_PATTERN.matcher(configurationFile.getName()).matches();
-        if (!isXML && !PROPERTIES_PATTERN.matcher(configurationFile.getName()).matches()) {
+        boolean isXML = filter.isXMLProperties(configurationFile);
+        if (!isXML && !filter.isProperties(configurationFile)) {
             // not *.xml and not *.properties, skipping file
             return;
         }
@@ -142,13 +148,11 @@ public final class SimpleConfigurationModule extends AbstractModule {
             connection = configurationUrl.openConnection();
             input = connection.getInputStream();
 
-            Properties properties = new Properties();
             if (isXML) {
-                properties.loadFromXML(input);
+                this.configuration.loadFromXML(input);
             } else {
-                properties.load(input);
+                this.configuration.load(input);
             }
-            this.addProperties(properties);
         } catch (IOException e) {
             throw new RuntimeException("Impossible to open configuration URL "
                     + configurationUrl
@@ -170,14 +174,12 @@ public final class SimpleConfigurationModule extends AbstractModule {
         if (properties == null) {
             throw new IllegalArgumentException("'properties' argument can't be null");
         }
-        this.configuration.add(properties);
+        this.configuration.putAll(properties);
     }
 
     @Override
     protected void configure() {
-        for (Properties properties : this.configuration) {
-            Names.bindProperties(this.binder(), properties);
-        }
+        Names.bindProperties(this.binder(), this.configuration);
     }
 
 }

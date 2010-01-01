@@ -15,6 +15,8 @@
  */
 package com.rocoto.simpleconfig;
 
+import java.io.File;
+
 import org.testng.annotations.Test;
 
 /**
@@ -35,6 +37,15 @@ public final class SimpleConfigurationModuleTestCase {
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void loadNonExistentXMLResource() {
         this.module.addProperties("doesNotExist.xml");
+    }
+
+    @Test
+    public void loadFromDir() {
+        this.module.addProperties(new File("test-data"));
+    }
+
+    public void loadFromClasspath() {
+        this.module.addProperties("/com/rocoto/simpleconfig/ldap.properties");
     }
 
 }
