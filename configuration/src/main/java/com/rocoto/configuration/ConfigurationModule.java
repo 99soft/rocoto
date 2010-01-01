@@ -16,6 +16,7 @@
 package com.rocoto.configuration;
 
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.SystemConfiguration;
@@ -31,10 +32,18 @@ import com.google.inject.name.Names;
  */
 public final class ConfigurationModule extends AbstractModule {
 
+    private static final String ENV_PREFIX = "env.";
+
     private final CompositeConfiguration configuration = new CompositeConfiguration();
 
     public void addSystemConfiguration() {
         this.configuration.addConfiguration(new SystemConfiguration());
+    }
+
+    public void addEnvironmentVariablesConfiguration() {
+        for (Entry<String, String> envVar : System.getenv().entrySet()) {
+            this.configuration.addProperty(ENV_PREFIX + envVar.getKey(), envVar.getValue());
+        }
     }
 
     @Override
