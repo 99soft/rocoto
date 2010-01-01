@@ -65,7 +65,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
     }
 
     public void addXMLProperties(String classpathConfigurationUrl) {
-        this.addProperties(classpathConfigurationUrl, this.defaultClassLoader);
+        this.addXMLProperties(classpathConfigurationUrl, this.defaultClassLoader);
     }
 
     public void addXMLProperties(String classpathConfigurationUrl, ClassLoader classLoader) {
