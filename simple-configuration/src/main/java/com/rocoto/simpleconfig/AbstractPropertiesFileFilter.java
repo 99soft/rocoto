@@ -59,7 +59,9 @@ public abstract class AbstractPropertiesFileFilter implements FileFilter {
      * @return
      */
     private static boolean matches(File pathname, Pattern pattern) {
-        return pattern.matcher(pathname.getName()).matches();
+        return pattern != null
+                && pathname != null
+                && pattern.matcher(pathname.getName()).matches();
     }
 
 }
