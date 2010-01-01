@@ -36,6 +36,13 @@
     <name>Simple Configuration Properties</name>
     <description>Simple Configuration Properties support for Google Guice</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+    </dependencies>
+
     <reporting>
         <plugins>
             <plugin>

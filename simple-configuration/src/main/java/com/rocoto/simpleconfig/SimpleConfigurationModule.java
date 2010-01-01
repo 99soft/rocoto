@@ -24,6 +24,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
@@ -34,6 +37,11 @@ import com.google.inject.name.Names;
  * @version $Id$
  */
 public final class SimpleConfigurationModule extends AbstractModule {
+
+    /**
+     * This class logger.
+     */
+    private final Log log = LogFactory.getLog(this.getClass());
 
     /**
      * The stored load configurations.
@@ -84,6 +92,21 @@ public final class SimpleConfigurationModule extends AbstractModule {
             classpathConfigurationUrl = classpathConfigurationUrl.substring(1);
         }
 
+        if (this.log.isDebugEnabled()) {
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.append("Loading ");
+            if (isXML) {
+                messageBuilder.append("XML");
+            }
+            messageBuilder.append(" classpath resource '");
+            messageBuilder.append(classpathConfigurationUrl);
+            messageBuilder.append("' using class loader '");
+            messageBuilder.append(classLoader.getClass().getName());
+            messageBuilder.append("'");
+
+            this.log.debug(messageBuilder);
+        }
+
         this.addProperties(classLoader.getResource(classpathConfigurationUrl), isXML);
     }
 
@@ -95,17 +118,35 @@ public final class SimpleConfigurationModule extends AbstractModule {
         if (configurationFile == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
         }
+        if (configurationFile == null) {
+            throw new IllegalArgumentException("'filter' argument can't be null");
+        }
+
         if (!configurationFile.exists()) {
             throw new RuntimeException("Impossible to load properties file '"
                     + configurationFile
                     + " because it doesn't exist");
         }
 
+        if (this.log.isDebugEnabled()) {
+            this.log.debug("Loading configuration(s) from file '"
+                    + configurationFile
+                    + "'");
+        }
+
         if (configurationFile.isDirectory()) {
-            // if it is a directory, traverse it
+            if (this.log.isDebugEnabled()) {
+                this.log.debug("Configuration file '"
+                    + configurationFile
+                    + "' is a directory, traversing it to look for properties file");
+            }
             File[] childs = configurationFile.listFiles(filter);
             if (childs == null || childs.length == 0) {
-                // no need to traverse
+                if (this.log.isDebugEnabled()) {
+                    this.log.debug("Configuration directory file '"
+                            + configurationFile
+                            + "' is empty");
+                }
                 return;
             }
             for (File file : childs) {
@@ -114,14 +155,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
             return;
         }
 
-        boolean isXML = filter.isXMLProperties(configurationFile);
-        if (!isXML && !filter.isProperties(configurationFile)) {
-            // not *.xml and not *.properties, skipping file
-            return;
-        }
-
         try {
-            this.addProperties(configurationFile.toURL(), isXML);
+            this.addProperties(configurationFile.toURL(), filter.isXMLProperties(configurationFile));
         } catch (MalformedURLException e) {
             throw new RuntimeException("Impossible to load properties file '"
                     + configurationFile
@@ -140,6 +175,19 @@ public final class SimpleConfigurationModule extends AbstractModule {
     private void addProperties(URL configurationUrl, boolean isXML) {
         if (configurationUrl == null) {
             throw new IllegalArgumentException("'configurationUrl' argument can't be null");
+        }
+
+        if (this.log.isDebugEnabled()) {
+            StringBuilder messageBuilder = new StringBuilder();
+            messageBuilder.append("Loading ");
+            if (isXML) {
+                messageBuilder.append("XML");
+            }
+            messageBuilder.append(" configurationUrl '");
+            messageBuilder.append(configurationUrl);
+            messageBuilder.append("'");
+
+            this.log.debug(messageBuilder);
         }
 
         URLConnection connection = null;
