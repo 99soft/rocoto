@@ -94,36 +94,36 @@ public final class SimpleConfigurationModuleTestCase {
 
     @Test(dependsOnMethods = "doInject")
     public void verifyIBatisConfiguration() {
-        assert this.iBatisConfiguration.getEnvironmentId() != null;
+        assert "test".equals(this.iBatisConfiguration.getEnvironmentId());
         assert this.iBatisConfiguration.isLazyLoadingEnabled();
     }
 
     @Test(dependsOnMethods = "doInject")
     public void verifyJDBCConfiguration() {
-        assert this.jdbcConfiguration.getDriver() != null;
-        assert this.jdbcConfiguration.getUrl() != null;
-        assert this.jdbcConfiguration.getUsername() != null;
-        assert this.jdbcConfiguration.getPassword() != null;
+        assert "com.mysql.jdbc.Driver".equals(this.jdbcConfiguration.getDriver());
+        assert "jdbc:mysql://localhost:3306/rocoto".equals(this.jdbcConfiguration.getUrl());
+        assert "simone".equals(this.jdbcConfiguration.getUsername());
+        assert "rocoto2010".equals(this.jdbcConfiguration.getPassword());
         assert this.jdbcConfiguration.isAutoCommit();
     }
 
     @Test(dependsOnMethods = "doInject")
     public void verifyLdapConfiguration() {
-        assert this.ldapConfiguration.getHost() != null;
-        assert this.ldapConfiguration.getPort() > 0;
-        assert this.ldapConfiguration.getBaseDN() != null;
+        assert "ldap.myuniv.edu".equals(this.ldapConfiguration.getHost());
+        assert 389 == this.ldapConfiguration.getPort();
+        assert "ou=People, dc=myuniv, dc=edu".equals(this.ldapConfiguration.getBaseDN());
     }
 
     @Test(dependsOnMethods = "doInject")
     public void verifyMemcachedConfiguration() {
-        assert this.memcachedConfiguration.getKeyPrefix() != null;
+        assert "test_".equals(this.memcachedConfiguration.getKeyPrefix());
         assert this.memcachedConfiguration.isCompressionEnabled();
     }
 
     @Test(dependsOnMethods = "doInject")
     public void verifyProxyConfiguration() {
-        assert this.proxyConfiguration.getHost() != null;
-        assert this.proxyConfiguration.getPort() > 0;
+        assert "localhost".equals(this.proxyConfiguration.getHost());
+        assert 8180 == this.proxyConfiguration.getPort();
     }
 
 }
