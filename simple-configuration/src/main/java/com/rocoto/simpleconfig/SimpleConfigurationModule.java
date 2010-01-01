@@ -128,23 +128,17 @@ public final class SimpleConfigurationModule extends AbstractModule {
                     + " because it doesn't exist");
         }
 
-        if (this.log.isDebugEnabled()) {
-            this.log.debug("Loading configuration(s) from file '"
-                    + configurationFile
-                    + "'");
-        }
-
         if (configurationFile.isDirectory()) {
             if (this.log.isDebugEnabled()) {
                 this.log.debug("Configuration file '"
-                    + configurationFile
+                    + configurationFile.getAbsolutePath()
                     + "' is a directory, traversing it to look for properties file");
             }
             File[] childs = configurationFile.listFiles(filter);
             if (childs == null || childs.length == 0) {
                 if (this.log.isDebugEnabled()) {
                     this.log.debug("Configuration directory file '"
-                            + configurationFile
+                            + configurationFile.getAbsolutePath()
                             + "' is empty");
                 }
                 return;
@@ -159,7 +153,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
             this.addProperties(configurationFile.toURL(), filter.isXMLProperties(configurationFile));
         } catch (MalformedURLException e) {
             throw new RuntimeException("Impossible to load properties file '"
-                    + configurationFile
+                    + configurationFile.getAbsolutePath()
                     + ", see nested exceptions", e);
         }
     }
