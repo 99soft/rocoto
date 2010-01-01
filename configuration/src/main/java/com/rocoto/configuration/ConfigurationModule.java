@@ -15,10 +15,13 @@
  */
 package com.rocoto.configuration;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import org.apache.commons.configuration.CompositeConfiguration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.ConfigurationFactory;
 import org.apache.commons.configuration.SystemConfiguration;
 
 import com.google.inject.AbstractModule;
@@ -43,6 +46,33 @@ public final class ConfigurationModule extends AbstractModule {
     public void addEnvironmentVariablesConfiguration() {
         for (Entry<String, String> envVar : System.getenv().entrySet()) {
             this.configuration.addProperty(ENV_PREFIX + envVar.getKey(), envVar.getValue());
+        }
+    }
+
+    public void loadFromXMLDefinition(File configurationFile) {
+        if (configurationFile == null) {
+            throw new IllegalArgumentException("'configurationFile' argument mustn't be null");
+        }
+
+        if (!configurationFile.exists()) {
+            throw new IllegalArgumentException("Configuration file '"
+                    + configurationFile.getAbsolutePath()
+                    + "' doesn't exist");
+        }
+
+        if (configurationFile.isDirectory()) {
+            throw new IllegalArgumentException("Impossible to load Configuration file '"
+                    + configurationFile.getAbsolutePath()
+                    + "' because it is a directory");
+        }
+
+        ConfigurationFactory configurationFactory = new ConfigurationFactory(configurationFile.getAbsolutePath());
+        try {
+            this.configuration.addConfiguration(configurationFactory.getConfiguration());
+        } catch (ConfigurationException e) {
+            throw new RuntimeException("Impossible to load the configuration from file '"
+                    + configurationFile.getAbsolutePath()
+                    + "'", e);
         }
     }
 
