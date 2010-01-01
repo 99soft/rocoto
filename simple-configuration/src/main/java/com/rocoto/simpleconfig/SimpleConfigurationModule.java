@@ -252,7 +252,6 @@ public final class SimpleConfigurationModule extends AbstractModule {
     protected void configure() {
         String key;
         String value;
-        String variable;
         String variableKey;
         String variableValue;
         StringBuffer buffer;
@@ -264,14 +263,11 @@ public final class SimpleConfigurationModule extends AbstractModule {
             Matcher matcher = VARIABLE_REPLACE_PATTERN.matcher(value);
             buffer = new StringBuffer();
             while (matcher.find()) {
-                variable = matcher.group();
                 variableKey = matcher.group(1);
                 variableValue = this.configuration.getProperty(variableKey);
 
                 if (variableValue != null) {
                     matcher.appendReplacement(buffer, variableValue);
-                } else {
-                    buffer.append(variable);
                 }
             }
             matcher.appendTail(buffer);

@@ -109,7 +109,7 @@ public final class SimpleConfigurationModuleTestCase {
 
     @Test(dependsOnMethods = "doInject")
     public void verifyLdapConfiguration() {
-        assert "ldap.myuniv.edu".equals(this.ldapConfiguration.getHost());
+        assert "ldap.${not.found}".equals(this.ldapConfiguration.getHost());
         assert 389 == this.ldapConfiguration.getPort();
         assert "ou=People, dc=myuniv, dc=edu".equals(this.ldapConfiguration.getBaseDN());
     }
