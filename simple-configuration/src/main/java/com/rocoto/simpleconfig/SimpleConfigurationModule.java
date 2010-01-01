@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Properties;
+import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,6 +38,8 @@ import com.google.inject.name.Names;
  * @version $Id$
  */
 public final class SimpleConfigurationModule extends AbstractModule {
+
+    private static final String DEFAULT_ENV_PREFIX = "env.";
 
     /**
      * This class logger.
@@ -209,6 +212,28 @@ public final class SimpleConfigurationModule extends AbstractModule {
                 } catch (IOException e) {
                 }
             }
+        }
+    }
+
+    public void addSystemProperties() {
+        this.addProperties(System.getProperties());
+    }
+
+    public void addEnvironmentVariables() {
+        this.addEnvironmentVariables(DEFAULT_ENV_PREFIX);
+    }
+
+    public void addEnvironmentVariables(String prefix) {
+        if (prefix == null || prefix.length() == 0) {
+            throw new IllegalArgumentException("empty prefix not allowed");
+        }
+
+        if (prefix.charAt(prefix.length() - 1) != '.') {
+            prefix += '.';
+        }
+
+        for (Entry<String, String> envVar : System.getenv().entrySet()) {
+            this.configuration.setProperty(prefix + envVar.getKey(), envVar.getValue());
         }
     }
 
