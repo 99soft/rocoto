@@ -44,6 +44,7 @@ public final class SimpleConfigurationModuleTestCase {
         this.module.addProperties(new File("test-data"));
     }
 
+    @Test
     public void loadFromClasspath() {
         this.module.addProperties("/com/rocoto/simpleconfig/ldap.properties");
     }
