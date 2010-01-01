@@ -331,6 +331,7 @@
 
     <modules>
         <module>simple-configuration</module>
+        <module>configuration</module>
         <module>system</module>
     </modules>
 
