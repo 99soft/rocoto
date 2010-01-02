@@ -101,7 +101,7 @@ final class AntStyleProperties implements Map<String, String> {
 
     private void resolveVariables() {
         for (Entry<String, Formatter> entry : this.index.entrySet()) {
-            this.data.put(entry.getKey(), entry.getValue().format(this.data));
+            this.putValue(entry.getKey(), entry.getValue().format(this.data));
         }
     }
 
