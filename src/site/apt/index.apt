@@ -29,6 +29,10 @@ Welcome to Rocoto!
   easier the task of loading <<<java.util.Properties>>> by reading configuration
   files.
 
+  Rocoto is one of the most spicy pepper in South America, very popular in Peru
+  and well known since the age of Incas... it adds some spice to Google Guice
+  through configuration files!
+
 Before Coding...
 
   To set up your project, configure in your pom.xml the <<<repository>>>:
