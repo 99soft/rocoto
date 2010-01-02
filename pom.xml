@@ -28,7 +28,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>Rocoto</name>
-    <description>Adds some spice to Google Guice through configuration files!</description>
+    <description>Add some spice to Google Guice through configuration files!</description>
     <url>http://code.google.com/p/rocoto</url>
 
     <licenses>

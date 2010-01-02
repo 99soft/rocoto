@@ -28,34 +28,16 @@
     </skin>
 
     <bannerLeft>
-        <name>iBaGuice: enjoy the power of iBatis + Google Guice</name>
+        <name>Add some spice to Google Guice through configuration files!</name>
         <src>images/logo.png</src>
-        <href>http://ibaguice.googlecode.com/svn/site/${project.version}/index.html</href>
+        <href>http://rocoto.googlecode.com/svn/site/${project.version}/index.html</href>
     </bannerLeft>
 
     <version position="left"/>
 
     <body>
         <menu name="${project.name}">
-            <item name="Introduction" href="index.html"/>
-            <item name="The Core components" href="core.html"/>
-            <item name="Supported Data Sources" href="datasource.html">
-                <item name="Unpooled Data Source Provider" href="datasource.html#Unpooled_Data_Source_Provider"/>
-                <item name="Pooled Data Source Provider" href="datasource.html#Pooled_Data_Source_Provider"/>
-                <item name="JNDI Data Source Provider" href="datasource.html#JNDI_Data_Source_Provider"/>
-                <item name="Basic Data Source Provider" href="datasource.html#Basic_Data_Source_Provider"/>
-                <item name="Shared Pool Data Source" href="datasource.html#Shared_Pool_Data_Source"/>
-                <item name="Per User Pool DataSource" href="datasource.html#Per_User_Pool_DataSource"/>
-                <item name="Connection Pool Data Source driver adapter" href="datasource.html#Connection_Pool_Data_Source_driver_adapter"/>
-                <item name="C3P0 Provider" href="datasource.html#C3P0_Provider"/>
-            </item>
-            <item name="Caching support" href="caching.html">
-                <item name="OSCache" href="caching.html#OSCache"/>
-                <item name="Memcached" href="caching.html#Memcached"/>
-                <item name="JBoss Cache" href="caching.html#JBoss_Cache"/>
-                <item name="Ehcache" href="caching.html#Ehcache"/>
-            </item>
-            <item name="DAO" href="dao.html"/>
+            <item name="Home" href="index.html"/>
         </menu>
 
         <menu ref="reports"/>
