@@ -46,7 +46,6 @@
 
         <menu name="External Links">
             <item name="Project Page" href="http://code.google.com/p/ibaguice/"/>
-            <item name="iBatis" href="http://ibatis.apache.org/"/>
             <item name="Google Guice" href="http://code.google.com/p/google-guice/"/>
         </menu>
     </body>
