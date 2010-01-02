@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
-
 /**
  * 
  *
@@ -33,10 +31,6 @@ final class Formatter {
 
     private final List<Appender> appenders = new ArrayList<Appender>();
 
-    @Getter
-    private final List<String> keys = new ArrayList<String>();
-
-    @Getter
     private boolean containsKeys = false;
 
     public Formatter(final String pattern) {
@@ -64,7 +58,6 @@ final class Formatter {
                 }
                 String key = pattern.substring(pos + 2, endName);
                 this.appenders.add(new KeyAppender(key));
-                this.keys.add(key);
                 prev = endName + 1;
                 this.containsKeys = true;
             }
@@ -72,6 +65,10 @@ final class Formatter {
         if (prev < pattern.length()) {
             this.appenders.add(new TextAppender(pattern.substring(prev)));
         }
+    }
+
+    public boolean containsKeys() {
+        return this.containsKeys;
     }
 
     public String format(Map<String, String> configuration) {
