@@ -1,0 +1,153 @@
+~~
+~~   Copyright 2009-2010 The Rocoto Team
+~~
+~~   Licensed under the Apache License, Version 2.0 (the "License");
+~~   you may not use this file except in compliance with the License.
+~~   You may obtain a copy of the License at
+~~
+~~       http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~   Unless required by applicable law or agreed to in writing, software
+~~   distributed under the License is distributed on an "AS IS" BASIS,
+~~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~   See the License for the specific language governing permissions and
+~~   limitations under the License.
+~~
+
+~~author: Simone Tripodi
+~~version: $Id$
+                                    ------
+                                    Home
+                                    ------
+                                    Simple Configuration
+                                    ------
+                                     2010
+
+The Simple Configuration module
+
+  Users that want ot use the <Simple Configuration> module in their ptojects,
+  users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
+
+----------------------------------------
+<dependencies>
+    ...
+    <dependency>
+        <groupId>com.rocoto</groupId>
+        <artifactId>rocoto-simple-configuration</artifactId>
+        <version>XX.XX</version>
+    </dependency>
+    ...
+</dependencies>
+----------------------------------------
+
+  Then users are ready to load configuration files, but first create the module;
+  once configured, is it possible to create your injector:
+
+----------------------------------------
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import com.rocoto.simpleconfig.SimpleConfigurationModule;
+
+...
+
+SimpleConfigurationModule configurationModule = new SimpleConfigurationModule();
+/*
+ * adds your configuration files
+ */
+Injector injector = Guice.createInjector(configurationModule,
+    ...
+);
+----------------------------------------
+
+* Adding properties files from Classpath
+
+  In many cases developers are used to include their properties file into wars
+  or jars, then reloading them from the classpath.
+
+  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> offers a set of
+  methods that simplifies that loading operation, by specifying the full
+  qualified classpath resource name:
+
+----------------------------------------
+module.addProperties("com/acme/jdbc.properties");
+module.addProperties("/com/acme/ldap.properties");
+----------------------------------------
+
+  If needed, users can also specify the <<<ClassLoader>>> needed to load the
+  pointed resource(s):
+
+----------------------------------------
+ClassLoader myClassLoader = [...];
+...
+module.addProperties("com/acme/jdbc.properties", myClassLoader);
+module.addProperties("/com/acme/ldap.properties", myClassLoader);
+----------------------------------------
+
+  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
+  <XML> definition of properties file:
+
+----------------------------------------
+module.addXMLProperties("com/acme/jdbc.xml");
+module.addXMLProperties("/com/acme/ldap.xml");
+----------------------------------------
+
+  and, of course, also for <XML> it is possible to specify the <<<ClassLoader>>>:
+
+----------------------------------------
+ClassLoader myClassLoader = [...];
+...
+module.addXMLProperties("com/acme/jdbc.xml", myClassLoader);
+module.addXMLProperties("/com/acme/ldap.xml", myClassLoader);
+----------------------------------------
+
+* Adding Properties files from the FileSystem
+
+  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> is able to load
+  typical and <XML> properties files from the filesystem by specifying the
+  <<<java.io.File>>> location:
+
+----------------------------------------
+import java.io.File;
+...
+module.addProperties(new File("etc/com/acme/jdbc.properties"));
+module.addProperties(new File("etc/com/acme/ldap.xml"));
+----------------------------------------
+
+  By default, using this API, files wich name matches with <*.properties>
+  pattern will be threated as typical properties files, <*.xml> instead as
+  <XML> properties definition.
+
+  If the specified <<<java.io.File>>> is a directory, it will be traversed
+  looking for <*.properties> and <*.xml> properties files and will be loaded
+  int the configuration; given the following directory:
+
+----------------------------------------
+etc
+|-- com
+|   |-- jdbc.properties
+|   |-- rocoto
+|   |   |-- should-be-ignored.txt
+|   |   `-- simpleconfig
+|   |       |-- memcached.xml
+|   |       `-- should-be-ignored.txt
+|   `-- should-be-ignored.txt
+|-- ibatis.properties
+`-- should-be-ignored.txt
+----------------------------------------
+
+  all txt files will be ignored, all others will be load as properties files.
+
+  Users can customize the default behavior of properties files pattern matching,
+  by specifying their <<<com.rocoto.simpleconfig.AbstractPropertiesFileFilter>>>
+  implementation, where it is possible specifying the files patterns:
+
+----------------------------------------
+import com.rocoto.simpleconfig.AbstractPropertiesFileFilter;
+import java.util.regex.Pattern;
+...
+module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
+    Pattern.compile(".*\\.config"), // specify here the 'old-style' properties file pattern
+    Pattern.compile(".*\\.pxml") // specify here the XML properties file pattern
+) {});
+----------------------------------------
