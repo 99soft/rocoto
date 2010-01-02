@@ -22,23 +22,42 @@ import java.util.Map.Entry;
 import org.apache.commons.configuration.MapConfiguration;
 
 /**
- * 
+ * The Environment Variables configuration implementation.
  *
  * @author Simone Tripodi
  * @version $Id$
  */
 final class EnvironmentConfiguration extends MapConfiguration {
 
+    /**
+     * The default {@code env.} prefix.
+     */
     private static final String DEFAULT_ENV_PREFIX = "env.";
 
+    /**
+     * Build a new Environment Variables configuration where variables are
+     * prefixed with the default prefix.
+     */
     public EnvironmentConfiguration() {
         this(DEFAULT_ENV_PREFIX);
     }
 
+    /**
+     * Build a new Environment Variables configuration where variables are
+     * prefixed with the user specified prefix prefix.
+     * 
+     * @param prefix the Environment Variables prefix.
+     */
     public EnvironmentConfiguration(String prefix) {
         super(createEnvVars(prefix));
     }
 
+    /**
+     * Builds the Environment Variables map with the specified prefix.
+     *
+     * @param prefix he specified Environment Variable prefix.
+     * @return the Environment Variables map.
+     */
     private static Map<String, String> createEnvVars(String prefix) {
         if (prefix == null || prefix.length() == 0) {
             throw new IllegalArgumentException("empty prefix not allowed");
