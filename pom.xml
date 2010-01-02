@@ -38,15 +38,6 @@
         </license>
     </licenses>
 
-    <mailingLists>
-        <mailingList>
-            <name>iBaGuice public group</name>
-            <post>rocoto at googlegroups dot com</post>
-            <archive>http://groups.google.com/group/rocoto</archive>
-            <subscribe>http://groups.google.com/group/rocoto/subscribe</subscribe>
-        </mailingList>
-    </mailingLists>
-
     <scm>
         <developerConnection>scm:svn:https://rocoto.googlecode.com/svn/trunk</developerConnection>
         <connection>scm:svn:http://rocoto.googlecode.com/svn/trunk</connection>
