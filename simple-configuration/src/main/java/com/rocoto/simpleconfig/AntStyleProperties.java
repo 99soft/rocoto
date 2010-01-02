@@ -34,12 +34,12 @@ final class AntStyleProperties implements Map<String, String> {
      */
     private static final long serialVersionUID = 1L;
 
-    private final Map<String, Formatter> index = new HashMap<String, Formatter>();
+    private final Map<String, Formatter> formatters = new HashMap<String, Formatter>();
 
     private final Map<String, String> data = new HashMap<String, String>();
 
     public void clear() {
-        this.index.clear();
+        this.formatters.clear();
         this.data.clear();
     }
 
@@ -93,14 +93,17 @@ final class AntStyleProperties implements Map<String, String> {
         }
         Formatter formatter = new Formatter(value);
         if (formatter.containsKeys()) {
-            this.index.put(key, formatter);
+            this.formatters.put(key, formatter);
         } else {
+            if (this.formatters.containsKey(key)) {
+                this.formatters.remove(key);
+            }
             this.data.put(key, value);
         }
     }
 
     private void resolveVariables() {
-        for (Entry<String, Formatter> entry : this.index.entrySet()) {
+        for (Entry<String, Formatter> entry : this.formatters.entrySet()) {
             this.putValue(entry.getKey(), entry.getValue().format(this.data));
         }
     }
@@ -108,7 +111,7 @@ final class AntStyleProperties implements Map<String, String> {
     public String remove(Object key) {
         String value = this.data.get(key);
         this.data.remove(key);
-        this.index.remove(key);
+        this.formatters.remove(key);
         return value;
     }
 
