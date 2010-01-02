@@ -37,7 +37,7 @@ final class KeyAppender implements Appender {
     public void append(StringBuilder buffer, Map<String, String> configuration) {
         String value = configuration.get(this.key);
         if (value != null) {
-            buffer.append(this.toString);
+            buffer.append(value);
         } else {
             buffer.append(this.toString);
         }
