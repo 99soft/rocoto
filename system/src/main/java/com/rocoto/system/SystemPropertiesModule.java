@@ -20,13 +20,16 @@ import java.util.Map.Entry;
 import com.google.inject.AbstractModule;
 
 /**
- * 
+ * Binds Java System Properties into Guice binder.
  *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class SystemPropertiesModule extends AbstractModule {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void configure() {
         for (Entry<Object, Object> systemProperty : System.getProperties().entrySet()) {

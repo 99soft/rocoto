@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 import com.google.inject.BindingAnnotation;
 
 /**
- * 
+ * Marks a field or a parameter as Java System Property.
  *
  * @author Simone Tripodi
  * @version $Id$

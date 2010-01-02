@@ -20,13 +20,16 @@ import java.util.Map.Entry;
 import com.google.inject.AbstractModule;
 
 /**
- * 
+ * Binds Environment Variables into Guice binder.
  *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class EnvironmentVariablesModule extends AbstractModule {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void configure() {
         for (Entry<String, String> envVar : System.getenv().entrySet()) {
