@@ -15,7 +15,7 @@
  */
 package com.rocoto.simpleconfig;
 
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * 
@@ -25,6 +25,6 @@ import java.util.Properties;
  */
 interface Appender {
 
-    void append(StringBuilder buffer, Properties configuration);
+    void append(StringBuilder buffer, Map<String, String> configuration);
 
 }

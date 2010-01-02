@@ -15,7 +15,7 @@
  */
 package com.rocoto.simpleconfig;
 
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * 
@@ -31,7 +31,7 @@ final class TextAppender implements Appender {
         this.textFragment = textFragment;
     }
 
-    public void append(StringBuilder buffer, Properties configuration) {
+    public void append(StringBuilder buffer, Map<String, String> configuration) {
         buffer.append(this.textFragment);
     }
 

@@ -15,7 +15,7 @@
  */
 package com.rocoto.simpleconfig;
 
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * 
@@ -34,12 +34,12 @@ final class KeyAppender implements Appender {
         this.toString = "${" + this.key + "}";
     }
 
-    public void append(StringBuilder buffer, Properties configuration) {
-        String value = configuration.getProperty(this.key);
+    public void append(StringBuilder buffer, Map<String, String> configuration) {
+        String value = configuration.get(this.key);
         if (value != null) {
-            buffer.append(this.toString());
+            buffer.append(this.toString);
         } else {
-            buffer.append(this.toString());
+            buffer.append(this.toString);
         }
     }
 

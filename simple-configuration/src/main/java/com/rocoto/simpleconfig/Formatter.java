@@ -17,7 +17,7 @@ package com.rocoto.simpleconfig;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 import lombok.Getter;
 
@@ -74,7 +74,7 @@ final class Formatter {
         }
     }
 
-    public String format(Properties configuration) {
+    public String format(Map<String, String> configuration) {
         StringBuilder buffer = new StringBuilder();
         for (Appender appender : this.appenders) {
             appender.append(buffer, configuration);
