@@ -33,13 +33,16 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
 /**
- * 
+ * Simple configuration module to
  *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class SimpleConfigurationModule extends AbstractModule {
 
+    /**
+     * The default environment variable prefix, {@code env.}
+     */
     private static final String DEFAULT_ENV_PREFIX = "env.";
 
     /**
@@ -58,28 +61,48 @@ public final class SimpleConfigurationModule extends AbstractModule {
     private final ClassLoader defaultClassLoader = this.getClass().getClassLoader();
 
     /**
-     * 
+     * The default file filter to traverse properties dirs.
      */
     private final AbstractPropertiesFileFilter defaultFileFilter = new DefaultPropertiesFileFilter();
 
     /**
-     * Adds a {@link Properties} to the Guice Binder by loading the properties
-     * file in the classpath.
+     * Adds {@link Properties} to the Guice Binder by loading a classpath
+     * resource file, using the default {@code ClassLoader}.
      *
-     * @param classpathConfigurationUrl
+     * @param classpathConfigurationUrl the classpath resource file.
      */
     public void addProperties(String classpathConfigurationUrl) {
         this.addProperties(classpathConfigurationUrl, this.defaultClassLoader);
     }
 
+    /**
+     * Adds {@link Properties} to the Guice Binder by loading a classpath
+     * resource file, using the user specified {@code ClassLoader}.
+     *
+     * @param classpathConfigurationUrl the classpath resource file.
+     * @param classLoader the user specified {@code ClassLoader}.
+     */
     public void addProperties(String classpathConfigurationUrl, ClassLoader classLoader) {
         this.addProperties(classpathConfigurationUrl, classLoader, false);
     }
 
+    /**
+     * Adds XML {@link Properties} to the Guice Binder by loading a classpath
+     * resource file, using the default {@code ClassLoader}.
+     *
+     * @param classpathConfigurationUrl the classpath resource file.
+     */
     public void addXMLProperties(String classpathConfigurationUrl) {
         this.addXMLProperties(classpathConfigurationUrl, this.defaultClassLoader);
     }
 
+    /**
+     * Adds XML {@link Properties} to the Guice Binder by loading a classpath
+     * resource file, using the user specified {@code ClassLoader}.
+     *
+     * @param classpathConfigurationUrl the classpath resource file.
+     * @param classLoader the user specified {@code ClassLoader}.
+     */
     public void addXMLProperties(String classpathConfigurationUrl, ClassLoader classLoader) {
         this.addProperties(classpathConfigurationUrl, this.defaultClassLoader, true);
     }
@@ -114,10 +137,28 @@ public final class SimpleConfigurationModule extends AbstractModule {
         this.addProperties(classLoader.getResource(classpathConfigurationUrl), isXML);
     }
 
+    /**
+     * Adds {@link Properties} to the Guice Binder by loading a file; if the
+     * user specified file is a directory, it will be traversed and every file
+     * that matches with {@code *.properties} and {@code *.xml} patterns will be
+     * load as properties file.
+     *
+     * @param configurationFile the properties file or the root dir has to be
+     *        traversed.
+     */
     public void addProperties(File configurationFile) {
         this.addProperties(configurationFile, this.defaultFileFilter);
     }
 
+    /**
+     * Adds {@link Properties} to the Guice Binder by loading a file; if the
+     * user specified file is a directory, it will be traversed and every file
+     * that matches with user specified patterns will be load as properties file.
+     *
+     * @param configurationFile the properties file or the root dir has to be
+     *        traversed.
+     * @param filter the user specified properties file patterns.
+     */
     public void addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
         if (configurationFile == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
@@ -162,10 +203,20 @@ public final class SimpleConfigurationModule extends AbstractModule {
         }
     }
 
+    /**
+     * Adds {@link Properties} to the Guice Binder by loading data from a URL.
+     *
+     * @param configurationUrl the properties URL.
+     */
     public void addProperties(URL configurationUrl) {
         this.addProperties(configurationUrl, false);
     }
 
+    /**
+     * Adds XML {@link Properties} to the Guice Binder by loading data from a URL.
+     *
+     * @param configurationUrl the properties URL.
+     */
     public void addXMLProperties(URL configurationUrl) {
         this.addProperties(configurationUrl, true);
     }
@@ -218,14 +269,26 @@ public final class SimpleConfigurationModule extends AbstractModule {
         }
     }
 
+    /**
+     * Adds Java System properties to the Guice Binder.
+     */
     public void addSystemProperties() {
         this.addProperties(System.getProperties());
     }
 
+    /**
+     * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
+     */
     public void addEnvironmentVariables() {
         this.addEnvironmentVariables(DEFAULT_ENV_PREFIX);
     }
 
+    /**
+     * Adds environment variables, prefixed with user specified prefix, to the
+     * Guice Binder.
+     *
+     * @param prefix the user specified prefix.
+     */
     public void addEnvironmentVariables(String prefix) {
         if (prefix == null || prefix.length() == 0) {
             throw new IllegalArgumentException("empty prefix not allowed");
@@ -240,6 +303,11 @@ public final class SimpleConfigurationModule extends AbstractModule {
         }
     }
 
+    /**
+     * Adds already loaded {@link Properties} to the current configuration.
+     *
+     * @param properties the existing {@link Properties}.
+     */
     public void addProperties(Properties properties) {
         if (properties == null) {
             throw new IllegalArgumentException("'properties' argument can't be null");
@@ -247,6 +315,11 @@ public final class SimpleConfigurationModule extends AbstractModule {
         this.configuration.putAll(properties);
     }
 
+    /**
+     * Adds an existing configuration to the current configuration.
+     *
+     * @param configuration the existing configuration.
+     */
     public void addProperties(Map<String, String> configuration) {
         if (configuration == null) {
             throw new IllegalArgumentException("'configuration' argument can't be null");
@@ -254,6 +327,9 @@ public final class SimpleConfigurationModule extends AbstractModule {
         this.configuration.putAll(configuration);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void configure() {
         Names.bindProperties(this.binder(), this.configuration);
