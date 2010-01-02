@@ -234,8 +234,8 @@ commons.port=8080
   then referencing them in different files, loaded in the same configuration:
 
 ----------------------------------------
-ldap.host=$\{commons.host\}
-ldap.port=$\{commons.port\}
+ldap.host=${commons.host}
+ldap.port=${commons.port}
 ...
 ----------------------------------------
 
@@ -245,8 +245,8 @@ ldap.port=$\{commons.port\}
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties version="1.0">
-    <entry key="proxy.host">$\{commons.host\}</entry>
-    <entry key="proxy.port">$\{commons.port\}</entry>
+    <entry key="proxy.host">${commons.host}</entry>
+    <entry key="proxy.port">${commons.port}</entry>
     ...
 </properties>
 ----------------------------------------
