@@ -15,7 +15,9 @@
  */
 package com.rocoto.configuration;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -66,6 +68,15 @@ final class Utils {
             throw new RuntimeException("Impossible to load configuration file '"
                     + configurationFile.getAbsolutePath()
                     + ", see nested exceptions", e);
+        }
+    }
+
+    public static void closeQuietly(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (IOException e) {
+            }
         }
     }
 

@@ -15,14 +15,11 @@
  */
 package com.rocoto.configuration;
 
-import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
@@ -30,7 +27,6 @@ import java.util.Iterator;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.ConfigurationFactory;
 import org.apache.commons.configuration.FileConfiguration;
 
@@ -54,27 +50,30 @@ public final class ConfigurationModule extends AbstractModule {
      */
     private final ClassLoader defaultClassLoader = this.getClass().getClassLoader();
 
+    public void loadFromXMLDefinition(String classpathConfigurationFile) {
+        this.loadFromXMLDefinition(classpathConfigurationFile, this.defaultClassLoader);
+    }
+
+    public void loadFromXMLDefinition(String classpathConfigurationFile, ClassLoader classLoader) {
+        this.loadFromXMLDefinition(Utils.toURL(classpathConfigurationFile, classLoader));
+    }
+
     public void loadFromXMLDefinition(File configurationFile) {
-        if (configurationFile == null) {
-            throw new IllegalArgumentException("'configurationFile' argument mustn't be null");
-        }
-        if (!configurationFile.exists()) {
-            throw new IllegalArgumentException("Configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + "' doesn't exist");
-        }
-        if (configurationFile.isDirectory()) {
-            throw new IllegalArgumentException("Impossible to load Configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + "' because it is a directory");
+        this.loadFromXMLDefinition(Utils.toURL(configurationFile));
+    }
+
+    public void loadFromXMLDefinition(URL url) {
+        if (url == null) {
+            throw new IllegalArgumentException("'url' argument mustn't be null");
         }
 
-        ConfigurationFactory configurationFactory = new ConfigurationFactory(configurationFile.getAbsolutePath());
+        ConfigurationFactory configurationFactory = new ConfigurationFactory();
         try {
+            configurationFactory.setConfigurationFileName(url.toExternalForm());
             this.configuration.addConfiguration(configurationFactory.getConfiguration());
-        } catch (ConfigurationException e) {
-            throw new RuntimeException("Impossible to load the configuration from file '"
-                    + configurationFile.getAbsolutePath()
+        } catch (Exception e) {
+            throw new RuntimeException("Impossible to load the configuration from '"
+                    + url
                     + "'", e);
         }
     }
@@ -86,27 +85,7 @@ public final class ConfigurationModule extends AbstractModule {
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
             File configurationFile,
             Charset encoding) {
-        if (configurationFile == null) {
-            throw new IllegalArgumentException("'configurationFile' argument mustn't be null");
-        }
-        if (!configurationFile.exists()) {
-            throw new IllegalArgumentException("Configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + "' doesn't exist");
-        }
-        if (configurationFile.isDirectory()) {
-            throw new IllegalArgumentException("Impossible to load Configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + "' because it is a directory");
-        }
-
-        try {
-            this.loadConfiguration(configurationType, configurationFile.toURL(), encoding);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Impossible to load configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + ", see nested exceptions", e);
-        }
+        this.loadConfiguration(configurationType, Utils.toURL(configurationFile), encoding);
     }
 
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType, String classpathConfigurationUrl) {
@@ -132,18 +111,7 @@ public final class ConfigurationModule extends AbstractModule {
             String classpathConfigurationUrl,
             ClassLoader classLoader,
             Charset encoding) {
-        if (classpathConfigurationUrl == null) {
-            throw new IllegalArgumentException("'classpathConfigurationUrl' argument can't be null");
-        }
-        if (classLoader == null) {
-            throw new IllegalArgumentException("'classLoader' argument can't be null");
-        }
-
-        if ('/' == classpathConfigurationUrl.charAt(0)) {
-            classpathConfigurationUrl = classpathConfigurationUrl.substring(1);
-        }
-
-        this.loadConfiguration(configurationType, classLoader.getResource(classpathConfigurationUrl), encoding);
+        this.loadConfiguration(configurationType, Utils.toURL(classpathConfigurationUrl, classLoader), encoding);
     }
 
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType, URL url, Charset encoding) {
@@ -166,8 +134,8 @@ public final class ConfigurationModule extends AbstractModule {
             if (connection != null && (connection instanceof HttpURLConnection)) {
                 ((HttpURLConnection) connection).disconnect();
             }
-            closeQuietly(input);
-            closeQuietly(reader);
+            Utils.closeQuietly(input);
+            Utils.closeQuietly(reader);
         }
     }
 
@@ -179,15 +147,6 @@ public final class ConfigurationModule extends AbstractModule {
             String key = keys.next();
             String value = this.configuration.getString(key);
             this.bindConstant().annotatedWith(Names.named(key)).to(value);
-        }
-    }
-
-    private static void closeQuietly(Closeable closeable) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (IOException e) {
-            }
         }
     }
 
