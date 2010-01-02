@@ -60,6 +60,9 @@ Injector injector = Guice.createInjector(configurationModule,
 );
 ----------------------------------------
 
+  Finally, users can access to configuration parameters throug the
+  <<<@com.google.inject.name.Named>>> annotation.
+
 * Adding properties files from Classpath
 
   In many cases developers are used to include their properties file into wars
@@ -150,4 +153,100 @@ module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
     Pattern.compile(".*\\.config"), // specify here the 'old-style' properties file pattern
     Pattern.compile(".*\\.pxml") // specify here the XML properties file pattern
 ) {});
+----------------------------------------
+
+* Adding Properties files from URLs
+
+  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
+  properties loading from URLs, by specifying the <<<java.net.URL>>>:
+
+----------------------------------------
+import java.net.URL;
+...
+module.addProperties(new URL("http://acme.com/config/jdbc.properties"));
+module.addXMLProperties(new URL("http://acme.com/config/ldap.xml"));
+----------------------------------------
+
+* Adding Java System Properties
+
+  In many cases users need to acces to Java System Properties by invoking
+  <<<System.getProperty("java.version")>>> or <<<System.getProperties()>>>.
+
+  By enabling them to the configuration module, users can replace the Java System
+  Properties retrieving operation with the Dependency Injection:
+
+----------------------------------------
+...
+module.addSystemProperties();
+----------------------------------------
+
+* Adding Environment Variables
+
+  In Java5 the Environment Variables are accessible through <<<System.getenv()>>>
+  and <<<System.getenv("JAVA_HOME")>>>; like for Java System Properties, users
+  can adding Environment Variables simply by invoking:
+
+----------------------------------------
+...
+module.addEnvironmentVariables();
+----------------------------------------
+
+  By default Environment Variables will be referenced into the configuration
+  with the <<<env.>>> prefix, but users are free to specify their preferred one:
+
+----------------------------------------
+...
+module.addEnvironmentVariables("environment");
+----------------------------------------
+
+* Adding existing configurations
+
+  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> allows users to
+  plug already existing properties configuration:
+
+----------------------------------------
+Properties p = [...]
+...
+module.addProperties(p);
+----------------------------------------
+
+  or
+
+----------------------------------------
+Map\<String, String\> m = [...]
+...
+module.addProperties(m);
+----------------------------------------
+
+* $\{\}, the <Apache Ant> variables style
+
+  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> supports the well
+  known <$\{\}> expression to define placeholders, which scope is the whole
+  configuration, that means that users can define some commons properties in one
+  properties file:
+
+----------------------------------------
+commons.host=localhost
+commons.port=8080
+...
+----------------------------------------
+
+  then referencing them in different files, loaded in the same configuration:
+
+----------------------------------------
+ldap.host=$\{commons.host\}
+ldap.port=$\{commons.port\}
+...
+----------------------------------------
+
+  and
+
+----------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties version="1.0">
+    <entry key="proxy.host">$\{commons.host\}</entry>
+    <entry key="proxy.port">$\{commons.port\}</entry>
+    ...
+</properties>
 ----------------------------------------
