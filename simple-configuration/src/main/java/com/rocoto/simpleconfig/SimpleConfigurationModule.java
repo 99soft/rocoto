@@ -24,8 +24,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Properties;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,8 +40,6 @@ import com.google.inject.name.Names;
 public final class SimpleConfigurationModule extends AbstractModule {
 
     private static final String DEFAULT_ENV_PREFIX = "env.";
-
-    private static final Pattern VARIABLE_REPLACE_PATTERN = Pattern.compile("\\$\\{(.*?)\\}");
 
     /**
      * This class logger.
@@ -250,30 +246,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        String key;
-        String value;
-        String variableKey;
-        String variableValue;
-        StringBuffer buffer;
-
-        for (Entry<Object, Object> entry : this.configuration.entrySet()) {
-            key = entry.getKey().toString();
-            value = entry.getValue().toString();
-
-            Matcher matcher = VARIABLE_REPLACE_PATTERN.matcher(value);
-            buffer = new StringBuffer();
-            while (matcher.find()) {
-                variableKey = matcher.group(1);
-                variableValue = this.configuration.getProperty(variableKey);
-
-                if (variableValue != null) {
-                    matcher.appendReplacement(buffer, variableValue);
-                }
-            }
-            matcher.appendTail(buffer);
-
-            this.bindConstant().annotatedWith(Names.named(key)).to(buffer.toString());
-        }
+        Names.bindProperties(this.binder(), this.configuration);
     }
 
 }
