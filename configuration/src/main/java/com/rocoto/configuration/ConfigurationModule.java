@@ -79,6 +79,10 @@ public final class ConfigurationModule extends AbstractModule {
         }
     }
 
+    public void addConfiguration(Configuration configuration) {
+        this.configuration.addConfiguration(configuration);
+    }
+
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
             File configurationFile,
             Charset encoding) {
@@ -103,10 +107,6 @@ public final class ConfigurationModule extends AbstractModule {
                     + configurationFile.getAbsolutePath()
                     + ", see nested exceptions", e);
         }
-    }
-
-    public void addConfiguration(Configuration configuration) {
-        this.configuration.addConfiguration(configuration);
     }
 
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType, String classpathConfigurationUrl) {
