@@ -79,4 +79,9 @@ final class Formatter {
         return buffer.toString();
     }
 
+    @Override
+    public String toString() {
+        return this.appenders.toString();
+    }
+
 }
