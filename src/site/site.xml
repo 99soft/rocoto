@@ -39,6 +39,7 @@
         <menu name="${project.name}">
             <item name="Home" href="index.html"/>
             <item name="Simple Configuration" href="simple-configuration.html"/>
+            <item name="Configuration" href="configuration.html"/>
         </menu>
 
         <menu ref="reports"/>

@@ -1,0 +1,147 @@
+~~
+~~   Copyright 2009-2010 The Rocoto Team
+~~
+~~   Licensed under the Apache License, Version 2.0 (the "License");
+~~   you may not use this file except in compliance with the License.
+~~   You may obtain a copy of the License at
+~~
+~~       http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~   Unless required by applicable law or agreed to in writing, software
+~~   distributed under the License is distributed on an "AS IS" BASIS,
+~~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~   See the License for the specific language governing permissions and
+~~   limitations under the License.
+~~
+
+~~author: Simone Tripodi
+~~version: $Id: simple-configuration.apt 71 2010-01-02 16:28:21Z simone.tripodi $
+                                    ------
+                                    Home
+                                    ------
+                                    Configuration
+                                    ------
+                                     2010
+
+The Configuration module
+
+  The <Configuration> module is an easy-to-use Apache
+  {{{http://commons.apache.org/configuration/}commons-configurations}} wrapper,
+  built for users that require more complex configuration format.
+
+  Users that want ot use the <Configuration> module in their ptojects,
+  users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
+
+----------------------------------------
+<dependencies>
+    ...
+    <dependency>
+        <groupId>com.rocoto</groupId>
+        <artifactId>rocoto-configuration</artifactId>
+        <version>XX.XX</version>
+    </dependency>
+    ...
+</dependencies>
+----------------------------------------
+
+  Then users are ready to load configuration files, but first create the module;
+  once configured, is it possible to create your injector:
+
+----------------------------------------
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import com.rocoto.configuration.ConfigurationModule;
+
+...
+
+ConfigurationModule configurationModule = new ConfigurationModule();
+/*
+ * adds your configuration files
+ */
+Injector injector = Guice.createInjector(configurationModule,
+    ...
+);
+----------------------------------------
+
+  Finally, users can access to configuration parameters throug the
+  <<<@com.google.inject.name.Named>>> annotation.
+
+* Loading configuration from the XML definition
+
+  A compact way to load properties into configuration, is using the built int
+  {{{http://commons.apache.org/configuration/userguide/howto_configurationfactory.html#Using_a_Configuration_Factory}Configuration Factory}},
+  by loading the configuration definition file.
+
+  It is possible doing it in 3 different ways:
+
+** From a Classpath resource
+
+  By specifying the full qualified classpath resource name:
+
+----------------------------------------
+module.loadFromXMLDefinition("com/acme/config.xml");
+----------------------------------------
+
+  If needed, users can also specify the <<<ClassLoader>>> needed to load the
+  pointed resource(s):
+
+----------------------------------------
+ClassLoader myClassLoader = [...];
+...
+module.loadFromXMLDefinition("/com/acme/config.xml", myClassLoader);
+----------------------------------------
+
+** From a File
+
+----------------------------------------
+module.loadFromXMLDefinition(new java.io.File("etc/com/acme/config.xml"));
+----------------------------------------
+
+** From an URL
+
+----------------------------------------
+module.loadFromXMLDefinition(new java.net.URL("http://acme.com/config/config.xml"));
+----------------------------------------
+
+* Adding configuration
+
+  Users can easily add existing <<<org.apache.commons.configuration.Configuration>>>
+  by invoking the method:
+
+----------------------------------------
+import org.apache.commons.configuration.Configuration;
+...
+Configuration conf = [...]
+...
+module.addConfiguration(conf);
+----------------------------------------
+
+  For example, users can add Java System Properties configuration:
+
+----------------------------------------
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.SystemConfiguration;
+...
+module.addConfiguration(new SystemConfiguration());
+----------------------------------------
+
+  or the provided <<<com.rocoto.configuration.EnvironmentConfiguration>>> that
+  loads the Environment Variables:
+
+----------------------------------------
+import org.apache.commons.configuration.Configuration;
+import com.rocoto.configuration.EnvironmentConfiguration;
+...
+module.addConfiguration(new EnvironmentConfiguration());
+----------------------------------------
+
+  In this case, Environment Variables will be prefixed with <<<env.>>>, but users
+  are free to customize it:
+
+----------------------------------------
+import org.apache.commons.configuration.Configuration;
+import com.rocoto.configuration.EnvironmentConfiguration;
+...
+module.addConfiguration(new EnvironmentConfiguration("environment"));
+----------------------------------------
