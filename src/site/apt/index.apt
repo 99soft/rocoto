@@ -1,0 +1,55 @@
+~~
+~~   Copyright 2009-2010 The Rocoto Team
+~~
+~~   Licensed under the Apache License, Version 2.0 (the "License");
+~~   you may not use this file except in compliance with the License.
+~~   You may obtain a copy of the License at
+~~
+~~       http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~   Unless required by applicable law or agreed to in writing, software
+~~   distributed under the License is distributed on an "AS IS" BASIS,
+~~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~   See the License for the specific language governing permissions and
+~~   limitations under the License.
+~~
+
+~~author: Simone Tripodi
+~~version: $Id: caching.apt 924 2009-12-31 10:11:36Z simone.tripodi $
+                                    ------
+                                    Home
+                                    ------
+                                    The Rocoto Team
+                                    ------
+                                     2010
+
+Welcome to Rocoto!
+
+  Rocoto is a small collection of reusable Modules for <Google Guice> to make
+  easier the task of loading <<<java.util.Properties>>> by reading configuration
+  files.
+
+Before Coding...
+
+  To set up your project, configure in your pom.xml the <<<repository>>>:
+
+----------------------------------------
+<repositories>
+    ...
+    <repository>
+        <id>rocoto-repository</id>
+        <name>Rocoto Repository for Maven</name>
+        <url>http://rocoto.googlecode.com/svn/repo</url>
+        <layout>default</layout>
+    </repository>
+    ...
+</repositories>
+----------------------------------------
+
+Acknowledgements
+
+  This work is dedicated to our city, L'Aquila, destroyed by a terrible
+  earthquake the 6th April, 2009... That day more than 300 people were killed
+  because buildings collapsed after a magnitudo 6.3 earthquake at 3:32 am.
+
+  We'll never forget that episode.
