@@ -244,7 +244,6 @@ public final class SimpleConfigurationModule extends AbstractModule {
         if (properties == null) {
             throw new IllegalArgumentException("'properties' argument can't be null");
         }
-        properties.list(System.err);
         this.configuration.putAll(properties);
     }
 
