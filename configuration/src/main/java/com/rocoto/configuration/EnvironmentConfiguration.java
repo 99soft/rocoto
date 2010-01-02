@@ -29,16 +29,28 @@ import org.apache.commons.configuration.MapConfiguration;
  */
 final class EnvironmentConfiguration extends MapConfiguration {
 
-    private static final String ENV_PREFIX = "env.";
+    private static final String DEFAULT_ENV_PREFIX = "env.";
 
     public EnvironmentConfiguration() {
-        super(createEnvVars());
+        this(DEFAULT_ENV_PREFIX);
     }
 
-    private static Map<String, String> createEnvVars() {
+    public EnvironmentConfiguration(String prefix) {
+        super(createEnvVars(prefix));
+    }
+
+    private static Map<String, String> createEnvVars(String prefix) {
+        if (prefix == null || prefix.length() == 0) {
+            throw new IllegalArgumentException("empty prefix not allowed");
+        }
+
+        if (prefix.charAt(prefix.length() - 1) != '.') {
+            prefix += '.';
+        }
+
         Map<String, String> envVars = new HashMap<String, String>(System.getenv().size());
         for (Entry<String, String> envVar : System.getenv().entrySet()) {
-            envVars.put(ENV_PREFIX + envVar.getKey(), envVar.getValue());
+            envVars.put(DEFAULT_ENV_PREFIX + envVar.getKey(), envVar.getValue());
         }
         return envVars;
     }
