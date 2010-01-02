@@ -25,6 +25,7 @@
     <test name="format">
         <classes>
             <class name="com.rocoto.simpleconfig.FormatterTestCase"/>
+            <class name="com.rocoto.simpleconfig.AntStyleProperties"/>
         </classes>
     </test>
 
