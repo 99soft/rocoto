@@ -27,7 +27,7 @@ The Configuration module
 
   The <Configuration> module is an easy-to-use Apache
   {{{http://commons.apache.org/configuration/}commons-configurations}} wrapper,
-  built for users that require more complex configuration format.
+  built for users that require binding more complex configuration format.
 
   Users that want ot use the <Configuration> module in their ptojects,
   users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
