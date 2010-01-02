@@ -91,6 +91,8 @@ final class AntStyleProperties implements Map<String, String> {
         if (key == null || value == null) {
             throw new IllegalArgumentException("Null key/value not supported");
         }
+        this.data.put(key, value);
+
         Formatter formatter = new Formatter(value);
         if (formatter.containsKeys()) {
             this.formatters.put(key, formatter);
@@ -98,7 +100,6 @@ final class AntStyleProperties implements Map<String, String> {
             if (this.formatters.containsKey(key)) {
                 this.formatters.remove(key);
             }
-            this.data.put(key, value);
         }
     }
 

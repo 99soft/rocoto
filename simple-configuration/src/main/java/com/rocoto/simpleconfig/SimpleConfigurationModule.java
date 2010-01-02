@@ -22,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
@@ -49,7 +50,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
     /**
      * The stored load configurations.
      */
-    private final Properties configuration = new Properties();
+    private final AntStyleProperties configuration = new AntStyleProperties();
 
     /**
      * This class loader.
@@ -193,11 +194,13 @@ public final class SimpleConfigurationModule extends AbstractModule {
             connection = configurationUrl.openConnection();
             input = connection.getInputStream();
 
+            Properties properties = new Properties();
             if (isXML) {
-                this.configuration.loadFromXML(input);
+                properties.loadFromXML(input);
             } else {
-                this.configuration.load(input);
+                properties.load(input);
             }
+            this.addProperties(properties);
         } catch (IOException e) {
             throw new RuntimeException("Impossible to open configuration URL "
                     + configurationUrl
@@ -233,7 +236,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
         }
 
         for (Entry<String, String> envVar : System.getenv().entrySet()) {
-            this.configuration.setProperty(prefix + envVar.getKey(), envVar.getValue());
+            this.configuration.put(prefix + envVar.getKey(), envVar.getValue());
         }
     }
 
@@ -241,7 +244,15 @@ public final class SimpleConfigurationModule extends AbstractModule {
         if (properties == null) {
             throw new IllegalArgumentException("'properties' argument can't be null");
         }
+        properties.list(System.err);
         this.configuration.putAll(properties);
+    }
+
+    public void addProperties(Map<String, String> configuration) {
+        if (configuration == null) {
+            throw new IllegalArgumentException("'configuration' argument can't be null");
+        }
+        this.configuration.putAll(configuration);
     }
 
     @Override
