@@ -33,7 +33,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 
 /**
- * Simple configuration module to
+ * Simple configuration module to make easier the configuration properties to
+ * Google Guice binder.
  *
  * @author Simone Tripodi
  * @version $Id$
