@@ -67,43 +67,6 @@ Injector injector = Guice.createInjector(configurationModule,
   Finally, users can access to configuration parameters throug the
   <<<@com.google.inject.name.Named>>> annotation.
 
-* Loading configuration from the XML definition
-
-  A compact way to load properties into configuration, is using the built int
-  {{{http://commons.apache.org/configuration/userguide/howto_configurationfactory.html#Using_a_Configuration_Factory}Configuration Factory}},
-  by loading the configuration definition file.
-
-  It is possible doing it in 3 different ways:
-
-** From a Classpath resource
-
-  By specifying the full qualified classpath resource name:
-
-----------------------------------------
-module.loadFromXMLDefinition("com/acme/config.xml");
-----------------------------------------
-
-  If needed, users can also specify the <<<ClassLoader>>> needed to load the
-  pointed resource(s):
-
-----------------------------------------
-ClassLoader myClassLoader = [...];
-...
-module.loadFromXMLDefinition("/com/acme/config.xml", myClassLoader);
-----------------------------------------
-
-** From a File
-
-----------------------------------------
-module.loadFromXMLDefinition(new java.io.File("etc/com/acme/config.xml"));
-----------------------------------------
-
-** From an URL
-
-----------------------------------------
-module.loadFromXMLDefinition(new java.net.URL("http://acme.com/config/config.xml"));
-----------------------------------------
-
 * Adding configuration
 
   Users can easily add existing <<<org.apache.commons.configuration.Configuration>>>
@@ -161,7 +124,7 @@ module.addConfiguration(new EnvironmentConfiguration("environment"));
 
 ----------------------------------------
 Class<? extends FileConfiguration> configurationType = [...]
-module.loadConfiguration(configurationType, "com/acme/config.xml");
+module.loadConfiguration(configurationType, "com/acme/config.ext");
 ----------------------------------------
 
   If needed, users can also specify the <<<ClassLoader>>> needed to load the
@@ -171,19 +134,32 @@ module.loadConfiguration(configurationType, "com/acme/config.xml");
 ClassLoader myClassLoader = [...];
 ...
 Class<? extends FileConfiguration> configurationType = [...]
-module.loadConfiguration(configurationType, "com/acme/config.xml", myClassLoader);
+module.loadConfiguration(configurationType, "com/acme/config.ext", myClassLoader);
 ----------------------------------------
 
 ** From a File
 
 ----------------------------------------
 Class<? extends FileConfiguration> configurationType = [...]
-module.loadConfiguration(configurationType, new java.io.File("etc/com/acme/config.xml"));
+module.loadConfiguration(configurationType, new java.io.File("etc/com/acme/config.ext"));
 ----------------------------------------
 
 ** From an URL
 
 ----------------------------------------
 Class<? extends FileConfiguration> configurationType = [...]
-module.loadConfiguration(configurationType, new java.net.URL("http://acme.com/config/config.xml"));
+module.loadConfiguration(configurationType, new java.net.URL("http://acme.com/config/config.ext"));
+----------------------------------------
+
+* Specifying the encoding
+
+  All methods shown above load the specified resources using <UTF-8> encoding,
+  but users are free to changed it if needed through the
+  <<<java.nio.charset.Charset>>>:
+
+----------------------------------------
+import java.nio.charset.Charset;
+...
+Class<? extends FileConfiguration> configurationType = [...]
+module.loadConfiguration(configurationType, "com/acme/config.ext", Charset.forName("UTF-16"));
 ----------------------------------------
