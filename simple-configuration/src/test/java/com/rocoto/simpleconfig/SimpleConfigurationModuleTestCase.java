@@ -55,38 +55,38 @@ public final class SimpleConfigurationModuleTestCase {
     @Setter
     private ProxyConfiguration proxyConfiguration;
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(
+            expectedExceptions = IllegalArgumentException.class,
+            groups = "load"
+    )
     public void loadNonExistentResource() {
         this.module.addProperties("doesNotExist.properties");
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(
+            expectedExceptions = IllegalArgumentException.class,
+            groups = "load"
+    )
     public void loadNonExistentXMLResource() {
         this.module.addProperties("doesNotExist.xml");
     }
 
-    @Test
+    @Test(groups = "load")
     public void loadFromClasspath() {
         this.module.addProperties("/com/rocoto/simpleconfig/ldap.properties");
     }
 
-    @Test
+    @Test(groups = "load")
     public void loadFromRootClasspath() {
         this.module.addXMLProperties("proxy.xml");
     }
 
-    @Test
+    @Test(groups = "load")
     public void loadFromDirUsingDefaulTraversal() {
         this.module.addProperties(new File("src/test/data"));
     }
 
-    @Test(dependsOnMethods = {
-            "loadNonExistentResource",
-            "loadNonExistentXMLResource",
-            "loadFromClasspath",
-            "loadFromRootClasspath",
-            "loadFromDirUsingDefaulTraversal"
-    })
+    @Test(dependsOnGroups = "load")
     public void doInject() {
         Injector injector = Guice.createInjector(this.module);
         injector.injectMembers(this);
