@@ -22,4 +22,10 @@
 -->
 <suite name="rocoto-configuration">
 
+    <test name="configuration">
+        <classes>
+            <class name="com.rocoto.configuration.ConfigurationModuleTestCase"/>
+        </classes>
+    </test>
+
 </suite>

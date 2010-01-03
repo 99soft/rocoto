@@ -27,7 +27,6 @@ import java.util.Iterator;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationFactory;
 import org.apache.commons.configuration.FileConfiguration;
 
 import com.google.inject.AbstractModule;
@@ -50,34 +49,6 @@ public final class ConfigurationModule extends AbstractModule {
      * This class loader.
      */
     private final ClassLoader defaultClassLoader = this.getClass().getClassLoader();
-
-    public void loadFromXMLDefinition(String classpathConfigurationFile) {
-        this.loadFromXMLDefinition(classpathConfigurationFile, this.defaultClassLoader);
-    }
-
-    public void loadFromXMLDefinition(String classpathConfigurationFile, ClassLoader classLoader) {
-        this.loadFromXMLDefinition(Utils.toURL(classpathConfigurationFile, classLoader));
-    }
-
-    public void loadFromXMLDefinition(File configurationFile) {
-        this.loadFromXMLDefinition(Utils.toURL(configurationFile));
-    }
-
-    public void loadFromXMLDefinition(URL url) {
-        if (url == null) {
-            throw new IllegalArgumentException("'url' argument mustn't be null");
-        }
-
-        ConfigurationFactory configurationFactory = new ConfigurationFactory();
-        try {
-            configurationFactory.setConfigurationFileName(url.toExternalForm());
-            this.configuration.addConfiguration(configurationFactory.getConfiguration());
-        } catch (Exception e) {
-            throw new RuntimeException("Impossible to load the configuration from '"
-                    + url
-                    + "'", e);
-        }
-    }
 
     public void addConfiguration(Configuration configuration) {
         this.configuration.addConfiguration(configuration);

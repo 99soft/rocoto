@@ -44,7 +44,13 @@ final class Utils {
             classpathResource = classpathResource.substring(1);
         }
 
-        return classLoader.getResource(classpathResource);
+        URL url = classLoader.getResource(classpathResource);
+        if (url == null) {
+            throw new IllegalArgumentException("classpathResource '"
+                    + classpathResource
+                    + "' doesn't exist");
+        }
+        return url;
     }
 
     public static URL toURL(File configurationFile) {
