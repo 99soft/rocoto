@@ -30,11 +30,11 @@ import com.google.inject.name.Named;
 public final class IBatisConfiguration {
 
     @Inject
-    @Named("ibatis.environment.id")
+    @Named("ibatis.environmentId")
     private String environmentId;
 
     @Inject
-    @Named("ibatis.configuration.lazyLoadingEnabled")
+    @Named("ibatis.lazyLoadingEnabled")
     private boolean lazyLoadingEnabled;
 
 }

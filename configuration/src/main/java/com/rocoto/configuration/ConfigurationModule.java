@@ -28,6 +28,8 @@ import java.util.Iterator;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.FileConfiguration;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
@@ -40,6 +42,8 @@ import com.google.inject.name.Names;
  * @version $Id$
  */
 public final class ConfigurationModule extends AbstractModule {
+
+    private final Log log = LogFactory.getLog(this.getClass());
 
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
@@ -121,6 +125,14 @@ public final class ConfigurationModule extends AbstractModule {
         while (keys.hasNext()) {
             String key = keys.next();
             String value = this.configuration.getString(key);
+
+            if (this.log.isInfoEnabled()) {
+                this.log.info("Binding property '"
+                        + key
+                        + " = "
+                        + value);
+            }
+
             this.bindConstant().annotatedWith(Names.named(key)).to(value);
         }
     }
