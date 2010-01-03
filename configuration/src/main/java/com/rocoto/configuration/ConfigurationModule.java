@@ -126,8 +126,8 @@ public final class ConfigurationModule extends AbstractModule {
             String key = keys.next();
             String value = this.configuration.getString(key);
 
-            if (this.log.isInfoEnabled()) {
-                this.log.info("Binding property '"
+            if (this.log.isDebugEnabled()) {
+                this.log.debug("Binding property '"
                         + key
                         + " = "
                         + value);
