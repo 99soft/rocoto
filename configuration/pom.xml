@@ -73,6 +73,11 @@
             <version>1.8.2</version>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
     </dependencies>
 
     <reporting>
