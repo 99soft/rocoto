@@ -70,54 +70,54 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * Adds {@link Properties} to the Guice Binder by loading a classpath
      * resource file, using the default {@code ClassLoader}.
      *
-     * @param classpathConfigurationUrl the classpath resource file.
+     * @param classpathResource the classpath resource file.
      */
-    public void addProperties(String classpathConfigurationUrl) {
-        this.addProperties(classpathConfigurationUrl, this.defaultClassLoader);
+    public void addProperties(String classpathResource) {
+        this.addProperties(classpathResource, this.defaultClassLoader);
     }
 
     /**
      * Adds {@link Properties} to the Guice Binder by loading a classpath
      * resource file, using the user specified {@code ClassLoader}.
      *
-     * @param classpathConfigurationUrl the classpath resource file.
+     * @param classpathResource the classpath resource file.
      * @param classLoader the user specified {@code ClassLoader}.
      */
-    public void addProperties(String classpathConfigurationUrl, ClassLoader classLoader) {
-        this.addProperties(classpathConfigurationUrl, classLoader, false);
+    public void addProperties(String classpathResource, ClassLoader classLoader) {
+        this.addProperties(classpathResource, classLoader, false);
     }
 
     /**
      * Adds XML {@link Properties} to the Guice Binder by loading a classpath
      * resource file, using the default {@code ClassLoader}.
      *
-     * @param classpathConfigurationUrl the classpath resource file.
+     * @param classpathResource the classpath resource file.
      */
-    public void addXMLProperties(String classpathConfigurationUrl) {
-        this.addXMLProperties(classpathConfigurationUrl, this.defaultClassLoader);
+    public void addXMLProperties(String classpathResource) {
+        this.addXMLProperties(classpathResource, this.defaultClassLoader);
     }
 
     /**
      * Adds XML {@link Properties} to the Guice Binder by loading a classpath
      * resource file, using the user specified {@code ClassLoader}.
      *
-     * @param classpathConfigurationUrl the classpath resource file.
+     * @param classpathResource the classpath resource file.
      * @param classLoader the user specified {@code ClassLoader}.
      */
-    public void addXMLProperties(String classpathConfigurationUrl, ClassLoader classLoader) {
-        this.addProperties(classpathConfigurationUrl, this.defaultClassLoader, true);
+    public void addXMLProperties(String classpathResource, ClassLoader classLoader) {
+        this.addProperties(classpathResource, this.defaultClassLoader, true);
     }
 
-    private void addProperties(String classpathConfigurationUrl, ClassLoader classLoader, boolean isXML) {
-        if (classpathConfigurationUrl == null) {
-            throw new IllegalArgumentException("'classpathConfigurationUrl' argument can't be null");
+    private void addProperties(String classpathResource, ClassLoader classLoader, boolean isXML) {
+        if (classpathResource == null) {
+            throw new IllegalArgumentException("'classpathResource' argument can't be null");
         }
         if (classLoader == null) {
             throw new IllegalArgumentException("'classLoader' argument can't be null");
         }
 
-        if ('/' == classpathConfigurationUrl.charAt(0)) {
-            classpathConfigurationUrl = classpathConfigurationUrl.substring(1);
+        if ('/' == classpathResource.charAt(0)) {
+            classpathResource = classpathResource.substring(1);
         }
 
         if (this.log.isDebugEnabled()) {
@@ -127,7 +127,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
                 messageBuilder.append("XML");
             }
             messageBuilder.append(" classpath resource '");
-            messageBuilder.append(classpathConfigurationUrl);
+            messageBuilder.append(classpathResource);
             messageBuilder.append("' using class loader '");
             messageBuilder.append(classLoader.getClass().getName());
             messageBuilder.append("'");
@@ -135,7 +135,13 @@ public final class SimpleConfigurationModule extends AbstractModule {
             this.log.debug(messageBuilder);
         }
 
-        this.addProperties(classLoader.getResource(classpathConfigurationUrl), isXML);
+        URL url = classLoader.getResource(classpathResource);
+        if (url == null) {
+            throw new IllegalArgumentException("classpathResource '"
+                    + classpathResource
+                    + "' doesn't exist");
+        }
+        this.addProperties(url, isXML);
     }
 
     /**
