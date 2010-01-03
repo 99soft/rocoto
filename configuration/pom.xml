@@ -24,7 +24,7 @@
 
     <parent>
         <groupId>com.rocoto</groupId>
-	    <artifactId>rocoto-parent</artifactId>
+        <artifactId>rocoto-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
@@ -32,7 +32,7 @@
     <groupId>com.rocoto</groupId>
     <artifactId>rocoto-configuration</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>${parent.version}</version>
     <name>Apache commons-configuration</name>
     <description>Apache commons-configuration support for Google Guice</description>
 
