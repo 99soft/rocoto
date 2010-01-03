@@ -77,7 +77,7 @@ public final class SimpleConfigurationModuleTestCase {
 
     @Test
     public void loadFromDirUsingDefaulTraversal() {
-        this.module.addProperties(new File("test-data"));
+        this.module.addProperties(new File("src/test/data"));
     }
 
     @Test(dependsOnMethods = {
