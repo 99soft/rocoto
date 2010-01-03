@@ -35,7 +35,7 @@ public final class ConfigurationModuleTestCase {
     }
 
     @Test(groups = "load")
-    public void loadFromXMLDefinition() {
+    public void loadPropertiesConfiguration() {
         this.configurationModule.loadConfiguration(PropertiesConfiguration.class, "/com/rocoto/configuration/jdbc.properties");
     }
 
