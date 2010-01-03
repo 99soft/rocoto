@@ -35,7 +35,7 @@ import com.google.inject.name.Names;
 
 /**
  * Easy-to-use {@code Apache commons-configurations} wrapper,
-  built for users that require binding more complex configuration format.
+ * built for users that require binding more complex configuration format.
  *
  * @author Simone Tripodi
  * @version $Id$
