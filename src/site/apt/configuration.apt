@@ -29,7 +29,7 @@ The Configuration module
   {{{http://commons.apache.org/configuration/}commons-configurations}} wrapper,
   built for users that require binding more complex configuration format.
 
-  Users that want ot use the <Configuration> module in their ptojects,
+  Users that want ot use the <Configuration> module in their projects,
   users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
 
 ----------------------------------------

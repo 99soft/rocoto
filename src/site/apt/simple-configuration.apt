@@ -25,7 +25,11 @@
 
 The Simple Configuration module
 
-  Users that want ot use the <Simple Configuration> module in their ptojects,
+  The <Simple Configuration> module is a dependencies-less, light yet powerfull
+  <Guice> module to easy load configuration properties and bing them to the
+  <Guice Binder>.
+
+  Users that want ot use the <Simple Configuration> module in their projects,
   users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
 
 ----------------------------------------
