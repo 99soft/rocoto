@@ -15,6 +15,9 @@
  */
 package com.rocoto.converters;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
@@ -26,8 +29,13 @@ import com.google.inject.spi.TypeConverter;
 public final class URLTypeConverter implements TypeConverter {
 
     public Object convert(String value, TypeLiteral<?> toType) {
-        
-        return null;
+        try {
+            return new URI(value);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("String vaue '"
+                    + value
+                    + "' is not a valid URL", e);
+        }
     }
 
 }
