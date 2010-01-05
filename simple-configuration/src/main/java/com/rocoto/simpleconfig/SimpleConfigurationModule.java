@@ -16,7 +16,6 @@
 package com.rocoto.simpleconfig;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -274,7 +273,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
         for (PropertiesReader reader : this.readers) {
             try {
                 this.addProperties(reader.read());
-            } catch (IOException e) {
+            } catch (Exception e) {
                 this.addError(e);
             }
         }

@@ -96,7 +96,7 @@ public abstract class AbstractURLReader<T> {
      * 
      * @return
      */
-    public final T read() throws IOException {
+    public final T read() throws Exception {
         URLConnection connection = null;
         InputStream input = null;
         try {
