@@ -122,6 +122,6 @@ public abstract class AbstractURLReader<T> {
      * @param input
      * @throws IOException
      */
-    protected abstract T process(InputStream input) throws IOException;
+    protected abstract T process(InputStream input) throws Exception;
 
 }

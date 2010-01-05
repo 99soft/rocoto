@@ -16,7 +16,6 @@
 package com.rocoto.simpleconfig;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
@@ -48,7 +47,7 @@ final class PropertiesReader extends AbstractURLReader<Properties> {
     }
 
     @Override
-    protected Properties process(InputStream input) throws IOException {
+    protected Properties process(InputStream input) throws Exception {
         Properties properties = new Properties();
         if (isXML) {
             properties.loadFromXML(input);
