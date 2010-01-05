@@ -17,11 +17,9 @@ package com.rocoto.simpleconfig;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -67,6 +65,11 @@ public final class SimpleConfigurationModule extends AbstractModule {
     private final AbstractPropertiesFileFilter defaultFileFilter = new DefaultPropertiesFileFilter();
 
     /**
+     * 
+     */
+    private final List<PropertiesReader> readers = new ArrayList<PropertiesReader>();
+
+    /**
      * Adds {@link Properties} to the Guice Binder by loading a classpath
      * resource file, using the default {@code ClassLoader}.
      *
@@ -108,40 +111,14 @@ public final class SimpleConfigurationModule extends AbstractModule {
         this.addProperties(classpathResource, this.defaultClassLoader, true);
     }
 
+    /**
+     * 
+     * @param classpathResource
+     * @param classLoader
+     * @param isXML
+     */
     private void addProperties(String classpathResource, ClassLoader classLoader, boolean isXML) {
-        if (classpathResource == null) {
-            throw new IllegalArgumentException("'classpathResource' argument can't be null");
-        }
-        if (classLoader == null) {
-            throw new IllegalArgumentException("'classLoader' argument can't be null");
-        }
-
-        if ('/' == classpathResource.charAt(0)) {
-            classpathResource = classpathResource.substring(1);
-        }
-
-        if (this.log.isDebugEnabled()) {
-            StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.append("Loading ");
-            if (isXML) {
-                messageBuilder.append("XML");
-            }
-            messageBuilder.append(" classpath resource '");
-            messageBuilder.append(classpathResource);
-            messageBuilder.append("' using class loader '");
-            messageBuilder.append(classLoader.getClass().getName());
-            messageBuilder.append("'");
-
-            this.log.debug(messageBuilder);
-        }
-
-        URL url = classLoader.getResource(classpathResource);
-        if (url == null) {
-            throw new IllegalArgumentException("classpathResource '"
-                    + classpathResource
-                    + "' doesn't exist");
-        }
-        this.addProperties(url, isXML);
+        this.readers.add(new PropertiesReader(classpathResource, classLoader, isXML));
     }
 
     /**
@@ -201,13 +178,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
             return;
         }
 
-        try {
-            this.addProperties(configurationFile.toURL(), filter.isXMLProperties(configurationFile));
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Impossible to load properties file '"
-                    + configurationFile.getAbsolutePath()
-                    + ", see nested exceptions", e);
-        }
+        this.readers.add(new PropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
     }
 
     /**
@@ -228,52 +199,13 @@ public final class SimpleConfigurationModule extends AbstractModule {
         this.addProperties(configurationUrl, true);
     }
 
+    /**
+     * 
+     * @param configurationUrl
+     * @param isXML
+     */
     private void addProperties(URL configurationUrl, boolean isXML) {
-        if (configurationUrl == null) {
-            throw new IllegalArgumentException("'configurationUrl' argument can't be null");
-        }
-
-        if (this.log.isDebugEnabled()) {
-            StringBuilder messageBuilder = new StringBuilder();
-            messageBuilder.append("Loading ");
-            if (isXML) {
-                messageBuilder.append("XML");
-            }
-            messageBuilder.append(" configurationUrl '");
-            messageBuilder.append(configurationUrl);
-            messageBuilder.append("'");
-
-            this.log.debug(messageBuilder);
-        }
-
-        URLConnection connection = null;
-        InputStream input = null;
-        try {
-            connection = configurationUrl.openConnection();
-            input = connection.getInputStream();
-
-            Properties properties = new Properties();
-            if (isXML) {
-                properties.loadFromXML(input);
-            } else {
-                properties.load(input);
-            }
-            this.addProperties(properties);
-        } catch (IOException e) {
-            throw new RuntimeException("Impossible to open configuration URL "
-                    + configurationUrl
-                    + ", see nested exceptions", e);
-        } finally {
-            if (connection != null && (connection instanceof HttpURLConnection)) {
-                ((HttpURLConnection) connection).disconnect();
-            }
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                }
-            }
-        }
+        this.readers.add(new PropertiesReader(configurationUrl, isXML));
     }
 
     /**
@@ -339,6 +271,13 @@ public final class SimpleConfigurationModule extends AbstractModule {
      */
     @Override
     protected void configure() {
+        for (PropertiesReader reader : this.readers) {
+            try {
+                this.addProperties(reader.read());
+            } catch (IOException e) {
+                this.addError(e);
+            }
+        }
         Names.bindProperties(this.binder(), this.configuration);
     }
 
