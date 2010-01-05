@@ -17,6 +17,7 @@ package com.rocoto.converters;
 
 import java.net.URL;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,6 +39,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(URL.class, new URLTypeConverter());
         this.registerConverter(java.sql.Date.class, new SQLDateConverter());
         this.registerConverter(Time.class, new SQLTimeConverter());
+        this.registerConverter(Timestamp.class, new SQLTimestampConverter());
     }
 
     public void registerConverter(Class<?> target, TypeConverter converter) {
