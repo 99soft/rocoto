@@ -96,7 +96,7 @@ public abstract class AbstractURLReader<T> {
      * 
      * @return
      */
-    public final T read() {
+    public final T read() throws IOException {
         URLConnection connection = null;
         InputStream input = null;
         try {
@@ -104,10 +104,6 @@ public abstract class AbstractURLReader<T> {
             input = connection.getInputStream();
 
             return this.process(input);
-        } catch (IOException e) {
-            throw new RuntimeException("Impossible read URL "
-                    + url
-                    + ", see nested exceptions", e);
         } finally {
             if (connection != null && (connection instanceof HttpURLConnection)) {
                 ((HttpURLConnection) connection).disconnect();
