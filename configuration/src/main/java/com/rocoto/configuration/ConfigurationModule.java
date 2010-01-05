@@ -15,18 +15,12 @@
  */
 package com.rocoto.configuration;
 
-import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
@@ -51,6 +45,8 @@ public final class ConfigurationModule extends AbstractModule {
     private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     private final CompositeConfiguration configuration = new CompositeConfiguration();
+
+    private final List<ConfigurationReader> readers = new ArrayList<ConfigurationReader>();
 
     /**
      * This class loader.
@@ -84,24 +80,7 @@ public final class ConfigurationModule extends AbstractModule {
             String classpathResource,
             ClassLoader classLoader,
             Charset encoding) {
-        if (classpathResource == null) {
-            throw new IllegalArgumentException("'classpathConfigurationUrl' argument can't be null");
-        }
-        if (classLoader == null) {
-            throw new IllegalArgumentException("'classLoader' argument can't be null");
-        }
-
-        if ('/' == classpathResource.charAt(0)) {
-            classpathResource = classpathResource.substring(1);
-        }
-
-        URL url = classLoader.getResource(classpathResource);
-        if (url == null) {
-            throw new IllegalArgumentException("classpathResource '"
-                    + classpathResource
-                    + "' doesn't exist");
-        }
-        this.loadConfiguration(configurationType, url, encoding);
+        this.readers.add(new ConfigurationReader(classpathResource, classLoader, configurationType, encoding));
     }
 
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
@@ -112,52 +91,11 @@ public final class ConfigurationModule extends AbstractModule {
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
             File configurationFile,
             Charset encoding) {
-        if (configurationFile == null) {
-            throw new IllegalArgumentException("'configurationFile' argument mustn't be null");
-        }
-        if (!configurationFile.exists()) {
-            throw new IllegalArgumentException("Configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + "' doesn't exist");
-        }
-        if (configurationFile.isDirectory()) {
-            throw new IllegalArgumentException("Impossible to load Configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + "' because it is a directory");
-        }
-
-        try {
-            this.loadConfiguration(configurationType, configurationFile.toURL(), encoding);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Impossible to load configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + ", see nested exceptions", e);
-        }
+        this.readers.add(new ConfigurationReader(configurationFile, configurationType, encoding));
     }
 
     public void loadConfiguration(Class<? extends FileConfiguration> configurationType, URL url, Charset encoding) {
-        URLConnection connection = null;
-        InputStream input = null;
-        Reader reader = null;
-        try {
-            connection = url.openConnection();
-            input = connection.getInputStream();
-            reader = new InputStreamReader(input, encoding);
-
-            FileConfiguration configuration = configurationType.newInstance();
-            configuration.load(reader);
-            this.configuration.addConfiguration(configuration);
-        } catch (Exception e) {
-            throw new RuntimeException("Impossible to open configuration URL "
-                    + url
-                    + ", see nested exceptions", e);
-        } finally {
-            if (connection != null && (connection instanceof HttpURLConnection)) {
-                ((HttpURLConnection) connection).disconnect();
-            }
-            closeQuietly(input);
-            closeQuietly(reader);
-        }
+        this.readers.add(new ConfigurationReader(url, configurationType, encoding));
     }
 
     /**
@@ -166,6 +104,14 @@ public final class ConfigurationModule extends AbstractModule {
     @Override
     @SuppressWarnings("unchecked")
     protected void configure() {
+        for (ConfigurationReader reader : this.readers) {
+            try {
+                this.addConfiguration(reader.read());
+            } catch (Exception e) {
+                this.addError(e);
+            }
+        }
+
         Iterator<String> keys = this.configuration.getKeys();
         while (keys.hasNext()) {
             String key = keys.next();
@@ -179,15 +125,6 @@ public final class ConfigurationModule extends AbstractModule {
             }
 
             this.bindConstant().annotatedWith(Names.named(key)).to(value);
-        }
-    }
-
-    private static void closeQuietly(Closeable closeable) {
-        if (closeable != null) {
-            try {
-                closeable.close();
-            } catch (IOException e) {
-            }
         }
     }
 
