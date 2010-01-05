@@ -13,18 +13,11 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.rocoto.core;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * 
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
-public interface InputStreamProcessor {
-
-    void process(InputStream input) throws IOException;
-
-}
+package com.rocoto.core;

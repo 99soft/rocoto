@@ -28,39 +28,16 @@ import java.net.URLConnection;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class URLProcessor {
+public abstract class AbstractURLReader<T> {
 
-    private static final URLProcessor INSTANCE = new URLProcessor();
-
-    public static URLProcessor getInstance() {
-        return INSTANCE;
-    }
-
-    private URLProcessor() {
-        // do nothing
-    }
-
-    /**
-     * This class loader.
-     */
-    private final ClassLoader defaultClassLoader = this.getClass().getClassLoader();
-
-    /**
-     * 
-     * @param classpathResource
-     * @param streamProcessor
-     */
-    public void readClasspathResource(String classpathResource, InputStreamProcessor streamProcessor) {
-        this.readClasspathResource(classpathResource, this.defaultClassLoader, streamProcessor);
-    }
+    private final URL url;
 
     /**
      * 
      * @param classpathResource
      * @param classLoader
-     * @param streamProcessor
      */
-    public void readClasspathResource(String classpathResource, ClassLoader classLoader, InputStreamProcessor streamProcessor) {
+    public AbstractURLReader(String classpathResource, ClassLoader classLoader) {
         if (classpathResource == null) {
             throw new IllegalArgumentException("'classpathResource' argument can't be null");
         }
@@ -78,9 +55,14 @@ public final class URLProcessor {
                     + classpathResource
                     + "' doesn't exist");
         }
+        this.url = url;
     }
 
-    public void readFile(File file, InputStreamProcessor streamProcessor) {
+    /**
+     * 
+     * @param file
+     */
+    public AbstractURLReader(File file) {
         if (file == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
         }
@@ -91,7 +73,7 @@ public final class URLProcessor {
         }
 
         try {
-            this.readURL(file.toURL(), streamProcessor);
+            this.url = file.toURL();
         } catch (MalformedURLException e) {
             throw new RuntimeException("Impossible to load properties file '"
                     + file.getAbsolutePath()
@@ -99,18 +81,29 @@ public final class URLProcessor {
         }
     }
 
-    public void readURL(URL url, InputStreamProcessor streamProcessor) {
+    /**
+     * 
+     * @param url
+     */
+    public AbstractURLReader(URL url) {
         if (url == null) {
             throw new IllegalArgumentException("'url' argument can't be null");
         }
+        this.url = url;
+    }
 
+    /**
+     * 
+     * @return
+     */
+    public final T read() {
         URLConnection connection = null;
         InputStream input = null;
         try {
             connection = url.openConnection();
             input = connection.getInputStream();
 
-            streamProcessor.process(input);
+            return this.process(input);
         } catch (IOException e) {
             throw new RuntimeException("Impossible read URL "
                     + url
@@ -127,5 +120,12 @@ public final class URLProcessor {
             }
         }
     }
+
+    /**
+     * 
+     * @param input
+     * @throws IOException
+     */
+    protected abstract T process(InputStream input) throws IOException;
 
 }
