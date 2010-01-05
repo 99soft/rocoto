@@ -38,6 +38,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.rocoto</groupId>
+            <artifactId>rocoto-core</artifactId>
+            <version>${parent.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
          </dependency>
