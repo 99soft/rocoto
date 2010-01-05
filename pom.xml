@@ -350,6 +350,7 @@
         <module>core</module>
         <module>simple-configuration</module>
         <module>configuration</module>
+        <module>converters</module>
         <module>system</module>
     </modules>
 
