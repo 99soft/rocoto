@@ -36,6 +36,13 @@
     <name>System Properties</name>
     <description>System Properties support for Google Guice</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+         </dependency>
+    </dependencies>
+
     <reporting>
         <plugins>
             <plugin>
