@@ -35,6 +35,7 @@ public final class ConvertersModule extends AbstractModule {
 
     public ConvertersModule() {
         this.registerConverter(URL.class, new URLTypeConverter());
+        this.registerConverter(java.sql.Date.class, new SQLDateConverter());
     }
 
     public void registerConverter(Class<?> target, TypeConverter converter) {
