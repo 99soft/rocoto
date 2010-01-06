@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.spi.TypeConverter;
 
@@ -61,7 +62,7 @@ public final class ConvertersModule extends AbstractModule {
     @Override
     protected void configure() {
         for (Entry<Class<?>, TypeConverter> converter : this.converters.entrySet()) {
-            this.binder().convertToTypes(Matchers.only(converter.getKey()), converter.getValue());
+            this.binder().convertToTypes(Matchers.only(TypeLiteral.get(converter.getKey())), converter.getValue());
         }
     }
 
