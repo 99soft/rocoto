@@ -15,8 +15,8 @@
  */
 package com.rocoto.converters;
 
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
@@ -30,8 +30,8 @@ public final class URLTypeConverter implements TypeConverter {
 
     public Object convert(String value, TypeLiteral<?> toType) {
         try {
-            return new URI(value);
-        } catch (URISyntaxException e) {
+            return new URL(value);
+        } catch (MalformedURLException e) {
             throw new RuntimeException("String vaue '"
                     + value
                     + "' is not a valid URL", e);
