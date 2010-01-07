@@ -41,6 +41,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(java.sql.Date.class, new SQLDateConverter());
         this.registerConverter(Time.class, new SQLTimeConverter());
         this.registerConverter(Timestamp.class, new SQLTimestampConverter());
+        this.registerConverter(Class.class, new ClassConverter());
 
         TypeConverter booleanConverter = new BooleanConverter();
         this.registerConverter(boolean.class, booleanConverter);
