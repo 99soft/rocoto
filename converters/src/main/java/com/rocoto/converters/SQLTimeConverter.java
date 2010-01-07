@@ -18,17 +18,17 @@ package com.rocoto.converters;
 import java.sql.Time;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Time.class)
-public final class SQLTimeConverter implements TypeConverter {
+@Converts({ Time.class, Time[].class })
+public final class SQLTimeConverter extends AbstractConverter {
 
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         try {
             return Time.valueOf(value);
         } catch (Throwable t) {
