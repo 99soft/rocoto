@@ -23,7 +23,7 @@ import com.google.inject.TypeLiteral;
  * @version $Id$
  */
 @Converts({ Class.class, Class[].class })
-public class ClassConverter extends AbstractConverter {
+public final class ClassConverter extends AbstractConverter {
 
     @Override
     protected Object simpleConvert(String value, TypeLiteral<?> toType) {
