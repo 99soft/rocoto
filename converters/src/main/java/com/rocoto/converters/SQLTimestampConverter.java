@@ -18,17 +18,17 @@ package com.rocoto.converters;
 import java.sql.Timestamp;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Timestamp.class)
-public final class SQLTimestampConverter implements TypeConverter {
+@Converts({ Timestamp.class, Timestamp[].class })
+public final class SQLTimestampConverter extends AbstractConverter {
 
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         try {
             return Timestamp.valueOf(value);
         } catch (Throwable t) {
