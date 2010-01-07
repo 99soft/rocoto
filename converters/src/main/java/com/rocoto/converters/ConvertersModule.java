@@ -45,6 +45,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(new CharacterArrayConverter());
         this.registerConverter(new CharsetConverter());
         this.registerConverter(new LocaleConverter());
+        this.registerConverter(new PatternConverter());
     }
 
     public void registerConverter(TypeConverter converter) {
