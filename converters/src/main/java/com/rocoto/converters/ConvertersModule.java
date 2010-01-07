@@ -41,6 +41,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(new ClassConverter());
         this.registerConverter(new FileConverter());
         this.registerConverter(new BooleanConverter());
+        this.registerConverter(new CharacterConverter());
     }
 
     public void registerConverter(TypeConverter converter) {
