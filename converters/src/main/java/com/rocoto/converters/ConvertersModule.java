@@ -15,9 +15,8 @@
  */
 package com.rocoto.converters;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
@@ -31,7 +30,7 @@ import com.google.inject.spi.TypeConverter;
  */
 public final class ConvertersModule extends AbstractModule {
 
-    private final Map<Class<?>, TypeConverter> converters = new HashMap<Class<?>, TypeConverter>();
+    private final List<TypeConverter> converters = new ArrayList<TypeConverter>();
 
     public ConvertersModule() {
         this.registerConverter(new URLTypeConverter());
@@ -45,27 +44,28 @@ public final class ConvertersModule extends AbstractModule {
     }
 
     public void registerConverter(TypeConverter converter) {
-        if (!converter.getClass().isAnnotationPresent(Converts.class)) {
-            throw new IllegalArgumentException("Converter '"
-                    + converter.getClass().getName()
-                    + "' has to be annotated with '@"
-                    + Converts.class.getName()
-                    + "'");
-        }
-
-        for (Class<?> target : converter.getClass().getAnnotation(Converts.class).value()) {
-            this.converters.put(target, converter);
-        }
+        this.converters.add(converter);
     }
 
-    public void registerConverters(Map<Class<?>, TypeConverter> converters) {
-        this.converters.putAll(converters);
+    public void registerConverters(List<TypeConverter> converters) {
+        this.converters.addAll(converters);
     }
 
     @Override
     protected void configure() {
-        for (Entry<Class<?>, TypeConverter> converter : this.converters.entrySet()) {
-            this.binder().convertToTypes(Matchers.only(TypeLiteral.get(converter.getKey())), converter.getValue());
+        for (TypeConverter converter : this.converters) {
+            Class<? extends TypeConverter> converterClass = converter.getClass();
+            if (!converterClass.isAnnotationPresent(Converts.class)) {
+                this.addError("Converter '"
+                        + converter.getClass().getName()
+                        + "' has to be annotated with '@"
+                        + Converts.class.getName()
+                        + "'");
+            } else {
+                for (Class<?> target : converterClass.getAnnotation(Converts.class).value()) {
+                    this.binder().convertToTypes(Matchers.only(TypeLiteral.get(target)), converter);
+                }
+            }
         }
     }
 
