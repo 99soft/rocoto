@@ -48,6 +48,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(new PatternConverter());
         this.registerConverter(new PropertiesConverter());
         this.registerConverter(new ByteArrayConverter());
+        this.registerConverter(new DateConverter());
     }
 
     public void registerConverter(TypeConverter converter) {
