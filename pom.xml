@@ -105,8 +105,8 @@
             <organization>Asemantics S.r.l.</organization>
             <organizationUrl>http://www.asemantics.com/</organizationUrl>
             <roles>
-                <role>Architect</role>
-                <role>Developer</role>
+                <role>Owner</role>
+                <role>Committer</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
@@ -118,8 +118,7 @@
             <organization>TRS S.p.A.</organization>
             <organizationUrl>http://www.trs.it/</organizationUrl>
             <roles>
-                <role>Architect</role>
-                <role>Developer</role>
+                <role>Committer</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
