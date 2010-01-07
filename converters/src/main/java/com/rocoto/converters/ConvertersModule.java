@@ -46,6 +46,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(new PropertiesConverter());
         this.registerConverter(new ByteArrayConverter());
         this.registerConverter(new DateConverter());
+        this.registerConverter(new SQLDateTimeConverter());
     }
 
     public void registerConverter(TypeConverter converter) {
