@@ -35,9 +35,6 @@ public final class ConvertersModule extends AbstractModule {
     public ConvertersModule() {
         this.registerConverter(new URLTypeConverter());
         this.registerConverter(new URITypeConverter());
-        this.registerConverter(new SQLDateConverter());
-        this.registerConverter(new SQLTimeConverter());
-        this.registerConverter(new SQLTimestampConverter());
         this.registerConverter(new ClassConverter());
         this.registerConverter(new FileConverter());
         this.registerConverter(new BooleanConverter());

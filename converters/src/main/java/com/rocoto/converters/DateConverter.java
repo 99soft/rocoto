@@ -15,6 +15,8 @@
  */
 package com.rocoto.converters;
 
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -34,8 +36,19 @@ import com.google.inject.TypeLiteral;
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({ Date.class, Date[].class, Calendar.class, Calendar[].class })
-public class DateConverter extends AbstractConverter {
+@Converts({
+    Date.class,
+    Date[].class,
+    Calendar.class,
+    Calendar[].class,
+    java.sql.Date.class,
+    java.sql.Date[].class,
+    Time.class,
+    Time[].class,
+    Timestamp.class,
+    Timestamp[].class
+})
+public final class DateConverter extends AbstractConverter {
 
     private final List<String> patterns = new ArrayList<String>();
 
@@ -60,6 +73,34 @@ public class DateConverter extends AbstractConverter {
 
     @Override
     protected Object simpleConvert(String value, TypeLiteral<?> toType) {
+        Class<?> type = toType.getRawType();
+
+        // java.sql.Date
+        if (type == java.sql.Date.class) {
+            try {
+                return java.sql.Date.valueOf(value);
+            } catch (Throwable t) {
+                throw new IllegalArgumentException("String must be in JDBC format [yyyy-MM-dd] to create a java.sql.Date");
+            }
+        }
+
+        // java.sql.Time
+        if (type == Time.class) {
+            try {
+                return Time.valueOf(value);
+            } catch (Throwable t) {
+                throw new IllegalArgumentException("String must be in JDBC format [HH:mm:ss] to create a java.sql.Time");
+            }
+        }
+
+        if (type == Timestamp.class) {
+            try {
+                return Timestamp.valueOf(value);
+            } catch (Throwable t) {
+                throw new IllegalArgumentException("String must be in JDBC format [yyyy-MM-dd HH:mm:ss.fffffffff] to create a java.sql.Timestamp");
+            }
+        }
+
         Exception firstEx = null;
         for (String pattern : this.patterns) {
             try {
@@ -70,7 +111,7 @@ public class DateConverter extends AbstractConverter {
                 }
                 Date date = this.parse(value, format);
 
-                if (Calendar.class == toType.getRawType()) {
+                if (Calendar.class == type) {
                     Calendar calendar = null;
                     if (this.locale == null && this.timeZone == null) {
                         calendar = Calendar.getInstance();
