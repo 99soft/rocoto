@@ -16,15 +16,14 @@
 package com.rocoto.converters;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({ boolean.class, Boolean.class })
-public final class BooleanConverter implements TypeConverter {
+@Converts({ boolean.class, boolean[].class, Boolean.class, Boolean[].class })
+public final class BooleanConverter extends AbstractConverter {
 
     /**
      * The set of strings that are known to map to Boolean.TRUE.
@@ -36,10 +35,8 @@ public final class BooleanConverter implements TypeConverter {
      */
     private final String[] falseStrings = { "false", "no", "n", "off", "0" };
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         for (String trueString : this.trueStrings) {
             if (trueString.equals(value)) {
                 return Boolean.TRUE;
