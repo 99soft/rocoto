@@ -15,6 +15,7 @@
  */
 package com.rocoto.converters;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -42,6 +43,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(Time.class, new SQLTimeConverter());
         this.registerConverter(Timestamp.class, new SQLTimestampConverter());
         this.registerConverter(Class.class, new ClassConverter());
+        this.registerConverter(File.class, new FileConverter());
 
         TypeConverter booleanConverter = new BooleanConverter();
         this.registerConverter(boolean.class, booleanConverter);
