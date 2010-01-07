@@ -16,20 +16,17 @@
 package com.rocoto.converters;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Class.class)
-public class ClassConverter implements TypeConverter {
+@Converts({ Class.class, Class[].class })
+public class ClassConverter extends AbstractConverter {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         if (classLoader != null) {
             try {
