@@ -18,17 +18,17 @@ package com.rocoto.converters;
 import java.sql.Date;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Date.class)
-public final class SQLDateConverter implements TypeConverter {
+@Converts({ Date.class, Date[].class })
+public final class SQLDateConverter extends AbstractConverter {
 
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         try {
             return Date.valueOf(value);
         } catch (Throwable t) {
