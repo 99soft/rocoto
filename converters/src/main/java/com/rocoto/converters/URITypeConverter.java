@@ -19,17 +19,17 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(URI.class)
-public final class URITypeConverter implements TypeConverter {
+@Converts({ URI.class, URI[].class })
+public final class URITypeConverter extends AbstractConverter {
 
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         try {
             return new URI(value);
         } catch (URISyntaxException e) {
