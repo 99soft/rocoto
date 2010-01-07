@@ -25,6 +25,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
+@Converts(Date.class)
 public final class SQLDateConverter implements TypeConverter {
 
     public Object convert(String value, TypeLiteral<?> toType) {

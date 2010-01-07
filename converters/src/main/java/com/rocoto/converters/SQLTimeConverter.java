@@ -25,6 +25,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
+@Converts(Time.class)
 public final class SQLTimeConverter implements TypeConverter {
 
     public Object convert(String value, TypeLiteral<?> toType) {

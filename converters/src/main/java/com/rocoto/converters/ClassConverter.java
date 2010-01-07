@@ -23,6 +23,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
+@Converts(Class.class)
 public final class ClassConverter implements TypeConverter {
 
     /**

@@ -15,24 +15,22 @@
  */
 package com.rocoto.converters;
 
-import java.io.File;
-
-import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(File.class)
-public final class FileConverter implements TypeConverter {
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface Converts {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return new File(value);
-    }
+    Class<?>[] value();
 
 }

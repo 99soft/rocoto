@@ -23,6 +23,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
+@Converts({ boolean.class, Boolean.class })
 public final class BooleanConverter implements TypeConverter {
 
     /**

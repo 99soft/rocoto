@@ -15,7 +15,8 @@
  */
 package com.rocoto.converters;
 
-import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
@@ -25,14 +26,17 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(File.class)
-public final class FileConverter implements TypeConverter {
+@Converts(URI.class)
+public final class URITypeConverter implements TypeConverter {
 
-    /**
-     * {@inheritDoc}
-     */
     public Object convert(String value, TypeLiteral<?> toType) {
-        return new File(value);
+        try {
+            return new URI(value);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("String vaue '"
+                    + value
+                    + "' is not a valid URI", e);
+        }
     }
 
 }

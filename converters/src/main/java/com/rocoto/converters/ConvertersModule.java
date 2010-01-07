@@ -15,10 +15,6 @@
  */
 package com.rocoto.converters;
 
-import java.io.File;
-import java.net.URL;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,32 +34,32 @@ public final class ConvertersModule extends AbstractModule {
     private final Map<Class<?>, TypeConverter> converters = new HashMap<Class<?>, TypeConverter>();
 
     public ConvertersModule() {
-        this.registerConverter(URL.class, new URLTypeConverter());
-        this.registerConverter(java.sql.Date.class, new SQLDateConverter());
-        this.registerConverter(Time.class, new SQLTimeConverter());
-        this.registerConverter(Timestamp.class, new SQLTimestampConverter());
-        this.registerConverter(Class.class, new ClassConverter());
-        this.registerConverter(File.class, new FileConverter());
-
-        TypeConverter booleanConverter = new BooleanConverter();
-        this.registerConverter(boolean.class, booleanConverter);
-        this.registerConverter(Boolean.class, booleanConverter);
+        this.registerConverter(new URLTypeConverter());
+        this.registerConverter(new URITypeConverter());
+        this.registerConverter(new SQLDateConverter());
+        this.registerConverter(new SQLTimeConverter());
+        this.registerConverter(new SQLTimestampConverter());
+        this.registerConverter(new ClassConverter());
+        this.registerConverter(new FileConverter());
+        this.registerConverter(new BooleanConverter());
     }
 
-    public void registerConverter(Class<?> target, TypeConverter converter) {
-        this.converters.put(target, converter);
+    public void registerConverter(TypeConverter converter) {
+        if (!converter.getClass().isAnnotationPresent(Converts.class)) {
+            throw new IllegalArgumentException("Converter '"
+                    + converter.getClass().getName()
+                    + "' has to be annotated with '@"
+                    + Converts.class.getName()
+                    + "'");
+        }
+
+        for (Class<?> target : converter.getClass().getAnnotation(Converts.class).value()) {
+            this.converters.put(target, converter);
+        }
     }
 
     public void registerConverters(Map<Class<?>, TypeConverter> converters) {
         this.converters.putAll(converters);
-    }
-
-    public TypeConverter lookup(Class<?> target) {
-        return this.converters.get(target);
-    }
-
-    public TypeConverter deregister(Class<?> target) {
-        return this.converters.remove(target);
     }
 
     @Override
