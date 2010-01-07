@@ -39,6 +39,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(new SQLTimeConverter());
         this.registerConverter(new SQLTimestampConverter());
         this.registerConverter(new ClassConverter());
+        this.registerConverter(new ClassArrayConverter());
         this.registerConverter(new FileConverter());
         this.registerConverter(new BooleanConverter());
         this.registerConverter(new CharacterConverter());

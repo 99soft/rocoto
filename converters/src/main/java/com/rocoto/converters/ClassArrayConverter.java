@@ -15,39 +15,34 @@
  */
 package com.rocoto.converters;
 
+import java.util.StringTokenizer;
+
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Class.class)
-public class ClassConverter implements TypeConverter {
+@Converts(Class[].class)
+public final class ClassArrayConverter extends ClassConverter {
+
+    private static final String DEFAULT_DELIMITER = ",";
 
     /**
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        if (classLoader != null) {
-            try {
-                return classLoader.loadClass(value);
-            } catch (ClassNotFoundException ex) {
-                // Don't fail, carry on and try this class's class loader
-            }
+        StringTokenizer tokenizer = new StringTokenizer(value, DEFAULT_DELIMITER);
+        Class<?>[] classArray = new Class[tokenizer.countTokens()];
+
+        int i = 0;
+        while (tokenizer.hasMoreTokens()) {
+            String classString = tokenizer.nextToken().trim();
+            classArray[i] = (Class<?>) super.convert(classString, toType);
         }
 
-        // Try this class's class loader
-        classLoader = ClassConverter.class.getClassLoader();
-        try {
-            return classLoader.loadClass(value);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Impossible to load class '"
-                    + value
-                    + "'", e);
-        }
+        return classArray;
     }
 
 }
