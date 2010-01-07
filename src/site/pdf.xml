@@ -25,7 +25,7 @@
     outputName="${project.name}-${project.version}">
 
     <meta>
-        <title>Rocoto</title>
+        <title>${project.name}</title>
         <authors>
             <author>
                 <name>Simone Tripodi</name>
