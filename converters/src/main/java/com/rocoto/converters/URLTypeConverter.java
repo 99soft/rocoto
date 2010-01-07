@@ -19,17 +19,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(URL.class)
-public final class URLTypeConverter implements TypeConverter {
+@Converts({ URL.class, URL[].class })
+public final class URLTypeConverter extends AbstractConverter {
 
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         try {
             return new URL(value);
         } catch (MalformedURLException e) {
