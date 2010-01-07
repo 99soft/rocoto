@@ -319,6 +319,26 @@
                     <outputEncoding>UTF-8</outputEncoding>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pdf-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>pdf</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>pdf</goal>
+                        </goals>
+                        <configuration>
+                            <includeReports>false</includeReports>
+                            <detail>true</detail>
+                            <indentSize>1</indentSize>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <extensions>
