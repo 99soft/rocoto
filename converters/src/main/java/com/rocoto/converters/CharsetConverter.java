@@ -18,20 +18,17 @@ package com.rocoto.converters;
 import java.nio.charset.Charset;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Charset.class)
-public final class CharsetConverter implements TypeConverter {
+@Converts({ Charset.class, Charset[].class })
+public final class CharsetConverter extends AbstractConverter {
 
-    /**
-     * {@inheritDoc}
-     */
-    public Object convert(String value, TypeLiteral<?> toType) {
+    @Override
+    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
         if (value.length() == 0) {
             throw new IllegalArgumentException("Impossible to convert an empty value to a Charset");
         }
