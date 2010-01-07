@@ -24,6 +24,7 @@ import com.google.inject.TypeLiteral;
  * @author Simone Tripodi
  * @version $Id$
  */
+@Converts(Pattern.class)
 public final class PatternConverter extends AbstractConverter {
 
     @Override
