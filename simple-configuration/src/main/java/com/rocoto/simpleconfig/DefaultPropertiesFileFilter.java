@@ -15,8 +15,6 @@
  */
 package com.rocoto.simpleconfig;
 
-import java.util.regex.Pattern;
-
 /**
  * 
  *
@@ -25,9 +23,9 @@ import java.util.regex.Pattern;
  */
 public final class DefaultPropertiesFileFilter extends AbstractPropertiesFileFilter {
 
-    private static final Pattern PROPERTIES_PATTERN = Pattern.compile(".*\\.properties", Pattern.CASE_INSENSITIVE);
+    private static final String PROPERTIES_PATTERN = "**/*.properties";
 
-    private static final Pattern XML_PROPERTIES_PATTERN = Pattern.compile(".*\\.xml", Pattern.CASE_INSENSITIVE);
+    private static final String XML_PROPERTIES_PATTERN = "**/*.xml";
 
     public DefaultPropertiesFileFilter() {
         super(PROPERTIES_PATTERN, XML_PROPERTIES_PATTERN);
