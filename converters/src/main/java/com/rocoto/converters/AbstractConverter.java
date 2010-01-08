@@ -15,6 +15,8 @@
  */
 package com.rocoto.converters;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
 import java.util.StringTokenizer;
 
 import com.google.inject.TypeLiteral;
@@ -30,15 +32,20 @@ public abstract class AbstractConverter implements TypeConverter {
     private static final String DEFAULT_DELIMITER = ",";
 
     public final Object convert(String value, TypeLiteral<?> toType) {
-        if (((Class<?>) toType.getRawType()).isArray()) {
+        if (GenericArrayType.class.isInstance(toType.getType())) {
+            GenericArrayType arrayType = (GenericArrayType) toType.getType();
             StringTokenizer tokenizer = new StringTokenizer(value, DEFAULT_DELIMITER);
-            Object[] array = new Object[tokenizer.countTokens()];
+            Class<?> type = (Class<?>) arrayType.getGenericComponentType();
+            Object array = Array.newInstance(type, tokenizer.countTokens());
 
             int i = 0;
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken().trim();
-                array[i++] = this.simpleConvert(token, toType);
+                Array.set(array, i++, this.simpleConvert(token, toType));
             }
+
+            System.err.println(array.getClass().getComponentType());
+            System.err.println(array);
 
             return array;
         }
