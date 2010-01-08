@@ -32,16 +32,6 @@ import com.google.inject.name.Names;
  */
 public final class BooleanConverterTestCase extends AbstractConverterTestCase {
 
-    /* @Setter
-    @Inject
-    @Named("trues")
-    private boolean[] trues;
-
-    @Setter
-    @Inject
-    @Named("falses")
-    private Boolean[] falses; */
-
     @Setter
     @Inject
     @Named("true")
@@ -51,6 +41,16 @@ public final class BooleanConverterTestCase extends AbstractConverterTestCase {
     @Inject
     @Named("false")
     private Boolean expectedFalse;
+
+    @Setter
+    @Inject
+    @Named("trues")
+    private boolean[] trues;
+
+    @Setter
+    @Inject
+    @Named("falses")
+    private Boolean[] falses;
 
     @BeforeClass
     public void setUp() {
@@ -79,18 +79,15 @@ public final class BooleanConverterTestCase extends AbstractConverterTestCase {
         assert Boolean.FALSE.equals(this.expectedFalse);
     }
 
-    /* @Test
-    public void verifyTrues() {
+    @Test
+    public void verifyArrays() {
         for (boolean actual : this.trues) {
             assert true == actual;
         }
-    }
 
-    @Test
-    public void verifyFalses() {
         for (Boolean actual : this.falses) {
             assert Boolean.FALSE.equals(actual);
         }
-    } */
+    }
 
 }
