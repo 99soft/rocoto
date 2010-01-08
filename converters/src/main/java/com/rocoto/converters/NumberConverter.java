@@ -59,7 +59,7 @@ final class NumberConverter extends AbstractConverter {
 
     @Override
     protected final Object simpleConvert(String value, TypeLiteral<?> toType) {
-        Class<?> targetType = (Class<?>) toType.getType();
+        Class<?> targetType = (Class<?>) toType.getRawType();
 
         // Byte
         if (Byte.class == targetType) {

@@ -30,15 +30,17 @@ public abstract class AbstractConverter implements TypeConverter {
     private static final String DEFAULT_DELIMITER = ",";
 
     public final Object convert(String value, TypeLiteral<?> toType) {
-        if (toType.getRawType().isArray()) {
+        if (((Class<?>) toType.getRawType()).isArray()) {
             StringTokenizer tokenizer = new StringTokenizer(value, DEFAULT_DELIMITER);
             Object[] array = new Object[tokenizer.countTokens()];
 
             int i = 0;
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken().trim();
-                array[i] = this.simpleConvert(token, toType);
+                array[i++] = this.simpleConvert(token, toType);
             }
+
+            return array;
         }
         return this.simpleConvert(value, toType);
     }
