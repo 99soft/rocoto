@@ -33,8 +33,6 @@ public abstract class AbstractConverter implements TypeConverter {
     private static final String DEFAULT_DELIMITER = ",";
 
     public final Object convert(String value, TypeLiteral<?> toType) {
-        Class<?> type = MoreTypes.getRawType(toType.getType());
-
         if (GenericArrayType.class.isInstance(toType.getType())) {
             StringTokenizer tokenizer = new StringTokenizer(value, DEFAULT_DELIMITER);
             Class<?> arrayType = MoreTypes.getRawType(((GenericArrayType) toType.getType()).getGenericComponentType());
@@ -46,14 +44,12 @@ public abstract class AbstractConverter implements TypeConverter {
                 Array.set(array, i++, this.simpleConvert(token, arrayType));
             }
 
-            System.err.println(MoreTypes.getRawType(toType.getType()));
-            System.err.println(array);
-
             return array;
         }
 
-        return this.simpleConvert(value, type);
+        return this.simpleConvert(value, MoreTypes.getRawType(toType.getType()));
     }
 
     protected abstract Object simpleConvert(String value, Class<?> toType);
+
 }
