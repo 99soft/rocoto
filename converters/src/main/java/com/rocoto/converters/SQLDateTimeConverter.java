@@ -38,7 +38,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
 
     @Override
     protected Object simpleConvert(String value, TypeLiteral<?> toType) {
-        Class<?> type = toType.getRawType();
+        Class<?> type = (Class<?>) toType.getType();
 
         // java.sql.Date
         if (type == java.sql.Date.class) {
