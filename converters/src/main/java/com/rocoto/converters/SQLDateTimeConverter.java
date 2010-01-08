@@ -41,7 +41,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
         Class<?> type = (Class<?>) toType.getType();
 
         // java.sql.Date
-        if (type == java.sql.Date.class) {
+        if (type == Date.class) {
             try {
                 return java.sql.Date.valueOf(value);
             } catch (Throwable t) {
