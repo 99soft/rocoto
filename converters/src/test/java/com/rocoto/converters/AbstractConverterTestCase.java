@@ -15,23 +15,20 @@
  */
 package com.rocoto.converters;
 
-import java.net.URL;
-
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
-import lombok.Data;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Module;
 
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Data
-public final class FakeConfig {
+abstract class AbstractConverterTestCase {
 
-    @Inject
-    @Named("url")
-    private URL url;
+    protected final void init(Module configuration) {
+        Injector injector = Guice.createInjector(new ConvertersModule(), configuration);
+        injector.injectMembers(this);
+    }
 
 }

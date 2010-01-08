@@ -69,6 +69,11 @@ public final class ConvertersModule extends AbstractModule {
                         + "'");
             } else {
                 for (Class<?> target : converterClass.getAnnotation(Converts.class).value()) {
+                    System.err.println("binder().convertToTypes(Matchers.only(TypeLiteral.get("
+                            + target.getName()
+                            +")), "
+                            + converter.getClass().getName()
+                            + ");");
                     this.binder().convertToTypes(Matchers.only(TypeLiteral.get(target)), converter);
                 }
             }

@@ -27,8 +27,6 @@ import java.util.TimeZone;
 
 import lombok.Setter;
 
-import com.google.inject.TypeLiteral;
-
 /**
  * 
  * @author Simone Tripodi
@@ -64,7 +62,7 @@ public final class DateConverter extends AbstractConverter {
     }
 
     @Override
-    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
+    protected Object simpleConvert(String value, Class<?> toType) {
         Exception firstEx = null;
         for (String pattern : this.patterns) {
             try {
@@ -75,7 +73,7 @@ public final class DateConverter extends AbstractConverter {
                 }
                 Date date = this.parse(value, format);
 
-                if (Calendar.class == toType.getRawType()) {
+                if (Calendar.class == toType) {
                     Calendar calendar = null;
                     if (this.locale == null && this.timeZone == null) {
                         calendar = Calendar.getInstance();

@@ -18,8 +18,6 @@ package com.rocoto.converters;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import com.google.inject.TypeLiteral;
-
 /**
  * 
  * @author Simone Tripodi
@@ -29,7 +27,7 @@ import com.google.inject.TypeLiteral;
 public final class URITypeConverter extends AbstractConverter {
 
     @Override
-    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
+    protected Object simpleConvert(String value, Class<?> toType) {
         try {
             return new URI(value);
         } catch (URISyntaxException e) {

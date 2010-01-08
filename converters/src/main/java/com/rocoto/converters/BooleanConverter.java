@@ -15,8 +15,6 @@
  */
 package com.rocoto.converters;
 
-import com.google.inject.TypeLiteral;
-
 /**
  * 
  * @author Simone Tripodi
@@ -36,7 +34,7 @@ public final class BooleanConverter extends AbstractConverter {
     private final String[] falseStrings = { "false", "no", "n", "off", "0" };
 
     @Override
-    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
+    protected Object simpleConvert(String value, Class<?> toType) {
         for (String trueString : this.trueStrings) {
             if (trueString.equals(value)) {
                 return Boolean.TRUE;

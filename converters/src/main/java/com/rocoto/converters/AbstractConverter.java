@@ -20,6 +20,7 @@ import java.lang.reflect.GenericArrayType;
 import java.util.StringTokenizer;
 
 import com.google.inject.TypeLiteral;
+import com.google.inject.internal.MoreTypes;
 import com.google.inject.spi.TypeConverter;
 
 /**
@@ -32,26 +33,27 @@ public abstract class AbstractConverter implements TypeConverter {
     private static final String DEFAULT_DELIMITER = ",";
 
     public final Object convert(String value, TypeLiteral<?> toType) {
+        Class<?> type = MoreTypes.getRawType(toType.getType());
+
         if (GenericArrayType.class.isInstance(toType.getType())) {
-            GenericArrayType arrayType = (GenericArrayType) toType.getType();
             StringTokenizer tokenizer = new StringTokenizer(value, DEFAULT_DELIMITER);
-            Class<?> type = (Class<?>) arrayType.getGenericComponentType();
-            Object array = Array.newInstance(type, tokenizer.countTokens());
+            Class<?> arrayType = MoreTypes.getRawType(((GenericArrayType) toType.getType()).getGenericComponentType());
+            Object array = Array.newInstance(arrayType, tokenizer.countTokens());
 
             int i = 0;
             while (tokenizer.hasMoreTokens()) {
                 String token = tokenizer.nextToken().trim();
-                Array.set(array, i++, this.simpleConvert(token, toType));
+                Array.set(array, i++, this.simpleConvert(token, arrayType));
             }
 
-            System.err.println(array.getClass().getComponentType());
+            System.err.println(MoreTypes.getRawType(toType.getType()));
             System.err.println(array);
 
             return array;
         }
-        return this.simpleConvert(value, toType);
+
+        return this.simpleConvert(value, type);
     }
 
-    protected abstract Object simpleConvert(String value, TypeLiteral<?> toType);
-
+    protected abstract Object simpleConvert(String value, Class<?> toType);
 }

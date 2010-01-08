@@ -22,10 +22,6 @@
 -->
 <suite name="rocoto-converters">
 
-    <test name="base-converters">
-        <classes>
-            <class name="com.rocoto.converters.ConvertersModuleTestCase"/>
-        </classes>
-    </test>
+    <test name="base-converters"/>
 
 </suite>

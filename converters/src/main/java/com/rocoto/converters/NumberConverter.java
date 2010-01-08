@@ -18,8 +18,6 @@ package com.rocoto.converters;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import com.google.inject.TypeLiteral;
-
 /**
  * 
  * @author Simone Tripodi
@@ -58,53 +56,51 @@ import com.google.inject.TypeLiteral;
 final class NumberConverter extends AbstractConverter {
 
     @Override
-    protected final Object simpleConvert(String value, TypeLiteral<?> toType) {
-        Class<?> targetType = (Class<?>) toType.getRawType();
-
+    protected final Object simpleConvert(String value, Class<?> toType) {
         // Byte
-        if (Byte.class == targetType) {
+        if (Byte.class == toType) {
             return new Byte(value);
         }
 
         // Short
-        if (Short.class == targetType) {
+        if (Short.class == toType) {
             return new Short(value);
         }
 
         // Integer
-        if (Integer.class == targetType) {
+        if (Integer.class == toType) {
             return new Integer(value);
         }
 
         // Long
-        if (Long.class == targetType) {
+        if (Long.class == toType) {
             return new Long(value);
         }
 
         // Float
-        if (Float.class == targetType) {
+        if (Float.class == toType) {
             return new Float(value);
         }
 
         // Double
-        if (Double.class == targetType) {
+        if (Double.class == toType) {
             return new Double(value);
         }
 
         // BigDecimal
-        if (BigDecimal.class == targetType) {
+        if (BigDecimal.class == toType) {
             return new BigDecimal(value);
         }
 
         // BigInteger
-        if (BigInteger.class == targetType) {
+        if (BigInteger.class == toType) {
             return new BigInteger(value);
         }
 
         throw new IllegalArgumentException("Impossible to convert '"
                 + value
                 + "' to '"
-                + targetType.getName()
+                + toType.getName()
                 + "'");
     }
 

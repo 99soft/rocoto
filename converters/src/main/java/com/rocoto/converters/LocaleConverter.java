@@ -17,8 +17,6 @@ package com.rocoto.converters;
 
 import java.util.Locale;
 
-import com.google.inject.TypeLiteral;
-
 /**
  * 
  * @author Simone Tripodi
@@ -28,7 +26,7 @@ import com.google.inject.TypeLiteral;
 public final class LocaleConverter extends AbstractConverter {
 
     @Override
-    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
+    protected Object simpleConvert(String value, Class<?> toType) {
         int separator = value.indexOf('-');
         if (separator != -1) {
             String language = value.substring(0, separator);

@@ -15,7 +15,6 @@
  */
 package com.rocoto.converters;
 
-import com.google.inject.TypeLiteral;
 
 /**
  * 
@@ -26,7 +25,7 @@ import com.google.inject.TypeLiteral;
 public final class ClassConverter extends AbstractConverter {
 
     @Override
-    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
+    protected Object simpleConvert(String value, Class<?> toType) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         if (classLoader != null) {
             try {

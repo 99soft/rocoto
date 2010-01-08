@@ -19,8 +19,6 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-import com.google.inject.TypeLiteral;
-
 /**
  * 
  * @author Simone Tripodi
@@ -37,11 +35,9 @@ import com.google.inject.TypeLiteral;
 public final class SQLDateTimeConverter extends AbstractConverter {
 
     @Override
-    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
-        Class<?> type = (Class<?>) toType.getRawType();
-
+    protected Object simpleConvert(String value, Class<?> toType) {
         // java.sql.Date
-        if (type == Date.class) {
+        if (toType == Date.class) {
             try {
                 return java.sql.Date.valueOf(value);
             } catch (Throwable t) {
@@ -50,7 +46,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
         }
 
         // java.sql.Time
-        if (type == Time.class) {
+        if (toType == Time.class) {
             try {
                 return Time.valueOf(value);
             } catch (Throwable t) {
@@ -58,7 +54,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
             }
         }
 
-        if (type == Timestamp.class) {
+        if (toType == Timestamp.class) {
             try {
                 return Timestamp.valueOf(value);
             } catch (Throwable t) {
@@ -67,7 +63,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
         }
 
         throw new IllegalArgumentException("Type '"
-                + type.getName()
+                + toType.getName()
                 + " not supported in this version");
     }
 

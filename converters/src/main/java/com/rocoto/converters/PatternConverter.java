@@ -17,8 +17,6 @@ package com.rocoto.converters;
 
 import java.util.regex.Pattern;
 
-import com.google.inject.TypeLiteral;
-
 /**
  * 
  * @author Simone Tripodi
@@ -28,7 +26,7 @@ import com.google.inject.TypeLiteral;
 public final class PatternConverter extends AbstractConverter {
 
     @Override
-    protected Object simpleConvert(String value, TypeLiteral<?> toType) {
+    protected Object simpleConvert(String value, Class<?> toType) {
         return Pattern.compile(value);
     }
 
