@@ -44,7 +44,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(new LocaleConverter());
         this.registerConverter(new PatternConverter());
         this.registerConverter(new PropertiesConverter());
-        this.registerConverter(new ByteArrayConverter());
+        this.registerConverter(new NumberConverter());
         this.registerConverter(new DateConverter());
         this.registerConverter(new SQLDateTimeConverter());
     }
