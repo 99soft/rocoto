@@ -42,6 +42,10 @@
             <item name="Configuration" href="configuration.html"/>
             <item name="Converters" href="converters.html"/>
             <item name="System" href="system.html"/>
+        </menu>
+
+        <menu name="Miscellaneous">
+            <item name="Project stats" href="stats.html"/>
             <item name="PDF Manual" href="${project.name}-${project.version}.pdf"/>
         </menu>
 
