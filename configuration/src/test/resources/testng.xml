@@ -24,7 +24,7 @@
 
     <test name="configuration">
         <classes>
-            <class name="com.rocoto.configuration.ConfigurationModuleTestCase"/>
+            <class name="com.google.code.rocoto.configuration.ConfigurationModuleTestCase"/>
         </classes>
     </test>
 
