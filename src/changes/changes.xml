@@ -28,6 +28,9 @@
     <body>
         <release version="2.0" date="TBD" description="Update release">
             <action dev="simone.tripodi" type="update">
+                Artifacts signed using GnuPG.
+            </action>
+            <action dev="simone.tripodi" type="update">
                 Added the converter module.
             </action>
             <action dev="simone.tripodi" type="update">
@@ -36,6 +39,12 @@
             </action>
             <action dev="simone.tripodi" type="update">
                 Common components moved to core module.
+            </action>
+            <action dev="simone.tripodi" type="update">
+                Moved to com.google.code groupId.
+            </action>
+            <action dev="simone.tripodi" type="update">
+                Added PDF manual.
             </action>
         </release>
 
