@@ -26,7 +26,7 @@
     </properties>
 
     <body>
-        <release version="1.1" date="TBD" description="Update release">
+        <release version="2.0" date="TBD" description="Update release">
             <action dev="simone.tripodi" type="update">
                 Added the converter module.
             </action>
