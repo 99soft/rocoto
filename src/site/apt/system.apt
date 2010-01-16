@@ -36,7 +36,7 @@ The System module
 <dependencies>
     ...
     <dependency>
-        <groupId>com.rocoto</groupId>
+        <groupId>com.google.code.rocoto</groupId>
         <artifactId>rocoto-system</artifactId>
         <version>XX.XX</version>
     </dependency>
@@ -51,7 +51,7 @@ The System module
 
 ----------------------------------------
 import com.google.inject.Inject;
-import com.rocoto.system.SystemProperty;
+import com.google.code.rocoto.system.SystemProperty;
 
 public class MyPojo {
 
@@ -73,7 +73,7 @@ public class MyPojo {
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import com.rocoto.system.SystemPropertiesModule;
+import com.google.code.rocoto.system.SystemPropertiesModule;
 ...
 Injector injector = Guice.createInjector(new SystemPropertiesModule());
 ----------------------------------------
@@ -85,7 +85,7 @@ Injector injector = Guice.createInjector(new SystemPropertiesModule());
 
 ----------------------------------------
 import com.google.inject.Inject;
-import com.rocoto.system.EnvironmentVariable;
+import com.google.code.rocoto.system.EnvironmentVariable;
 
 public class MyPojo {
 
@@ -107,7 +107,7 @@ public class MyPojo {
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import com.rocoto.system.EnvironmentVariablesModule;
+import com.google.code.rocoto.system.EnvironmentVariablesModule;
 ...
 Injector injector = Guice.createInjector(new EnvironmentVariablesModule());
 ----------------------------------------

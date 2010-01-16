@@ -37,7 +37,7 @@ The Configuration module
 <dependencies>
     ...
     <dependency>
-        <groupId>com.rocoto</groupId>
+        <groupId>com.google.code.rocoto</groupId>
         <artifactId>rocoto-configuration</artifactId>
         <version>XX.XX</version>
     </dependency>
@@ -52,7 +52,7 @@ The Configuration module
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import com.rocoto.configuration.ConfigurationModule;
+import com.google.code.rocoto.configuration.ConfigurationModule;
 
 ...
 
@@ -90,12 +90,12 @@ import org.apache.commons.configuration.SystemConfiguration;
 module.addConfiguration(new SystemConfiguration());
 ----------------------------------------
 
-  or the provided <<<com.rocoto.configuration.EnvironmentConfiguration>>> that
+  or the provided <<<com.google.code.rocoto.configuration.EnvironmentConfiguration>>> that
   loads the Environment Variables:
 
 ----------------------------------------
 import org.apache.commons.configuration.Configuration;
-import com.rocoto.configuration.EnvironmentConfiguration;
+import com.google.code.rocoto.configuration.EnvironmentConfiguration;
 ...
 module.addConfiguration(new EnvironmentConfiguration());
 ----------------------------------------
@@ -105,7 +105,7 @@ module.addConfiguration(new EnvironmentConfiguration());
 
 ----------------------------------------
 import org.apache.commons.configuration.Configuration;
-import com.rocoto.configuration.EnvironmentConfiguration;
+import com.google.code.rocoto.configuration.EnvironmentConfiguration;
 ...
 module.addConfiguration(new EnvironmentConfiguration("environment"));
 ----------------------------------------
@@ -114,7 +114,7 @@ module.addConfiguration(new EnvironmentConfiguration("environment"));
 
   Configurations based on textual files are widely supported by <Apache commons-configuration>
   by the {{{http://commons.apache.org/configuration/apidocs/org/apache/commons/configuration/FileConfiguration.html}org.apache.commons.configuration.FileConfiguration}}
-  interface; the <<<com.rocoto.configuration.ConfigurationModule>>> allows
+  interface; the <<<com.google.code.rocoto.configuration.ConfigurationModule>>> allows
   loading them by specifying the type, usually a class that implements the
   <<<org.apache.commons.configuration.FileConfiguration>>> interface, the source
   and the charset encoding, <UTF-8> by default.

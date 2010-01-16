@@ -33,7 +33,7 @@ The Converters module
 <dependencies>
     ...
     <dependency>
-        <groupId>com.rocoto</groupId>
+        <groupId>com.google.code.rocoto</groupId>
         <artifactId>rocoto-converters</artifactId>
         <version>XX.XX</version>
     </dependency>

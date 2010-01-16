@@ -37,7 +37,7 @@ The Simple Configuration module
 <dependencies>
     ...
     <dependency>
-        <groupId>com.rocoto</groupId>
+        <groupId>com.google.code.rocoto</groupId>
         <artifactId>rocoto-simple-configuration</artifactId>
         <version>XX.XX</version>
     </dependency>
@@ -52,7 +52,7 @@ The Simple Configuration module
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import com.rocoto.simpleconfig.SimpleConfigurationModule;
+import com.google.code.rocoto.simpleconfig.SimpleConfigurationModule;
 
 ...
 
@@ -73,7 +73,7 @@ Injector injector = Guice.createInjector(configurationModule,
   In many cases developers are used to include their properties file into wars
   or jars, then reloading them from the classpath.
 
-  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> offers a set of
+  The <<<com.google.code.rocoto.simpleconfig.SimpleConfigurationModule>>> offers a set of
   methods that simplifies that loading operation, by specifying the full
   qualified classpath resource name:
 
@@ -92,7 +92,7 @@ module.addProperties("com/acme/jdbc.properties", myClassLoader);
 module.addProperties("/com/acme/ldap.properties", myClassLoader);
 ----------------------------------------
 
-  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
+  The <<<com.google.code.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
   <XML> definition of properties file:
 
 ----------------------------------------
@@ -111,7 +111,7 @@ module.addXMLProperties("/com/acme/ldap.xml", myClassLoader);
 
 * Adding Properties files from the FileSystem
 
-  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> is able to load
+  The <<<com.google.code.rocoto.simpleconfig.SimpleConfigurationModule>>> is able to load
   typical and <XML> properties files from the filesystem by specifying the
   <<<java.io.File>>> location:
 
@@ -147,11 +147,11 @@ etc
   all txt files will be ignored, all others will be load as properties files.
 
   Users can customize the default behavior of properties files pattern matching,
-  by specifying their <<<com.rocoto.simpleconfig.AbstractPropertiesFileFilter>>>
+  by specifying their <<<com.google.code.rocoto.simpleconfig.AbstractPropertiesFileFilter>>>
   implementation, where it is possible specifying the files patterns:
 
 ----------------------------------------
-import com.rocoto.simpleconfig.AbstractPropertiesFileFilter;
+import com.google.code.rocoto.simpleconfig.AbstractPropertiesFileFilter;
 import java.util.regex.Pattern;
 ...
 module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
@@ -162,7 +162,7 @@ module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
 
 * Adding Properties files from URLs
 
-  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
+  The <<<com.google.code.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
   properties loading from URLs, by specifying the <<<java.net.URL>>>:
 
 ----------------------------------------
@@ -206,7 +206,7 @@ module.addEnvironmentVariables("environment");
 
 * Adding existing configurations
 
-  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> allows users to
+  The <<<com.google.code.rocoto.simpleconfig.SimpleConfigurationModule>>> allows users to
   plug already existing properties configuration:
 
 ----------------------------------------
@@ -225,7 +225,7 @@ module.addProperties(m);
 
 * $\{\}, the <Apache Ant> variables style
 
-  The <<<com.rocoto.simpleconfig.SimpleConfigurationModule>>> supports the well
+  The <<<com.google.code.rocoto.simpleconfig.SimpleConfigurationModule>>> supports the well
   known <$\{\}> expression to define placeholders, which scope is the whole
   configuration, that means that users can define some commons properties in one
   properties file:
