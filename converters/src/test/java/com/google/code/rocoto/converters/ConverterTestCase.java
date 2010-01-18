@@ -16,6 +16,7 @@
 package com.google.code.rocoto.converters;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.Locale;
 
 import lombok.Setter;
@@ -40,6 +41,11 @@ public final class ConverterTestCase {
 
     @Setter
     @Inject
+    @Named("charset")
+    private Charset charset;
+
+    @Setter
+    @Inject
     @Named("file")
     private File file;
 
@@ -54,6 +60,9 @@ public final class ConverterTestCase {
             @Override
             protected void configure() {
                 this.bindConstant()
+                    .annotatedWith(Names.named("charset"))
+                    .to("UTF-8");
+                this.bindConstant()
                     .annotatedWith(Names.named("file"))
                     .to("/tmp");
                 this.bindConstant()
@@ -62,6 +71,11 @@ public final class ConverterTestCase {
             }
         });
         injector.injectMembers(this);
+    }
+
+    @Test
+    public void charset() {
+        Assert.assertEquals(Charset.forName("UTF-8"), this.charset);
     }
 
     @Test
