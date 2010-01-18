@@ -30,9 +30,35 @@ import com.google.inject.spi.TypeConverter;
 public final class URLTypeConverter implements TypeConverter {
 
     /**
+     * Pseudo URL prefix for loading from the class path: "classpath://"
+     */
+    public static final String CLASSPATH_URL_PREFIX = "classpath://";
+
+    /**
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
+        if (value.startsWith(CLASSPATH_URL_PREFIX)) {
+            String path = value.substring(CLASSPATH_URL_PREFIX.length());
+            ClassLoader classLoader = null;
+            try {
+                classLoader = Thread.currentThread().getContextClassLoader();
+            } catch (Throwable t) {
+                // Cannot access thread context ClassLoader - falling back to system class loader...
+            }
+            if (classLoader == null) {
+                // No thread context class loader -> use class loader of this class.
+                classLoader = URLTypeConverter.class.getClassLoader();
+            }
+            URL url = classLoader.getResource(path);
+            if (url == null) {
+                throw new RuntimeException("class path resource '"
+                        + path
+                        + "' cannot be resolved to URL because it does not exist");
+            }
+            return url;
+        }
+
         try {
             return new URL(value);
         } catch (MalformedURLException e) {
