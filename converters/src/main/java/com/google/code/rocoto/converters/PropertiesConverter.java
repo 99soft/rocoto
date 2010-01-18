@@ -23,19 +23,27 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.util.Properties}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class PropertiesConverter implements TypeConverter {
 
+    /**
+     * Default properties encoding {@code ISO-8859-1}.
+     *
+     * Properties.load(stream) expects it.
+     */
     private static final String PROPERTIES_ENCODING = "ISO-8859-1";
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         Properties properties = new Properties();
 
         try {
-            // Must use the ISO-8859-1 encoding because Properties.load(stream) expects it.
             properties.load(new ByteArrayInputStream(value.getBytes(PROPERTIES_ENCODING)));
         } catch (IOException e) {
             // Should never happen.
@@ -45,6 +53,11 @@ public final class PropertiesConverter implements TypeConverter {
         }
 
         return properties;
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.util.Properties>";
     }
 
 }

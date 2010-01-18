@@ -21,14 +21,23 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.io.File}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class FileConverter implements TypeConverter {
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         return new File(value);
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.io.File>";
     }
 
 }

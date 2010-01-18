@@ -21,12 +21,16 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.util.Locale}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class LocaleConverter implements TypeConverter {
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         int separator = value.indexOf('-');
         if (separator != -1) {
@@ -35,6 +39,11 @@ public final class LocaleConverter implements TypeConverter {
             return new Locale(language, country);
         }
         return new Locale(value);
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.util.Locale>";
     }
 
 }

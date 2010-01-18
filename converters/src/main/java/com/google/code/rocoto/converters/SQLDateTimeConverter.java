@@ -24,12 +24,17 @@ import com.google.inject.internal.MoreTypes;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.sql.Date}, {@code java.sql.Time} and
+ * {@code java.sql.Timestamp}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class SQLDateTimeConverter implements TypeConverter {
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         Class<?> type = MoreTypes.getRawType(toType.getType());
 
@@ -62,6 +67,11 @@ public final class SQLDateTimeConverter implements TypeConverter {
         throw new IllegalArgumentException("Type '"
                 + type.getName()
                 + " not supported in this version");
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.sql.Date | java.sql.Time | java.sql.Timestamp>";
     }
 
 }

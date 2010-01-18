@@ -23,9 +23,14 @@ import com.google.inject.internal.MoreTypes;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.math.BigDecimal} and
+ * {@code java.math.BigInteger}.
+ *
  * @author Simone Tripodi
  * @version $Id$
+ */
+/**
+ * {@inheritDoc}
  */
 final class NumberConverter implements TypeConverter {
 
@@ -47,6 +52,11 @@ final class NumberConverter implements TypeConverter {
                 + "' to '"
                 + type.getName()
                 + "'");
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.math.BigDecimal | java.math.BigInteger>";
     }
 
 }

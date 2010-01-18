@@ -38,14 +38,22 @@ import com.google.inject.matcher.Matchers;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Allows user to easily register converters not included in the base
+ * google-guice package.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class ConvertersModule extends AbstractModule {
 
+    /**
+     * Maintains all the auxiliary converters.
+     */
     private final Map<TypeLiteral<?>, TypeConverter> converters = new HashMap<TypeLiteral<?>, TypeConverter>();
 
+    /**
+     * Builds a new converters with default converters.
+     */
     public ConvertersModule() {
         this.registerConverter(URL.class, new URLTypeConverter());
         this.registerConverter(URI.class, new URITypeConverter());
@@ -69,14 +77,74 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(Timestamp.class, sqlDateTimeConverter);
     }
 
+    /**
+     * Associates the specified converter with the specified type in this module.
+     *
+     * @param type type with which the specified converter is to be associated.
+     * @param typeConverter converter to be associated with the specified type.
+     */
     public void registerConverter(Class<?> type, TypeConverter typeConverter) {
+        if (type == null) {
+            throw new IllegalArgumentException("Argument 'type' nust not be null");
+        }
+        if (typeConverter == null) {
+            throw new IllegalArgumentException("Argument 'typeConverter' nust not be null");
+        }
         this.registerConverter(TypeLiteral.get(type), typeConverter);
     }
 
+    /**
+     * Associates the specified converter with the specified type literal in
+     * this module.
+     *
+     * @param typeLiteral type literal with which the specified converter is to
+     *        be associated.
+     * @param typeConverter converter to be associated with the specified type.
+     */
     public void registerConverter(TypeLiteral<?> typeLiteral, TypeConverter typeConverter) {
+        if (typeLiteral == null) {
+            throw new IllegalArgumentException("Argument 'typeLiteral' nust not be null");
+        }
+        if (typeConverter == null) {
+            throw new IllegalArgumentException("Argument 'typeConverter' nust not be null");
+        }
         this.converters.put(typeLiteral, typeConverter);
     }
 
+    /**
+     * Returns the converter to which the specified type is mapped, or
+     * {@code null} if this module contains no mapping for the type.
+     *
+     * @param type the type whose associated converter is to be returned.
+     * @return the converter to which the specified type is mapped, or null if
+     *         this module contains no mapping for the type.
+     */
+    public TypeConverter lookup(Class<?> type) {
+        if (type == null) {
+            throw new IllegalArgumentException("Argument 'type' nust not be null");
+        }
+        return this.lookup(TypeLiteral.get(type));
+    }
+
+    /**
+     * Returns the converter to which the specified type literal is mapped, or
+     * {@code null} if this module contains no mapping for the type.
+     *
+     * @param typeLiteral the type literal whose associated converter
+     *        is to be returned.
+     * @return the converter to which the specified type literal is mapped, or
+     *         null if this module contains no mapping for the type.
+     */
+    public TypeConverter lookup(TypeLiteral<?> typeLiteral) {
+        if (typeLiteral == null) {
+            throw new IllegalArgumentException("Argument 'typeLiteral' nust not be null");
+        }
+        return this.converters.get(typeLiteral);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void configure() {
         for (Entry<TypeLiteral<?>, TypeConverter> converter : this.converters.entrySet()) {

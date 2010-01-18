@@ -21,17 +21,26 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.nio.charset.Charset}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class CharsetConverter implements TypeConverter {
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         if (value.length() == 0) {
             throw new IllegalArgumentException("Impossible to convert an empty value to a Charset");
         }
         return Charset.forName(value);
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.nio.charset.Charset>";
     }
 
 }

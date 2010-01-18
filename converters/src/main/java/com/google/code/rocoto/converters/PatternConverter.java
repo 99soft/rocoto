@@ -21,14 +21,23 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.util.regex.Pattern}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class PatternConverter implements TypeConverter {
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         return Pattern.compile(value);
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.util.regex.Pattern>";
     }
 
 }

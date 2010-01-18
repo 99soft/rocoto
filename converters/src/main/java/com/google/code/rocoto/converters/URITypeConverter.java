@@ -22,12 +22,16 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.net.URI}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
 public final class URITypeConverter implements TypeConverter {
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         try {
             return new URI(value);
@@ -36,6 +40,11 @@ public final class URITypeConverter implements TypeConverter {
                     + value
                     + "' is not a valid URI", e);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.net.URI>";
     }
 
 }

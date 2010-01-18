@@ -31,7 +31,9 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * Converter implementation for {@code java.util.Calendar} and
+ * {@code java.util.Date}.
+ *
  * @author Simone Tripodi
  * @version $Id$
  */
@@ -59,6 +61,9 @@ public final class DateConverter implements TypeConverter {
         this.patterns.add(pattern);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         Exception firstEx = null;
         for (String pattern : this.patterns) {
@@ -119,6 +124,11 @@ public final class DateConverter implements TypeConverter {
         }
 
         return parsedDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TypeConverter<java.util.Calendar | java.util.Date>";
     }
 
 }
