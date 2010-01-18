@@ -17,16 +17,17 @@ package com.google.code.rocoto.converters;
 
 import java.util.regex.Pattern;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Pattern.class)
-public final class PatternConverter extends AbstractConverter {
+public final class PatternConverter implements TypeConverter {
 
-    @Override
-    protected Object simpleConvert(String value, Class<?> toType) {
+    public Object convert(String value, TypeLiteral<?> toType) {
         return Pattern.compile(value);
     }
 

@@ -18,16 +18,17 @@ package com.google.code.rocoto.converters;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({ URI.class, URI[].class })
-public final class URITypeConverter extends AbstractConverter {
+public final class URITypeConverter implements TypeConverter {
 
-    @Override
-    protected Object simpleConvert(String value, Class<?> toType) {
+    public Object convert(String value, TypeLiteral<?> toType) {
         try {
             return new URI(value);
         } catch (URISyntaxException e) {

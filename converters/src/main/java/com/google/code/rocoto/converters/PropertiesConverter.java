@@ -27,7 +27,6 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts(Properties.class)
 public final class PropertiesConverter implements TypeConverter {
 
     private static final String PROPERTIES_ENCODING = "ISO-8859-1";

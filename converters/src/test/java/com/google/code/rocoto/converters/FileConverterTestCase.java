@@ -40,11 +40,6 @@ public final class FileConverterTestCase extends AbstractConverterTestCase {
     @Named("single-file")
     private File single;
 
-    @Setter
-    @Inject
-    @Named("array-file")
-    private File[] fileArray;
-
     @BeforeClass
     public void setUp() {
         this.init(new AbstractModule() {
@@ -53,9 +48,6 @@ public final class FileConverterTestCase extends AbstractConverterTestCase {
                 this.bindConstant()
                     .annotatedWith(Names.named("single-file"))
                     .to("/tmp");
-                this.bindConstant()
-                    .annotatedWith(Names.named("array-file"))
-                    .to("/tmp, /var");
             }
         });
     }
@@ -63,7 +55,6 @@ public final class FileConverterTestCase extends AbstractConverterTestCase {
     @Test
     public void single() {
         Assert.assertEquals(new File("/tmp"), this.single);
-        Assert.assertEquals(new File[]{ new File("/tmp"), new File("/var") }, this.fileArray);
     }
 
 }

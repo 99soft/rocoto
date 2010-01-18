@@ -15,8 +15,22 @@
  */
 package com.google.code.rocoto.converters;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Map.Entry;
+import java.util.regex.Pattern;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
@@ -30,48 +44,43 @@ import com.google.inject.spi.TypeConverter;
  */
 public final class ConvertersModule extends AbstractModule {
 
-    private final List<TypeConverter> converters = new ArrayList<TypeConverter>();
+    private final Map<TypeLiteral<?>, TypeConverter> converters = new HashMap<TypeLiteral<?>, TypeConverter>();
 
     public ConvertersModule() {
-        this.registerConverter(new URLTypeConverter());
-        this.registerConverter(new URITypeConverter());
-        this.registerConverter(new ClassConverter());
-        this.registerConverter(new FileConverter());
-        this.registerConverter(new BooleanConverter());
-        this.registerConverter(new CharacterConverter());
-        this.registerConverter(new CharacterArrayConverter());
-        this.registerConverter(new CharsetConverter());
-        this.registerConverter(new LocaleConverter());
-        this.registerConverter(new PatternConverter());
-        this.registerConverter(new PropertiesConverter());
-        this.registerConverter(new NumberConverter());
-        this.registerConverter(new DateConverter());
-        this.registerConverter(new SQLDateTimeConverter());
+        this.registerConverter(URL.class, new URLTypeConverter());
+        this.registerConverter(URI.class, new URITypeConverter());
+        this.registerConverter(File.class, new FileConverter());
+        this.registerConverter(Charset.class, new CharsetConverter());
+        this.registerConverter(Locale.class, new LocaleConverter());
+        this.registerConverter(Pattern.class, new PatternConverter());
+        this.registerConverter(Properties.class, new PropertiesConverter());
+
+        NumberConverter numberConverter = new NumberConverter();
+        this.registerConverter(BigDecimal.class, numberConverter);
+        this.registerConverter(BigInteger.class, numberConverter);
+
+        DateConverter dateConverter = new DateConverter();
+        this.registerConverter(Calendar.class, dateConverter);
+        this.registerConverter(Date.class, dateConverter);
+
+        SQLDateTimeConverter sqlDateTimeConverter = new SQLDateTimeConverter();
+        this.registerConverter(java.sql.Date.class, sqlDateTimeConverter);
+        this.registerConverter(Time.class, sqlDateTimeConverter);
+        this.registerConverter(Timestamp.class, sqlDateTimeConverter);
     }
 
-    public void registerConverter(TypeConverter converter) {
-        this.converters.add(converter);
+    public void registerConverter(Class<?> type, TypeConverter typeConverter) {
+        this.registerConverter(TypeLiteral.get(type), typeConverter);
     }
 
-    public void registerConverters(List<TypeConverter> converters) {
-        this.converters.addAll(converters);
+    public void registerConverter(TypeLiteral<?> typeLiteral, TypeConverter typeConverter) {
+        this.converters.put(typeLiteral, typeConverter);
     }
 
     @Override
     protected void configure() {
-        for (TypeConverter converter : this.converters) {
-            Class<? extends TypeConverter> converterClass = converter.getClass();
-            if (!converterClass.isAnnotationPresent(Converts.class)) {
-                this.addError("Converter '"
-                        + converter.getClass().getName()
-                        + "' has to be annotated with '@"
-                        + Converts.class.getName()
-                        + "'");
-            } else {
-                for (Class<?> target : converterClass.getAnnotation(Converts.class).value()) {
-                    this.binder().convertToTypes(Matchers.only(TypeLiteral.get(target)), converter);
-                }
-            }
+        for (Entry<TypeLiteral<?>, TypeConverter> converter : this.converters.entrySet()) {
+            this.binder().convertToTypes(Matchers.only(converter.getKey()), converter.getValue());
         }
     }
 

@@ -18,16 +18,17 @@ package com.google.code.rocoto.converters;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({ URL.class, URL[].class })
-public final class URLTypeConverter extends AbstractConverter {
+public final class URLTypeConverter implements TypeConverter {
 
-    @Override
-    protected Object simpleConvert(String value, Class<?> toType) {
+    public Object convert(String value, TypeLiteral<?> toType) {
         try {
             return new URL(value);
         } catch (MalformedURLException e) {

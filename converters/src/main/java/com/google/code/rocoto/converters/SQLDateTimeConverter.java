@@ -19,25 +19,22 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.internal.MoreTypes;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({
-    Date.class,
-    Date[].class,
-    Time.class,
-    Time[].class,
-    Timestamp.class,
-    Timestamp[].class
-})
-public final class SQLDateTimeConverter extends AbstractConverter {
+public final class SQLDateTimeConverter implements TypeConverter {
 
-    @Override
-    protected Object simpleConvert(String value, Class<?> toType) {
+    public Object convert(String value, TypeLiteral<?> toType) {
+        Class<?> type = MoreTypes.getRawType(toType.getType());
+
         // java.sql.Date
-        if (toType == Date.class) {
+        if (type == Date.class) {
             try {
                 return java.sql.Date.valueOf(value);
             } catch (Throwable t) {
@@ -46,7 +43,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
         }
 
         // java.sql.Time
-        if (toType == Time.class) {
+        if (type == Time.class) {
             try {
                 return Time.valueOf(value);
             } catch (Throwable t) {
@@ -54,7 +51,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
             }
         }
 
-        if (toType == Timestamp.class) {
+        if (type == Timestamp.class) {
             try {
                 return Timestamp.valueOf(value);
             } catch (Throwable t) {
@@ -63,7 +60,7 @@ public final class SQLDateTimeConverter extends AbstractConverter {
         }
 
         throw new IllegalArgumentException("Type '"
-                + toType.getName()
+                + type.getName()
                 + " not supported in this version");
     }
 

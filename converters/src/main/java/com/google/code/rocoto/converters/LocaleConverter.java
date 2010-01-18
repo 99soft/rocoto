@@ -17,16 +17,17 @@ package com.google.code.rocoto.converters;
 
 import java.util.Locale;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({ Locale.class, Locale[].class })
-public final class LocaleConverter extends AbstractConverter {
+public final class LocaleConverter implements TypeConverter {
 
-    @Override
-    protected Object simpleConvert(String value, Class<?> toType) {
+    public Object convert(String value, TypeLiteral<?> toType) {
         int separator = value.indexOf('-');
         if (separator != -1) {
             String language = value.substring(0, separator);

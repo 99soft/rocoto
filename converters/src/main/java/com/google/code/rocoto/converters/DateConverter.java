@@ -27,18 +27,15 @@ import java.util.TimeZone;
 
 import lombok.Setter;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({
-    Date.class,
-    Date[].class,
-    Calendar.class,
-    Calendar[].class
-})
-public final class DateConverter extends AbstractConverter {
+public final class DateConverter implements TypeConverter {
 
     private final List<String> patterns = new ArrayList<String>();
 
@@ -49,6 +46,7 @@ public final class DateConverter extends AbstractConverter {
     private TimeZone timeZone;
 
     public DateConverter() {
+        // ISO date formats
         this.addPattern("yyyy");
         this.addPattern("yyyy-MM");
         this.addPattern("yyyy-MM-dd");
@@ -61,8 +59,7 @@ public final class DateConverter extends AbstractConverter {
         this.patterns.add(pattern);
     }
 
-    @Override
-    protected Object simpleConvert(String value, Class<?> toType) {
+    public Object convert(String value, TypeLiteral<?> toType) {
         Exception firstEx = null;
         for (String pattern : this.patterns) {
             try {
@@ -73,7 +70,7 @@ public final class DateConverter extends AbstractConverter {
                 }
                 Date date = this.parse(value, format);
 
-                if (Calendar.class == toType) {
+                if (Calendar.class == toType.getType()) {
                     Calendar calendar = null;
                     if (this.locale == null && this.timeZone == null) {
                         calendar = Calendar.getInstance();
@@ -97,15 +94,10 @@ public final class DateConverter extends AbstractConverter {
             }
         }
 
-        String errorMessage = "Error converting '"
+        throw new IllegalArgumentException("Error converting '"
             + value
             + "' using  patterns "
-            + this.patterns;
-        if (this.patterns.size() > 1) {
-            throw new IllegalArgumentException(errorMessage);
-        } else {
-            throw new IllegalArgumentException(errorMessage, firstEx);
-        }
+            + this.patterns, firstEx);
     }
 
     private Date parse(String value, DateFormat format) {

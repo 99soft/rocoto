@@ -18,89 +18,34 @@ package com.google.code.rocoto.converters;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.internal.MoreTypes;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({
-    byte.class,
-    byte[].class,
-    Byte.class,
-    Byte[].class,
-    short.class,
-    short[].class,
-    Short.class,
-    Short[].class,
-    int.class,
-    int[].class,
-    Integer.class,
-    Integer[].class,
-    long.class,
-    long[].class,
-    Long.class,
-    Long[].class,
-    float.class,
-    float[].class,
-    Float.class,
-    Float[].class,
-    double.class,
-    double[].class,
-    Double.class,
-    Double[].class,
-    BigDecimal.class,
-    BigDecimal[].class,
-    BigInteger.class,
-    BigInteger[].class
-})
-final class NumberConverter extends AbstractConverter {
+final class NumberConverter implements TypeConverter {
 
-    @Override
-    protected final Object simpleConvert(String value, Class<?> toType) {
-        // Byte
-        if (Byte.class == toType) {
-            return new Byte(value);
-        }
-
-        // Short
-        if (Short.class == toType) {
-            return new Short(value);
-        }
-
-        // Integer
-        if (Integer.class == toType) {
-            return new Integer(value);
-        }
-
-        // Long
-        if (Long.class == toType) {
-            return new Long(value);
-        }
-
-        // Float
-        if (Float.class == toType) {
-            return new Float(value);
-        }
-
-        // Double
-        if (Double.class == toType) {
-            return new Double(value);
-        }
+    public Object convert(String value, TypeLiteral<?> toType) {
+        Class<?> type = MoreTypes.getRawType(toType.getType());
 
         // BigDecimal
-        if (BigDecimal.class == toType) {
+        if (BigDecimal.class == type) {
             return new BigDecimal(value);
         }
 
         // BigInteger
-        if (BigInteger.class == toType) {
+        if (BigInteger.class == type) {
             return new BigInteger(value);
         }
 
         throw new IllegalArgumentException("Impossible to convert '"
                 + value
                 + "' to '"
-                + toType.getName()
+                + type.getName()
                 + "'");
     }
 

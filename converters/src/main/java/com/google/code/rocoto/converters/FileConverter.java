@@ -17,16 +17,17 @@ package com.google.code.rocoto.converters;
 
 import java.io.File;
 
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeConverter;
+
 /**
  * 
  * @author Simone Tripodi
  * @version $Id$
  */
-@Converts({ File.class, File[].class })
-public final class FileConverter extends AbstractConverter {
+public final class FileConverter implements TypeConverter {
 
-    @Override
-    protected Object simpleConvert(String value, Class<?> toType) {
+    public Object convert(String value, TypeLiteral<?> toType) {
         return new File(value);
     }
 
