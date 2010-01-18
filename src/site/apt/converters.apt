@@ -26,6 +26,10 @@
 
 The Converters module
 
+  The <Converters> module adds some string-to-type converters not already present
+  in Google Guice, plus a simple to use module that makes easier the converters
+  registration.
+
   Users that want ot use the <Converters> module in their projects,
   users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
 
@@ -40,3 +44,41 @@ The Converters module
     ...
 </dependencies>
 ----------------------------------------
+
+* The ConvertersModule
+
+  Thecore class is the <<<com.google.code.rocoto.converters.ConvertersModule>>>
+  that's a Guice Module that simplifyes the <<<com.google.inject.spi.TypeConverter>>>
+  registration.
+
+  Users can write their <<<com.google.inject.spi.TypeConverter>>> implementation:
+
+----------------------------------------
+import com.google.inject.TypeLiteral;
+import com.google.inject.spi.TypeConverter;
+
+public class MyConverter implements TypeConverter {
+
+    public Object convert(String value, TypeLiteral<?> toType) {
+       // perform here the coonversion
+    }
+
+}
+----------------------------------------
+
+  then registry it into the module by specifying the binding type:
+
+----------------------------------------
+import com.google.code.rocoto.converters.ConvertersModule;
+...
+ConvertersModule convertersModule = new ConvertersModule();
+convertersModule.registerConverter(MyType.class, new MyConverter());
+----------------------------------------
+
+  or bind it to a <<<com.google.inject.TypeLiteral>>>:
+
+----------------------------------------
+convertersModule.registerConverter(new TypeLiteral<List<MyType>>(){}, new MyConverter());
+----------------------------------------
+
+* The Converters
