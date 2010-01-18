@@ -16,6 +16,7 @@
 package com.google.code.rocoto.converters;
 
 import java.io.File;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
@@ -54,6 +55,11 @@ public final class ConverterTestCase {
     @Named("locale")
     private Locale locale;
 
+    @Setter
+    @Inject
+    @Named("classpathResource")
+    private URL classpathResource;
+
     @BeforeClass
     protected final void init() {
         Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractModule() {
@@ -68,6 +74,9 @@ public final class ConverterTestCase {
                 this.bindConstant()
                     .annotatedWith(Names.named("locale"))
                     .to("en_US");
+                this.bindConstant()
+                    .annotatedWith(Names.named("classpathResource"))
+                    .to("classpath:///testng.xml");
             }
         });
         injector.injectMembers(this);
@@ -86,6 +95,11 @@ public final class ConverterTestCase {
     @Test
     public void locale() {
         Assert.assertEquals(new Locale("en", "US"), this.locale);
+    }
+
+    @Test
+    public void classpathResource() {
+        Assert.assertEquals(this.getClass().getResource("/testng.xml"), this.classpathResource);
     }
 
 }

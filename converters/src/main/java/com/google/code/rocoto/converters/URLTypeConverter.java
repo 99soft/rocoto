@@ -40,6 +40,10 @@ public final class URLTypeConverter implements TypeConverter {
     public Object convert(String value, TypeLiteral<?> toType) {
         if (value.startsWith(CLASSPATH_URL_PREFIX)) {
             String path = value.substring(CLASSPATH_URL_PREFIX.length());
+            while ('/' == path.charAt(0)) {
+                path = path.substring(1);
+            }
+
             ClassLoader classLoader = null;
             try {
                 classLoader = Thread.currentThread().getContextClassLoader();
@@ -56,6 +60,7 @@ public final class URLTypeConverter implements TypeConverter {
                         + path
                         + "' cannot be resolved to URL because it does not exist");
             }
+
             return url;
         }
 
