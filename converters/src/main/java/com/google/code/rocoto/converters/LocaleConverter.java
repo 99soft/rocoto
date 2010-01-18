@@ -32,7 +32,7 @@ public final class LocaleConverter implements TypeConverter {
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
-        int separator = value.indexOf('-');
+        int separator = value.indexOf('_');
         if (separator != -1) {
             String language = value.substring(0, separator);
             String country = value.substring(separator + 1);

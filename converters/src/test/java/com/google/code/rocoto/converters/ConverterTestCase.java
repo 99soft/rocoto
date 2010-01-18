@@ -16,6 +16,7 @@
 package com.google.code.rocoto.converters;
 
 import java.io.File;
+import java.util.Locale;
 
 import lombok.Setter;
 
@@ -42,6 +43,11 @@ public final class ConverterTestCase {
     @Named("file")
     private File file;
 
+    @Setter
+    @Inject
+    @Named("locale")
+    private Locale locale;
+
     @BeforeClass
     protected final void init() {
         Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractModule() {
@@ -50,6 +56,9 @@ public final class ConverterTestCase {
                 this.bindConstant()
                     .annotatedWith(Names.named("file"))
                     .to("/tmp");
+                this.bindConstant()
+                    .annotatedWith(Names.named("locale"))
+                    .to("en_US");
             }
         });
         injector.injectMembers(this);
@@ -58,6 +67,11 @@ public final class ConverterTestCase {
     @Test
     public void file() {
         Assert.assertEquals(new File("/tmp"), this.file);
+    }
+
+    @Test
+    public void locale() {
+        Assert.assertEquals(new Locale("en", "US"), this.locale);
     }
 
 }
