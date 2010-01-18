@@ -22,6 +22,10 @@
 -->
 <suite name="rocoto-converters">
 
-    <test name="base-converters"/>
+    <test name="base-converters">
+        <classes>
+            <class name="com.google.code.rocoto.converters.ConverterTestCase"/>
+        </classes>
+    </test>
 
 </suite>

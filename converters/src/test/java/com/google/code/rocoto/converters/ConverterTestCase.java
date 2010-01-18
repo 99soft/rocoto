@@ -24,7 +24,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 
@@ -33,28 +35,29 @@ import com.google.inject.name.Names;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class FileConverterTestCase extends AbstractConverterTestCase {
+public final class ConverterTestCase {
 
     @Setter
     @Inject
-    @Named("single-file")
-    private File single;
+    @Named("file")
+    private File file;
 
     @BeforeClass
-    public void setUp() {
-        this.init(new AbstractModule() {
+    protected final void init() {
+        Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractModule() {
             @Override
             protected void configure() {
                 this.bindConstant()
-                    .annotatedWith(Names.named("single-file"))
+                    .annotatedWith(Names.named("file"))
                     .to("/tmp");
             }
         });
+        injector.injectMembers(this);
     }
 
     @Test
-    public void single() {
-        Assert.assertEquals(new File("/tmp"), this.single);
+    public void file() {
+        Assert.assertEquals(new File("/tmp"), this.file);
     }
 
 }
