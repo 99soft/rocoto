@@ -51,7 +51,7 @@ public abstract class AbstractURLReader<T> {
 
         URL url = classLoader.getResource(classpathResource);
         if (url == null) {
-            throw new IllegalArgumentException("classpathResource '"
+            throw new IllegalArgumentException("classpath resource '"
                     + classpathResource
                     + "' doesn't exist");
         }
