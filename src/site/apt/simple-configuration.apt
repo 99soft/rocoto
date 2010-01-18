@@ -122,13 +122,13 @@ module.addProperties(new File("etc/com/acme/jdbc.properties"));
 module.addProperties(new File("etc/com/acme/ldap.xml"));
 ----------------------------------------
 
-  By default, using this API, files wich name matches with <*.properties>
-  pattern will be threated as typical properties files, <*.xml> instead as
+  By default, using this API, files wich name matches with <<<**/*.properties>>>
+  pattern will be threated as typical properties files, <<<**/*.xml>>> instead as
   <XML> properties definition.
 
   If the specified <<<java.io.File>>> is a directory, it will be traversed
-  looking for <*.properties> and <*.xml> properties files and will be loaded
-  int the configuration; given the following directory:
+  looking for <<<**/*.properties>>> and <<<**/*.xml>>> properties files and will
+  be loaded in the configuration; given the following directory:
 
 ----------------------------------------
 etc
@@ -152,13 +152,22 @@ etc
 
 ----------------------------------------
 import com.google.code.rocoto.simpleconfig.AbstractPropertiesFileFilter;
-import java.util.regex.Pattern;
+
 ...
 module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
-    Pattern.compile(".*\\.config"), // specify here the 'old-style' properties file pattern
-    Pattern.compile(".*\\.pxml") // specify here the XML properties file pattern
+    "**/*.config", // specify here the 'old-style' properties file pattern
+    "**/*.p?ml" // specify here the XML properties file pattern
 ) {});
 ----------------------------------------
+
+  As described earlier, patterns are used for the inclusion and exclusion of
+  files. These patterns look very much like the patterns used in
+  {{{http://ant.apache.org/manual/dirtasks.html#patterns}Apache Ant}} (from
+  wich the code has been kindly borrowed :P):
+
+  * <<<**>>> matches zero or more 'directories' in a path;
+  * <<<*>>> matches zero or more characters;
+  * <<<?>>> matches one character.
 
 * Adding Properties files from URLs
 
