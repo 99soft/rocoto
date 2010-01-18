@@ -19,6 +19,7 @@ import java.io.File;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Locale;
+import java.util.Properties;
 
 import lombok.Setter;
 
@@ -57,6 +58,11 @@ public final class ConverterTestCase {
 
     @Setter
     @Inject
+    @Named("properties")
+    private Properties properties;
+
+    @Setter
+    @Inject
     @Named("classpathResource")
     private URL classpathResource;
 
@@ -74,6 +80,9 @@ public final class ConverterTestCase {
                 this.bindConstant()
                     .annotatedWith(Names.named("locale"))
                     .to("en_US");
+                this.bindConstant()
+                    .annotatedWith(Names.named("properties"))
+                    .to("useUnicode=true\ncharacterEncoding=UTF-8");
                 this.bindConstant()
                     .annotatedWith(Names.named("classpathResource"))
                     .to("classpath:///testng.xml");
@@ -95,6 +104,14 @@ public final class ConverterTestCase {
     @Test
     public void locale() {
         Assert.assertEquals(new Locale("en", "US"), this.locale);
+    }
+
+    @Test
+    public void properties() {
+        Properties expected = new Properties();
+        expected.setProperty("useUnicode", "true");
+        expected.setProperty("characterEncoding", "UTF-8");
+        Assert.assertEquals(expected, this.properties);
     }
 
     @Test
