@@ -66,7 +66,7 @@ public class MyConverter implements TypeConverter {
 }
 ----------------------------------------
 
-  then registry it into the module by specifying the binding type:
+  and registry it into the module by specifying the binding type:
 
 ----------------------------------------
 import com.google.code.rocoto.converters.ConvertersModule;
@@ -81,4 +81,108 @@ convertersModule.registerConverter(MyType.class, new MyConverter());
 convertersModule.registerConverter(new TypeLiteral<List<MyType>>(){}, new MyConverter());
 ----------------------------------------
 
+  or bind it to a <<<com.google.inject.matcher.Matcher>>>:
+
+----------------------------------------
+import com.google.inject.TypeLiteral;
+import com.google.inject.matcher.Matcher;
+
+Matcher<? super TypeLiteral<?> myMatcher = new MyMatcher();
+convertersModule.registerConverter(myMatcher, new MyConverter());
+----------------------------------------
+
+  finally, users have just to include the converters module when creating the
+  <<<com.google.inject.Injector>>>:
+
+----------------------------------------
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+...
+
+Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractModule() {
+            @Override
+            protected void configure() {
+                this.bindConstant()
+                    .annotatedWith(Names.named("charset"))
+                    .to("UTF-8");
+            }
+        });
+----------------------------------------
+
 * The Converters
+
+  The <<<com.google.code.rocoto.converters>>> package comes with
+  default implementations of converers not already included in Google Guice.
+
+  Every converter throws runtime exceptions if invalid input are submitted to the
+  conversion process.
+
+  Let's show and explain how they work:
+
+** BitSetConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.BitSet>>>.
+
+  String representation is typically a CSV String mixed o chars and numbers, i.e:
+
+----------------------------------------
+a, 123, ~
+----------------------------------------
+
+  in the example, <<<a>>> is taken in consideration as a <<<char>>>, <<<123>>>
+  as an <<<int>>>, <<<~>>> as a <<<char>>>.
+
+  <<Note>> alphanumerical fragments with length great than 1 are not allowed!!!
+
+** CharsetConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.nio.charset.Charset>>>.
+
+** CurrencyConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.Currency>>>.
+
+** DateConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.Calendar>>> and to <<<java.util.Date>>>.
+
+  By default, this converter manages the following ISO Date format representation:
+
+  * yyyy;
+  * yyyy-MM;
+  * yyyy-MM-dd;
+  * yyyy-MM-dd'T'hh:mmZ;
+  * yyyy-MM-dd'T'hh:mm:ssZ;
+  * yyyy-MM-dd'T'hh:mm:ss.sZ
+
+  If users need to add new supported date formats, first they have to retrieve
+  the <DateConverter>, then add a new pattern:
+
+----------------------------------------
+DateConverter dateConverter = module.lookup(Date.class, DateConverter.class);
+dateConverter.addPattern("EEE, MMM d, ''yy");
+----------------------------------------
+
+  If users need to set the <<<java.util.Locale>>> and/or the
+  <<<java.util.TimeZone>>>, first they have to retrieve the <DateConverter>,
+  then set their preferences:
+
+----------------------------------------
+import java.util.Locale;
+import java.util.TimeZone;
+...
+DateConverter dateConverter = module.lookup(Date.class, DateConverter.class);
+dateConverter.setLocale(Locale.getDefault());
+dateConverter.setTimeZone(TimeZone.getDefault());
+----------------------------------------
+
+** FileConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.io.File>>>
