@@ -55,8 +55,8 @@ public final class ConvertersModule extends AbstractModule {
      * Builds a new converters with default converters.
      */
     public ConvertersModule() {
-        this.registerConverter(URL.class, new URLTypeConverter());
-        this.registerConverter(URI.class, new URITypeConverter());
+        this.registerConverter(URL.class, new URLConverter());
+        this.registerConverter(URI.class, new URIConverter());
         this.registerConverter(File.class, new FileConverter());
         this.registerConverter(Charset.class, new CharsetConverter());
         this.registerConverter(Locale.class, new LocaleConverter());

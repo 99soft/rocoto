@@ -27,7 +27,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class URITypeConverter implements TypeConverter {
+public final class URIConverter implements TypeConverter {
 
     /**
      * {@inheritDoc}

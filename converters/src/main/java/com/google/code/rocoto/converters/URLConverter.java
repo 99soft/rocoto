@@ -27,7 +27,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class URLTypeConverter implements TypeConverter {
+public final class URLConverter implements TypeConverter {
 
     /**
      * Pseudo URL prefix for loading from the class path: "classpath://"
@@ -52,7 +52,7 @@ public final class URLTypeConverter implements TypeConverter {
             }
             if (classLoader == null) {
                 // No thread context class loader -> use class loader of this class.
-                classLoader = URLTypeConverter.class.getClassLoader();
+                classLoader = URLConverter.class.getClassLoader();
             }
             URL url = classLoader.getResource(path);
             if (url == null) {
