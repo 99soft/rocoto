@@ -18,6 +18,7 @@ package com.google.code.rocoto.converters;
 import java.io.File;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.BitSet;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -40,6 +41,11 @@ import com.google.inject.name.Names;
  * @version $Id$
  */
 public final class ConverterTestCase {
+
+    @Setter
+    @Inject
+    @Named("bitset")
+    private BitSet bitSet;
 
     @Setter
     @Inject
@@ -72,6 +78,9 @@ public final class ConverterTestCase {
             @Override
             protected void configure() {
                 this.bindConstant()
+                    .annotatedWith(Names.named("bitset"))
+                    .to("a, 123, ~");
+                this.bindConstant()
                     .annotatedWith(Names.named("charset"))
                     .to("UTF-8");
                 this.bindConstant()
@@ -89,6 +98,15 @@ public final class ConverterTestCase {
             }
         });
         injector.injectMembers(this);
+    }
+
+    @Test
+    public void bitset() {
+        BitSet expected = new BitSet();
+        expected.set('a');
+        expected.set(123);
+        expected.set('~');
+        Assert.assertEquals(expected, this.bitSet);
     }
 
     @Test
