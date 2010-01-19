@@ -68,11 +68,16 @@ public final class DateConverter implements TypeConverter {
         Exception firstEx = null;
         for (String pattern : this.patterns) {
             try {
-                DateFormat format = new SimpleDateFormat(pattern);
-                format.setLenient(false);
+                DateFormat format;
+                if (this.locale != null) {
+                    format = new SimpleDateFormat(pattern, this.locale);
+                } else {
+                    format = new SimpleDateFormat(pattern);
+                }
                 if (this.timeZone != null) {
                     format.setTimeZone(this.timeZone);
                 }
+                format.setLenient(false);
                 Date date = this.parse(value, format);
 
                 if (Calendar.class == toType.getType()) {
