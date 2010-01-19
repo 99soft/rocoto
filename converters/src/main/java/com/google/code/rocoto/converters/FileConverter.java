@@ -35,6 +35,9 @@ public final class FileConverter implements TypeConverter {
         return new File(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.io.File>";

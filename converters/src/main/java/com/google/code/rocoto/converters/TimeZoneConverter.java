@@ -35,6 +35,9 @@ public final class TimeZoneConverter implements TypeConverter {
         return TimeZone.getTimeZone(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.util.TimeZone>";

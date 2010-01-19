@@ -73,6 +73,9 @@ public final class URLConverter implements TypeConverter {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.net.URL>";

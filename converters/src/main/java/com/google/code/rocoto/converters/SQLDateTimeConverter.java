@@ -69,6 +69,9 @@ public final class SQLDateTimeConverter implements TypeConverter {
                 + " not supported in this version");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.sql.Date | java.sql.Time | java.sql.Timestamp>";

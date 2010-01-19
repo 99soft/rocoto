@@ -35,6 +35,9 @@ public final class PatternConverter implements TypeConverter {
         return Pattern.compile(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.util.regex.Pattern>";

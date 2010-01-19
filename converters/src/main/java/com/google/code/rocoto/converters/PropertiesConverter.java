@@ -55,6 +55,9 @@ public final class PropertiesConverter implements TypeConverter {
         return properties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.util.Properties>";

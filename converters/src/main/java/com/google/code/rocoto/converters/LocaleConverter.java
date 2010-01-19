@@ -41,6 +41,9 @@ public final class LocaleConverter implements TypeConverter {
         return new Locale(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.util.Locale>";

@@ -38,6 +38,9 @@ public final class CharsetConverter implements TypeConverter {
         return Charset.forName(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.nio.charset.Charset>";

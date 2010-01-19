@@ -126,6 +126,9 @@ public final class DateConverter implements TypeConverter {
         return parsedDate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.util.Calendar | java.util.Date>";

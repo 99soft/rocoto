@@ -34,6 +34,9 @@ import com.google.inject.spi.TypeConverter;
  */
 final class NumberConverter implements TypeConverter {
 
+    /**
+     * {@inheritDoc}
+     */
     public Object convert(String value, TypeLiteral<?> toType) {
         Class<?> type = MoreTypes.getRawType(toType.getType());
 
@@ -54,6 +57,9 @@ final class NumberConverter implements TypeConverter {
                 + "'");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "TypeConverter<java.math.BigDecimal | java.math.BigInteger>";
