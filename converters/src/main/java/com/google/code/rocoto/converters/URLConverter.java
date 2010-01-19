@@ -67,7 +67,7 @@ public final class URLConverter implements TypeConverter {
         try {
             return new URL(value);
         } catch (MalformedURLException e) {
-            throw new RuntimeException("String vaue '"
+            throw new RuntimeException("String value '"
                     + value
                     + "' is not a valid URL", e);
         }

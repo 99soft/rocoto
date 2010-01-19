@@ -36,7 +36,7 @@ public final class URIConverter implements TypeConverter {
         try {
             return new URI(value);
         } catch (URISyntaxException e) {
-            throw new RuntimeException("String vaue '"
+            throw new RuntimeException("String value '"
                     + value
                     + "' is not a valid URI", e);
         }
