@@ -186,3 +186,73 @@ dateConverter.setTimeZone(TimeZone.getDefault());
 
   Is the converter that converts a <<<java.lang.String>>> representation to a
   <<<java.io.File>>>
+
+** LocaleConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.Locale>>>
+
+  The converter checks first if the input String matches with the pattern
+  <languageCode_counrtyCode> to create the <<<java.util.Locale>>> otherwise
+  will use the input value as locale language.
+
+** NumberConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  math number representation, such <<<java.math.BigDecimal>>> and
+  <<<java.math.BigInteger>>>.
+
+** PatternConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.regex.Pattern>>>
+
+** PropertiesConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.Properties>>>
+
+  <<Note>> Input string has to match with the pattern <key1=value1\nkey2=value2...>.
+
+** SQLDateTimeConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to:
+
+  * <<<java.sql.Date>>> (input has to match with <<<yyyy-MM-dd>>> pattern);
+  * <<<java.sql.Time>>> (input has to match with <<<HH:mm:ss>>> pattern);
+  * <<<java.sql.Timestamp>>> (input has to match with <<<yyyy-MM-dd HH:mm:ss.fffffffff>>> pattern).
+
+** TimeZoneConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.TimeZone>>>.
+
+** URIConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.net.URI>>>.
+
+** URLConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.net.URL>>>, supporting the <classpath://> pseudo protocol, to load
+  resources from the the class path.
+
+  Users that need to load classpath resources, have to specify the full qualified
+  name of the resource. For example, given the class path resource:
+
+----------------------------------------
+com.acme.myapplication.JDBC.properties
+----------------------------------------
+
+  following URLs point to the same resource:
+
+----------------------------------------
+classpath://com/acme/myapplication/JDBC.properties
+classpath:///com/acme/myapplication/JDBC.properties
+----------------------------------------
+
+** UUIDConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.util.UUID>>>.
