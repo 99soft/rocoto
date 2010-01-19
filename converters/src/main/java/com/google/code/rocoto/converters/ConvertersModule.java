@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
@@ -62,6 +63,7 @@ public final class ConvertersModule extends AbstractModule {
         this.registerConverter(Locale.class, new LocaleConverter());
         this.registerConverter(Pattern.class, new PatternConverter());
         this.registerConverter(Properties.class, new PropertiesConverter());
+        this.registerConverter(TimeZone.class, new TimeZoneConverter());
 
         NumberConverter numberConverter = new NumberConverter();
         this.registerConverter(BigDecimal.class, numberConverter);
