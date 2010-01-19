@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
+import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.spi.TypeConverter;
 
@@ -53,7 +54,7 @@ public final class ConvertersModule extends AbstractModule {
     /**
      * Maintains all the auxiliary converters.
      */
-    private final Map<TypeLiteral<?>, TypeConverter> converters = new HashMap<TypeLiteral<?>, TypeConverter>();
+    private final Map<Matcher<Object>, TypeConverter> converters = new HashMap<Matcher<Object>, TypeConverter>();
 
     /**
      * Builds a new converters with default converters.
@@ -116,7 +117,25 @@ public final class ConvertersModule extends AbstractModule {
         if (typeConverter == null) {
             throw new IllegalArgumentException("Argument 'typeConverter' nust not be null");
         }
-        this.converters.put(typeLiteral, typeConverter);
+        this.registerConverter(Matchers.only(typeLiteral), typeConverter);
+    }
+
+    /**
+     * Associates the specified converter with the specified matcher in
+     * this module.
+     *
+     * @param matcher matcher with which the specified converter is to be
+     *        associated.
+     * @param typeConverter converter to be associated with the matcher.
+     */
+    public void registerConverter(Matcher<Object> matcher, TypeConverter typeConverter) {
+        if (matcher == null) {
+            throw new IllegalArgumentException("Argument 'matcher' nust not be null");
+        }
+        if (typeConverter == null) {
+            throw new IllegalArgumentException("Argument 'typeConverter' nust not be null");
+        }
+        this.converters.put(matcher, typeConverter);
     }
 
     /**
@@ -147,7 +166,22 @@ public final class ConvertersModule extends AbstractModule {
         if (typeLiteral == null) {
             throw new IllegalArgumentException("Argument 'typeLiteral' nust not be null");
         }
-        return this.converters.get(typeLiteral);
+        return this.lookup(Matchers.only(typeLiteral));
+    }
+
+    /**
+     * Returns the converter to which the specified matcher is mapped, or
+     * {@code null} if this module contains no mapping for the matcher.
+     *
+     * @param matcher the matcher whose associated converter is to be returned.
+     * @return the converter to which the specified matcher is mapped, or
+     *         null if this module contains no mapping for the matcher.
+     */
+    public TypeConverter lookup(Matcher<Object> matcher) {
+        if (matcher == null) {
+            throw new IllegalArgumentException("Argument 'matcher' nust not be null");
+        }
+        return this.converters.get(matcher);
     }
 
     /**
@@ -155,8 +189,8 @@ public final class ConvertersModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-        for (Entry<TypeLiteral<?>, TypeConverter> converter : this.converters.entrySet()) {
-            this.binder().convertToTypes(Matchers.only(converter.getKey()), converter.getValue());
+        for (Entry<Matcher<Object>, TypeConverter> converter : this.converters.entrySet()) {
+            this.binder().convertToTypes(converter.getKey(), converter.getValue());
         }
     }
 
