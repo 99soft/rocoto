@@ -25,6 +25,7 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.BitSet;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -60,6 +61,7 @@ public final class ConvertersModule extends AbstractModule {
     public ConvertersModule() {
         this.registerConverter(BitSet.class, new BitSetConverter());
         this.registerConverter(Charset.class, new CharsetConverter());
+        this.registerConverter(Currency.class, new CurrencyConverter());
         this.registerConverter(File.class, new FileConverter());
         this.registerConverter(Locale.class, new LocaleConverter());
         this.registerConverter(Pattern.class, new PatternConverter());
