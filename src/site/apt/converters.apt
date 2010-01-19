@@ -155,10 +155,15 @@ a, 123, ~
   By default, this converter manages the following ISO Date format representation:
 
   * yyyy;
+
   * yyyy-MM;
+
   * yyyy-MM-dd;
+
   * yyyy-MM-dd'T'hh:mmZ;
+
   * yyyy-MM-dd'T'hh:mm:ssZ;
+
   * yyyy-MM-dd'T'hh:mm:ss.sZ
 
   If users need to add new supported date formats, first they have to retrieve
