@@ -144,14 +144,16 @@ public final class ConvertersModule extends AbstractModule {
      * {@code null} if this module contains no mapping for the type.
      *
      * @param type the type whose associated converter is to be returned.
+     * @param converterType the converter type is looking for associated to the
+     *        type.
      * @return the converter to which the specified type is mapped, or null if
      *         this module contains no mapping for the type.
      */
-    public TypeConverter lookup(Class<?> type) {
+    public <T extends TypeConverter> T lookup(Class<?> type, Class<T> converterType) {
         if (type == null) {
             throw new IllegalArgumentException("Argument 'type' nust not be null");
         }
-        return this.lookup(TypeLiteral.get(type));
+        return this.lookup(TypeLiteral.get(type), converterType);
     }
 
     /**
@@ -160,14 +162,16 @@ public final class ConvertersModule extends AbstractModule {
      *
      * @param typeLiteral the type literal whose associated converter
      *        is to be returned.
+     * @param converterType the converter type is looking for associated to the
+     *        type literal.
      * @return the converter to which the specified type literal is mapped, or
      *         null if this module contains no mapping for the type.
      */
-    public TypeConverter lookup(TypeLiteral<?> typeLiteral) {
+    public <T extends TypeConverter> T lookup(TypeLiteral<?> typeLiteral, Class<T> converterType) {
         if (typeLiteral == null) {
             throw new IllegalArgumentException("Argument 'typeLiteral' nust not be null");
         }
-        return this.lookup(Matchers.only(typeLiteral));
+        return this.lookup(Matchers.only(typeLiteral), converterType);
     }
 
     /**
@@ -175,14 +179,20 @@ public final class ConvertersModule extends AbstractModule {
      * {@code null} if this module contains no mapping for the matcher.
      *
      * @param matcher the matcher whose associated converter is to be returned.
+     * @param converterType the converter type is looking for associated to the
+     *        input matcher.
      * @return the converter to which the specified matcher is mapped, or
      *         null if this module contains no mapping for the matcher.
      */
-    public TypeConverter lookup(Matcher<? super TypeLiteral<?>> matcher) {
+    public <T extends TypeConverter> T lookup(Matcher<? super TypeLiteral<?>> matcher, Class<T> converterType) {
         if (matcher == null) {
             throw new IllegalArgumentException("Argument 'matcher' nust not be null");
         }
-        return this.converters.get(matcher);
+        TypeConverter converter = this.converters.get(matcher);
+        if (converter != null && converterType.isInstance(converter)) {
+            return converterType.cast(converter);
+        }
+        return null;
     }
 
     /**
