@@ -21,7 +21,7 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
 /**
- * Converter implementation for {@code java.net.URL}.
+ * Converter implementation for {@code java.util.UUID}.
  *
  * @author Simone Tripodi
  * @version $Id$
