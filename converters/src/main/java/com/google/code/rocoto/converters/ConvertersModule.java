@@ -54,7 +54,8 @@ public final class ConvertersModule extends AbstractModule {
     /**
      * Maintains all the auxiliary converters.
      */
-    private final Map<Matcher<Object>, TypeConverter> converters = new HashMap<Matcher<Object>, TypeConverter>();
+    private final Map<Matcher<? super TypeLiteral<?>>, TypeConverter> converters =
+        new HashMap<Matcher<? super TypeLiteral<?>>, TypeConverter>();
 
     /**
      * Builds a new converters with default converters.
@@ -128,7 +129,7 @@ public final class ConvertersModule extends AbstractModule {
      *        associated.
      * @param typeConverter converter to be associated with the matcher.
      */
-    public void registerConverter(Matcher<Object> matcher, TypeConverter typeConverter) {
+    public void registerConverter(Matcher<? super TypeLiteral<?>> matcher, TypeConverter typeConverter) {
         if (matcher == null) {
             throw new IllegalArgumentException("Argument 'matcher' nust not be null");
         }
@@ -177,7 +178,7 @@ public final class ConvertersModule extends AbstractModule {
      * @return the converter to which the specified matcher is mapped, or
      *         null if this module contains no mapping for the matcher.
      */
-    public TypeConverter lookup(Matcher<Object> matcher) {
+    public TypeConverter lookup(Matcher<? super TypeLiteral<?>> matcher) {
         if (matcher == null) {
             throw new IllegalArgumentException("Argument 'matcher' nust not be null");
         }
@@ -189,7 +190,7 @@ public final class ConvertersModule extends AbstractModule {
      */
     @Override
     protected void configure() {
-        for (Entry<Matcher<Object>, TypeConverter> converter : this.converters.entrySet()) {
+        for (Entry<Matcher<? super TypeLiteral<?>>, TypeConverter> converter : this.converters.entrySet()) {
             this.binder().convertToTypes(converter.getKey(), converter.getValue());
         }
     }
