@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TimeZone;
+import java.util.UUID;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
@@ -56,14 +57,15 @@ public final class ConvertersModule extends AbstractModule {
      * Builds a new converters with default converters.
      */
     public ConvertersModule() {
-        this.registerConverter(URL.class, new URLConverter());
-        this.registerConverter(URI.class, new URIConverter());
-        this.registerConverter(File.class, new FileConverter());
         this.registerConverter(Charset.class, new CharsetConverter());
+        this.registerConverter(File.class, new FileConverter());
         this.registerConverter(Locale.class, new LocaleConverter());
         this.registerConverter(Pattern.class, new PatternConverter());
         this.registerConverter(Properties.class, new PropertiesConverter());
         this.registerConverter(TimeZone.class, new TimeZoneConverter());
+        this.registerConverter(URL.class, new URLConverter());
+        this.registerConverter(URI.class, new URIConverter());
+        this.registerConverter(UUID.class, new UUIDConverter());
 
         NumberConverter numberConverter = new NumberConverter();
         this.registerConverter(BigDecimal.class, numberConverter);
