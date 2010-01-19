@@ -23,6 +23,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.BitSet;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,6 +58,7 @@ public final class ConvertersModule extends AbstractModule {
      * Builds a new converters with default converters.
      */
     public ConvertersModule() {
+        this.registerConverter(BitSet.class, new BitSetConverter());
         this.registerConverter(Charset.class, new CharsetConverter());
         this.registerConverter(File.class, new FileConverter());
         this.registerConverter(Locale.class, new LocaleConverter());
