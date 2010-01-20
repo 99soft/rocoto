@@ -227,7 +227,7 @@ module.addProperties(p);
   or
 
 ----------------------------------------
-Map\<String, String\> m = [...]
+Map<String, String> m = [...]
 ...
 module.addProperties(m);
 ----------------------------------------
