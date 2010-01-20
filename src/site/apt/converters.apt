@@ -60,7 +60,7 @@ import com.google.inject.spi.TypeConverter;
 public class MyConverter implements TypeConverter {
 
     public Object convert(String value, TypeLiteral<?> toType) {
-       // perform here the coonversion
+       // perform here the conversion
     }
 
 }
