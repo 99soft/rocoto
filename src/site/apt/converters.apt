@@ -114,7 +114,8 @@ Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractMod
 * The Converters
 
   The <<<com.google.code.rocoto.converters>>> package comes with
-  default implementations of converers not already included in Google Guice.
+  default implementations of converers not already included in Google Guice,
+  installed in the <<<com.google.code.rocoto.converters.ConvertersModule>>>.
 
   Every converter throws runtime exceptions if invalid input are submitted to the
   conversion process.
