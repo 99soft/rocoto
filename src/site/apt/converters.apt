@@ -136,7 +136,7 @@ a, 123, ~
   in the example, <<<a>>> is taken in consideration as a <<<char>>>, <<<123>>>
   as an <<<int>>>, <<<~>>> as a <<<char>>>.
 
-  <<Note>> alphanumerical fragments with length great than 1 are not allowed!!!
+  <<Note>> non numerical fragments with length great than 1 are not allowed!!!
 
 ** CharsetConverter
 
