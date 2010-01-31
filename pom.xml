@@ -102,8 +102,8 @@
             <id>simone.tripodi</id>
             <name>Simone Tripodi</name>
             <email>simone dot tripodi at gmail dot com</email>
-            <organization>Asemantics S.r.l.</organization>
-            <organizationUrl>http://www.asemantics.com/</organizationUrl>
+            <organization>Sourcesense S.r.l.</organization>
+            <organizationUrl>http://www.sourcesense.com/</organizationUrl>
             <roles>
                 <role>Owner</role>
                 <role>Committer</role>
