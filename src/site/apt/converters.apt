@@ -37,7 +37,7 @@ The Converters module
 <dependencies>
     ...
     <dependency>
-        <groupId>com.google.code.rocoto</groupId>
+        <groupId>com.googlecode.rocoto</groupId>
         <artifactId>rocoto-converters</artifactId>
         <version>XX.XX</version>
     </dependency>
@@ -47,7 +47,7 @@ The Converters module
 
 * The ConvertersModule
 
-  Thecore class is the <<<com.google.code.rocoto.converters.ConvertersModule>>>
+  Thecore class is the <<<com.googlecode.rocoto.converters.ConvertersModule>>>
   that's a Guice Module that simplifyes the <<<com.google.inject.spi.TypeConverter>>>
   registration.
 
@@ -69,7 +69,7 @@ public class MyConverter implements TypeConverter {
   and registry it into the module by specifying the binding type:
 
 ----------------------------------------
-import com.google.code.rocoto.converters.ConvertersModule;
+import com.googlecode.rocoto.converters.ConvertersModule;
 ...
 ConvertersModule convertersModule = new ConvertersModule();
 convertersModule.registerConverter(MyType.class, new MyConverter());
@@ -113,9 +113,9 @@ Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractMod
 
 * The Converters
 
-  The <<<com.google.code.rocoto.converters>>> package comes with
+  The <<<com.googlecode.rocoto.converters>>> package comes with
   default implementations of converers not already included in Google Guice,
-  installed in the <<<com.google.code.rocoto.converters.ConvertersModule>>>.
+  installed in the <<<com.googlecode.rocoto.converters.ConvertersModule>>>.
 
   Every converter throws runtime exceptions if invalid input are submitted to the
   conversion process.
