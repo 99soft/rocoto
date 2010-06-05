@@ -24,7 +24,7 @@
 
     <test name="base-converters">
         <classes>
-            <class name="com.google.code.rocoto.converters.ConverterTestCase"/>
+            <class name="com.googlecode.rocoto.converters.ConverterTestCase"/>
         </classes>
     </test>
 
