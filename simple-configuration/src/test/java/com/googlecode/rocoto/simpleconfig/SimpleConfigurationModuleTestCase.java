@@ -88,7 +88,7 @@ public final class SimpleConfigurationModuleTestCase {
 
     @Test(groups = "load")
     public void loadFromClasspath() {
-        this.module.addProperties("/com/google/code/rocoto/simpleconfig/ldap.properties");
+        this.module.addProperties("/com/googlecode/rocoto/simpleconfig/ldap.properties");
     }
 
     @Test(groups = "load")

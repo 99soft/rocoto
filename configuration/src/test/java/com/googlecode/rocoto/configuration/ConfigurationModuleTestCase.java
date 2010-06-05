@@ -80,22 +80,22 @@ public final class ConfigurationModuleTestCase {
 
     @Test(groups = "load")
     public void loadPropertiesConfiguration() {
-        this.configurationModule.loadConfiguration(PropertiesConfiguration.class, "/com/google/code/rocoto/configuration/jdbc.properties");
+        this.configurationModule.loadConfiguration(PropertiesConfiguration.class, "/com/googlecode/rocoto/configuration/jdbc.properties");
     }
 
     @Test(groups = "load")
     public void loadINIConfiguration() {
-        this.configurationModule.loadConfiguration(HierarchicalINIConfiguration.class, "/com/google/code/rocoto/configuration/ibatis.ini");
+        this.configurationModule.loadConfiguration(HierarchicalINIConfiguration.class, "/com/googlecode/rocoto/configuration/ibatis.ini");
     }
 
     @Test(groups = "load")
     public void loadXMLConfiguration() {
-        this.configurationModule.loadConfiguration(XMLConfiguration.class, "/com/google/code/rocoto/configuration/proxy.xml");
+        this.configurationModule.loadConfiguration(XMLConfiguration.class, "/com/googlecode/rocoto/configuration/proxy.xml");
     }
 
     @Test(groups = "load")
     public void loadPListConfiguration() {
-        this.configurationModule.loadConfiguration(PropertyListConfiguration.class, "/com/google/code/rocoto/configuration/memcached.plist");
+        this.configurationModule.loadConfiguration(PropertyListConfiguration.class, "/com/googlecode/rocoto/configuration/memcached.plist");
     }
 
     @Test(dependsOnGroups = "load")
