@@ -30,7 +30,7 @@
     <bannerLeft>
         <name>Add some spice to Google Guice through configuration files!</name>
         <src>images/logo.png</src>
-        <href>http://rocoto.googlecode.com/svn/site/${project.version}/index.html</href>
+        <href>${project.url}/index.html</href>
     </bannerLeft>
 
     <version position="left"/>
