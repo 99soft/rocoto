@@ -63,8 +63,8 @@
         </snapshotRepository>
 
         <site>
-            <id>googlecode</id>
-            <url>${docs.deploymentBaseUrl}/${pom.version}/</url>
+            <id>99soft.org</id>
+            <url>ftp://ftp.99soft.org/htdocs/projects/rocoto/${project.version}</url>
         </site>
     </distributionManagement>
 
@@ -98,7 +98,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <docs.deploymentBaseUrl>svn:https://rocoto.googlecode.com/svn/site</docs.deploymentBaseUrl>
     </properties>
 
     <dependencyManagement>
@@ -401,6 +400,14 @@
                 </executions>
             </plugin>
         </plugins>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>1.0-beta-6</version>
+            </extension>
+        </extensions>
 
         <resources>
             <resource>
