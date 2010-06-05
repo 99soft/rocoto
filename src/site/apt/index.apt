@@ -34,23 +34,6 @@ Welcome to Rocoto!
   and well known since the age of Incas... it adds some spice to Google Guice
   through configuration files!
 
-Before Coding...
-
-  To set up your project, configure in your pom.xml the <<<repository>>>:
-
-----------------------------------------
-<repositories>
-    ...
-    <repository>
-        <id>rocoto-repository</id>
-        <name>Rocoto Repository for Maven</name>
-        <url>http://rocoto.googlecode.com/svn/repo</url>
-        <layout>default</layout>
-    </repository>
-    ...
-</repositories>
-----------------------------------------
-
 Acknowledgements
 
   This work is dedicated to our city, L'Aquila, destroyed by a terrible
