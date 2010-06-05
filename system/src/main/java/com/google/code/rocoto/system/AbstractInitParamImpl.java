@@ -50,7 +50,7 @@ abstract class AbstractInitParamImpl implements Annotation {
     @SuppressWarnings("unchecked")
     public AbstractInitParamImpl(final String name) {
         this.name = name;
-        this.annotationType = this.getClass().getInterfaces()[0];
+        this.annotationType = (Class<? extends Annotation>) this.getClass().getInterfaces()[0];
     }
 
     /**

@@ -22,9 +22,9 @@
 <project name="${project.name}">
 
     <skin>
-        <groupId>com.fluido</groupId>
+        <groupId>com.googlecode.fluido-skin</groupId>
         <artifactId>fluido-skin</artifactId>
-        <version>1.1</version>
+        <version>1.3</version>
     </skin>
 
     <bannerLeft>
