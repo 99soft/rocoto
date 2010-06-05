@@ -26,7 +26,16 @@
     </properties>
 
     <body>
-        <release version="2.0" date="TBD" description="Update release">
+        <release version="3.0" date="TBD" description="Update release">
+            <action dev="simone.tripodi" type="update">
+                Moved to Sonatype infrastructure.
+            </action>
+            <action dev="simone.tripodi" type="update">
+                Moved to com.googlecode groupId.
+            </action>
+        </release>
+
+        <release version="2.0" date="2010-01-20" description="Update release">
             <action dev="simone.tripodi" type="update">
                 Artifacts signed using GnuPG.
             </action>

@@ -24,13 +24,13 @@
 
     <test name="environment-variables">
         <classes>
-            <class name="com.google.code.rocoto.system.EnvironmentVariablesModuleTestCase"/>
+            <class name="com.googlecode.rocoto.system.EnvironmentVariablesModuleTestCase"/>
         </classes>
     </test>
 
     <test name="system-properties">
         <classes>
-            <class name="com.google.code.rocoto.system.SystemPropertiesModuleTestCase"/>
+            <class name="com.googlecode.rocoto.system.SystemPropertiesModuleTestCase"/>
         </classes>
     </test>
 
