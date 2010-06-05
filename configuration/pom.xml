@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.googlecode.rocoto</groupId>
             <artifactId>rocoto-core</artifactId>
-            <version>${parent.version}</version>
+            <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
 
