@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import lombok.Setter;
-
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverter;
 
@@ -41,10 +39,8 @@ public final class DateConverter implements TypeConverter {
 
     private final List<String> patterns = new ArrayList<String>();
 
-    @Setter
     private Locale locale;
 
-    @Setter
     private TimeZone timeZone;
 
     public DateConverter() {
@@ -55,6 +51,14 @@ public final class DateConverter implements TypeConverter {
         this.addPattern("yyyy-MM-dd'T'hh:mmZ");
         this.addPattern("yyyy-MM-dd'T'hh:mm:ssZ");
         this.addPattern("yyyy-MM-dd'T'hh:mm:ss.sZ");
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public void setTimeZone(TimeZone timeZone) {
+        this.timeZone = timeZone;
     }
 
     public void addPattern(String pattern) {

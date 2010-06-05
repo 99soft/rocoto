@@ -15,13 +15,9 @@
  */
 package com.google.code.rocoto.system;
 
-import lombok.Setter;
-
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.google.code.rocoto.system.EnvironmentVariable;
-import com.google.code.rocoto.system.EnvironmentVariablesModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -34,10 +30,13 @@ import com.google.inject.Injector;
  */
 public final class EnvironmentVariablesModuleTestCase {
 
-    @Setter
     @Inject
     @EnvironmentVariable("HOME")
     private String home;
+
+    public void setHome(String home) {
+        this.home = home;
+    }
 
     @BeforeTest
     public void setUp() {

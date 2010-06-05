@@ -18,15 +18,12 @@ package com.google.code.rocoto.configuration;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-import lombok.Data;
-
 /**
  * 
  *
  * @author Simone Tripodi
  * @version $Id$
  */
-@Data
 public final class ProxyConfiguration {
 
     @Inject
@@ -36,5 +33,21 @@ public final class ProxyConfiguration {
     @Inject
     @Named("proxy.port")
     private int port;
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 
 }

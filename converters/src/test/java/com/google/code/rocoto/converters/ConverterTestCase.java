@@ -22,8 +22,6 @@ import java.util.BitSet;
 import java.util.Locale;
 import java.util.Properties;
 
-import lombok.Setter;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -42,35 +40,49 @@ import com.google.inject.name.Names;
  */
 public final class ConverterTestCase {
 
-    @Setter
     @Inject
     @Named("bitset")
     private BitSet bitSet;
 
-    @Setter
     @Inject
     @Named("charset")
     private Charset charset;
 
-    @Setter
     @Inject
     @Named("file")
     private File file;
 
-    @Setter
     @Inject
     @Named("locale")
     private Locale locale;
 
-    @Setter
     @Inject
     @Named("properties")
     private Properties properties;
 
-    @Setter
     @Inject
     @Named("classpathResource")
     private URL classpathResource;
+
+    public void setBitSet(BitSet bitSet) {
+        this.bitSet = bitSet;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
+    }
+
+    public void setClasspathResource(URL classpathResource) {
+        this.classpathResource = classpathResource;
+    }
 
     @BeforeClass
     protected final void init() {

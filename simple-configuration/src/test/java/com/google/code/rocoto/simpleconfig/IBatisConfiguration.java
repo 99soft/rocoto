@@ -15,8 +15,6 @@
  */
 package com.google.code.rocoto.simpleconfig;
 
-import lombok.Data;
-
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -26,7 +24,6 @@ import com.google.inject.name.Named;
  * @author Simone Tripodi
  * @version $Id$
  */
-@Data
 public final class IBatisConfiguration {
 
     @Inject
@@ -36,5 +33,21 @@ public final class IBatisConfiguration {
     @Inject
     @Named("ibatis.configuration.lazyLoadingEnabled")
     private boolean lazyLoadingEnabled;
+
+    public String getEnvironmentId() {
+        return environmentId;
+    }
+
+    public void setEnvironmentId(String environmentId) {
+        this.environmentId = environmentId;
+    }
+
+    public boolean isLazyLoadingEnabled() {
+        return lazyLoadingEnabled;
+    }
+
+    public void setLazyLoadingEnabled(boolean lazyLoadingEnabled) {
+        this.lazyLoadingEnabled = lazyLoadingEnabled;
+    }
 
 }

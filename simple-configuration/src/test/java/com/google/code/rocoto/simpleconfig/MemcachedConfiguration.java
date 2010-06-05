@@ -15,8 +15,6 @@
  */
 package com.google.code.rocoto.simpleconfig;
 
-import lombok.Data;
-
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -26,7 +24,6 @@ import com.google.inject.name.Named;
  * @author Simone Tripodi
  * @version $Id$
  */
-@Data
 public final class MemcachedConfiguration {
 
     @Inject
@@ -36,5 +33,21 @@ public final class MemcachedConfiguration {
     @Inject
     @Named("com.ibaguice.memcached.compression")
     private boolean compressionEnabled;
+
+    public String getKeyPrefix() {
+        return keyPrefix;
+    }
+
+    public void setKeyPrefix(String keyPrefix) {
+        this.keyPrefix = keyPrefix;
+    }
+
+    public boolean isCompressionEnabled() {
+        return compressionEnabled;
+    }
+
+    public void setCompressionEnabled(boolean compressionEnabled) {
+        this.compressionEnabled = compressionEnabled;
+    }
 
 }

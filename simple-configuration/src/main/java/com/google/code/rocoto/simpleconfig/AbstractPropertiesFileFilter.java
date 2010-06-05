@@ -19,15 +19,12 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.StringTokenizer;
 
-import lombok.Data;
-
 /**
  * 
  *
  * @author Simone Tripodi
  * @version $Id$
  */
-@Data
 public abstract class AbstractPropertiesFileFilter implements FileFilter {
 
     private static final String DEFAULT_PATH_SEPARATOR = "/";
@@ -41,6 +38,12 @@ public abstract class AbstractPropertiesFileFilter implements FileFilter {
     private final String propertiesPattern;
 
     private final String xmlPropertiesPattern;
+
+    public AbstractPropertiesFileFilter(String propertiesPattern,
+            String xmlPropertiesPattern) {
+        this.propertiesPattern = propertiesPattern;
+        this.xmlPropertiesPattern = xmlPropertiesPattern;
+    }
 
     /**
      * {@inheritDoc}

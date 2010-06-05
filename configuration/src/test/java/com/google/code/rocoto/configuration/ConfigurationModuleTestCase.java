@@ -15,15 +15,12 @@
  */
 package com.google.code.rocoto.configuration;
 
-import lombok.Setter;
-
 import org.apache.commons.configuration.HierarchicalINIConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.plist.PropertyListConfiguration;
 import org.testng.annotations.Test;
 
-import com.google.code.rocoto.configuration.ConfigurationModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -37,24 +34,40 @@ public final class ConfigurationModuleTestCase {
     private final ConfigurationModule configurationModule = new ConfigurationModule();
 
     @Inject
-    @Setter
     private IBatisConfiguration iBatisConfiguration;
 
     @Inject
-    @Setter
     private JDBCConfiguration jdbcConfiguration;
 
     @Inject
-    @Setter
     private LdapConfiguration ldapConfiguration;
 
     @Inject
-    @Setter
     private MemcachedConfiguration memcachedConfiguration;
 
     @Inject
-    @Setter
     private ProxyConfiguration proxyConfiguration;
+
+    public void setiBatisConfiguration(IBatisConfiguration iBatisConfiguration) {
+        this.iBatisConfiguration = iBatisConfiguration;
+    }
+
+    public void setJdbcConfiguration(JDBCConfiguration jdbcConfiguration) {
+        this.jdbcConfiguration = jdbcConfiguration;
+    }
+
+    public void setLdapConfiguration(LdapConfiguration ldapConfiguration) {
+        this.ldapConfiguration = ldapConfiguration;
+    }
+
+    public void setMemcachedConfiguration(
+            MemcachedConfiguration memcachedConfiguration) {
+        this.memcachedConfiguration = memcachedConfiguration;
+    }
+
+    public void setProxyConfiguration(ProxyConfiguration proxyConfiguration) {
+        this.proxyConfiguration = proxyConfiguration;
+    }
 
     @Test(
             expectedExceptions = IllegalArgumentException.class,

@@ -18,15 +18,12 @@ package com.google.code.rocoto.configuration;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
-import lombok.Data;
-
 /**
  * 
  *
  * @author Simone Tripodi
  * @version $Id$
  */
-@Data
 public final class LdapConfiguration {
 
     @Inject
@@ -40,5 +37,29 @@ public final class LdapConfiguration {
     @Inject
     @Named("ldap.baseDN")
     private String baseDN;
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getBaseDN() {
+        return baseDN;
+    }
+
+    public void setBaseDN(String baseDN) {
+        this.baseDN = baseDN;
+    }
 
 }
