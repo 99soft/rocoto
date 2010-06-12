@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 import com.google.inject.name.Names;
 
 /**
@@ -126,6 +127,78 @@ public final class ConfigurationModule extends AbstractModule {
 
             this.bindConstant().annotatedWith(Names.named(key)).to(value);
         }
+    }
+
+    /**
+     * Class that implements the {@link ConfigurationModule} builder.
+     */
+    public static class Builder {
+
+        /**
+         * The module reference.
+         */
+        private final ConfigurationModule module = new ConfigurationModule();
+
+        public Builder addConfiguration(Configuration configuration) {
+            this.module.addConfiguration(configuration);
+            return this;
+        }
+
+        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType, String classpathResource) {
+            this.module.loadConfiguration(configurationType, classpathResource);
+            return this;
+        }
+
+        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
+                String classpathResource,
+                Charset encoding) {
+            this.module.loadConfiguration(configurationType, classpathResource, encoding);
+            return this;
+        }
+
+        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
+                String classpathResource,
+                ClassLoader classLoader) {
+            this.module.loadConfiguration(configurationType, classpathResource, classLoader);
+            return this;
+        }
+
+        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
+                String classpathResource,
+                ClassLoader classLoader,
+                Charset encoding) {
+            this.module.loadConfiguration(configurationType, classpathResource, classLoader, encoding);
+            return this;
+        }
+
+        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
+                File configurationFile) {
+            this.module.loadConfiguration(configurationType, configurationFile);
+            return this;
+        }
+
+        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
+                File configurationFile,
+                Charset encoding) {
+            this.module.loadConfiguration(configurationType, configurationFile, encoding);
+            return this;
+        }
+
+        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType, URL url, Charset encoding) {
+            this.module.loadConfiguration(configurationType, url, encoding);
+            return this;
+        }
+
+        /**
+         * Returns the built module.
+         *
+         * @return the built module.
+         * @return this Builder instance.
+         */
+        public Module getModule() {
+            return this.module;
+        }
+
     }
 
 }
