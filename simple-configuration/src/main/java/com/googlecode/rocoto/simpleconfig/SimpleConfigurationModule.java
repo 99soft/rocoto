@@ -303,26 +303,69 @@ public final class SimpleConfigurationModule extends AbstractModule {
             return this;
         }
 
+        /**
+         * Adds {@link Properties} to the Guice Binder by loading a classpath
+         * resource file, using the user specified {@code ClassLoader}.
+         *
+         * @param classpathResource the classpath resource file.
+         * @param classLoader the user specified {@code ClassLoader}.
+         * @return this Builder instance.
+         */
         public Builder addProperties(String classpathResource, ClassLoader classLoader) {
             this.module.addProperties(classpathResource, classLoader);
             return this;
         }
 
+        /**
+         * Adds XML {@link Properties} to the Guice Binder by loading a classpath
+         * resource file, using the default {@code ClassLoader}.
+         *
+         * @param classpathResource the classpath resource file.
+         * @return this Builder instance.
+         */
         public Builder addXMLProperties(String classpathResource) {
             this.module.addXMLProperties(classpathResource);
             return this;
         }
 
+        /**
+         * Adds XML {@link Properties} to the Guice Binder by loading a classpath
+         * resource file, using the user specified {@code ClassLoader}.
+         *
+         * @param classpathResource the classpath resource file.
+         * @param classLoader the user specified {@code ClassLoader}.
+         * @return this Builder instance.
+         */
         public Builder addXMLProperties(String classpathResource, ClassLoader classLoader) {
             this.module.addXMLProperties(classpathResource, classLoader);
             return this;
         }
 
+        /**
+         * Adds {@link Properties} to the Guice Binder by loading a file; if the
+         * user specified file is a directory, it will be traversed and every file
+         * that matches with {@code *.properties} and {@code *.xml} patterns will be
+         * load as properties file.
+         *
+         * @param configurationFile the properties file or the root dir has to be
+         *        traversed.
+         * @return this Builder instance.
+         */
         public Builder addProperties(File configurationFile) {
             this.module.addProperties(configurationFile);
             return this;
         }
 
+        /**
+         * Adds {@link Properties} to the Guice Binder by loading a file; if the
+         * user specified file is a directory, it will be traversed and every file
+         * that matches with user specified patterns will be load as properties file.
+         *
+         * @param configurationFile the properties file or the root dir has to be
+         *        traversed.
+         * @param filter the user specified properties file patterns.
+         * @return this Builder instance.
+         */
         public Builder addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
             this.module.addProperties(configurationFile, filter);
             return this;
