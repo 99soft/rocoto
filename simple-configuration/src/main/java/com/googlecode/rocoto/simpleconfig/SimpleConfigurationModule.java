@@ -291,6 +291,13 @@ public final class SimpleConfigurationModule extends AbstractModule {
          */
         private final SimpleConfigurationModule module = new SimpleConfigurationModule();
 
+        /**
+         * Adds {@link Properties} to the Guice Binder by loading a classpath
+         * resource file, using the default {@code ClassLoader}.
+         *
+         * @param classpathResource the classpath resource file.
+         * @return this Builder instance.
+         */
         public Builder addProperties(String classpathResource) {
             this.module.addProperties(classpathResource);
             return this;
@@ -323,6 +330,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
 
         /**
          * Adds Java System properties to the Guice Binder.
+         *
+         * @return this Builder instance.
          */
         public Builder addSystemProperties() {
             this.module.addSystemProperties();
@@ -331,6 +340,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
 
         /**
          * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
+         *
+         * @return this Builder instance.
          */
         public Builder addEnvironmentVariables() {
             this.module.addEnvironmentVariables();
@@ -342,6 +353,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
          * Guice Binder.
          *
          * @param prefix the user specified prefix.
+         * @return this Builder instance.
          */
         public Builder addEnvironmentVariables(String prefix) {
             this.module.addEnvironmentVariables(prefix);
@@ -352,6 +364,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
          * Adds already loaded {@link Properties} to the current configuration.
          *
          * @param properties the existing {@link Properties}.
+         * @return this Builder instance.
          */
         public Builder addProperties(Properties properties) {
             this.module.addProperties(properties);
@@ -362,6 +375,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
          * Adds an existing configuration to the current configuration.
          *
          * @param configuration the existing configuration.
+         * @return this Builder instance.
          */
         public Builder addProperties(Map<String, String> configuration) {
             this.module.addProperties(configuration);
@@ -372,6 +386,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
          * Returns the built module.
          *
          * @return the built module.
+         * @return this Builder instance.
          */
         public Module getModule() {
             return this.module;
