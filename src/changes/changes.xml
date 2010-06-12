@@ -26,6 +26,15 @@
     </properties>
 
     <body>
+        <release version="3.1" date="TBD" description="Update release">
+            <action dev="simone.tripodi" type="update">
+                Added com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule.Builder API.
+            </action>
+            <action dev="simone.tripodi" type="update">
+                Added com.googlecode.rocoto.configuration.ConfigurationModule.Builder API.
+            </action>
+        </release>
+
         <release version="3.0" date="2009-06-09" description="Major release">
             <action dev="simone.tripodi" type="update">
                 Moved to Sonatype infrastructure.
