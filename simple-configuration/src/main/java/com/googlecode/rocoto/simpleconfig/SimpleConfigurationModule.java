@@ -27,6 +27,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 import com.google.inject.name.Names;
 
 /**
@@ -278,6 +279,104 @@ public final class SimpleConfigurationModule extends AbstractModule {
             }
         }
         Names.bindProperties(this.binder(), this.configuration);
+    }
+
+    /**
+     * Class that implements the {@link SimpleConfigurationModule} builder.
+     */
+    public static final class Builder {
+
+        /**
+         * The module reference.
+         */
+        private final SimpleConfigurationModule module = new SimpleConfigurationModule();
+
+        public Builder addProperties(String classpathResource) {
+            this.module.addProperties(classpathResource);
+            return this;
+        }
+
+        public Builder addProperties(String classpathResource, ClassLoader classLoader) {
+            this.module.addProperties(classpathResource, classLoader);
+            return this;
+        }
+
+        public Builder addXMLProperties(String classpathResource) {
+            this.module.addXMLProperties(classpathResource);
+            return this;
+        }
+
+        public Builder addXMLProperties(String classpathResource, ClassLoader classLoader) {
+            this.module.addXMLProperties(classpathResource, classLoader);
+            return this;
+        }
+
+        public Builder addProperties(File configurationFile) {
+            this.module.addProperties(configurationFile);
+            return this;
+        }
+
+        public Builder addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
+            this.module.addProperties(configurationFile, filter);
+            return this;
+        }
+
+        /**
+         * Adds Java System properties to the Guice Binder.
+         */
+        public Builder addSystemProperties() {
+            this.module.addSystemProperties();
+            return this;
+        }
+
+        /**
+         * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
+         */
+        public Builder addEnvironmentVariables() {
+            this.module.addEnvironmentVariables();
+            return this;
+        }
+
+        /**
+         * Adds environment variables, prefixed with user specified prefix, to the
+         * Guice Binder.
+         *
+         * @param prefix the user specified prefix.
+         */
+        public Builder addEnvironmentVariables(String prefix) {
+            this.module.addEnvironmentVariables(prefix);
+            return this;
+        }
+
+        /**
+         * Adds already loaded {@link Properties} to the current configuration.
+         *
+         * @param properties the existing {@link Properties}.
+         */
+        public Builder addProperties(Properties properties) {
+            this.module.addProperties(properties);
+            return this;
+        }
+
+        /**
+         * Adds an existing configuration to the current configuration.
+         *
+         * @param configuration the existing configuration.
+         */
+        public Builder addProperties(Map<String, String> configuration) {
+            this.module.addProperties(configuration);
+            return this;
+        }
+
+        /**
+         * Returns the built module.
+         *
+         * @return the built module.
+         */
+        public Module getModule() {
+            return this.module;
+        }
+
     }
 
 }
