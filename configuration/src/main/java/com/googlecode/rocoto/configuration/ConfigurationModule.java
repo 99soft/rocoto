@@ -29,7 +29,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Module;
 import com.google.inject.name.Names;
 
 /**
@@ -54,49 +53,53 @@ public final class ConfigurationModule extends AbstractModule {
      */
     private final ClassLoader defaultClassLoader = this.getClass().getClassLoader();
 
-    public void addConfiguration(Configuration configuration) {
+    public ConfigurationModule addConfiguration(Configuration configuration) {
         this.configuration.addConfiguration(configuration);
+        return this;
     }
 
-    public void loadConfiguration(Class<? extends FileConfiguration> configurationType, String classpathResource) {
-        this.loadConfiguration(configurationType, classpathResource, UTF_8);
+    public ConfigurationModule loadConfiguration(Class<? extends FileConfiguration> configurationType, String classpathResource) {
+        return this.loadConfiguration(configurationType, classpathResource, UTF_8);
     }
 
-    public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
+    public ConfigurationModule loadConfiguration(Class<? extends FileConfiguration> configurationType,
             String classpathResource,
             Charset encoding) {
-        this.loadConfiguration(configurationType, classpathResource, this.defaultClassLoader, encoding);
+        return this.loadConfiguration(configurationType, classpathResource, this.defaultClassLoader, encoding);
     }
 
-    public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
+    public ConfigurationModule loadConfiguration(Class<? extends FileConfiguration> configurationType,
             String classpathResource,
             ClassLoader classLoader) {
-        this.loadConfiguration(configurationType,
+        return this.loadConfiguration(configurationType,
                 classpathResource,
                 classLoader,
                 UTF_8);
     }
 
-    public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
+    public ConfigurationModule loadConfiguration(Class<? extends FileConfiguration> configurationType,
             String classpathResource,
             ClassLoader classLoader,
             Charset encoding) {
         this.readers.add(new ConfigurationReader(classpathResource, classLoader, configurationType, encoding));
+        return this;
     }
 
-    public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
+    public ConfigurationModule loadConfiguration(Class<? extends FileConfiguration> configurationType,
             File configurationFile) {
-        this.loadConfiguration(configurationType, configurationFile, UTF_8);
+        return this.loadConfiguration(configurationType, configurationFile, UTF_8);
     }
 
-    public void loadConfiguration(Class<? extends FileConfiguration> configurationType,
+    public ConfigurationModule loadConfiguration(Class<? extends FileConfiguration> configurationType,
             File configurationFile,
             Charset encoding) {
         this.readers.add(new ConfigurationReader(configurationFile, configurationType, encoding));
+        return this;
     }
 
-    public void loadConfiguration(Class<? extends FileConfiguration> configurationType, URL url, Charset encoding) {
+    public ConfigurationModule loadConfiguration(Class<? extends FileConfiguration> configurationType, URL url, Charset encoding) {
         this.readers.add(new ConfigurationReader(url, configurationType, encoding));
+        return this;
     }
 
     /**
@@ -127,78 +130,6 @@ public final class ConfigurationModule extends AbstractModule {
 
             this.bindConstant().annotatedWith(Names.named(key)).to(value);
         }
-    }
-
-    /**
-     * Class that implements the {@link ConfigurationModule} builder.
-     */
-    public static class Builder {
-
-        /**
-         * The module reference.
-         */
-        private final ConfigurationModule module = new ConfigurationModule();
-
-        public Builder addConfiguration(Configuration configuration) {
-            this.module.addConfiguration(configuration);
-            return this;
-        }
-
-        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType, String classpathResource) {
-            this.module.loadConfiguration(configurationType, classpathResource);
-            return this;
-        }
-
-        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
-                String classpathResource,
-                Charset encoding) {
-            this.module.loadConfiguration(configurationType, classpathResource, encoding);
-            return this;
-        }
-
-        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
-                String classpathResource,
-                ClassLoader classLoader) {
-            this.module.loadConfiguration(configurationType, classpathResource, classLoader);
-            return this;
-        }
-
-        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
-                String classpathResource,
-                ClassLoader classLoader,
-                Charset encoding) {
-            this.module.loadConfiguration(configurationType, classpathResource, classLoader, encoding);
-            return this;
-        }
-
-        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
-                File configurationFile) {
-            this.module.loadConfiguration(configurationType, configurationFile);
-            return this;
-        }
-
-        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType,
-                File configurationFile,
-                Charset encoding) {
-            this.module.loadConfiguration(configurationType, configurationFile, encoding);
-            return this;
-        }
-
-        public Builder loadConfiguration(Class<? extends FileConfiguration> configurationType, URL url, Charset encoding) {
-            this.module.loadConfiguration(configurationType, url, encoding);
-            return this;
-        }
-
-        /**
-         * Returns the built module.
-         *
-         * @return the built module.
-         * @return this Builder instance.
-         */
-        public Module getModule() {
-            return this.module;
-        }
-
     }
 
 }

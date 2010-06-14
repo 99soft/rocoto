@@ -27,7 +27,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Module;
 import com.google.inject.name.Names;
 
 /**
@@ -75,8 +74,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param classpathResource the classpath resource file.
      */
-    public void addProperties(String classpathResource) {
-        this.addProperties(classpathResource, this.defaultClassLoader);
+    public SimpleConfigurationModule addProperties(String classpathResource) {
+        return this.addProperties(classpathResource, this.defaultClassLoader);
     }
 
     /**
@@ -86,8 +85,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param classpathResource the classpath resource file.
      * @param classLoader the user specified {@code ClassLoader}.
      */
-    public void addProperties(String classpathResource, ClassLoader classLoader) {
-        this.addProperties(classpathResource, classLoader, false);
+    public SimpleConfigurationModule addProperties(String classpathResource, ClassLoader classLoader) {
+        return this.addProperties(classpathResource, classLoader, false);
     }
 
     /**
@@ -96,8 +95,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param classpathResource the classpath resource file.
      */
-    public void addXMLProperties(String classpathResource) {
-        this.addXMLProperties(classpathResource, this.defaultClassLoader);
+    public SimpleConfigurationModule addXMLProperties(String classpathResource) {
+        return this.addXMLProperties(classpathResource, this.defaultClassLoader);
     }
 
     /**
@@ -107,8 +106,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param classpathResource the classpath resource file.
      * @param classLoader the user specified {@code ClassLoader}.
      */
-    public void addXMLProperties(String classpathResource, ClassLoader classLoader) {
-        this.addProperties(classpathResource, this.defaultClassLoader, true);
+    public SimpleConfigurationModule addXMLProperties(String classpathResource, ClassLoader classLoader) {
+        return this.addProperties(classpathResource, this.defaultClassLoader, true);
     }
 
     /**
@@ -117,8 +116,9 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param classLoader
      * @param isXML
      */
-    private void addProperties(String classpathResource, ClassLoader classLoader, boolean isXML) {
+    private SimpleConfigurationModule addProperties(String classpathResource, ClassLoader classLoader, boolean isXML) {
         this.readers.add(new PropertiesReader(classpathResource, classLoader, isXML));
+        return this;
     }
 
     /**
@@ -130,8 +130,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param configurationFile the properties file or the root dir has to be
      *        traversed.
      */
-    public void addProperties(File configurationFile) {
-        this.addProperties(configurationFile, this.defaultFileFilter);
+    public SimpleConfigurationModule addProperties(File configurationFile) {
+        return this.addProperties(configurationFile, this.defaultFileFilter);
     }
 
     /**
@@ -143,7 +143,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *        traversed.
      * @param filter the user specified properties file patterns.
      */
-    public void addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
+    public SimpleConfigurationModule addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
         if (configurationFile == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
         }
@@ -170,15 +170,16 @@ public final class SimpleConfigurationModule extends AbstractModule {
                             + configurationFile.getAbsolutePath()
                             + "' is empty");
                 }
-                return;
+                return this;
             }
             for (File file : childs) {
                 this.addProperties(file, filter);
             }
-            return;
+            return this;
         }
 
         this.readers.add(new PropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
+        return this;
     }
 
     /**
@@ -186,8 +187,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param configurationUrl the properties URL.
      */
-    public void addProperties(URL configurationUrl) {
-        this.addProperties(configurationUrl, false);
+    public SimpleConfigurationModule addProperties(URL configurationUrl) {
+        return this.addProperties(configurationUrl, false);
     }
 
     /**
@@ -195,8 +196,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param configurationUrl the properties URL.
      */
-    public void addXMLProperties(URL configurationUrl) {
-        this.addProperties(configurationUrl, true);
+    public SimpleConfigurationModule addXMLProperties(URL configurationUrl) {
+        return this.addProperties(configurationUrl, true);
     }
 
     /**
@@ -204,22 +205,24 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param configurationUrl
      * @param isXML
      */
-    private void addProperties(URL configurationUrl, boolean isXML) {
+    private SimpleConfigurationModule addProperties(URL configurationUrl, boolean isXML) {
         this.readers.add(new PropertiesReader(configurationUrl, isXML));
+        return this;
     }
 
     /**
      * Adds Java System properties to the Guice Binder.
      */
-    public void addSystemProperties() {
+    public SimpleConfigurationModule addSystemProperties() {
         this.addProperties(System.getProperties());
+        return this;
     }
 
     /**
      * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
      */
-    public void addEnvironmentVariables() {
-        this.addEnvironmentVariables(DEFAULT_ENV_PREFIX);
+    public SimpleConfigurationModule addEnvironmentVariables() {
+        return this.addEnvironmentVariables(DEFAULT_ENV_PREFIX);
     }
 
     /**
@@ -228,7 +231,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param prefix the user specified prefix.
      */
-    public void addEnvironmentVariables(String prefix) {
+    public SimpleConfigurationModule addEnvironmentVariables(String prefix) {
         if (prefix == null || prefix.length() == 0) {
             throw new IllegalArgumentException("empty prefix not allowed");
         }
@@ -240,6 +243,8 @@ public final class SimpleConfigurationModule extends AbstractModule {
         for (Entry<String, String> envVar : System.getenv().entrySet()) {
             this.configuration.put(prefix + envVar.getKey(), envVar.getValue());
         }
+
+        return this;
     }
 
     /**
@@ -247,11 +252,12 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param properties the existing {@link Properties}.
      */
-    public void addProperties(Properties properties) {
+    public SimpleConfigurationModule addProperties(Properties properties) {
         if (properties == null) {
             throw new IllegalArgumentException("'properties' argument can't be null");
         }
         this.configuration.putAll(properties);
+        return this;
     }
 
     /**
@@ -259,11 +265,12 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param configuration the existing configuration.
      */
-    public void addProperties(Map<String, String> configuration) {
+    public SimpleConfigurationModule addProperties(Map<String, String> configuration) {
         if (configuration == null) {
             throw new IllegalArgumentException("'configuration' argument can't be null");
         }
         this.configuration.putAll(configuration);
+        return this;
     }
 
     /**
@@ -279,162 +286,6 @@ public final class SimpleConfigurationModule extends AbstractModule {
             }
         }
         Names.bindProperties(this.binder(), this.configuration);
-    }
-
-    /**
-     * Class that implements the {@link SimpleConfigurationModule} builder.
-     */
-    public static final class Builder {
-
-        /**
-         * The module reference.
-         */
-        private final SimpleConfigurationModule module = new SimpleConfigurationModule();
-
-        /**
-         * Adds {@link Properties} to the Guice Binder by loading a classpath
-         * resource file, using the default {@code ClassLoader}.
-         *
-         * @param classpathResource the classpath resource file.
-         * @return this Builder instance.
-         */
-        public Builder addProperties(String classpathResource) {
-            this.module.addProperties(classpathResource);
-            return this;
-        }
-
-        /**
-         * Adds {@link Properties} to the Guice Binder by loading a classpath
-         * resource file, using the user specified {@code ClassLoader}.
-         *
-         * @param classpathResource the classpath resource file.
-         * @param classLoader the user specified {@code ClassLoader}.
-         * @return this Builder instance.
-         */
-        public Builder addProperties(String classpathResource, ClassLoader classLoader) {
-            this.module.addProperties(classpathResource, classLoader);
-            return this;
-        }
-
-        /**
-         * Adds XML {@link Properties} to the Guice Binder by loading a classpath
-         * resource file, using the default {@code ClassLoader}.
-         *
-         * @param classpathResource the classpath resource file.
-         * @return this Builder instance.
-         */
-        public Builder addXMLProperties(String classpathResource) {
-            this.module.addXMLProperties(classpathResource);
-            return this;
-        }
-
-        /**
-         * Adds XML {@link Properties} to the Guice Binder by loading a classpath
-         * resource file, using the user specified {@code ClassLoader}.
-         *
-         * @param classpathResource the classpath resource file.
-         * @param classLoader the user specified {@code ClassLoader}.
-         * @return this Builder instance.
-         */
-        public Builder addXMLProperties(String classpathResource, ClassLoader classLoader) {
-            this.module.addXMLProperties(classpathResource, classLoader);
-            return this;
-        }
-
-        /**
-         * Adds {@link Properties} to the Guice Binder by loading a file; if the
-         * user specified file is a directory, it will be traversed and every file
-         * that matches with {@code *.properties} and {@code *.xml} patterns will be
-         * load as properties file.
-         *
-         * @param configurationFile the properties file or the root dir has to be
-         *        traversed.
-         * @return this Builder instance.
-         */
-        public Builder addProperties(File configurationFile) {
-            this.module.addProperties(configurationFile);
-            return this;
-        }
-
-        /**
-         * Adds {@link Properties} to the Guice Binder by loading a file; if the
-         * user specified file is a directory, it will be traversed and every file
-         * that matches with user specified patterns will be load as properties file.
-         *
-         * @param configurationFile the properties file or the root dir has to be
-         *        traversed.
-         * @param filter the user specified properties file patterns.
-         * @return this Builder instance.
-         */
-        public Builder addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
-            this.module.addProperties(configurationFile, filter);
-            return this;
-        }
-
-        /**
-         * Adds Java System properties to the Guice Binder.
-         *
-         * @return this Builder instance.
-         */
-        public Builder addSystemProperties() {
-            this.module.addSystemProperties();
-            return this;
-        }
-
-        /**
-         * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
-         *
-         * @return this Builder instance.
-         */
-        public Builder addEnvironmentVariables() {
-            this.module.addEnvironmentVariables();
-            return this;
-        }
-
-        /**
-         * Adds environment variables, prefixed with user specified prefix, to the
-         * Guice Binder.
-         *
-         * @param prefix the user specified prefix.
-         * @return this Builder instance.
-         */
-        public Builder addEnvironmentVariables(String prefix) {
-            this.module.addEnvironmentVariables(prefix);
-            return this;
-        }
-
-        /**
-         * Adds already loaded {@link Properties} to the current configuration.
-         *
-         * @param properties the existing {@link Properties}.
-         * @return this Builder instance.
-         */
-        public Builder addProperties(Properties properties) {
-            this.module.addProperties(properties);
-            return this;
-        }
-
-        /**
-         * Adds an existing configuration to the current configuration.
-         *
-         * @param configuration the existing configuration.
-         * @return this Builder instance.
-         */
-        public Builder addProperties(Map<String, String> configuration) {
-            this.module.addProperties(configuration);
-            return this;
-        }
-
-        /**
-         * Returns the built module.
-         *
-         * @return the built module.
-         * @return this Builder instance.
-         */
-        public Module getModule() {
-            return this.module;
-        }
-
     }
 
 }
