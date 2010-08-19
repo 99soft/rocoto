@@ -19,7 +19,6 @@ import java.util.BitSet;
 import java.util.StringTokenizer;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.util.UUID}.
@@ -27,7 +26,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class BitSetConverter implements TypeConverter {
+public final class BitSetConverter extends AbstractConverter<BitSet> {
 
     private static final String DEFAULT_SEPARATOR = ",";
 
@@ -73,14 +72,6 @@ public final class BitSetConverter implements TypeConverter {
         }
 
         return bitSet;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.util.BitSet>";
     }
 
 }

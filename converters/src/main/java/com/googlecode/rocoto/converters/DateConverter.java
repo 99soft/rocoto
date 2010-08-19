@@ -26,7 +26,6 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.util.Calendar} and
@@ -35,7 +34,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class DateConverter implements TypeConverter {
+public final class DateConverter extends AbstractConverter<Date> {
 
     private final List<String> patterns = new ArrayList<String>();
 
@@ -133,14 +132,6 @@ public final class DateConverter implements TypeConverter {
         }
 
         return parsedDate;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.util.Calendar | java.util.Date>";
     }
 
 }

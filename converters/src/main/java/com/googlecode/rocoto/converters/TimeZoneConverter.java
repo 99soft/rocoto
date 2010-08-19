@@ -18,7 +18,6 @@ package com.googlecode.rocoto.converters;
 import java.util.TimeZone;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.util.TimeZone}.
@@ -26,21 +25,13 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class TimeZoneConverter implements TypeConverter {
+public final class TimeZoneConverter extends AbstractConverter<TimeZone> {
 
     /**
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
         return TimeZone.getTimeZone(value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.util.TimeZone>";
     }
 
 }

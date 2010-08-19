@@ -18,7 +18,6 @@ package com.googlecode.rocoto.converters;
 import java.util.regex.Pattern;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.util.regex.Pattern}.
@@ -26,21 +25,13 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class PatternConverter implements TypeConverter {
+public final class PatternConverter extends AbstractConverter<Pattern> {
 
     /**
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
         return Pattern.compile(value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.util.regex.Pattern>";
     }
 
 }

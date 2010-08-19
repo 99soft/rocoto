@@ -15,23 +15,22 @@
  */
 package com.googlecode.rocoto.converters;
 
-import java.util.Currency;
+import java.math.BigInteger;
 
 import com.google.inject.TypeLiteral;
 
 /**
- * Converter implementation for {@code java.util.Currency}.
+ * Converter implementation for {@code java.math.BigDecimal}.
  *
- * @author Simone Tripodi
  * @version $Id$
  */
-public final class CurrencyConverter extends AbstractConverter<Currency> {
+public final class BigIntegerConverter extends AbstractConverter<BigInteger> {
 
     /**
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
-        return Currency.getInstance(value);
+        return new BigInteger(value);
     }
 
 }

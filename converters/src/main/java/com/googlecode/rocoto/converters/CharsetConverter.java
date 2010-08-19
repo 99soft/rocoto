@@ -18,7 +18,6 @@ package com.googlecode.rocoto.converters;
 import java.nio.charset.Charset;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.nio.charset.Charset}.
@@ -26,7 +25,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class CharsetConverter implements TypeConverter {
+public final class CharsetConverter extends AbstractConverter<Charset> {
 
     /**
      * {@inheritDoc}
@@ -36,14 +35,6 @@ public final class CharsetConverter implements TypeConverter {
             throw new IllegalArgumentException("Impossible to convert an empty value to a Charset");
         }
         return Charset.forName(value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.nio.charset.Charset>";
     }
 
 }

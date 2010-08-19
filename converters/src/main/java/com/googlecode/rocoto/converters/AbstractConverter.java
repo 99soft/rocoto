@@ -15,23 +15,25 @@
  */
 package com.googlecode.rocoto.converters;
 
-import java.util.Currency;
-
+import com.google.inject.Binder;
+import com.google.inject.Module;
 import com.google.inject.TypeLiteral;
+import com.google.inject.matcher.Matchers;
+import com.google.inject.spi.TypeConverter;
 
 /**
- * Converter implementation for {@code java.util.Currency}.
+ * 
  *
- * @author Simone Tripodi
  * @version $Id$
+ * @param <T>
  */
-public final class CurrencyConverter extends AbstractConverter<Currency> {
+abstract class AbstractConverter<T> extends TypeLiteral<T> implements Module, TypeConverter {
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return Currency.getInstance(value);
+    public final void configure(Binder binder) {
+        binder.convertToTypes(Matchers.only(TypeLiteral.get(this.getRawType())), this);
     }
 
 }

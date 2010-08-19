@@ -15,23 +15,27 @@
  */
 package com.googlecode.rocoto.converters;
 
-import java.util.Currency;
+import java.sql.Date;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
- * Converter implementation for {@code java.util.Currency}.
+ * Converter implementation for {@code java.sql.Date}.
  *
- * @author Simone Tripodi
  * @version $Id$
  */
-public final class CurrencyConverter extends AbstractConverter<Currency> {
+public final class SQLDateConverter extends AbstractConverter<Date> {
 
     /**
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
-        return Currency.getInstance(value);
+        try {
+            return Date.valueOf(value);
+        } catch (Throwable t) {
+            throw new ProvisionException("String must be in JDBC format [yyyy-MM-dd] to create a java.sql.Date");
+        }
     }
 
 }

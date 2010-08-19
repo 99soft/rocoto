@@ -18,7 +18,6 @@ package com.googlecode.rocoto.converters;
 import java.util.UUID;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.util.UUID}.
@@ -26,7 +25,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class UUIDConverter implements TypeConverter {
+public final class UUIDConverter extends AbstractConverter<UUID> {
 
     /**
      * {@inheritDoc}
@@ -39,14 +38,6 @@ public final class UUIDConverter implements TypeConverter {
                     + value
                     + "' is not a valid UUID", t);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.util.UUID>";
     }
 
 }

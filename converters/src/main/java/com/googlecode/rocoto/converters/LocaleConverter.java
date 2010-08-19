@@ -18,7 +18,6 @@ package com.googlecode.rocoto.converters;
 import java.util.Locale;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.util.Locale}.
@@ -26,7 +25,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class LocaleConverter implements TypeConverter {
+public final class LocaleConverter extends AbstractConverter<Locale> {
 
     /**
      * {@inheritDoc}
@@ -39,14 +38,6 @@ public final class LocaleConverter implements TypeConverter {
             return new Locale(language, country);
         }
         return new Locale(value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.util.Locale>";
     }
 
 }

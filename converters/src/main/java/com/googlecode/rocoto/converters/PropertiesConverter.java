@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.util.Properties}.
@@ -28,7 +27,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class PropertiesConverter implements TypeConverter {
+public final class PropertiesConverter extends AbstractConverter<Properties> {
 
     /**
      * Default properties encoding {@code ISO-8859-1}.
@@ -42,25 +41,27 @@ public final class PropertiesConverter implements TypeConverter {
      */
     public Object convert(String value, TypeLiteral<?> toType) {
         Properties properties = new Properties();
+        ByteArrayInputStream bais = null;
 
         try {
-            properties.load(new ByteArrayInputStream(value.getBytes(PROPERTIES_ENCODING)));
+            bais = new ByteArrayInputStream(value.getBytes(PROPERTIES_ENCODING));
+            properties.load(bais);
         } catch (IOException e) {
             // Should never happen.
             throw new IllegalArgumentException("Failed to parse "
                     + value
                     + "' into Properties", e);
+        } finally {
+            if (bais != null) {
+                try {
+                    bais.close();
+                } catch (IOException e) {
+                    // close quietly
+                }
+            }
         }
 
         return properties;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.util.Properties>";
     }
 
 }

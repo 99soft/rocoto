@@ -32,7 +32,6 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
-import com.googlecode.rocoto.converters.ConvertersModule;
 
 /**
  * 
@@ -87,7 +86,13 @@ public final class ConverterTestCase {
 
     @BeforeClass
     protected final void init() {
-        Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractModule() {
+        Injector injector = Guice.createInjector(new BitSetConverter(),
+                new CharsetConverter(),
+                new FileConverter(),
+                new LocaleConverter(),
+                new PropertiesConverter(),
+                new URLConverter(),
+                new AbstractModule() {
             @Override
             protected void configure() {
                 this.bindConstant()

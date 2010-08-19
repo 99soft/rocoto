@@ -19,7 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.net.URL}.
@@ -27,7 +26,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class URLConverter implements TypeConverter {
+public final class URLConverter extends AbstractConverter<URL> {
 
     /**
      * Pseudo URL prefix for loading from the class path: "classpath://"
@@ -71,14 +70,6 @@ public final class URLConverter implements TypeConverter {
                     + value
                     + "' is not a valid URL", e);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.net.URL>";
     }
 
 }

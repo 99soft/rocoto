@@ -19,7 +19,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.net.URI}.
@@ -27,7 +26,7 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class URIConverter implements TypeConverter {
+public final class URIConverter extends AbstractConverter<URI> {
 
     /**
      * {@inheritDoc}
@@ -40,14 +39,6 @@ public final class URIConverter implements TypeConverter {
                     + value
                     + "' is not a valid URI", e);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.net.URI>";
     }
 
 }

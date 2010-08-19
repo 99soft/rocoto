@@ -18,7 +18,6 @@ package com.googlecode.rocoto.converters;
 import java.io.File;
 
 import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
 
 /**
  * Converter implementation for {@code java.io.File}.
@@ -26,21 +25,13 @@ import com.google.inject.spi.TypeConverter;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class FileConverter implements TypeConverter {
+public final class FileConverter extends AbstractConverter<File> {
 
     /**
      * {@inheritDoc}
      */
     public Object convert(String value, TypeLiteral<?> toType) {
         return new File(value);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "TypeConverter<java.io.File>";
     }
 
 }
