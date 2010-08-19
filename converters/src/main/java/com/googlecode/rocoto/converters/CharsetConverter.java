@@ -17,6 +17,7 @@ package com.googlecode.rocoto.converters;
 
 import java.nio.charset.Charset;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -32,7 +33,7 @@ public final class CharsetConverter extends AbstractConverter<Charset> {
      */
     public Object convert(String value, TypeLiteral<?> toType) {
         if (value.length() == 0) {
-            throw new IllegalArgumentException("Impossible to convert an empty value to a Charset");
+            throw new ProvisionException("Impossible to convert an empty value to a Charset");
         }
         return Charset.forName(value);
     }

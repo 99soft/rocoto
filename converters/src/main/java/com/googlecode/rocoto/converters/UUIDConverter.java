@@ -17,6 +17,7 @@ package com.googlecode.rocoto.converters;
 
 import java.util.UUID;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -34,7 +35,7 @@ public final class UUIDConverter extends AbstractConverter<UUID> {
         try {
             return UUID.fromString(value);
         } catch (Throwable t) {
-            throw new RuntimeException("String value '"
+            throw new ProvisionException("String value '"
                     + value
                     + "' is not a valid UUID", t);
         }

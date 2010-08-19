@@ -19,6 +19,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -48,7 +49,7 @@ public final class PropertiesConverter extends AbstractConverter<Properties> {
             properties.load(bais);
         } catch (IOException e) {
             // Should never happen.
-            throw new IllegalArgumentException("Failed to parse "
+            throw new ProvisionException("Failed to parse "
                     + value
                     + "' into Properties", e);
         } finally {

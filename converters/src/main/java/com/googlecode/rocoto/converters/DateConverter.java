@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -128,7 +129,7 @@ public final class DateConverter extends AbstractConverter<Date> {
                     + ((SimpleDateFormat) format).toPattern()
                     + "'";
             }
-            throw new IllegalArgumentException(msg);
+            throw new ProvisionException(msg);
         }
 
         return parsedDate;

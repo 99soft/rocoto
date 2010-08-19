@@ -18,6 +18,7 @@ package com.googlecode.rocoto.converters;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -35,7 +36,7 @@ public final class URIConverter extends AbstractConverter<URI> {
         try {
             return new URI(value);
         } catch (URISyntaxException e) {
-            throw new RuntimeException("String value '"
+            throw new ProvisionException("String value '"
                     + value
                     + "' is not a valid URI", e);
         }

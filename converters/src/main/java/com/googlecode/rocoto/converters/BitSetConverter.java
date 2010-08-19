@@ -18,6 +18,7 @@ package com.googlecode.rocoto.converters;
 import java.util.BitSet;
 import java.util.StringTokenizer;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -44,7 +45,7 @@ public final class BitSetConverter extends AbstractConverter<BitSet> {
             String current = tokenizer.nextToken().trim();
 
             if (current.length() == 0) {
-                throw new RuntimeException("Input '"
+                throw new ProvisionException("Input '"
                         + value
                         + "' is not a valid java.util.BitSet, fragment at position "
                         + currentIndex
@@ -56,7 +57,7 @@ public final class BitSetConverter extends AbstractConverter<BitSet> {
             } else {
                 for (int i = 0; i < current.length(); i++) {
                     if (!Character.isDigit(current.charAt(i))) {
-                        throw new RuntimeException("Input '"
+                        throw new ProvisionException("Input '"
                                 + value
                                 + "' is not a valid java.util.BitSet, fragment '"
                                 + current

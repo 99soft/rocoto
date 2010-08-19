@@ -18,6 +18,7 @@ package com.googlecode.rocoto.converters;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
@@ -55,7 +56,7 @@ public final class URLConverter extends AbstractConverter<URL> {
             }
             URL url = classLoader.getResource(path);
             if (url == null) {
-                throw new RuntimeException("class path resource '"
+                throw new ProvisionException("class path resource '"
                         + path
                         + "' cannot be resolved to URL because it does not exist");
             }
@@ -66,7 +67,7 @@ public final class URLConverter extends AbstractConverter<URL> {
         try {
             return new URL(value);
         } catch (MalformedURLException e) {
-            throw new RuntimeException("String value '"
+            throw new ProvisionException("String value '"
                     + value
                     + "' is not a valid URL", e);
         }
