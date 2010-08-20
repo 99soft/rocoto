@@ -36,13 +36,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.googlecode.rocoto</groupId>
-            <artifactId>rocoto-core</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
          </dependency>
