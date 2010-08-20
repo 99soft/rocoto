@@ -261,7 +261,19 @@ ldap.port=${commons.port}
 
 * Chaining methods
 
-  
+  In order to make simpler the <<<SimpleConfigurationModule>>> creation,
+  since version 3.1 users can chain <<<SimpleConfigurationModule>>> methods:
+
+----------------------------------------
+Injector injector = Guice.createInjector(new SimpleConfigurationModule()
+    .addProperties("/com/acme/ldap.properties")
+    .addProperties(new File("etc/com/acme/jdbc.properties"))
+    .addXMLProperties(new URL("http://acme.com/config/ldap.xml"))
+    .addSystemProperties()
+    .addEnvironmentVariables(),
+    ...
+);
+----------------------------------------
 
 * More flexible than the Spring Framework!
 
