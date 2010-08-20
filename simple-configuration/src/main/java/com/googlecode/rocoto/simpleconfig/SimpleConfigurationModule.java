@@ -72,12 +72,18 @@ public final class SimpleConfigurationModule extends AbstractModule {
     private final AbstractPropertiesFileFilter defaultFileFilter = new DefaultPropertiesFileFilter();
 
     /**
-     * 
+     * The list of properties have to be read.
      */
     private final List<PropertiesReader> readers = new ArrayList<PropertiesReader>();
 
+    /**
+     * Flag to include Environment Variables, false by default.
+     */
     private boolean addEnvironmentVariables = false;
 
+    /**
+     * Flag to include System Properties, false by default.
+     */
     private boolean addSystemProperties = false;
 
     /**
@@ -223,7 +229,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
     }
 
     /**
-     * Adds Java System properties to the Guice Binder.
+     * Adds Java System properties, prefixed with {@code sys.}, to the Guice Binder.
      */
     public SimpleConfigurationModule addSystemProperties() {
         this.addSystemProperties = true;
