@@ -31,7 +31,7 @@
     <groupId>com.googlecode.rocoto</groupId>
     <artifactId>rocoto-system</artifactId>
     <packaging>jar</packaging>
-    <name>System Properties</name>
+    <name>Rocoto :: System Properties</name>
     <description>System Properties support for Google Guice</description>
 
     <dependencies>

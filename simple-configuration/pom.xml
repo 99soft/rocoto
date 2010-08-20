@@ -31,7 +31,7 @@
     <groupId>com.googlecode.rocoto</groupId>
     <artifactId>rocoto-simple-configuration</artifactId>
     <packaging>jar</packaging>
-    <name>Simple Configuration Properties</name>
+    <name>Rocoto :: Simple Configuration Properties</name>
     <description>Simple Configuration Properties support for Google Guice</description>
 
     <dependencies>

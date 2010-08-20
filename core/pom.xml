@@ -31,7 +31,7 @@
     <groupId>com.googlecode.rocoto</groupId>
     <artifactId>rocoto-core</artifactId>
     <packaging>jar</packaging>
-    <name>Core</name>
+    <name>Rocoto :: Core</name>
     <description>Commons components for main modules</description>
 
     <reporting>

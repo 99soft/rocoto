@@ -31,7 +31,7 @@
     <groupId>com.googlecode.rocoto</groupId>
     <artifactId>rocoto-converters</artifactId>
     <packaging>jar</packaging>
-    <name>Google Guice Converter Utils</name>
+    <name>Rocoto :: Google Guice Converter Utils</name>
     <description>Converter Utils support for Google Guice</description>
 
     <dependencies>
