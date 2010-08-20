@@ -28,10 +28,13 @@
     <body>
         <release version="3.1" date="TBD" description="Update release">
             <action dev="simone.tripodi" type="update">
-                Added com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule.Builder API.
+                Added com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule builder API.
             </action>
             <action dev="simone.tripodi" type="update">
-                Added com.googlecode.rocoto.configuration.ConfigurationModule.Builder API.
+                Added com.googlecode.rocoto.configuration.ConfigurationModule builder API.
+            </action>
+            <action dev="simone.tripodi" type="update">
+                Modularized converter package, each converter can be used as independant module.
             </action>
         </release>
 
