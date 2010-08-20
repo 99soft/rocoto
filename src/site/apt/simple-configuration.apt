@@ -183,7 +183,7 @@ module.addXMLProperties(new URL("http://acme.com/config/ldap.xml"));
 
 * Adding Java System Properties
 
-  In many cases users need to acces to Java System Properties by invoking
+  In many cases users need to access to Java System Properties by invoking
   <<<System.getProperty("java.version")>>> or <<<System.getProperties()>>>.
 
   By enabling them to the configuration module, users can replace the Java System
@@ -192,6 +192,14 @@ module.addXMLProperties(new URL("http://acme.com/config/ldap.xml"));
 ----------------------------------------
 ...
 module.addSystemProperties();
+----------------------------------------
+
+  By default Java System Properties will be referenced into the configuration
+  with the <<<sys.>>> prefix, so in the <<<*.properties>>> files they can be
+  referenced as:
+
+----------------------------------------
+user.os=${sys.os.name} ${sys.os.version} (${os.arch})
 ----------------------------------------
 
 * Adding Environment Variables
@@ -206,30 +214,11 @@ module.addEnvironmentVariables();
 ----------------------------------------
 
   By default Environment Variables will be referenced into the configuration
-  with the <<<env.>>> prefix, but users are free to specify their preferred one:
+  with the <<<env.>>> prefix, so in the <<<*.properties>>> files they can be
+  referenced as:
 
 ----------------------------------------
-...
-module.addEnvironmentVariables("environment");
-----------------------------------------
-
-* Adding existing configurations
-
-  The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> allows users to
-  plug already existing properties configuration:
-
-----------------------------------------
-Properties p = [...]
-...
-module.addProperties(p);
-----------------------------------------
-
-  or
-
-----------------------------------------
-Map<String, String> m = [...]
-...
-module.addProperties(m);
+user.home=${env.HOME}
 ----------------------------------------
 
 * $\{\}, the <Apache Ant> variables style
@@ -245,7 +234,7 @@ commons.port=8080
 ...
 ----------------------------------------
 
-  then referencing them in different files, loaded in the same configuration:
+  then referencing them in different files:
 
 ----------------------------------------
 ldap.host=${commons.host}
@@ -253,7 +242,7 @@ ldap.port=${commons.port}
 ...
 ----------------------------------------
 
-  and
+  it works also in the XML format:
 
 ----------------------------------------
 <?xml version="1.0" encoding="UTF-8"?>
@@ -264,3 +253,25 @@ ldap.port=${commons.port}
     ...
 </properties>
 ----------------------------------------
+
+  <<NOTE>>: users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}
+  but take care that loading properties using this method <$\{\}> expressions won't be resolved at all.
+  On the other side, specified properties in that way will be used to resolve
+  <$\{\}> expressions in properties using the <<<SimpleConfigurationModule>>>.
+
+* Chaining methods
+
+  
+
+* More flexible than the Spring Framework!
+
+  I had a not so good experience with the Spring's {{{http://static.springsource.org/spring/docs/2.0.2/api/org/springframework/beans/factory/config/PropertyPlaceholderConfigurer.html}PropertyPlaceholderConfigurer}}
+  because it forces users to centralize the properties files loading; I mean,
+  to make things working, in the way that <$\{\}> expressions were correctly
+  resolved, I had to declare just one <<<PropertyPlaceholderConfigurer>>> for the whole
+  context, list all the <<<*.properties>>> files for the all modules.
+
+  I didn't like that approach at all, it doesn't allow users to split configurations
+  in different modules even if some keys are shared by two or more modules.
+  With <<<rocoto-simple-configuration>>> users won't have these problems at all,
+  they can load <<<*.properties>>> files from different locations and obtain the same result.
