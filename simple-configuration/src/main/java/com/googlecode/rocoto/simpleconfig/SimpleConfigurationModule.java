@@ -147,7 +147,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
         if (configurationFile == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
         }
-        if (configurationFile == null) {
+        if (filter == null) {
             throw new IllegalArgumentException("'filter' argument can't be null");
         }
 
