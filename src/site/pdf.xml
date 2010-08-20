@@ -43,7 +43,6 @@
     <toc name="Table of Contents">
         <item name="Home" ref="index.html"/>
         <item name="Simple Configuration" ref="simple-configuration.html"/>
-        <item name="Configuration" ref="configuration.html"/>
         <item name="Converters" ref="converters.html"/>
         <item name="System" ref="system.html"/>
     </toc>
