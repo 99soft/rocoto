@@ -73,6 +73,13 @@ final class Formatter implements Provider<String> {
         }
     }
 
+    /**
+     * Return true, if the text contains at least one key in the ${} pattern,
+     * false otherwise.
+     *
+     * @return true, if the text contains at least one key in the ${} pattern,
+     *         false otherwise.
+     */
     public boolean containsKeys() {
         return this.containsKeys;
     }
@@ -81,6 +88,9 @@ final class Formatter implements Provider<String> {
         this.injector = injector;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String get() {
         StringBuilder buffer = new StringBuilder();
         for (Appender appender : this.appenders) {
@@ -89,6 +99,9 @@ final class Formatter implements Provider<String> {
         return buffer.toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return this.appenders.toString();
