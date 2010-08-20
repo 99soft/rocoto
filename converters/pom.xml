@@ -24,7 +24,7 @@
     <parent>
         <groupId>com.googlecode.rocoto</groupId>
         <artifactId>rocoto-parent</artifactId>
-        <version>3.1-SNAPSHOT</version>
+        <version>3.1</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
