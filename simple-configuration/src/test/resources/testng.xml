@@ -22,13 +22,6 @@
 -->
 <suite name="rocoto-simple-configuration">
 
-    <test name="format">
-        <classes>
-            <class name="com.googlecode.rocoto.simpleconfig.FormatterTestCase"/>
-            <class name="com.googlecode.rocoto.simpleconfig.AntStyleProperties"/>
-        </classes>
-    </test>
-
     <test name="configuration">
         <classes>
             <class name="com.googlecode.rocoto.simpleconfig.SimpleConfigurationModuleTestCase"/>

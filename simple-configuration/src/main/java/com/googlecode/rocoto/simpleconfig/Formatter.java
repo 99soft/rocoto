@@ -17,7 +17,10 @@ package com.googlecode.rocoto.simpleconfig;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Provider;
 
 /**
  * 
@@ -25,13 +28,16 @@ import java.util.Map;
  * @author Simone Tripodi
  * @version $Id$
  */
-final class Formatter {
+final class Formatter implements Provider<String> {
 
     private static final String VAR_BEGIN = "$";
 
     private final List<Appender> appenders = new ArrayList<Appender>();
 
     private boolean containsKeys = false;
+
+    @Inject
+    private Injector injector;
 
     public Formatter(final String pattern) {
         int prev = 0;
@@ -71,10 +77,14 @@ final class Formatter {
         return this.containsKeys;
     }
 
-    public String format(Map<String, String> configuration) {
+    public void setInjector(Injector injector) {
+        this.injector = injector;
+    }
+
+    public String get() {
         StringBuilder buffer = new StringBuilder();
         for (Appender appender : this.appenders) {
-            appender.append(buffer, configuration);
+            appender.append(buffer, this.injector);
         }
         return buffer.toString();
     }

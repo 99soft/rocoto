@@ -15,7 +15,7 @@
  */
 package com.googlecode.rocoto.simpleconfig;
 
-import java.util.Map;
+import com.google.inject.Injector;
 
 /**
  * 
@@ -25,6 +25,6 @@ import java.util.Map;
  */
 interface Appender {
 
-    void append(StringBuilder buffer, Map<String, String> configuration);
+    void append(StringBuilder buffer, Injector injector);
 
 }

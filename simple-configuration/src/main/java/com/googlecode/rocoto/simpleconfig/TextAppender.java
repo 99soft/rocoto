@@ -15,7 +15,7 @@
  */
 package com.googlecode.rocoto.simpleconfig;
 
-import java.util.Map;
+import com.google.inject.Injector;
 
 /**
  * 
@@ -31,7 +31,7 @@ final class TextAppender implements Appender {
         this.textFragment = textFragment;
     }
 
-    public void append(StringBuilder buffer, Map<String, String> configuration) {
+    public void append(StringBuilder buffer, Injector injector) {
         buffer.append(this.textFragment);
     }
 

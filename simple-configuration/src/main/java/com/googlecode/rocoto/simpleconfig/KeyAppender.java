@@ -15,7 +15,9 @@
  */
 package com.googlecode.rocoto.simpleconfig;
 
-import java.util.Map;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.name.Names;
 
 /**
  * 
@@ -34,11 +36,10 @@ final class KeyAppender implements Appender {
         this.toString = "${" + this.key + "}";
     }
 
-    public void append(StringBuilder buffer, Map<String, String> configuration) {
-        String value = configuration.get(this.key);
-        if (value != null) {
-            buffer.append(value);
-        } else {
+    public void append(StringBuilder buffer, Injector injector) {
+        try {
+            buffer.append(injector.getInstance(Key.get(String.class, Names.named(this.key))));
+        } catch (Throwable e) {
             buffer.append(this.toString);
         }
     }

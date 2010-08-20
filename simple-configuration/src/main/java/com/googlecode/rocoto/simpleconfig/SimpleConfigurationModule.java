@@ -20,13 +20,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Binder;
+import com.google.inject.Key;
+import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.name.Names;
 
 /**
@@ -39,19 +42,24 @@ import com.google.inject.name.Names;
 public final class SimpleConfigurationModule extends AbstractModule {
 
     /**
-     * The default environment variable prefix, {@code env.}
+     * The empty variable prefix
      */
-    private static final String DEFAULT_ENV_PREFIX = "env.";
+    private static final String EMPY_PREFIX = "";
+
+    /**
+     * The environment variable prefix, {@code env.}
+     */
+    private static final String ENV_PREFIX = "env.";
+
+    /**
+     * The {@link System} property prefix, {@code env.}
+     */
+    private static final String SYSTEM_PREFIX = "sys.";
 
     /**
      * This class logger.
      */
     private final Log log = LogFactory.getLog(this.getClass());
-
-    /**
-     * The stored load configurations.
-     */
-    private final AntStyleProperties configuration = new AntStyleProperties();
 
     /**
      * This class loader.
@@ -67,6 +75,10 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * 
      */
     private final List<PropertiesReader> readers = new ArrayList<PropertiesReader>();
+
+    private boolean addEnvironmentVariables = false;
+
+    private boolean addSystemProperties = false;
 
     /**
      * Adds {@link Properties} to the Guice Binder by loading a classpath
@@ -214,7 +226,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * Adds Java System properties to the Guice Binder.
      */
     public SimpleConfigurationModule addSystemProperties() {
-        this.addProperties(System.getProperties());
+        this.addSystemProperties = true;
         return this;
     }
 
@@ -222,54 +234,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
      */
     public SimpleConfigurationModule addEnvironmentVariables() {
-        return this.addEnvironmentVariables(DEFAULT_ENV_PREFIX);
-    }
-
-    /**
-     * Adds environment variables, prefixed with user specified prefix, to the
-     * Guice Binder.
-     *
-     * @param prefix the user specified prefix.
-     */
-    public SimpleConfigurationModule addEnvironmentVariables(String prefix) {
-        if (prefix == null || prefix.length() == 0) {
-            throw new IllegalArgumentException("empty prefix not allowed");
-        }
-
-        if (prefix.charAt(prefix.length() - 1) != '.') {
-            prefix += '.';
-        }
-
-        for (Entry<String, String> envVar : System.getenv().entrySet()) {
-            this.configuration.put(prefix + envVar.getKey(), envVar.getValue());
-        }
-
-        return this;
-    }
-
-    /**
-     * Adds already loaded {@link Properties} to the current configuration.
-     *
-     * @param properties the existing {@link Properties}.
-     */
-    public SimpleConfigurationModule addProperties(Properties properties) {
-        if (properties == null) {
-            throw new IllegalArgumentException("'properties' argument can't be null");
-        }
-        this.configuration.putAll(properties);
-        return this;
-    }
-
-    /**
-     * Adds an existing configuration to the current configuration.
-     *
-     * @param configuration the existing configuration.
-     */
-    public SimpleConfigurationModule addProperties(Map<String, String> configuration) {
-        if (configuration == null) {
-            throw new IllegalArgumentException("'configuration' argument can't be null");
-        }
-        this.configuration.putAll(configuration);
+        this.addEnvironmentVariables = true;
         return this;
     }
 
@@ -280,12 +245,32 @@ public final class SimpleConfigurationModule extends AbstractModule {
     protected void configure() {
         for (PropertiesReader reader : this.readers) {
             try {
-                this.addProperties(reader.read());
+                bindProperties(EMPY_PREFIX, reader.read(), this.binder());
             } catch (Exception e) {
                 this.addError(e);
             }
         }
-        Names.bindProperties(this.binder(), this.configuration);
+        if (this.addEnvironmentVariables) {
+            bindProperties(ENV_PREFIX, System.getenv(), this.binder());
+        }
+        if (this.addSystemProperties) {
+            bindProperties(SYSTEM_PREFIX, System.getProperties(), this.binder());
+        }
+    }
+
+    private static void bindProperties(String keyPrefix, Map<? extends Object, ? extends Object> properties, Binder binder) {
+        for (Entry<? extends Object, ? extends Object> property : properties.entrySet()) {
+            String key = keyPrefix + String.valueOf(property.getKey());
+            LinkedBindingBuilder<String> bindingBuilder = binder.bind(Key.get(String.class, Names.named(key)));
+
+            String value = String.valueOf(property.getValue());
+            Formatter formatter = new Formatter(value);
+            if (formatter.containsKeys()) {
+                bindingBuilder.toProvider(formatter);
+            } else {
+                bindingBuilder.toInstance(value);
+            }
+        }
     }
 
 }
