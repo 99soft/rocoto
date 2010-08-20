@@ -47,52 +47,9 @@ The Converters module
 
 * The ConvertersModule
 
-  Thecore class is the <<<com.googlecode.rocoto.converters.ConvertersModule>>>
-  that's a Guice Module that simplifyes the <<<com.google.inject.spi.TypeConverter>>>
-  registration.
-
-  Users can write their <<<com.google.inject.spi.TypeConverter>>> implementation:
-
-----------------------------------------
-import com.google.inject.TypeLiteral;
-import com.google.inject.spi.TypeConverter;
-
-public class MyConverter implements TypeConverter {
-
-    public Object convert(String value, TypeLiteral<?> toType) {
-       // perform here the conversion
-    }
-
-}
-----------------------------------------
-
-  and registry it into the module by specifying the binding type:
-
-----------------------------------------
-import com.googlecode.rocoto.converters.ConvertersModule;
-...
-ConvertersModule convertersModule = new ConvertersModule();
-convertersModule.registerConverter(MyType.class, new MyConverter());
-----------------------------------------
-
-  or bind it to a <<<com.google.inject.TypeLiteral>>>:
-
-----------------------------------------
-convertersModule.registerConverter(new TypeLiteral<List<MyType>>(){}, new MyConverter());
-----------------------------------------
-
-  or bind it to a <<<com.google.inject.matcher.Matcher>>>:
-
-----------------------------------------
-import com.google.inject.TypeLiteral;
-import com.google.inject.matcher.Matcher;
-
-Matcher<? super TypeLiteral<?> myMatcher = new MyMatcher();
-convertersModule.registerConverter(myMatcher, new MyConverter());
-----------------------------------------
-
-  finally, users have just to include the converters module when creating the
-  <<<com.google.inject.Injector>>>:
+  Starting from the version 3.1, each converter contained in the <<<com.googlecode.rocoto.converters>>>
+  package is implemented as a self-binding module easy to install in the Injector
+  as shown below:
 
 ----------------------------------------
 import com.google.inject.AbstractModule;
@@ -101,7 +58,9 @@ import com.google.inject.Injector;
 
 ...
 
-Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractModule() {
+Injector injector = Guice.createInjector(new XXXConverter(),
+        new YYYConverter(),
+        new AbstractModule() {
             @Override
             protected void configure() {
                 this.bindConstant()
@@ -114,8 +73,7 @@ Injector injector = Guice.createInjector(new ConvertersModule(), new AbstractMod
 * The Converters
 
   The <<<com.googlecode.rocoto.converters>>> package comes with
-  default implementations of converers not already included in Google Guice,
-  installed in the <<<com.googlecode.rocoto.converters.ConvertersModule>>>.
+  default implementations of converers not already included in Google Guice.
 
   Every converter throws runtime exceptions if invalid input are submitted to the
   conversion process.
@@ -188,6 +146,16 @@ dateConverter.setLocale(Locale.getDefault());
 dateConverter.setTimeZone(TimeZone.getDefault());
 ----------------------------------------
 
+** BigDecimalConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.math.BigDecimal>>>.
+
+** BigIntegerConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.math.BigInteger>>>.
+
 ** FileConverter
 
   Is the converter that converts a <<<java.lang.String>>> representation to a
@@ -200,13 +168,7 @@ dateConverter.setTimeZone(TimeZone.getDefault());
 
   The converter checks first if the input String matches with the pattern
   <languageCode_counrtyCode> to create the <<<java.util.Locale>>> otherwise
-  will use the input value as locale language.
-
-** NumberConverter
-
-  Is the converter that converts a <<<java.lang.String>>> representation to a
-  math number representation, such <<<java.math.BigDecimal>>> and
-  <<<java.math.BigInteger>>>.
+  will use the input value as Locale language.
 
 ** PatternConverter
 
@@ -218,17 +180,24 @@ dateConverter.setTimeZone(TimeZone.getDefault());
   Is the converter that converts a <<<java.lang.String>>> representation to a
   <<<java.util.Properties>>>
 
-  <<Note>> Input string has to match with the pattern <key1=value1\nkey2=value2...>.
+  <<Note>> Input string has to match with the pattern <key1=value1\nkey2=value2...>
+  encoded using the <<<ISO-8859-1>>> charset, according to <<<java.util.Properties>>>
+  recommendation.
 
-** SQLDateTimeConverter
+** SQLDateConverter
 
-  Is the converter that converts a <<<java.lang.String>>> representation to:
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.sql.Date>>>, input has to match with <<<yyyy-MM-dd>>> pattern.
 
-  * <<<java.sql.Date>>> (input has to match with <<<yyyy-MM-dd>>> pattern);
+** SQLTimeConverter.java
 
-  * <<<java.sql.Time>>> (input has to match with <<<HH:mm:ss>>> pattern);
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.sql.Time>>>, input has to match with <<<HH:mm:ss>>> pattern.
 
-  * <<<java.sql.Timestamp>>> (input has to match with <<<yyyy-MM-dd HH:mm:ss.fffffffff>>> pattern).
+** SQLTimestampConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.sql.Timestamp>>>, input has to match with <<<yyyy-MM-dd HH:mm:ss.fffffffff>>> pattern.
 
 ** TimeZoneConverter
 
