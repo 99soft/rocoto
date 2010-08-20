@@ -19,7 +19,9 @@
     author: Simone Tripodi (simone.tripodi)
     version: $Id$
 -->
-<document>
+<document xmlns="http://maven.apache.org/changes/1.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
     <properties>
         <author email="simone dot tripodi at gmail dot com">Simone Tripodi</author>
         <title>Changes</title>
@@ -35,6 +37,9 @@
             </action>
             <action dev="simone.tripodi" type="update">
                 Modularized converter package, each converter can be used as independant module.
+            </action>
+            <action dev="simone.tripodi" type="remove">
+                Removed the Apache Commons Configuration support.
             </action>
         </release>
 
