@@ -32,7 +32,7 @@ import com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule;
  */
 public final class SimpleConfigurationModuleTestCase {
 
-    private final SimpleConfigurationModule module = new SimpleConfigurationModule();
+    private final SimpleConfigurationModule module = new SimpleConfigurationModule().addEnvironmentVariables().addSystemProperties();
 
     @Inject
     private IBatisConfiguration iBatisConfiguration;
@@ -126,7 +126,7 @@ public final class SimpleConfigurationModuleTestCase {
     public void verifyLdapConfiguration() {
         assert "ldap.${not.found}".equals(this.ldapConfiguration.getHost());
         assert 389 == this.ldapConfiguration.getPort();
-        assert this.ldapConfiguration.getBaseDN() != null;
+        assert this.ldapConfiguration.getBaseDN().indexOf('$') < 0;
     }
 
     @Test(dependsOnMethods = "doInject")
