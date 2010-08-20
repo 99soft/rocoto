@@ -49,7 +49,7 @@ final class PropertiesReader extends AbstractURLReader<Properties> {
     @Override
     protected Properties process(InputStream input) throws Exception {
         Properties properties = new Properties();
-        if (isXML) {
+        if (this.isXML) {
             properties.loadFromXML(input);
         } else {
             properties.load(input);
