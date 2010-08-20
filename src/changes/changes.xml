@@ -41,6 +41,9 @@
             <action dev="simone.tripodi" type="remove">
                 Removed the Apache Commons Configuration support.
             </action>
+            <action dev="simone.tripodi" type="remove">
+                Removed the useless rocoto-core module.
+            </action>
         </release>
 
         <release version="3.0" date="2009-06-09" description="Major release">
