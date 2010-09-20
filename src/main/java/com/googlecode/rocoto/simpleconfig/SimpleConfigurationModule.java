@@ -135,7 +135,7 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @param isXML
      */
     private SimpleConfigurationModule addProperties(String classpathResource, ClassLoader classLoader, boolean isXML) {
-        this.readers.add(new PropertiesReader(classpathResource, classLoader, isXML));
+        this.readers.add(new DefaultPropertiesReader(classpathResource, classLoader, isXML));
         return this;
     }
 
@@ -196,7 +196,7 @@ public class SimpleConfigurationModule extends AbstractModule {
             return this;
         }
 
-        this.readers.add(new PropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
+        this.readers.add(new DefaultPropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
         return this;
     }
 
@@ -224,7 +224,7 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @param isXML
      */
     private final SimpleConfigurationModule addProperties(URL configurationUrl, boolean isXML) {
-        this.readers.add(new PropertiesReader(configurationUrl, isXML));
+        this.readers.add(new DefaultPropertiesReader(configurationUrl, isXML));
         return this;
     }
 
