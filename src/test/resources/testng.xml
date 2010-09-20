@@ -20,11 +20,21 @@
     author: Simone Tripodi (simone.tripodi)
     version: $Id$
 -->
-<suite name="rocoto-simple-configuration">
+<suite name="rocoto">
 
-    <test name="configuration">
+    <test name="simple-configuration">
         <classes>
             <class name="com.googlecode.rocoto.simpleconfig.SimpleConfigurationModuleTestCase"/>
+        </classes>
+    </test>
+
+    <test name="converters">
+        <classes>
+            <class name="com.googlecode.rocoto.converters.BitSetConverterTestCase" />
+            <class name="com.googlecode.rocoto.converters.CharsetConverterTestCase" />
+            <class name="com.googlecode.rocoto.converters.FileConverterTestCase" />
+            <class name="com.googlecode.rocoto.converters.LocaleConverterTestCase" />
+            <class name="com.googlecode.rocoto.converters.PropertiesConverterTestCase" />
         </classes>
     </test>
 

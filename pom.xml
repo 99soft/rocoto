@@ -23,8 +23,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.googlecode.rocoto</groupId>
-    <artifactId>rocoto-parent</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>rocoto</artifactId>
+    <packaging>jar</packaging>
     <version>3.2-SNAPSHOT</version>
     <name>Rocoto :: Parent</name>
     <description>Add some spice to Google Guice through configuration files!</description>
@@ -99,58 +99,54 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.google.inject</groupId>
-                <artifactId>guice</artifactId>
-                <version>2.0</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>1.1.1</version>
-                <scope>compile</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.15</version>
-                <scope>test</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.sun.jdmk</groupId>
-                        <artifactId>jmxtools</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>com.sun.jmx</groupId>
-                        <artifactId>jmxri</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>javax.jms</groupId>
-                        <artifactId>jms</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>javax.mail</groupId>
-                        <artifactId>mail</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>oro</groupId>
-                        <artifactId>oro</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>2.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.15</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sun.jdmk</groupId>
+                    <artifactId>jmxtools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.sun.jmx</groupId>
+                    <artifactId>jmxri</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.jms</groupId>
+                    <artifactId>jms</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.mail</groupId>
+                    <artifactId>mail</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>oro</groupId>
+                    <artifactId>oro</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -385,7 +381,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.0</version>
                 <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
                 </configuration>
             </plugin>
 
@@ -419,7 +415,7 @@
             </resource>
 
             <resource>
-                <directory>..</directory>
+                <directory>.</directory>
                 <targetPath>META-INF</targetPath>
                 <includes>
                     <include>LICENSE</include>
@@ -429,11 +425,5 @@
             </resource>
         </resources>
     </build>
-
-    <modules>
-        <module>simple-configuration</module>
-        <module>converters</module>
-        <module>system</module>
-    </modules>
 
 </project>
