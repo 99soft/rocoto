@@ -26,7 +26,7 @@
     <artifactId>rocoto</artifactId>
     <packaging>jar</packaging>
     <version>3.2-SNAPSHOT</version>
-    <name>Rocoto :: Parent</name>
+    <name>Rocoto</name>
     <description>Add some spice to Google Guice through configuration files!</description>
     <url>http://www.99soft.org/projects/rocoto/${project.version}</url>
 
