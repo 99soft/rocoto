@@ -135,8 +135,7 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @param isXML
      */
     private SimpleConfigurationModule addProperties(String classpathResource, ClassLoader classLoader, boolean isXML) {
-        this.readers.add(new DefaultPropertiesReader(classpathResource, classLoader, isXML));
-        return this;
+        return this.addPropertiesReader(new DefaultPropertiesReader(classpathResource, classLoader, isXML));
     }
 
     /**
@@ -196,8 +195,7 @@ public class SimpleConfigurationModule extends AbstractModule {
             return this;
         }
 
-        this.readers.add(new DefaultPropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
-        return this;
+        return this.addPropertiesReader(new DefaultPropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
     }
 
     /**
@@ -224,7 +222,16 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @param isXML
      */
     private final SimpleConfigurationModule addProperties(URL configurationUrl, boolean isXML) {
-        this.readers.add(new DefaultPropertiesReader(configurationUrl, isXML));
+        return this.addPropertiesReader(new DefaultPropertiesReader(configurationUrl, isXML));
+    }
+
+    /**
+     * 
+     * @param propertiesReader
+     * @return
+     */
+    public final SimpleConfigurationModule addPropertiesReader(PropertiesReader propertiesReader) {
+        this.readers.add(propertiesReader);
         return this;
     }
 
@@ -248,7 +255,7 @@ public class SimpleConfigurationModule extends AbstractModule {
      * {@inheritDoc}
      */
     @Override
-    protected void configure() {
+    protected final void configure() {
         for (PropertiesReader reader : this.readers) {
             try {
                 bindProperties(EMPY_PREFIX, reader.read(), this.binder());
