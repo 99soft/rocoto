@@ -39,7 +39,7 @@ import com.google.inject.name.Names;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class SimpleConfigurationModule extends AbstractModule {
+public class SimpleConfigurationModule extends AbstractModule {
 
     /**
      * The empty variable prefix
@@ -148,7 +148,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param configurationFile the properties file or the root dir has to be
      *        traversed.
      */
-    public SimpleConfigurationModule addProperties(File configurationFile) {
+    public final SimpleConfigurationModule addProperties(File configurationFile) {
         return this.addProperties(configurationFile, this.defaultFileFilter);
     }
 
@@ -161,7 +161,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *        traversed.
      * @param filter the user specified properties file patterns.
      */
-    public SimpleConfigurationModule addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
+    public final SimpleConfigurationModule addProperties(File configurationFile, AbstractPropertiesFileFilter filter) {
         if (configurationFile == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
         }
@@ -205,7 +205,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param configurationUrl the properties URL.
      */
-    public SimpleConfigurationModule addProperties(URL configurationUrl) {
+    public final SimpleConfigurationModule addProperties(URL configurationUrl) {
         return this.addProperties(configurationUrl, false);
     }
 
@@ -214,7 +214,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      *
      * @param configurationUrl the properties URL.
      */
-    public SimpleConfigurationModule addXMLProperties(URL configurationUrl) {
+    public final SimpleConfigurationModule addXMLProperties(URL configurationUrl) {
         return this.addProperties(configurationUrl, true);
     }
 
@@ -223,7 +223,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
      * @param configurationUrl
      * @param isXML
      */
-    private SimpleConfigurationModule addProperties(URL configurationUrl, boolean isXML) {
+    private final SimpleConfigurationModule addProperties(URL configurationUrl, boolean isXML) {
         this.readers.add(new PropertiesReader(configurationUrl, isXML));
         return this;
     }
@@ -231,7 +231,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
     /**
      * Adds Java System properties, prefixed with {@code sys.}, to the Guice Binder.
      */
-    public SimpleConfigurationModule addSystemProperties() {
+    public final SimpleConfigurationModule addSystemProperties() {
         this.addSystemProperties = true;
         return this;
     }
@@ -239,7 +239,7 @@ public final class SimpleConfigurationModule extends AbstractModule {
     /**
      * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
      */
-    public SimpleConfigurationModule addEnvironmentVariables() {
+    public final SimpleConfigurationModule addEnvironmentVariables() {
         this.addEnvironmentVariables = true;
         return this;
     }
