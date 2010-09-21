@@ -18,8 +18,8 @@ package com.googlecode.rocoto.simpleconfig;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -27,7 +27,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.name.Names;
@@ -40,11 +39,6 @@ import com.google.inject.name.Names;
  * @version $Id$
  */
 public class SimpleConfigurationModule extends AbstractModule {
-
-    /**
-     * The empty variable prefix
-     */
-    private static final String EMPY_PREFIX = "";
 
     /**
      * The environment variable prefix, {@code env.}
@@ -75,16 +69,6 @@ public class SimpleConfigurationModule extends AbstractModule {
      * The list of properties have to be read.
      */
     private final List<PropertiesReader> readers = new ArrayList<PropertiesReader>();
-
-    /**
-     * Flag to include Environment Variables, false by default.
-     */
-    private boolean addEnvironmentVariables = false;
-
-    /**
-     * Flag to include System Properties, false by default.
-     */
-    private boolean addSystemProperties = false;
 
     /**
      * Adds {@link Properties} to the Guice Binder by loading a classpath
@@ -226,28 +210,30 @@ public class SimpleConfigurationModule extends AbstractModule {
     }
 
     /**
-     * 
-     * @param propertiesReader
-     * @return
-     */
-    public final SimpleConfigurationModule addPropertiesReader(PropertiesReader propertiesReader) {
-        this.readers.add(propertiesReader);
-        return this;
-    }
-
-    /**
      * Adds Java System properties, prefixed with {@code sys.}, to the Guice Binder.
      */
     public final SimpleConfigurationModule addSystemProperties() {
-        this.addSystemProperties = true;
-        return this;
+        return this.addPropertiesReader(new PropertiesIterator(SYSTEM_PREFIX, System.getProperties()));
     }
 
     /**
      * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
      */
     public final SimpleConfigurationModule addEnvironmentVariables() {
-        this.addEnvironmentVariables = true;
+        return this.addPropertiesReader(new PropertiesIterator(ENV_PREFIX, System.getenv()));
+    }
+
+    /**
+     * 
+     * @param propertiesReader
+     * @return
+     * @since 3.2
+     */
+    public final SimpleConfigurationModule addPropertiesReader(PropertiesReader propertiesReader) {
+        if (propertiesReader == null) {
+            throw new IllegalArgumentException("Parametr 'propertiesReader' must not be null");
+        }
+        this.readers.add(propertiesReader);
         return this;
     }
 
@@ -258,30 +244,20 @@ public class SimpleConfigurationModule extends AbstractModule {
     protected final void configure() {
         for (PropertiesReader reader : this.readers) {
             try {
-                bindProperties(EMPY_PREFIX, reader.read(), this.binder());
+                Iterator<Entry<String, String>> properties = reader.read();
+                while (properties.hasNext()) {
+                    Entry<String, String> property = properties.next();
+                    LinkedBindingBuilder<String> bindingBuilder = this.bind(Key.get(String.class, Names.named(property.getKey())));
+
+                    Formatter formatter = new Formatter(property.getValue());
+                    if (formatter.containsKeys()) {
+                        bindingBuilder.toProvider(formatter);
+                    } else {
+                        bindingBuilder.toInstance(property.getValue());
+                    }
+                }
             } catch (Exception e) {
                 this.addError(e);
-            }
-        }
-        if (this.addEnvironmentVariables) {
-            bindProperties(ENV_PREFIX, System.getenv(), this.binder());
-        }
-        if (this.addSystemProperties) {
-            bindProperties(SYSTEM_PREFIX, System.getProperties(), this.binder());
-        }
-    }
-
-    private static void bindProperties(String keyPrefix, Map<? extends Object, ? extends Object> properties, Binder binder) {
-        for (Entry<? extends Object, ? extends Object> property : properties.entrySet()) {
-            String key = keyPrefix + String.valueOf(property.getKey());
-            LinkedBindingBuilder<String> bindingBuilder = binder.bind(Key.get(String.class, Names.named(key)));
-
-            String value = String.valueOf(property.getValue());
-            Formatter formatter = new Formatter(value);
-            if (formatter.containsKeys()) {
-                bindingBuilder.toProvider(formatter);
-            } else {
-                bindingBuilder.toInstance(value);
             }
         }
     }

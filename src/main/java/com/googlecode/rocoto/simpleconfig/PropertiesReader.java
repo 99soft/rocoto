@@ -15,7 +15,8 @@
  */
 package com.googlecode.rocoto.simpleconfig;
 
-import java.util.Properties;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * 
@@ -28,6 +29,6 @@ public interface PropertiesReader {
      * 
      * @return
      */
-    Properties read() throws Exception;
+    Iterator<Entry<String, String>> read() throws Exception;
 
 }

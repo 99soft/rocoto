@@ -22,6 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 /**
@@ -101,7 +103,7 @@ final class DefaultPropertiesReader implements PropertiesReader {
     /**
      * {@inheritDoc}
      */
-    public Properties read() throws Exception {
+    public Iterator<Entry<String, String>> read() throws Exception {
         URLConnection connection = null;
         InputStream input = null;
         try {
@@ -114,7 +116,7 @@ final class DefaultPropertiesReader implements PropertiesReader {
             } else {
                 properties.load(input);
             }
-            return properties;
+            return new PropertiesIterator(properties);
         } finally {
             if (connection != null && (connection instanceof HttpURLConnection)) {
                 ((HttpURLConnection) connection).disconnect();
