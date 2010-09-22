@@ -31,7 +31,7 @@ final class PropertiesIterator implements Iterator<Entry<String, String>>, Prope
 
     private final Iterator<?> properties;
 
-    public PropertiesIterator(Map<Object, Object> properties) {
+    public PropertiesIterator(Map<? extends Object, ? extends Object> properties) {
         this(null, properties);
     }
 

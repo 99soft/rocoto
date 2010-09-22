@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
@@ -221,6 +222,32 @@ public class SimpleConfigurationModule extends AbstractModule {
      */
     public final SimpleConfigurationModule addEnvironmentVariables() {
         return this.addPropertiesReader(new PropertiesIterator(ENV_PREFIX, System.getenv()));
+    }
+
+    /**
+     * 
+     * @param properties
+     * @return
+     * @since 3.2
+     */
+    public final SimpleConfigurationModule addProperties(Properties properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+        }
+        return this.addPropertiesReader(new PropertiesIterator(properties));
+    }
+
+    /**
+     * 
+     * @param properties
+     * @return
+     * @since 3.2
+     */
+    public final SimpleConfigurationModule addProperties(Map<String, String> properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+        }
+        return this.addPropertiesReader(new PropertiesIterator(properties));
     }
 
     /**
