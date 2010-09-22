@@ -41,10 +41,9 @@
     </meta>
 
     <toc name="Table of Contents">
-        <item name="Home" ref="index.html"/>
-        <item name="Simple Configuration" ref="simple-configuration.html"/>
-        <item name="Converters" ref="converters.html"/>
-        <item name="System" ref="system.html"/>
+        <item name="Home" ref="index.html" />
+        <item name="Simple Configuration" ref="simple-configuration.html" />
+        <item name="Converters" ref="converters.html" />
     </toc>
 
     <cover>
