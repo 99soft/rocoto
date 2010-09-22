@@ -52,6 +52,7 @@
         <coverSubTitle>v. ${project.version}</coverSubTitle>
         <coverType>User Guide</coverType>
         <projectName>${project.name}</projectName>
+        <coverdate>${date}</coverdate>
         <author>The Rocoto Team</author>
         <authors>
             <author>
@@ -60,7 +61,7 @@
                 <firstName>Simone</firstName>
                 <initials>ST</initials>
                 <country>Italy</country>
-                <companyName>Asemantics Srl</companyName>
+                <companyName>Sourcesense Srl</companyName>
                 <city>Rome</city>
             </author>
         </authors>
