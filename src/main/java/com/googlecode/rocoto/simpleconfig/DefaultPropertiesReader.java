@@ -30,6 +30,7 @@ import java.util.Properties;
  * 
  * @author Simone Tripodi
  * @version $Id$
+ * @since 3.2
  */
 final class DefaultPropertiesReader implements PropertiesReader {
 
