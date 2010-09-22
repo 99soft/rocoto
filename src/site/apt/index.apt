@@ -34,6 +34,22 @@ Welcome to Rocoto!
   and well known since the age of Incas... it adds some spice to Google Guice
   through configuration files!
 
+Before starting
+
+  Rocoto is available on the Maven Central repo, you just need to add the dependency below in your <<<pom.xml>>> file:
+
++--------------------------------------+
+<dependencies>
+    ...
+    <dependency>
+        <groupId>com.googlecode.rocoto</groupId>
+        <artifactId>rocoto</artifactId>
+        <version>XX.XX</version>
+    </dependency>
+    ...
+</dependencies>
++--------------------------------------+
+
 Acknowledgements
 
   This work is dedicated to our city, L'Aquila, destroyed by a terrible

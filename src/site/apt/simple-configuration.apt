@@ -30,25 +30,10 @@ The Simple Configuration module
   less than ~20KB) light yet powerfull <Guice> module to easy load configuration
   properties and bing them to the <Guice Binder>.
 
-  Users that want ot use the <Simple Configuration> module in their projects,
-  users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
+  Users ready to load configuration files, have to create first the module;
+  once configured, is it possible to create your Guice Injector:
 
-----------------------------------------
-<dependencies>
-    ...
-    <dependency>
-        <groupId>com.googlecode.rocoto</groupId>
-        <artifactId>rocoto-simple-configuration</artifactId>
-        <version>XX.XX</version>
-    </dependency>
-    ...
-</dependencies>
-----------------------------------------
-
-  Then users are ready to load configuration files, but first create the module;
-  once configured, is it possible to create your injector:
-
-----------------------------------------
++--------------------------------------+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -63,7 +48,7 @@ SimpleConfigurationModule configurationModule = new SimpleConfigurationModule();
 Injector injector = Guice.createInjector(configurationModule,
     ...
 );
-----------------------------------------
++--------------------------------------+
 
   Finally, users can access to configuration parameters throug the
   <<<@com.google.inject.name.Named>>> annotation.
@@ -77,37 +62,37 @@ Injector injector = Guice.createInjector(configurationModule,
   methods that simplifies that loading operation, by specifying the full
   qualified classpath resource name:
 
-----------------------------------------
++--------------------------------------+
 module.addProperties("com/acme/jdbc.properties");
 module.addProperties("/com/acme/ldap.properties");
-----------------------------------------
++--------------------------------------+
 
   If needed, users can also specify the <<<ClassLoader>>> needed to load the
   pointed resource(s):
 
-----------------------------------------
++--------------------------------------+
 ClassLoader myClassLoader = [...];
 ...
 module.addProperties("com/acme/jdbc.properties", myClassLoader);
 module.addProperties("/com/acme/ldap.properties", myClassLoader);
-----------------------------------------
++--------------------------------------+
 
   The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
   <XML> definition of properties file:
 
-----------------------------------------
++--------------------------------------+
 module.addXMLProperties("com/acme/jdbc.xml");
 module.addXMLProperties("/com/acme/ldap.xml");
-----------------------------------------
++--------------------------------------+
 
   and, of course, also for <XML> it is possible to specify the <<<ClassLoader>>>:
 
-----------------------------------------
++--------------------------------------+
 ClassLoader myClassLoader = [...];
 ...
 module.addXMLProperties("com/acme/jdbc.xml", myClassLoader);
 module.addXMLProperties("/com/acme/ldap.xml", myClassLoader);
-----------------------------------------
++--------------------------------------+
 
 * Adding Properties files from the FileSystem
 
@@ -115,12 +100,12 @@ module.addXMLProperties("/com/acme/ldap.xml", myClassLoader);
   typical and <XML> properties files from the filesystem by specifying the
   <<<java.io.File>>> location:
 
-----------------------------------------
++--------------------------------------+
 import java.io.File;
 ...
 module.addProperties(new File("etc/com/acme/jdbc.properties"));
 module.addProperties(new File("etc/com/acme/ldap.xml"));
-----------------------------------------
++--------------------------------------+
 
   By default, using this API, files wich name matches with <<<**/*.properties>>>
   pattern will be threated as typical properties files, <<<**/*.xml>>> instead as
@@ -130,7 +115,7 @@ module.addProperties(new File("etc/com/acme/ldap.xml"));
   looking for <<<**/*.properties>>> and <<<**/*.xml>>> properties files and will
   be loaded in the configuration; given the following directory:
 
-----------------------------------------
++--------------------------------------+
 etc
 |-- com
 |   |-- jdbc.properties
@@ -142,7 +127,7 @@ etc
 |   `-- should-be-ignored.txt
 |-- ibatis.properties
 `-- should-be-ignored.txt
-----------------------------------------
++--------------------------------------+
 
   all txt files will be ignored, all others will be load as properties files.
 
@@ -150,7 +135,7 @@ etc
   by specifying their <<<com.googlecode.rocoto.simpleconfig.AbstractPropertiesFileFilter>>>
   implementation, where it is possible specifying the files patterns:
 
-----------------------------------------
++--------------------------------------+
 import com.googlecode.rocoto.simpleconfig.AbstractPropertiesFileFilter;
 
 ...
@@ -158,7 +143,7 @@ module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
     "**/*.config", // specify here the 'old-style' properties file pattern
     "**/*.p?ml" // specify here the XML properties file pattern
 ) {});
-----------------------------------------
++--------------------------------------+
 
   As described earlier, patterns are used for the inclusion and exclusion of
   files. These patterns look very much like the patterns used in
@@ -174,12 +159,12 @@ module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
   The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
   properties loading from URLs, by specifying the <<<java.net.URL>>>:
 
-----------------------------------------
++--------------------------------------+
 import java.net.URL;
 ...
 module.addProperties(new URL("http://acme.com/config/jdbc.properties"));
 module.addXMLProperties(new URL("http://acme.com/config/ldap.xml"));
-----------------------------------------
++--------------------------------------+
 
 * Adding Java System Properties
 
@@ -189,18 +174,18 @@ module.addXMLProperties(new URL("http://acme.com/config/ldap.xml"));
   By enabling them to the configuration module, users can replace the Java System
   Properties retrieving operation with the Dependency Injection:
 
-----------------------------------------
++--------------------------------------+
 ...
 module.addSystemProperties();
-----------------------------------------
++--------------------------------------+
 
   By default Java System Properties will be referenced into the configuration
   with the <<<sys.>>> prefix, so in the <<<*.properties>>> files they can be
   referenced as:
 
-----------------------------------------
++--------------------------------------+
 user.os=${sys.os.name} ${sys.os.version} (${os.arch})
-----------------------------------------
++--------------------------------------+
 
 * Adding Environment Variables
 
@@ -208,18 +193,18 @@ user.os=${sys.os.name} ${sys.os.version} (${os.arch})
   and <<<System.getenv("JAVA_HOME")>>>; like for Java System Properties, users
   can adding Environment Variables simply by invoking:
 
-----------------------------------------
++--------------------------------------+
 ...
 module.addEnvironmentVariables();
-----------------------------------------
++--------------------------------------+
 
   By default Environment Variables will be referenced into the configuration
   with the <<<env.>>> prefix, so in the <<<*.properties>>> files they can be
   referenced as:
 
-----------------------------------------
++--------------------------------------+
 user.home=${env.HOME}
-----------------------------------------
++--------------------------------------+
 
 * $\{\}, the <Apache Ant> variables style
 
@@ -228,23 +213,23 @@ user.home=${env.HOME}
   configuration, that means that users can define some commons properties in one
   properties file:
 
-----------------------------------------
++--------------------------------------+
 commons.host=localhost
 commons.port=8080
 ...
-----------------------------------------
++--------------------------------------+
 
   then referencing them in different files:
 
-----------------------------------------
++--------------------------------------+
 ldap.host=${commons.host}
 ldap.port=${commons.port}
 ...
-----------------------------------------
++--------------------------------------+
 
   it works also in the XML format:
 
-----------------------------------------
++--------------------------------------+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties version="1.0">
@@ -252,7 +237,7 @@ ldap.port=${commons.port}
     <entry key="proxy.port">${commons.port}</entry>
     ...
 </properties>
-----------------------------------------
++--------------------------------------+
 
   <<NOTE>>: users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}
   but take care that loading properties using this method <$\{\}> expressions won't be resolved at all.
@@ -264,7 +249,7 @@ ldap.port=${commons.port}
   In order to make simpler the <<<SimpleConfigurationModule>>> creation,
   since version 3.1 users can chain <<<SimpleConfigurationModule>>> methods:
 
-----------------------------------------
++--------------------------------------+
 Injector injector = Guice.createInjector(new SimpleConfigurationModule()
     .addProperties("/com/acme/ldap.properties")
     .addProperties(new File("etc/com/acme/jdbc.properties"))
@@ -273,7 +258,7 @@ Injector injector = Guice.createInjector(new SimpleConfigurationModule()
     .addEnvironmentVariables(),
     ...
 );
-----------------------------------------
++--------------------------------------+
 
 * More flexible than the Spring Framework!
 

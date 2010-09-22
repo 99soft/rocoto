@@ -30,28 +30,13 @@ The Converters module
   in Google Guice, plus a simple to use module that makes easier the converters
   registration.
 
-  Users that want ot use the <Converters> module in their projects,
-  users have to add in their <<<pom.xml>>> the following <<<dependency>>>:
-
-----------------------------------------
-<dependencies>
-    ...
-    <dependency>
-        <groupId>com.googlecode.rocoto</groupId>
-        <artifactId>rocoto-converters</artifactId>
-        <version>XX.XX</version>
-    </dependency>
-    ...
-</dependencies>
-----------------------------------------
-
 * The ConvertersModule
 
   Starting from the version 3.1, each converter contained in the <<<com.googlecode.rocoto.converters>>>
   package is implemented as a self-binding module easy to install in the Injector
   as shown below:
 
-----------------------------------------
++--------------------------------------+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -68,7 +53,7 @@ Injector injector = Guice.createInjector(new XXXConverter(),
                     .to("UTF-8");
             }
         });
-----------------------------------------
++--------------------------------------+
 
 * The Converters
 
@@ -87,9 +72,9 @@ Injector injector = Guice.createInjector(new XXXConverter(),
 
   String representation is typically a CSV String mixed o chars and numbers, i.e:
 
-----------------------------------------
++--------------------------------------+
 a, 123, ~
-----------------------------------------
++--------------------------------------+
 
   in the example, <<<a>>> is taken in consideration as a <<<char>>>, <<<123>>>
   as an <<<int>>>, <<<~>>> as a <<<char>>>.
@@ -128,23 +113,23 @@ a, 123, ~
   If users need to add new supported date formats, first they have to retrieve
   the <DateConverter>, then add a new pattern:
 
-----------------------------------------
++--------------------------------------+
 DateConverter dateConverter = module.lookup(Date.class, DateConverter.class);
 dateConverter.addPattern("EEE, MMM d, ''yy");
-----------------------------------------
++--------------------------------------+
 
   If users need to set the <<<java.util.Locale>>> and/or the
   <<<java.util.TimeZone>>>, first they have to retrieve the <DateConverter>,
   then set their preferences:
 
-----------------------------------------
++--------------------------------------+
 import java.util.Locale;
 import java.util.TimeZone;
 ...
 DateConverter dateConverter = module.lookup(Date.class, DateConverter.class);
 dateConverter.setLocale(Locale.getDefault());
 dateConverter.setTimeZone(TimeZone.getDefault());
-----------------------------------------
++--------------------------------------+
 
 ** BigDecimalConverter
 
@@ -218,16 +203,16 @@ dateConverter.setTimeZone(TimeZone.getDefault());
   Users that need to load classpath resources, have to specify the full qualified
   name of the resource. For example, given the class path resource:
 
-----------------------------------------
++--------------------------------------+
 com.acme.myapplication.JDBC.properties
-----------------------------------------
++--------------------------------------+
 
   following URLs point to the same resource:
 
-----------------------------------------
++--------------------------------------+
 classpath://com/acme/myapplication/JDBC.properties
 classpath:///com/acme/myapplication/JDBC.properties
-----------------------------------------
++--------------------------------------+
 
 ** UUIDConverter
 
