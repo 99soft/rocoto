@@ -368,12 +368,13 @@
                         <goals>
                             <goal>pdf</goal>
                         </goals>
+                        <configuration>
+                            <outputDirectory>${project.reporting.outputDirectory}</outputDirectory>
+                            <includeReports>false</includeReports>
+                            <indentSize>1</indentSize>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <includeReports>false</includeReports>
-                    <indentSize>1</indentSize>
-                </configuration>
             </plugin>
 
             <plugin>
