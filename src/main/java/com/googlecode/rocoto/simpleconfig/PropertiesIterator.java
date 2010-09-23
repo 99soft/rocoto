@@ -25,17 +25,17 @@ import java.util.Map.Entry;
  * @since 3.2
  * @version $Id$
  */
-final class PropertiesIterator implements Iterator<Entry<String, String>>, PropertiesReader {
+final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>>, PropertiesReader {
 
     private final String keyPrefix;
 
-    private final Iterator<?> properties;
+    private final Iterator<Entry<K, V>> properties;
 
-    public PropertiesIterator(Map<? extends Object, ? extends Object> properties) {
+    public PropertiesIterator(Map<K, V> properties) {
         this(null, properties);
     }
 
-    public PropertiesIterator(String keyPrefix, Map<? extends Object, ? extends Object> properties) {
+    public PropertiesIterator(String keyPrefix, Map<K, V> properties) {
         this.keyPrefix = keyPrefix;
         this.properties = properties.entrySet().iterator();
     }
@@ -51,7 +51,7 @@ final class PropertiesIterator implements Iterator<Entry<String, String>>, Prope
      * {@inheritDoc}
      */
     public Entry<String, String> next() {
-        Entry<? extends Object, ? extends Object> next = (Entry<? extends Object, ? extends Object>) this.properties.next();
+        Entry<K, V> next = this.properties.next();
         String key = String.valueOf(next.getKey());
         if (this.keyPrefix != null && this.keyPrefix.length() > 0) {
             key = this.keyPrefix + key;

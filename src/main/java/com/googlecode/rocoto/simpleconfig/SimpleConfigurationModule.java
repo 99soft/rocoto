@@ -214,14 +214,14 @@ public class SimpleConfigurationModule extends AbstractModule {
      * Adds Java System properties, prefixed with {@code sys.}, to the Guice Binder.
      */
     public final SimpleConfigurationModule addSystemProperties() {
-        return this.addPropertiesReader(new PropertiesIterator(SYSTEM_PREFIX, System.getProperties()));
+        return this.addPropertiesReader(new PropertiesIterator<Object, Object>(SYSTEM_PREFIX, System.getProperties()));
     }
 
     /**
      * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
      */
     public final SimpleConfigurationModule addEnvironmentVariables() {
-        return this.addPropertiesReader(new PropertiesIterator(ENV_PREFIX, System.getenv()));
+        return this.addPropertiesReader(new PropertiesIterator<String, String>(ENV_PREFIX, System.getenv()));
     }
 
     /**
@@ -231,10 +231,7 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @since 3.2
      */
     public final SimpleConfigurationModule addProperties(Properties properties) {
-        if (properties == null) {
-            throw new IllegalArgumentException("Parameter 'properties' must be not null");
-        }
-        return this.addPropertiesReader(new PropertiesIterator(properties));
+        return this.addProperties(properties);
     }
 
     /**
@@ -243,11 +240,11 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @return
      * @since 3.2
      */
-    public final SimpleConfigurationModule addProperties(Map<String, String> properties) {
+    public final SimpleConfigurationModule addProperties(Map<Object, Object> properties) {
         if (properties == null) {
             throw new IllegalArgumentException("Parameter 'properties' must be not null");
         }
-        return this.addPropertiesReader(new PropertiesIterator(properties));
+        return this.addPropertiesReader(new PropertiesIterator<Object, Object>(properties));
     }
 
     /**

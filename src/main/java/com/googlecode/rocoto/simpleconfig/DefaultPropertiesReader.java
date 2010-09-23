@@ -117,7 +117,7 @@ final class DefaultPropertiesReader implements PropertiesReader {
             } else {
                 properties.load(input);
             }
-            return new PropertiesIterator(properties);
+            return new PropertiesIterator<Object, Object>(properties);
         } finally {
             if (connection != null && (connection instanceof HttpURLConnection)) {
                 ((HttpURLConnection) connection).disconnect();
