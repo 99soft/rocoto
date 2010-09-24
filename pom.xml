@@ -25,7 +25,7 @@
     <groupId>com.googlecode.rocoto</groupId>
     <artifactId>rocoto</artifactId>
     <packaging>jar</packaging>
-    <version>3.2</version>
+    <version>3.3-SNAPSHOT</version>
     <name>Rocoto</name>
     <description>Add some spice to Google Guice through configuration files!</description>
     <url>http://www.99soft.org/projects/rocoto/${project.version}</url>
@@ -38,9 +38,9 @@
     </licenses>
 
     <scm>
-        <developerConnection>scm:svn:https://rocoto.googlecode.com/svn/tags/3.2</developerConnection>
-        <connection>scm:svn:http://rocoto.googlecode.com/svn/tags/3.2</connection>
-        <url>http://code.google.com/p/rocoto/source/browse/#svn/tags/3.2</url>
+        <developerConnection>scm:svn:https://rocoto.googlecode.com/svn/trunk</developerConnection>
+        <connection>scm:svn:http://rocoto.googlecode.com/svn/trunk</connection>
+        <url>http://code.google.com/p/rocoto/source/browse/#svn/trunk</url>
     </scm>
 
     <issueManagement>
