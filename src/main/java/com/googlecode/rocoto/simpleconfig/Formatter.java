@@ -17,6 +17,7 @@ package com.googlecode.rocoto.simpleconfig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -31,6 +32,8 @@ import com.google.inject.Provider;
 final class Formatter implements Provider<String> {
 
     private static final String VAR_BEGIN = "$";
+
+    private static final String PIPE_SEPARATOR = "|";
 
     private final List<Appender> appenders = new ArrayList<Appender>();
 
@@ -62,8 +65,13 @@ final class Formatter implements Provider<String> {
                 if (endName < 0) {
                     throw new IllegalArgumentException("Syntax error in property: " + pattern);
                 }
-                String key = pattern.substring(pos + 2, endName);
-                this.appenders.add(new KeyAppender(key));
+                StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);
+                String key = keyTokenizer.nextToken();
+                String defaultValue = null;
+                if (keyTokenizer.hasMoreTokens()) {
+                    defaultValue = keyTokenizer.nextToken().trim();
+                }
+                this.appenders.add(new KeyAppender(key, defaultValue));
                 prev = endName + 1;
                 this.containsKeys = true;
             }

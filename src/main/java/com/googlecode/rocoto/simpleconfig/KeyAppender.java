@@ -27,20 +27,29 @@ import com.google.inject.name.Names;
  */
 final class KeyAppender implements Appender {
 
+    private static final String KEY_PREFIX = "${";
+
     private final String key;
+
+    private final String defaultValue;
 
     private final String toString;
 
-    public KeyAppender(final String key) {
+    public KeyAppender(final String key, final String defaultValue) {
         this.key = key;
-        this.toString = "${" + this.key + "}";
+        this.defaultValue = defaultValue;
+        this.toString = KEY_PREFIX + this.key + '}';
     }
 
     public void append(StringBuilder buffer, Injector injector) {
         try {
             buffer.append(injector.getInstance(Key.get(String.class, Names.named(this.key))));
         } catch (Throwable e) {
-            buffer.append(this.toString);
+            if (this.defaultValue != null) {
+                buffer.append(this.defaultValue);
+            } else {
+                buffer.append(this.toString);
+            }
         }
     }
 
