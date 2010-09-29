@@ -47,11 +47,6 @@ public class SimpleConfigurationModule extends AbstractModule {
     private static final String ENV_PREFIX = "env.";
 
     /**
-     * The {@link System} property prefix, {@code env.}
-     */
-    private static final String SYSTEM_PREFIX = "sys.";
-
-    /**
      * This class logger.
      */
     private final Log log = LogFactory.getLog(this.getClass());
@@ -211,10 +206,10 @@ public class SimpleConfigurationModule extends AbstractModule {
     }
 
     /**
-     * Adds Java System properties, prefixed with {@code sys.}, to the Guice Binder.
+     * Adds Java System properties to the Guice Binder.
      */
     public final SimpleConfigurationModule addSystemProperties() {
-        return this.addPropertiesReader(new PropertiesIterator<Object, Object>(SYSTEM_PREFIX, System.getProperties()));
+        return this.addPropertiesReader(new PropertiesIterator<Object, Object>(System.getProperties()));
     }
 
     /**
