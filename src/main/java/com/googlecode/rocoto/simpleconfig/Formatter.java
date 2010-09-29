@@ -66,7 +66,7 @@ final class Formatter implements Provider<String> {
                     throw new IllegalArgumentException("Syntax error in property: " + pattern);
                 }
                 StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);
-                String key = keyTokenizer.nextToken();
+                String key = keyTokenizer.nextToken().trim();
                 String defaultValue = null;
                 if (keyTokenizer.hasMoreTokens()) {
                     defaultValue = keyTokenizer.nextToken().trim();
