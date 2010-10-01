@@ -438,7 +438,6 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>2.0</version>
                 <configuration>
-                    <preparationGoals>clean site verify</preparationGoals>
                     <mavenExecutorId>forked-path</mavenExecutorId>
                 </configuration>
             </plugin>
