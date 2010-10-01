@@ -65,6 +65,16 @@ Injector injector = Guice.createInjector(new XXXConverter(),
 
   Let's show and explain how they work:
 
+** BigDecimalConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.math.BigDecimal>>>.
+
+** BigIntegerConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.math.BigInteger>>>.
+
 ** BitSetConverter
 
   Is the converter that converts a <<<java.lang.String>>> representation to a
@@ -85,6 +95,11 @@ a, 123, ~
 
   Is the converter that converts a <<<java.lang.String>>> representation to a
   <<<java.nio.charset.Charset>>>.
+
+** ClobConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.sql.Clob>>>.
 
 ** CurrencyConverter
 
@@ -131,20 +146,20 @@ dateConverter.setLocale(Locale.getDefault());
 dateConverter.setTimeZone(TimeZone.getDefault());
 +--------------------------------------+
 
-** BigDecimalConverter
+** DecimalFormatConverter
 
   Is the converter that converts a <<<java.lang.String>>> representation to a
-  <<<java.math.BigDecimal>>>.
-
-** BigIntegerConverter
-
-  Is the converter that converts a <<<java.lang.String>>> representation to a
-  <<<java.math.BigInteger>>>.
+  <<<java.text.DecimalFormat>>>
 
 ** FileConverter
 
   Is the converter that converts a <<<java.lang.String>>> representation to a
   <<<java.io.File>>>
+
+** InetAddressConverter
+
+  Is the converter that converts a <<<java.lang.String>>> representation to a
+  <<<java.net.InetAddress>>>
 
 ** LocaleConverter
 
