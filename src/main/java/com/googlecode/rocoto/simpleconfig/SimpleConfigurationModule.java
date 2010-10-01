@@ -115,7 +115,7 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @param isXML
      */
     private SimpleConfigurationModule addProperties(String classpathResource, ClassLoader classLoader, boolean isXML) {
-        return this.addPropertiesReader(new DefaultPropertiesReader(classpathResource, classLoader, isXML));
+        return this.addPropertiesReader(new URLPropertiesReader(classpathResource, classLoader, isXML));
     }
 
     /**
@@ -175,7 +175,7 @@ public class SimpleConfigurationModule extends AbstractModule {
             return this;
         }
 
-        return this.addPropertiesReader(new DefaultPropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
+        return this.addPropertiesReader(new URLPropertiesReader(configurationFile, filter.isXMLProperties(configurationFile)));
     }
 
     /**
@@ -202,21 +202,21 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @param isXML
      */
     private final SimpleConfigurationModule addProperties(URL configurationUrl, boolean isXML) {
-        return this.addPropertiesReader(new DefaultPropertiesReader(configurationUrl, isXML));
+        return this.addPropertiesReader(new URLPropertiesReader(configurationUrl, isXML));
     }
 
     /**
      * Adds Java System properties to the Guice Binder.
      */
     public final SimpleConfigurationModule addSystemProperties() {
-        return this.addPropertiesReader(new PropertiesIterator<Object, Object>(System.getProperties()));
+        return this.addProperties(System.getProperties());
     }
 
     /**
      * Adds environment variables, prefixed with {@code env.}, to the Guice Binder.
      */
     public final SimpleConfigurationModule addEnvironmentVariables() {
-        return this.addPropertiesReader(new PropertiesIterator<String, String>(ENV_PREFIX, System.getenv()));
+        return this.addPropertiesReader(new DefaultPropertiesReader(ENV_PREFIX, System.getenv()));
     }
 
     /**
@@ -225,21 +225,11 @@ public class SimpleConfigurationModule extends AbstractModule {
      * @return
      * @since 3.2
      */
-    public final SimpleConfigurationModule addProperties(Properties properties) {
-        return this.addProperties(properties);
-    }
-
-    /**
-     * 
-     * @param properties
-     * @return
-     * @since 3.2
-     */
-    public final SimpleConfigurationModule addProperties(Map<Object, Object> properties) {
+    public final SimpleConfigurationModule addProperties(Map<?, ?> properties) {
         if (properties == null) {
             throw new IllegalArgumentException("Parameter 'properties' must be not null");
         }
-        return this.addPropertiesReader(new PropertiesIterator<Object, Object>(properties));
+        return this.addPropertiesReader(new DefaultPropertiesReader(properties));
     }
 
     /**

@@ -25,33 +25,29 @@ import java.util.Map.Entry;
  * @since 3.2
  * @version $Id$
  */
-final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>>, PropertiesReader {
+final class PropertiesIterator implements Iterator<Entry<String, String>> {
 
     private final String keyPrefix;
 
-    private final Iterator<Entry<K, V>> properties;
+    private final Iterator<?> propertiesIterator;
 
-    public PropertiesIterator(Map<K, V> properties) {
-        this(null, properties);
-    }
-
-    public PropertiesIterator(String keyPrefix, Map<K, V> properties) {
+    public PropertiesIterator(String keyPrefix, Map<?, ?> properties) {
         this.keyPrefix = keyPrefix;
-        this.properties = properties.entrySet().iterator();
+        this.propertiesIterator = properties.entrySet().iterator();
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean hasNext() {
-        return this.properties.hasNext();
+        return this.propertiesIterator.hasNext();
     }
 
     /**
      * {@inheritDoc}
      */
     public Entry<String, String> next() {
-        Entry<K, V> next = this.properties.next();
+        Entry<?, ?> next = (Entry<?, ?>) this.propertiesIterator.next();
         String key = String.valueOf(next.getKey());
         if (this.keyPrefix != null && this.keyPrefix.length() > 0) {
             key = this.keyPrefix + key;
@@ -64,13 +60,6 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>>,
      */
     public void remove() {
         // not needed in this version
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Iterator<Entry<String, String>> read() throws Exception {
-        return this;
     }
 
 }
