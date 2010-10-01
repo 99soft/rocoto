@@ -40,21 +40,11 @@
             <source>target/${project.artifactId}-${project.version}-sources.${project.packaging}</source>
         </file>
         <file>
-            <source>${project.reporting.outputDirectory}/${project.artifactId}-guide.pdf</source>
-        </file>
-        <file>
             <source>LICENSE</source>
         </file>
         <file>
             <source>NOTICE</source>
         </file>
     </files>
-
-    <dependencySets>
-        <dependencySet>
-            <outputDirectory>lib</outputDirectory>
-            <useProjectArtifact>false</useProjectArtifact>
-        </dependencySet>
-    </dependencySets>
 
 </assembly>
