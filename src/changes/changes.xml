@@ -28,7 +28,7 @@
     </properties>
 
     <body>
-        <release version="3.3" date="2010-09-24" description="Update release">
+        <release version="3.3" date="TBD" description="Update release">
              <action dev="simone.tripodi" type="update">
                 Added default property value support, if key is not found the optional default value will be used
                 to replace the key.
@@ -36,9 +36,18 @@
              <action dev="simone.tripodi" type="update">
                 No more sys. prefix for Java System Properties.
             </action>
+             <action dev="simone.tripodi" type="update">
+                Added ClobConverter
+            </action>
+             <action dev="simone.tripodi" type="update">
+                Added DecimalFormatConverter
+            </action>
+             <action dev="simone.tripodi" type="update">
+                Added InetAddressConverter
+            </action>
         </release>
 
-        <release version="3.2" date="TBD" description="Update release">
+        <release version="3.2" date="2010-09-24" description="Update release">
             <action dev="simone.tripodi" type="update">
                 No more submodules, Rocoto is distribuited as unique module.
             </action>
