@@ -178,12 +178,10 @@ module.addXMLProperties(new URL("http://acme.com/config/ldap.xml"));
 module.addSystemProperties();
 +--------------------------------------+
 
-  By default Java System Properties will be referenced into the configuration
-  with the <<<sys.>>> prefix, so in the <<<*.properties>>> files they can be
-  referenced as:
+  Java System Properties  can be referenced as:
 
 +--------------------------------------+
-user.os=${sys.os.name} ${sys.os.version} (${os.arch})
+user.os=${os.name} ${os.version} (${os.arch})
 +--------------------------------------+
 
 * Adding Environment Variables
@@ -238,7 +236,33 @@ ldap.port=${commons.port}
 </properties>
 +--------------------------------------+
 
-  <<NOTE>>: users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}
+** Default Values
+
+  In Java code users can retrieve a property from <<<java.util.Properties>>> specifying the <<default>> value if the
+  input key is not present, using the
+  {{{http://download.oracle.com/javase/6/docs/api/java/util/Properties.html#getProperty(java.lang.String, java.lang.String)}Properties#getProperty(java.lang.String, java.lang.String)}}
+  method.
+
+  Rocoto allows doing the same, users can specify a key using the pipe character <<<|>>> to separate the key name from
+  the default value:
+
++--------------------------------------+
+JDBC.url=jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}
++--------------------------------------+
+
+  that means if <<<JDBC.host>>> and <<<JDBC.port>>> won't be specified, they will be replaced by the default values;
+  given the following properties:
+
++--------------------------------------+
+JDBC.url=jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}
+JDBC.schema=rocoto
++--------------------------------------+
+
+  the <<<JDBC.url>>> property value will be <<<jdbc:derby://localhost:1527/rocoto>>>.
+
+** com.google.inject.name.Names compatibility
+
+  Users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}
   but take care that loading properties using this method <$\{\}> expressions won't be resolved at all.
   On the other side, specified properties in that way will be used to resolve
   <$\{\}> expressions in properties using the <<<SimpleConfigurationModule>>>.
