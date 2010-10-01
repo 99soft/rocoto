@@ -44,7 +44,6 @@
 
         <menu name="Miscellaneous">
             <item name="Project stats" href="stats.html"/>
-            <item name="PDF Manual" href="${project.name}-guide.pdf"/>
         </menu>
 
         <menu ref="reports"/>
