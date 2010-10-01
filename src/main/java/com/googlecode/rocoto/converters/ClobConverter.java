@@ -23,7 +23,7 @@ import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
- * Converter implementation for {@code java.net.InetAddress}.
+ * Converter implementation for {@code java.sql.Clob}.
  *
  * @since 3.3
  * @version $Id$
