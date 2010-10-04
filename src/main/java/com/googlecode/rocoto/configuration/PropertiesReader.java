@@ -15,16 +15,24 @@
  */
 package com.googlecode.rocoto.configuration;
 
+import java.util.Properties;
+
 /**
  * 
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
-public final class SystemPropertiesReader extends PropertiesReader {
+public class PropertiesReader implements ConfigurationReader<Properties> {
 
-    public SystemPropertiesReader() {
-        super(System.getProperties());
+    private final Properties properties;
+
+    public PropertiesReader(Properties properties) {
+        this.properties = properties;
+    }
+
+    public final Properties readConfiguration() throws Exception {
+        return this.properties;
     }
 
 }
