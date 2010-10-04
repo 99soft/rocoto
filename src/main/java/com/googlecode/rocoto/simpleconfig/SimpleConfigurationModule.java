@@ -155,16 +155,14 @@ public class SimpleConfigurationModule extends AbstractModule {
 
         if (configurationFile.isDirectory()) {
             if (this.logger.isLoggable(Level.FINE)) {
-                this.logger.fine("Configuration file '"
-                    + configurationFile.getAbsolutePath()
-                    + "' is a directory, traversing it to look for properties file");
+                this.logger.fine(String.format("Configuration file '%s' is a directory, traversing it to look for properties file",
+                        configurationFile.getAbsolutePath()));
             }
             File[] childs = configurationFile.listFiles(filter);
             if (childs == null || childs.length == 0) {
                 if (this.logger.isLoggable(Level.FINE)) {
-                    this.logger.fine("Configuration directory file '"
-                            + configurationFile.getAbsolutePath()
-                            + "' is empty");
+                    this.logger.fine(String.format("Configuration directory file '%s' is empty",
+                            configurationFile.getAbsolutePath()));
                 }
                 return this;
             }

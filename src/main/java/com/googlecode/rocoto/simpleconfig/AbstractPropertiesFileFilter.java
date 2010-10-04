@@ -18,6 +18,8 @@ package com.googlecode.rocoto.simpleconfig;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * 
@@ -39,6 +41,11 @@ public abstract class AbstractPropertiesFileFilter implements FileFilter {
 
     private final String xmlPropertiesPattern;
 
+    /**
+     * This class logger.
+     */
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
+
     public AbstractPropertiesFileFilter(String propertiesPattern,
             String xmlPropertiesPattern) {
         this.propertiesPattern = propertiesPattern;
@@ -52,7 +59,9 @@ public abstract class AbstractPropertiesFileFilter implements FileFilter {
         boolean accepted = pathname.isDirectory()
                 || this.isXMLProperties(pathname)
                 || this.isProperties(pathname);
-        System.err.printf("File %s %s accepted\n", pathname, accepted ? "" : "NOT");
+        if (this.logger.isLoggable(Level.FINE)) {
+            this.logger.fine(String.format("File '%s' %s accepted\n", pathname, accepted ? "" : "NOT"));
+        }
         return accepted;
     }
 
