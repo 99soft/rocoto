@@ -28,7 +28,7 @@
     </properties>
 
     <body>
-        <release version="3.4" date="TBD" description="Update release">
+        <release version="4.0" date="TBD" description="Update release">
             <action dev="simone.tripodi" type="remove">
                 Removed the 3rd party logging dependency.
             </action>
