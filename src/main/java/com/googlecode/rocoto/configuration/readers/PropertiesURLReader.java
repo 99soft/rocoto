@@ -28,7 +28,7 @@ import java.util.Properties;
  * @since 4.0
  * @version $Id$
  */
-public final class PropertiesURLReader extends AbstractConfigurationURLReader<Properties> {
+public final class PropertiesURLReader extends AbstractConfigurationURLReader {
 
     private final boolean isXML;
 

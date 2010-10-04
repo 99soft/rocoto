@@ -34,7 +34,7 @@ import com.googlecode.rocoto.configuration.ConfigurationReader;
  * @since 4.0
  * @version $Id$
  */
-public abstract class AbstractConfigurationURLReader<T> implements ConfigurationReader {
+public abstract class AbstractConfigurationURLReader implements ConfigurationReader {
 
     private final URL url;
 
