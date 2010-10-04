@@ -25,21 +25,21 @@ import java.util.Map.Entry;
  * @since 4.0
  * @version $Id$
  */
-final class PropertiesIterator<T> implements Iterator<Entry<String, String>> {
+final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> {
 
-    public static final <T> PropertiesIterator<T> createNew(Map<T, T> properties) {
+    public static final <K, V> PropertiesIterator<K, V> createNew(Map<K, V> properties) {
         return createNew(null, properties);
     }
 
-    public static final <T> PropertiesIterator<T> createNew(String keyPrefix, Map<T, T> properties) {
-        return new PropertiesIterator<T>(keyPrefix, properties);
+    public static final <K, V> PropertiesIterator<K, V> createNew(String keyPrefix, Map<K, V> properties) {
+        return new PropertiesIterator<K, V>(keyPrefix, properties);
     }
 
     private final String keyPrefix;
 
-    private final Iterator<Entry<T, T>> propertiesIterator;
+    private final Iterator<Entry<K, V>> propertiesIterator;
 
-    private PropertiesIterator(String keyPrefix, Map<T, T> properties) {
+    private PropertiesIterator(String keyPrefix, Map<K, V> properties) {
         this.keyPrefix = keyPrefix;
         this.propertiesIterator = properties.entrySet().iterator();
     }
@@ -55,7 +55,7 @@ final class PropertiesIterator<T> implements Iterator<Entry<String, String>> {
      * {@inheritDoc}
      */
     public Entry<String, String> next() {
-        Entry<T, T> next = this.propertiesIterator.next();
+        Entry<K, V> next = this.propertiesIterator.next();
         String key = String.valueOf(next.getKey());
         if (this.keyPrefix != null && this.keyPrefix.length() > 0) {
             key = this.keyPrefix + key;
