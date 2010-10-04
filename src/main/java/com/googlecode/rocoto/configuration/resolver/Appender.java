@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration;
+package com.googlecode.rocoto.configuration.resolver;
 
 import com.google.inject.Injector;
 
@@ -24,21 +24,8 @@ import com.google.inject.Injector;
  * @since 4.0
  * @version $Id$
  */
-final class TextAppender implements Appender {
+interface Appender {
 
-    private final String textFragment;
-
-    public TextAppender(final String textFragment) {
-        this.textFragment = textFragment;
-    }
-
-    public void append(StringBuilder buffer, Injector injector) {
-        buffer.append(this.textFragment);
-    }
-
-    @Override
-    public String toString() {
-        return this.textFragment;
-    }
+    void append(StringBuilder buffer, Injector injector);
 
 }
