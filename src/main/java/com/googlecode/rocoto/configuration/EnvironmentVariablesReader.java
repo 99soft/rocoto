@@ -24,7 +24,7 @@ import java.util.Properties;
  * @since 4.0
  * @version $Id$
  */
-public final class EnvironmentVariableReader implements ConfigurationReader<Properties> {
+public final class EnvironmentVariablesReader implements ConfigurationReader<Properties> {
 
     /**
      * The environment variable prefix, {@code env.}
