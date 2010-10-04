@@ -30,6 +30,6 @@ public interface PropertiesIterator {
      * 
      * @return
      */
-    Iterator<Entry<String, String>> read() throws Exception;
+    Iterator<Entry<String, String>> iterator();
 
 }
