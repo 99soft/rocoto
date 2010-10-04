@@ -41,6 +41,14 @@ public abstract class AbstractConfigurationURLReader<T> implements Configuration
     /**
      * 
      * @param classpathResource
+     */
+    public AbstractConfigurationURLReader(String classpathResource) {
+        this(classpathResource, Thread.currentThread().getContextClassLoader());
+    }
+
+    /**
+     * 
+     * @param classpathResource
      * @param classLoader
      */
     public AbstractConfigurationURLReader(String classpathResource, ClassLoader classLoader) {
