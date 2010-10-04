@@ -15,18 +15,21 @@
  */
 package com.googlecode.rocoto.configuration;
 
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 /**
  * 
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
-public interface ConfigurationReader<T> {
+public interface ConfigurationReader {
 
     /**
      * 
      * @return
      */
-    T readConfiguration() throws Exception;
+    Iterator<Entry<String, String>> readConfiguration() throws Exception;
 
 }

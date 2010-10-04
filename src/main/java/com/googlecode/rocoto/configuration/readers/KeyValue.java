@@ -15,11 +15,7 @@
  */
 package com.googlecode.rocoto.configuration.readers;
 
-import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Properties;
-
-import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
  * 
@@ -27,16 +23,37 @@ import com.googlecode.rocoto.configuration.ConfigurationReader;
  * @since 4.0
  * @version $Id$
  */
-public class PropertiesReader implements ConfigurationReader {
+final class KeyValue implements Entry<String, String> {
 
-    private final Properties properties;
+    private final String key;
 
-    public PropertiesReader(Properties properties) {
-        this.properties = properties;
+    private final String value;
+
+    public KeyValue(String key, String value) {
+        this.key = key;
+        this.value = value;
     }
 
-    public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.createNew(this.properties);
+    /**
+     * {@inheritDoc}
+     */
+    public String getKey() {
+        return this.key;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getValue() {
+        return this.value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String setValue(String value) {
+        // not needed in this version
+        return null;
     }
 
 }

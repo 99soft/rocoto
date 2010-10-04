@@ -22,6 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import com.googlecode.rocoto.configuration.ConfigurationReader;
 
@@ -32,7 +34,7 @@ import com.googlecode.rocoto.configuration.ConfigurationReader;
  * @since 4.0
  * @version $Id$
  */
-public abstract class AbstractConfigurationURLReader<T> implements ConfigurationReader<T> {
+public abstract class AbstractConfigurationURLReader<T> implements ConfigurationReader {
 
     private final URL url;
 
@@ -100,7 +102,7 @@ public abstract class AbstractConfigurationURLReader<T> implements Configuration
      * 
      * @return
      */
-    public final T readConfiguration() throws Exception {
+    public final Iterator<Entry<String, String>> readConfiguration() throws Exception {
         URLConnection connection = null;
         InputStream input = null;
         try {
@@ -127,6 +129,6 @@ public abstract class AbstractConfigurationURLReader<T> implements Configuration
      * @param input
      * @throws IOException
      */
-    protected abstract T process(InputStream input) throws Exception;
+    protected abstract Iterator<Entry<String, String>> process(InputStream input) throws Exception;
 
 }

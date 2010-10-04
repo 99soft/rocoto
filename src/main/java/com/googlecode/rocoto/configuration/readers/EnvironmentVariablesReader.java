@@ -15,8 +15,8 @@
  */
 package com.googlecode.rocoto.configuration.readers;
 
+import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Properties;
 
 import com.googlecode.rocoto.configuration.ConfigurationReader;
 
@@ -26,7 +26,7 @@ import com.googlecode.rocoto.configuration.ConfigurationReader;
  * @since 4.0
  * @version $Id$
  */
-public final class EnvironmentVariablesReader implements ConfigurationReader<Properties> {
+public final class EnvironmentVariablesReader implements ConfigurationReader {
 
     /**
      * The environment variable prefix, {@code env.}
@@ -36,14 +36,8 @@ public final class EnvironmentVariablesReader implements ConfigurationReader<Pro
     /**
      * {@inheritDoc}
      */
-    public Properties readConfiguration() throws Exception {
-        Properties properties = new Properties();
-
-        for (Entry<String, String> entry : System.getenv().entrySet()) {
-            properties.setProperty(ENV_PREFIX + entry.getKey(), entry.getValue());
-        }
-
-        return properties;
+    public Iterator<Entry<String, String>> readConfiguration() throws Exception {
+        return PropertiesIterator.createNew(ENV_PREFIX, System.getenv());
     }
 
 }

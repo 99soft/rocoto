@@ -18,6 +18,8 @@ package com.googlecode.rocoto.configuration.readers;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Properties;
 
 /**
@@ -58,14 +60,14 @@ public final class PropertiesURLReader extends AbstractConfigurationURLReader<Pr
     }
 
     @Override
-    protected Properties process(InputStream input) throws Exception {
+    protected Iterator<Entry<String, String>> process(InputStream input) throws Exception {
         Properties properties = new Properties();
         if (this.isXML) {
             properties.loadFromXML(input);
         } else {
             properties.load(input);
         }
-        return properties;
+        return PropertiesIterator.createNew(properties);
     }
 
 }
