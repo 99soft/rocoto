@@ -23,9 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
@@ -49,7 +48,7 @@ public class SimpleConfigurationModule extends AbstractModule {
     /**
      * This class logger.
      */
-    private final Log log = LogFactory.getLog(this.getClass());
+    private final Logger logger = Logger.getLogger(this.getClass().getName());
 
     /**
      * This class loader.
@@ -155,15 +154,15 @@ public class SimpleConfigurationModule extends AbstractModule {
         }
 
         if (configurationFile.isDirectory()) {
-            if (this.log.isDebugEnabled()) {
-                this.log.debug("Configuration file '"
+            if (this.logger.isLoggable(Level.FINE)) {
+                this.logger.fine("Configuration file '"
                     + configurationFile.getAbsolutePath()
                     + "' is a directory, traversing it to look for properties file");
             }
             File[] childs = configurationFile.listFiles(filter);
             if (childs == null || childs.length == 0) {
-                if (this.log.isDebugEnabled()) {
-                    this.log.debug("Configuration directory file '"
+                if (this.logger.isLoggable(Level.FINE)) {
+                    this.logger.fine("Configuration directory file '"
                             + configurationFile.getAbsolutePath()
                             + "' is empty");
                 }
