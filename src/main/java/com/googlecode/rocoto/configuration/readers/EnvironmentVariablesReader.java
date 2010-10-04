@@ -13,10 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration;
+package com.googlecode.rocoto.configuration.readers;
 
 import java.util.Map.Entry;
 import java.util.Properties;
+
+import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
  * 

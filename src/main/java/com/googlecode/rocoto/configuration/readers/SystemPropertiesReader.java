@@ -13,9 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration;
-
-import java.util.Properties;
+package com.googlecode.rocoto.configuration.readers;
 
 /**
  * 
@@ -23,16 +21,10 @@ import java.util.Properties;
  * @since 4.0
  * @version $Id$
  */
-public class PropertiesReader implements ConfigurationReader<Properties> {
+public final class SystemPropertiesReader extends PropertiesReader {
 
-    private final Properties properties;
-
-    public PropertiesReader(Properties properties) {
-        this.properties = properties;
-    }
-
-    public final Properties readConfiguration() throws Exception {
-        return this.properties;
+    public SystemPropertiesReader() {
+        super(System.getProperties());
     }
 
 }

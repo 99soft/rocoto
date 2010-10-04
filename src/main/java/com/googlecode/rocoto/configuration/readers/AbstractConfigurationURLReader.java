@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration;
+package com.googlecode.rocoto.configuration.readers;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
  * 
