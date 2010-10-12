@@ -22,9 +22,9 @@
 -->
 <suite name="rocoto">
 
-    <test name="simple-configuration">
+    <test name="configuration">
         <classes>
-            <class name="com.googlecode.rocoto.simpleconfig.SimpleConfigurationModuleTestCase"/>
+            <class name="com.googlecode.rocoto.configuration.ConfigurationModuleTestCase"/>
         </classes>
     </test>
 
