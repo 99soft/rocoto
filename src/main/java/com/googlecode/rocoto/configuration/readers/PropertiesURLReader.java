@@ -45,6 +45,10 @@ public final class PropertiesURLReader extends AbstractConfigurationURLReader {
         this(classpathResource, Thread.currentThread().getContextClassLoader());
     }
 
+    public PropertiesURLReader(String classpathResource, boolean isXML) {
+        this(classpathResource, Thread.currentThread().getContextClassLoader(), isXML);
+    }
+
     public PropertiesURLReader(String classpathResource, ClassLoader classLoader) {
         this(classpathResource, classLoader, false);
     }
