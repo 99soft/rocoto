@@ -13,9 +13,10 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.simpleconfig;
+package com.googlecode.rocoto.configuration;
 
-import com.google.inject.Injector;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * 
@@ -23,21 +24,30 @@ import com.google.inject.Injector;
  * @author Simone Tripodi
  * @version $Id$
  */
-final class TextAppender implements Appender {
+public final class MemcachedConfiguration {
 
-    private final String textFragment;
+    @Inject
+    @Named("com.ibaguice.memcached.keyprefix")
+    private String keyPrefix;
 
-    public TextAppender(final String textFragment) {
-        this.textFragment = textFragment;
+    @Inject
+    @Named("com.ibaguice.memcached.compression")
+    private boolean compressionEnabled;
+
+    public String getKeyPrefix() {
+        return keyPrefix;
     }
 
-    public void append(StringBuilder buffer, Injector injector) {
-        buffer.append(this.textFragment);
+    public void setKeyPrefix(String keyPrefix) {
+        this.keyPrefix = keyPrefix;
     }
 
-    @Override
-    public String toString() {
-        return this.textFragment;
+    public boolean isCompressionEnabled() {
+        return compressionEnabled;
+    }
+
+    public void setCompressionEnabled(boolean compressionEnabled) {
+        this.compressionEnabled = compressionEnabled;
     }
 
 }

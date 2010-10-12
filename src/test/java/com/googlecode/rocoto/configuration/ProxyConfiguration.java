@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.simpleconfig;
+package com.googlecode.rocoto.configuration;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -24,19 +24,15 @@ import com.google.inject.name.Named;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class LdapConfiguration {
+public final class ProxyConfiguration {
 
     @Inject
-    @Named("ldap.host")
+    @Named("proxy.host")
     private String host;
 
     @Inject
-    @Named("ldap.port")
+    @Named("proxy.port")
     private int port;
-
-    @Inject
-    @Named("ldap.baseDN")
-    private String baseDN;
 
     public String getHost() {
         return host;
@@ -52,14 +48,6 @@ public final class LdapConfiguration {
 
     public void setPort(int port) {
         this.port = port;
-    }
-
-    public String getBaseDN() {
-        return baseDN;
-    }
-
-    public void setBaseDN(String baseDN) {
-        this.baseDN = baseDN;
     }
 
 }

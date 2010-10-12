@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.simpleconfig;
+package com.googlecode.rocoto.configuration;
 
 import java.io.File;
 
@@ -22,7 +22,11 @@ import org.testng.annotations.Test;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule;
+import com.googlecode.rocoto.configuration.readers.EnvironmentVariablesReader;
+import com.googlecode.rocoto.configuration.readers.PropertiesURLReader;
+import com.googlecode.rocoto.configuration.readers.SystemPropertiesReader;
+import com.googlecode.rocoto.configuration.traversal.PropertiesReaderBuilder;
+import com.googlecode.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 
 /**
  * 
@@ -30,9 +34,11 @@ import com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class SimpleConfigurationModuleTestCase {
+public final class ConfigurationModuleTestCase {
 
-    private final SimpleConfigurationModule module = new SimpleConfigurationModule().addEnvironmentVariables().addSystemProperties();
+    private final ConfigurationModule module = new ConfigurationModule()
+            .addConfigurationReader(new EnvironmentVariablesReader())
+            .addConfigurationReader(new SystemPropertiesReader());
 
     @Inject
     private IBatisConfiguration iBatisConfiguration;
@@ -75,30 +81,24 @@ public final class SimpleConfigurationModuleTestCase {
             groups = "load"
     )
     public void loadNonExistentResource() {
-        this.module.addProperties("doesNotExist.properties");
-    }
-
-    @Test(
-            expectedExceptions = IllegalArgumentException.class,
-            groups = "load"
-    )
-    public void loadNonExistentXMLResource() {
-        this.module.addProperties("doesNotExist.xml");
+        this.module.addConfigurationReader(new PropertiesURLReader("doesNotExist.properties"));
     }
 
     @Test(groups = "load")
     public void loadFromClasspath() {
-        this.module.addProperties("/com/googlecode/rocoto/simpleconfig/ldap.properties");
+        this.module.addConfigurationReader(new PropertiesURLReader("/com/googlecode/rocoto/simpleconfig/ldap.properties"));
     }
 
     @Test(groups = "load")
     public void loadFromRootClasspath() {
-        this.module.addXMLProperties("proxy.xml");
+        this.module.addConfigurationReader(new PropertiesURLReader("proxy.xml", true));
     }
 
     @Test(groups = "load")
     public void loadFromDirUsingDefaulTraversal() {
-        this.module.addProperties(new File("src/test/data"));
+        this.module.addConfigurationReader(new File("src/test/data"),
+                new PropertiesReaderBuilder(),
+                new XMLPropertiesReaderBuilder());
     }
 
     @Test(dependsOnGroups = "load")
