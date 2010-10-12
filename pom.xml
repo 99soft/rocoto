@@ -94,6 +94,16 @@
         </developer>
     </developers>
 
+    <contributors>
+        <contributor>
+            <name>Daniel Manzke</name>
+            <email>daniel dot manzke at googlemail dot com</email>
+            <url>http://devsurf.wordpress.com/</url>
+            <organization>Saperion </organization>
+            <organizationUrl>http://www.saperion.com/</organizationUrl>
+        </contributor>
+    </contributors>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
