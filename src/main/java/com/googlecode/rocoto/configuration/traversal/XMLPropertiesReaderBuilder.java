@@ -36,7 +36,7 @@ public final class XMLPropertiesReaderBuilder extends ConfigurationReaderBuilder
 
     @Override
     public ConfigurationReader create(File configurationFile) {
-        return new PropertiesURLReader(configurationFile);
+        return new PropertiesURLReader(configurationFile, true);
     }
 
 }
