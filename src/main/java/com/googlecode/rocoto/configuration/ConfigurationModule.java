@@ -15,6 +15,7 @@
  */
 package com.googlecode.rocoto.configuration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +26,7 @@ import com.google.inject.Key;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.name.Names;
 import com.googlecode.rocoto.configuration.resolver.PropertiesResolver;
+import com.googlecode.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
 /**
  * 
@@ -38,6 +40,34 @@ public class ConfigurationModule extends AbstractModule {
 
     public final ConfigurationModule addConfigurationReader(ConfigurationReader configurationReader) {
         this.readers.add(configurationReader);
+        return this;
+    }
+
+    public final ConfigurationModule addConfigurationReader(File configurationFile, ConfigurationReaderBuilder...builders) {
+        if (configurationFile == null) {
+            throw new IllegalArgumentException("'toScan' argument can't be null");
+        }
+
+        if (!configurationFile.exists()) {
+            throw new RuntimeException("Impossible to load configuration file '"
+                    + configurationFile
+                    + " because it doesn't exist");
+        }
+
+        if (configurationFile.isDirectory()) {
+            for (File file : configurationFile.listFiles()) {
+                this.addConfigurationReader(file, builders);
+            }
+
+            return this;
+        }
+
+        for (ConfigurationReaderBuilder builder : builders) {
+            if (builder.accept(configurationFile)) {
+                this.addConfigurationReader(builder.create(configurationFile));
+            }
+        }
+
         return this;
     }
 
