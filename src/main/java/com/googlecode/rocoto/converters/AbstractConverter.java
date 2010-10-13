@@ -27,7 +27,7 @@ import com.google.inject.spi.TypeConverter;
  * @version $Id$
  * @param <T>
  */
-abstract class AbstractConverter<T> extends TypeLiteral<T> implements Module, TypeConverter {
+public abstract class AbstractConverter<T> extends TypeLiteral<T> implements Module, TypeConverter {
 
     /**
      * {@inheritDoc}
