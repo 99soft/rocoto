@@ -87,7 +87,7 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
         }
 
         try {
-            this.url = file.toURL();
+            this.url = file.toURI().toURL();
         } catch (MalformedURLException e) {
             throw new RuntimeException("Impossible to load properties file '"
                     + file.getAbsolutePath()
