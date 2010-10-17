@@ -105,6 +105,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <javac.src.version>1.5</javac.src.version>
+        <javac.target.version>1.5</javac.target.version>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ssZ</maven.build.timestamp.format>
     </properties>
 
     <dependencies>
@@ -263,7 +266,10 @@
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                         <manifestEntries>
-                            <Implementation-Build>${buildNumber}</Implementation-Build>
+                            <Implementation-Build>r${buildNumber}</Implementation-Build>
+                            <Implementation-Build-Date>${maven.build.timestamp}</Implementation-Build-Date>
+                            <X-Compile-Source-JDK>${javac.src.version}</X-Compile-Source-JDK>
+                            <X-Compile-Target-JDK>${javac.target.version}</X-Compile-Target-JDK>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -306,8 +312,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.0.2</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>${javac.src.version}</source>
+                    <target>${javac.target.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
