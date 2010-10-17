@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.googlecode.rocoto.configuration.internal.KeyValue;
+
 /**
  * 
  * @author Simone Tripodi

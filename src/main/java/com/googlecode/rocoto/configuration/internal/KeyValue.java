@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package com.googlecode.rocoto.configuration.internal;
 
 import java.util.Map.Entry;
 
@@ -23,7 +23,7 @@ import java.util.Map.Entry;
  * @since 4.0
  * @version $Id$
  */
-final class KeyValue implements Entry<String, String> {
+public final class KeyValue implements Entry<String, String> {
 
     private final String key;
 

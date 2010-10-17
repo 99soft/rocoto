@@ -22,6 +22,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import com.googlecode.rocoto.configuration.internal.AbstractConfigurationURLReader;
+
 /**
  * 
  * @author Simone Tripodi
