@@ -276,7 +276,7 @@
                                     <message>Best Practice is to always define plugin versions!</message>
                                     <banLatest>true</banLatest>
                                     <banRelease>true</banRelease>
-                                    <banSnapshots>false</banSnapshots>
+                                    <banSnapshots>true</banSnapshots>
                                     <phases>clean,deploy,site</phases>
                                 </requirePluginVersions>
                             </rules>
@@ -387,7 +387,7 @@
                     <plugin>
                         <groupId>com.googlecode.maven-gcu-plugin</groupId>
                         <artifactId>maven-gcu-plugin</artifactId>
-                        <version>1.1-SNAPSHOT</version>
+                        <version>1.1</version>
                         <executions>
                             <execution>
                                 <phase>deploy</phase>
