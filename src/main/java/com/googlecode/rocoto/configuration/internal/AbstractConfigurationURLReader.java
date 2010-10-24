@@ -28,7 +28,7 @@ import java.util.Map.Entry;
 import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
- * Abstract reusable reader able to read configuration files from classpath, file system or URls.
+ * Abstract reusable reader able to read configuration files from classpath, file system or URLs.
  *
  * @author Simone Tripodi
  * @since 4.0
