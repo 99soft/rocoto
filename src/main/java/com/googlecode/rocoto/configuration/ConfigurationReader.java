@@ -19,7 +19,9 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * 
+ * A configuration reader is an object able to read configuration
+ * files from classpath, file system or URLs.
+ *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
@@ -27,8 +29,9 @@ import java.util.Map.Entry;
 public interface ConfigurationReader {
 
     /**
-     * 
-     * @return
+     * Read the configuration file iterating over the configuration properties.
+     *
+     * @return the configuration properties iterator.
      */
     Iterator<Entry<String, String>> readConfiguration() throws Exception;
 

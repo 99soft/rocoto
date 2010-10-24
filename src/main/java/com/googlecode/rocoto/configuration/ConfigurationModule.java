@@ -29,20 +29,40 @@ import com.googlecode.rocoto.configuration.resolver.PropertiesResolver;
 import com.googlecode.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
 /**
- * 
+ * The ConfigurationModule simplifies the task of loading configurations in Google Guice.
+ *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
 public class ConfigurationModule extends AbstractModule {
 
+    /**
+     * The configuration readers list, in the user specified order.
+     */
     private final List<ConfigurationReader> readers = new ArrayList<ConfigurationReader>();
 
+    /**
+     * Add a configuration reader.
+     *
+     * @param configurationReader the configuration reader.
+     * @return this ConfigurationModule instance.
+     */
     public final ConfigurationModule addConfigurationReader(ConfigurationReader configurationReader) {
         this.readers.add(configurationReader);
         return this;
     }
 
+    /**
+     * Allows adding configuration files automatically by traversing a directory; while scanning the dir,
+     * if the current analyzed file satisfies one of more of the given {@link ConfigurationReaderBuilder}s
+     * requirements, then a related {@link ConfigurationReader} will be built based on the configuration
+     * file and added in the readers list.
+     *
+     * @param configurationFile the directory has to be traversed.
+     * @param builders the {@link ConfigurationReaderBuilder} list involved in the directory traversing.
+     * @return this ConfigurationModule instance.
+     */
     public final ConfigurationModule addConfigurationReader(File configurationFile, ConfigurationReaderBuilder...builders) {
         if (configurationFile == null) {
             throw new IllegalArgumentException("'toScan' argument can't be null");
