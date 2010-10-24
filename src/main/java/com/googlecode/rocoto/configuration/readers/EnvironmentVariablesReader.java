@@ -21,7 +21,8 @@ import java.util.Map.Entry;
 import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
- * 
+ * Environment variable reader.
+ *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$

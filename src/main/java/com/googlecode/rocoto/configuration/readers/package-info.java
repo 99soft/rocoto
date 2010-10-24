@@ -15,7 +15,7 @@
  */
 
 /**
- * 
+ * Basic {@link com.googlecode.rocoto.configuration.ConfigurationReader} implementations.
  *
  * @author Simone Tripodi
  * @since 4.0

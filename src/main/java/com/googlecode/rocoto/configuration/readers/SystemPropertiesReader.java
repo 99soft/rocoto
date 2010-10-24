@@ -16,13 +16,17 @@
 package com.googlecode.rocoto.configuration.readers;
 
 /**
- * 
+ * Java system properties reader.
+ *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
 public final class SystemPropertiesReader extends PropertiesReader {
 
+    /**
+     * Creates a new Java system properties reader.
+     */
     public SystemPropertiesReader() {
         super(System.getProperties());
     }

@@ -22,25 +22,56 @@ import java.util.Map.Entry;
 import com.googlecode.rocoto.configuration.internal.KeyValue;
 
 /**
- * 
+ * Simple iterator of a {@code Map<K, V>} entries, with the option of prefixing keys
+ * with the given prefix.
+ *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
 final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> {
 
+    /**
+     * Creates a new iterator over a map configuration without prefixing the keys.
+     *
+     * @param <K> the map entry key type.
+     * @param <V> the map entry value type.
+     * @param properties the map configuration has to be read.
+     * @return a map confguration iterator.
+     */
     public static final <K, V> PropertiesIterator<K, V> createNew(Map<K, V> properties) {
         return createNew(null, properties);
     }
 
+    /**
+     * Creates a new iterator over a map configuration with prefixing the keys with the given prefix.
+     *
+     * @param <K> the map entry key type.
+     * @param <V> the map entry value type.
+     * @param keyPrefix the prefix for key entries.
+     * @param properties the map configuration has to be read.
+     * @return a map confguration iterator.
+     */
     public static final <K, V> PropertiesIterator<K, V> createNew(String keyPrefix, Map<K, V> properties) {
         return new PropertiesIterator<K, V>(keyPrefix, properties);
     }
 
+    /**
+     * The key prefix.
+     */
     private final String keyPrefix;
 
+    /**
+     * The wrapped configuration iterator.
+     */
     private final Iterator<Entry<K, V>> propertiesIterator;
 
+    /**
+     * Creates a new properties iterator.
+     *
+     * @param keyPrefix the key prefix. It can be {@code null}.
+     * @param properties the wrapped configuration.
+     */
     private PropertiesIterator(String keyPrefix, Map<K, V> properties) {
         this.keyPrefix = keyPrefix;
         this.propertiesIterator = properties.entrySet().iterator();

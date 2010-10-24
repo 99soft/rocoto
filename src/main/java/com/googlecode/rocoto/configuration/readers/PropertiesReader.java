@@ -22,19 +22,31 @@ import java.util.Properties;
 import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
- * 
+ * Simple {@link Properties} reader adapter.
+ *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
 public class PropertiesReader implements ConfigurationReader {
 
+    /**
+     * The properties have to be read.
+     */
     private final Properties properties;
 
+    /**
+     * Creates a new properties reader adapter.
+     *
+     * @param properties the properties have to be read.
+     */
     public PropertiesReader(Properties properties) {
         this.properties = properties;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Iterator<Entry<String, String>> readConfiguration() throws Exception {
         return PropertiesIterator.createNew(this.properties);
     }
