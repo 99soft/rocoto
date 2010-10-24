@@ -119,9 +119,7 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
     }
 
     /**
-     * Reads the configuration file iterating over the configuration properties.
-     *
-     * @return the configuration properties iterator.
+     * {@inheritDoc}
      */
     public final Iterator<Entry<String, String>> readConfiguration() throws Exception {
         URLConnection connection = null;
