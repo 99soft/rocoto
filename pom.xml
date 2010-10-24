@@ -457,7 +457,7 @@
 
     <profiles>
         <profile>
-            <id>release</id>
+            <id>deloy</id>
             <build>
                 <plugins>
                     <plugin>
