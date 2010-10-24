@@ -18,7 +18,8 @@ package com.googlecode.rocoto.configuration.resolver;
 import com.google.inject.Injector;
 
 /**
- * 
+ * Appender implementations have the task to resolve variables
+ * and append text to the given buffer.
  *
  * @author Simone Tripodi
  * @since 4.0
@@ -26,6 +27,13 @@ import com.google.inject.Injector;
  */
 interface Appender {
 
+    /**
+     * Resolve variables from the injector, if needed,
+     * and append the result to the given buffer.
+     *
+     * @param buffer the buffer to append text
+     * @param injector the injector used to resolve variables.
+     */
     void append(StringBuilder buffer, Injector injector);
 
 }

@@ -32,17 +32,37 @@ import com.google.inject.Provider;
  */
 public final class PropertiesResolver implements Provider<String> {
 
+    /**
+     * The symbol that indicates a variable begin.
+     */
     private static final String VAR_BEGIN = "$";
 
+    /**
+     * The symbol that separates the key name to the default value.
+     */
     private static final String PIPE_SEPARATOR = "|";
 
+    /**
+     * The appenders list have to be invoked when resolving variables, in the given order.
+     */
     private final List<Appender> appenders = new ArrayList<Appender>();
 
+    /**
+     * Flag to indicate the text fragment contains ${} keys.
+     */
     private boolean containsKeys = false;
 
+    /**
+     * The Injector instance used to resolve variables.
+     */
     @Inject
     private Injector injector;
 
+    /**
+     * Creates a new properties resolver instance.
+     *
+     * @param pattern the text fragment has to be parsed and extract keys.
+     */
     public PropertiesResolver(final String pattern) {
         int prev = 0;
         int pos;
@@ -94,8 +114,9 @@ public final class PropertiesResolver implements Provider<String> {
     }
 
     /**
-     * 
-     * @param injector
+     * Set the Injector instance used to resolve variables.
+     *
+     * @param injector the Injector instance used to resolve variables.
      */
     public void setInjector(Injector injector) {
         this.injector = injector;

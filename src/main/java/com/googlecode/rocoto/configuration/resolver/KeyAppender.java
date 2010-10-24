@@ -20,7 +20,10 @@ import com.google.inject.Key;
 import com.google.inject.name.Names;
 
 /**
- * 
+ * {@link Appender} implementation that resolve the ${} variables
+ * and append the result to the given buffer; if the variable
+ * won't be resolved, the default value, if any, will be used,
+ * otherwise 
  *
  * @author Simone Tripodi
  * @since 4.0
@@ -28,20 +31,42 @@ import com.google.inject.name.Names;
  */
 final class KeyAppender implements Appender {
 
+    /**
+     * The key prefix, in its unresolved form.
+     */
     private static final String KEY_PREFIX = "${";
 
+    /**
+     * The key has to be resolved.
+     */
     private final String key;
 
+    /**
+     * The default value used if the key won't be resolved.
+     */
     private final String defaultValue;
 
+    /**
+     * The {@code ToString} key form.
+     */
     private final String toString;
 
+    /**
+     * Creates a new KeyAppender with a property
+     * key name and the default value.
+     *
+     * @param key the property key name.
+     * @param defaultValue the property default value.
+     */
     public KeyAppender(final String key, final String defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;
         this.toString = KEY_PREFIX + this.key + '}';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void append(StringBuilder buffer, Injector injector) {
         try {
             buffer.append(injector.getInstance(Key.get(String.class, Names.named(this.key))));
@@ -54,6 +79,9 @@ final class KeyAppender implements Appender {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return this.toString;
