@@ -16,7 +16,6 @@
 package com.googlecode.rocoto.configuration.traversal;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +28,7 @@ import com.googlecode.rocoto.configuration.ConfigurationReader;
  * @author Simone Tripodi
  * @version $Id$
  */
-public abstract class ConfigurationReaderBuilder implements FileFilter {
+public abstract class ConfigurationReaderBuilder {
 
     private static final String DEFAULT_PATH_SEPARATOR = "/";
 
