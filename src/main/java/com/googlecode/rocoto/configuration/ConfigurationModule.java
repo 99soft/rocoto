@@ -65,19 +65,20 @@ public class ConfigurationModule extends AbstractModule {
      */
     public final ConfigurationModule addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
         if (configurationsDir == null) {
-            throw new IllegalArgumentException("'toScan' argument can't be null");
+            throw new IllegalArgumentException("'configurationsDir' argument can't be null");
         }
-
         if (!configurationsDir.exists()) {
-            throw new RuntimeException("Impossible to load configuration file '"
+            throw new RuntimeException("Impossible to load configurations directory '"
                     + configurationsDir
-                    + " because it doesn't exist");
+                    + "' because it doesn't exist");
         }
-
         if (!configurationsDir.isDirectory()) {
             throw new RuntimeException("Impossible to traverse '"
                     + configurationsDir
                     + "' because it is not a directory");
+        }
+        if (builders == null || builders.length == 0) {
+            throw new RuntimeException("At least one ConfigurationReaderBuilder is required");
         }
 
         for (File file : configurationsDir.listFiles()) {
