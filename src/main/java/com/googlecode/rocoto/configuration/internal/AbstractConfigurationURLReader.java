@@ -91,6 +91,11 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
                     + file.getAbsolutePath()
                     + " because it doesn't exist");
         }
+        if (file.isDirectory()) {
+            throw new RuntimeException("Impossible to read file '"
+                    + file.getAbsolutePath()
+                    + " because it is a directory");
+        }
 
         try {
             this.url = file.toURI().toURL();
