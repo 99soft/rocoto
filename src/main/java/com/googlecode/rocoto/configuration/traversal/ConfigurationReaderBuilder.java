@@ -38,19 +38,15 @@ public abstract class ConfigurationReaderBuilder {
 
     private static final char ONE_CHAR = '?';
 
-    private final String configurationFilePattern;
-
     /**
      * This class logger.
      */
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
+    private final String configurationFilePattern;
+
     public ConfigurationReaderBuilder(String configurationFilePattern) {
         this.configurationFilePattern = configurationFilePattern;
-    }
-
-    public final String getConfigurationFilePattern() {
-        return this.configurationFilePattern;
     }
 
     /**
