@@ -59,32 +59,36 @@ public class ConfigurationModule extends AbstractModule {
      * requirements, then a related {@link ConfigurationReader} will be built based on the configuration
      * file and added in the readers list.
      *
-     * @param configurationFile the directory has to be traversed.
+     * @param configurationsDir the directory has to be traversed.
      * @param builders the {@link ConfigurationReaderBuilder} list involved in the directory traversing.
      * @return this ConfigurationModule instance.
      */
-    public final ConfigurationModule addConfigurationReader(File configurationFile, ConfigurationReaderBuilder...builders) {
-        if (configurationFile == null) {
+    public final ConfigurationModule addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
+        if (configurationsDir == null) {
             throw new IllegalArgumentException("'toScan' argument can't be null");
         }
 
-        if (!configurationFile.exists()) {
+        if (!configurationsDir.exists()) {
             throw new RuntimeException("Impossible to load configuration file '"
-                    + configurationFile
+                    + configurationsDir
                     + " because it doesn't exist");
         }
 
-        if (configurationFile.isDirectory()) {
-            for (File file : configurationFile.listFiles()) {
-                this.addConfigurationReader(file, builders);
-            }
-
-            return this;
+        if (!configurationsDir.isDirectory()) {
+            throw new RuntimeException("Impossible to traverse '"
+                    + configurationsDir
+                    + "' because it is not a directory");
         }
 
-        for (ConfigurationReaderBuilder builder : builders) {
-            if (builder.accept(configurationFile)) {
-                this.addConfigurationReader(builder.create(configurationFile));
+        for (File file : configurationsDir.listFiles()) {
+            if (file.isDirectory()) {
+                this.addConfigurationReader(file, builders);
+            } else {
+                for (ConfigurationReaderBuilder builder : builders) {
+                    if (builder.accept(file)) {
+                        this.addConfigurationReader(builder.create(file));
+                    }
+                }
             }
         }
 
