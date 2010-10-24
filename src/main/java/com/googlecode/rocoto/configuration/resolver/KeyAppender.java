@@ -47,11 +47,6 @@ final class KeyAppender implements Appender {
     private final String defaultValue;
 
     /**
-     * The {@code ToString} key form.
-     */
-    private final String toString;
-
-    /**
      * Creates a new KeyAppender with a property
      * key name and the default value.
      *
@@ -61,7 +56,6 @@ final class KeyAppender implements Appender {
     public KeyAppender(final String key, final String defaultValue) {
         this.key = key;
         this.defaultValue = defaultValue;
-        this.toString = KEY_PREFIX + this.key + '}';
     }
 
     /**
@@ -74,7 +68,7 @@ final class KeyAppender implements Appender {
             if (this.defaultValue != null) {
                 buffer.append(this.defaultValue);
             } else {
-                buffer.append(this.toString);
+                buffer.append(KEY_PREFIX).append(this.key).append('}');
             }
         }
     }
@@ -84,7 +78,12 @@ final class KeyAppender implements Appender {
      */
     @Override
     public String toString() {
-        return this.toString;
+        StringBuilder builder = new StringBuilder(KEY_PREFIX).append(this.key);
+        if (this.defaultValue != null) {
+            builder.append('|').append(this.defaultValue);
+        }
+        builder.append('}');
+        return builder.toString();
     }
 
 }
