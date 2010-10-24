@@ -28,7 +28,7 @@ import java.util.Map.Entry;
 import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
- * 
+ * Abstract reusable reader able to read configuration files from classpath, file system or URls.
  *
  * @author Simone Tripodi
  * @since 4.0
@@ -36,20 +36,25 @@ import com.googlecode.rocoto.configuration.ConfigurationReader;
  */
 public abstract class AbstractConfigurationURLReader implements ConfigurationReader {
 
+    /**
+     * The URL has to be open.
+     */
     private final URL url;
 
     /**
-     * 
-     * @param classpathResource
+     * Create a new reader of a classpath resource using the current thread classloader.
+     *
+     * @param classpathResource the classpath resource has to be read.
      */
     public AbstractConfigurationURLReader(String classpathResource) {
         this(classpathResource, Thread.currentThread().getContextClassLoader());
     }
 
     /**
-     * 
-     * @param classpathResource
-     * @param classLoader
+     * Create a new reader of a classpath resource using the given classloader.
+     *
+     * @param classpathResource the classpath resource has to be read.
+     * @param classLoader the class loader to read the resource.
      */
     public AbstractConfigurationURLReader(String classpathResource, ClassLoader classLoader) {
         if (classpathResource == null) {
@@ -73,8 +78,9 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
     }
 
     /**
-     * 
-     * @param file
+     * Create a new reader of a resource in the file system.
+     *
+     * @param file the resource in the file system.
      */
     public AbstractConfigurationURLReader(File file) {
         if (file == null) {
@@ -96,8 +102,9 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
     }
 
     /**
-     * 
-     * @param url
+     * Create a new reader of a resource located in the given URL.
+     *
+     * @param url the URL that locates the configuration resource.
      */
     public AbstractConfigurationURLReader(URL url) {
         if (url == null) {
@@ -107,8 +114,9 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
     }
 
     /**
-     * 
-     * @return
+     * Reads the configuration file iterating over the configuration properties.
+     *
+     * @return the configuration properties iterator.
      */
     public final Iterator<Entry<String, String>> readConfiguration() throws Exception {
         URLConnection connection = null;
@@ -133,9 +141,11 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
     }
 
     /**
-     * 
-     * @param input
-     * @throws IOException
+     * Reads the configuration properties from the given input stream 
+     *
+     * @param input the stream from which the configuration has to be read.
+     * @throws IOException if any error occurs while reading the stream.
+     * @return  the configuration properties iterator.
      */
     protected abstract Iterator<Entry<String, String>> process(InputStream input) throws Exception;
 

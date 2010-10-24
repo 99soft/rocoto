@@ -18,17 +18,30 @@ package com.googlecode.rocoto.configuration.internal;
 import java.util.Map.Entry;
 
 /**
- * 
+ * A simple {@code Entry<String, String>} implementation.
+ *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
 public final class KeyValue implements Entry<String, String> {
 
+    /**
+     * The entry key.
+     */
     private final String key;
 
+    /**
+     * The entry value.
+     */
     private final String value;
 
+    /**
+     * Creates a new {@code Entry<String, String>}.
+     *
+     * @param key the entry key.
+     * @param value the entry value.
+     */
     public KeyValue(String key, String value) {
         this.key = key;
         this.value = value;
