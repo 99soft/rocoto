@@ -23,7 +23,10 @@ import java.util.logging.Logger;
 import com.googlecode.rocoto.configuration.ConfigurationReader;
 
 /**
- * 
+ * The configuration reader builder creates {@link ConfigurationReader} instances if
+ * the given file name matches with the user specified pattern.
+ *
+ * Part of this code has been kindly borrowed from Apache Ant and Spring Framework.
  *
  * @author Simone Tripodi
  * @version $Id$
@@ -43,8 +46,16 @@ public abstract class ConfigurationReaderBuilder {
      */
     private final Logger logger = Logger.getLogger(this.getClass().getName());
 
+    /**
+     * The configuration file pattern.
+     */
     private final String configurationFilePattern;
 
+    /**
+     * Creates a new configuration reader builder given the configuration file pattern.
+     *
+     * @param configurationFilePattern the configuration file pattern.
+     */
     public ConfigurationReaderBuilder(String configurationFilePattern) {
         this.configurationFilePattern = configurationFilePattern;
     }
@@ -61,18 +72,18 @@ public abstract class ConfigurationReaderBuilder {
     }
 
     /**
-     * 
+     * Creates a new {@link ConfigurationReader} given the input file.
      *
-     * @param configurationFile
-     * @return
+     * @param configurationFile the file to read.
+     * @return a new {@link ConfigurationReader} instance.
      */
     public abstract ConfigurationReader create(File configurationFile);
 
     /**
      * Check if a file name matches with the Pattern.
      *
-     * @param file
-     * @param pattern
+     * @param pattern the configuration file pattern.
+     * @param path the current file path.
      * @return true if the supplied path matched, false otherwise.
      */
     private static boolean match(String pattern, String path, boolean fullMatch) {
