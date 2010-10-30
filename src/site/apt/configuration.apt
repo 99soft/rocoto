@@ -24,13 +24,19 @@
 ~~author: Simone Tripodi
 ~~version: $Id$
 
-The Simple Configuration module
+The Configuration module
 
-  The <Simple Configuration> module is a dependencies-less, light yet powerful <Guice> module to easy load
+  The <Configuration> module is a dependencies-less, light yet powerful <Guice> module to easy load
   configuration properties and bing them to the <Guice Binder>.
 
-  Users ready to load configuration files, have to create first the module;
-  once configured, is it possible to create your Guice Injector:
+  The first concept users have to get familiar is the <ConfigurationReader>, an object able to
+  read a generic configuration file in any format, that iterates over the key/value
+  configuration entries.
+
+  
+
+  Users are now ready to load configuration files, but first have to create the module;
+  once plugged the <ConfigurationReader>s, is it possible to create the Guice Injector:
 
 +--------------------------------------+
 import com.google.inject.Guice;

@@ -33,24 +33,24 @@
         <href>${project.url}/index.html</href>
     </bannerLeft>
 
-    <version position="left"/>
+    <version position="left" />
 
     <body>
         <menu name="${project.name}">
-            <item name="Home" href="index.html"/>
-            <item name="Simple Configuration" href="simple-configuration.html"/>
-            <item name="Converters" href="converters.html"/>
+            <item name="Home" href="index.html" />
+            <item name="Configuration" href="configuration.html" />
+            <item name="Converters" href="converters.html" />
         </menu>
 
         <menu name="Miscellaneous">
-            <item name="Project stats" href="stats.html"/>
+            <item name="Project stats" href="stats.html" />
         </menu>
 
-        <menu ref="reports"/>
+        <menu ref="reports" />
 
         <menu name="External Links">
-            <item name="Project Page" href="http://code.google.com/p/rocoto/"/>
-            <item name="Google Guice" href="http://code.google.com/p/google-guice/"/>
+            <item name="Project Page" href="http://code.google.com/p/rocoto/" />
+            <item name="Google Guice" href="http://code.google.com/p/google-guice/" />
         </menu>
     </body>
 
