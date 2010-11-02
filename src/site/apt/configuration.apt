@@ -26,99 +26,120 @@
 
 The Configuration module
 
-  The <Configuration> module is a dependencies-less, light yet powerful <Guice> module to easy load
-  configuration properties and bing them to the <Guice Binder>.
+  The <ConfigurationModule> is a dependencies-less but open to support 3rd party libraries,
+  light yet powerful <Guice> module to easy load configurations and bind them to the <Guice Binder>.
 
   The first concept users have to get familiar is the <ConfigurationReader>, an object able to
   read a generic configuration file in any format, that iterates over the key/value
-  configuration entries.
+  configuration entries; by default, Rocoto comes with following <ConfigurationReader>s:
 
-  
+  * <<<com.googlecode.rocoto.configuration.readers.PropertiesReader>>> that simply iterates over
+    <<<java.util.Properties>>> properties;
 
-  Users are now ready to load configuration files, but first have to create the module;
+  * <<<com.googlecode.rocoto.configuration.readers.PropertiesURLReader>>> loads <<<java.util.Properties>>>
+  in both <<<.properties>>> and <<<.xml>>> formats from Class Path, File System and URL;
+
+  * <<<com.googlecode.rocoto.configuration.readers.SystemPropertiesReader>>> iterates over
+    <<<System.getProperties()>>> entries;
+
+  * <<<com.googlecode.rocoto.configuration.readers.EnvironmentVariablesReader>>> iterates over
+    <<<System.getenv()>>> entries;
+
+  With these tools users are now ready to load configuration files, but first have to create the module;
   once plugged the <ConfigurationReader>s, is it possible to create the Guice Injector:
 
 +--------------------------------------+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule;
+import com.googlecode.rocoto.configuration.ConfigurationModule;
 
 ...
 
-SimpleConfigurationModule configurationModule = new SimpleConfigurationModule();
-/*
- * adds your configuration files
- */
+ConfigurationModule configurationModule = new ConfigurationModule();
+// load environments variables
+configurationModule.addConfigurationReader(new EnvironmentVariablesReader())
+// load system properties
+configurationModule.addConfigurationReader(new SystemPropertiesReader());
+// load a class path properties resource
+configurationModule.addConfigurationReader(
+    new PropertiesURLReader("/com/googlecode/rocoto/simpleconfig/ldap.properties"));
+// now create the Injector
 Injector injector = Guice.createInjector(configurationModule,
     ...
 );
 +--------------------------------------+
 
-  Finally, users can access to configuration parameters throug the
-  <<<@com.google.inject.name.Named>>> annotation.
+  Now users can access to configuration parameters through the <<<@com.google.inject.name.Named>>> annotation.
 
-* Adding properties files from Classpath
+  <<NOTE>> properties load via <<<EnvironmentVariablesReader>>> will be referred with the <<<env.>>> prefix.
 
-  In many cases developers are used to include their properties file into wars
-  or jars, then reloading them from the classpath.
+* Implementing your own configuration loader
 
-  The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> offers a set of
-  methods that simplifies that loading operation, by specifying the full
-  qualified classpath resource name:
+  If users want to load configuration files in different format, all they have to do is implementing
+  the <<<com.googlecode.rocoto.configuration.ConfigurationReader>>> interface:
 
 +--------------------------------------+
-module.addProperties("com/acme/jdbc.properties");
-module.addProperties("/com/acme/ldap.properties");
+class INIReader implements ConfigurationReader {
+
+    /**
+     * {@inheritDoc}
+     */
+    public Iterator<Entry<String, String>> readConfiguration() throws Exception {
+        return // next INI configuration entry
+    }
+
+}
 +--------------------------------------+
 
-  If needed, users can also specify the <<<ClassLoader>>> needed to load the
-  pointed resource(s):
+  If users want to read their configuration files from Class Path, File System or URL, to help respecting the DRY
+  principle, Rocoto provides the <<<com.googlecode.rocoto.configuration.internal.AbstractConfigurationURLReader>>>:
 
 +--------------------------------------+
-ClassLoader myClassLoader = [...];
-...
-module.addProperties("com/acme/jdbc.properties", myClassLoader);
-module.addProperties("/com/acme/ldap.properties", myClassLoader);
+class INIReader extends AbstractConfigurationURLReader {
+
+    public INIReader(String classpathResource) {
+        super(classpathResource);
+    }
+
+    public INIReader(String classpathResource, ClassLoader classLoader) {
+        super(classpathResource, classLoader);
+    }
+
+    public INIReader(File file) {
+        super(file);
+    }
+
+    public INIReader(URL url) {
+        super(url);
+    }
+
+    @Override
+    protected Iterator<Entry<String, String>> process(InputStream input) throws Exception {
+        // implement your logic here!!!
+    }
+
+}
 +--------------------------------------+
 
-  The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
-  <XML> definition of properties file:
+* Adding configuration files by traversing the File System
 
-+--------------------------------------+
-module.addXMLProperties("com/acme/jdbc.xml");
-module.addXMLProperties("/com/acme/ldap.xml");
-+--------------------------------------+
+  The <<<com.googlecode.rocoto.configuration.ConfigurationModule>>> is able to load automatically
+  configuration files from the file system by specifying the <<<java.io.File>>> root location; since
+  configuration files can be represented in different formats, Rocoto let users handle files via one or more
+  <<<com.googlecode.rocoto.configuration.traversal.ConfigurationReaderBuilder>>>s, an element that
+  recognizes the traversed file from the path name pattern and creates the relative <<<ConfigurationReader>>>
 
-  and, of course, also for <XML> it is possible to specify the <<<ClassLoader>>>:
+  By default, Rocoto comes with following <<<ConfigurationReaderBuilder>>> implementations:
 
-+--------------------------------------+
-ClassLoader myClassLoader = [...];
-...
-module.addXMLProperties("com/acme/jdbc.xml", myClassLoader);
-module.addXMLProperties("/com/acme/ldap.xml", myClassLoader);
-+--------------------------------------+
+  * <<<com.googlecode.rocoto.configuration.traversal.PropertiesReaderBuilder>>> that handles <<<**/*.properties>>> files
+    during the directory traversal;
+  * <<<com.googlecode.rocoto.configuration.traversal.XMLPropertiesReaderBuilder>>> that handles <<<**/*.xml>>> files
+    during the directory traversal and threat them as <<<java.util.Properties>>> in the XML format.
 
-* Adding Properties files from the FileSystem
+  Please note that the previous builders are NOT activated automatically in the module.
 
-  The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> is able to load
-  typical and <XML> properties files from the filesystem by specifying the
-  <<<java.io.File>>> location:
-
-+--------------------------------------+
-import java.io.File;
-...
-module.addProperties(new File("etc/com/acme/jdbc.properties"));
-module.addProperties(new File("etc/com/acme/ldap.xml"));
-+--------------------------------------+
-
-  By default, using this API, files wich name matches with <<<**/*.properties>>>
-  pattern will be threated as typical properties files, <<<**/*.xml>>> instead as
-  <XML> properties definition.
-
-  If the specified <<<java.io.File>>> is a directory, it will be traversed
-  looking for <<<**/*.properties>>> and <<<**/*.xml>>> properties files and will
-  be loaded in the configuration; given the following directory:
+  Let's have a look how it works; given the following directory:
 
 +--------------------------------------+
 etc
@@ -130,24 +151,58 @@ etc
 |   |       |-- memcached.xml
 |   |       `-- should-be-ignored.txt
 |   `-- should-be-ignored.txt
-|-- ibatis.properties
+|-- mybatis.properties
 `-- should-be-ignored.txt
 +--------------------------------------+
 
-  all txt files will be ignored, all others will be load as properties files.
-
-  Users can customize the default behavior of properties files pattern matching,
-  by specifying their <<<com.googlecode.rocoto.simpleconfig.AbstractPropertiesFileFilter>>>
-  implementation, where it is possible specifying the files patterns:
+  users can traverse the <<<etc>>> directory in that way:
 
 +--------------------------------------+
-import com.googlecode.rocoto.simpleconfig.AbstractPropertiesFileFilter;
+import com.googlecode.rocoto.configuration.ConfigurationModule;
 
 ...
-module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
-    "**/*.config", // specify here the 'old-style' properties file pattern
-    "**/*.p?ml" // specify here the XML properties file pattern
-) {});
+
+ConfigurationModule configurationModule = new ConfigurationModule();
+configurationModule.addConfigurationReader(new File("etc"),
+    new PropertiesReaderBuilder(),
+    new XMLPropertiesReaderBuilder());
++--------------------------------------+
+
+  to speed up operations, users are encouraged to define all the builders for the same directory traversal.
+
+  Of course, users will have the need to handle configuration files also in different format to <<<.properties> or
+  <<<.xml>>> version of <<<java.util.Properties>>>, so to handle that their own type they have to define a new
+  <<<ConfigurationReaderBuilder>>>:
+
++--------------------------------------+
+class INIReaderBuilder extends ConfigurationReaderBuilder {
+
+    private static final String INI_PATTERN = "**/*.ini";
+
+    public INIReaderBuilder() {
+        super(INI_PATTERN);
+    }
+
+    @Override
+    public ConfigurationReader create(File configurationFile) {
+        return new INIReader(configurationFile);
+    }
+
+}
++--------------------------------------+
+
+  and now they can add the builder in the directory traversal operation:
+
++--------------------------------------+
+import com.googlecode.rocoto.configuration.ConfigurationModule;
+
+...
+
+ConfigurationModule configurationModule = new ConfigurationModule();
+configurationModule.addConfigurationReader(new File("etc"),
+    new PropertiesReaderBuilder(),
+    new XMLPropertiesReaderBuilder(),
+    new INIReaderBuilder());
 +--------------------------------------+
 
   As described earlier, patterns are used for the inclusion and exclusion of
@@ -159,59 +214,9 @@ module.addProperties(new File("etc"), new AbstractPropertiesFileFilter(
   * <<<*>>> matches zero or more characters;
   * <<<?>>> matches one character.
 
-* Adding Properties files from URLs
-
-  The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> also supports the
-  properties loading from URLs, by specifying the <<<java.net.URL>>>:
-
-+--------------------------------------+
-import java.net.URL;
-...
-module.addProperties(new URL("http://acme.com/config/jdbc.properties"));
-module.addXMLProperties(new URL("http://acme.com/config/ldap.xml"));
-+--------------------------------------+
-
-* Adding Java System Properties
-
-  In many cases users need to access to Java System Properties by invoking
-  <<<System.getProperty("java.version")>>> or <<<System.getProperties()>>>.
-
-  By enabling them to the configuration module, users can replace the Java System
-  Properties retrieving operation with the Dependency Injection:
-
-+--------------------------------------+
-...
-module.addSystemProperties();
-+--------------------------------------+
-
-  Java System Properties  can be referenced as:
-
-+--------------------------------------+
-user.os=${os.name} ${os.version} (${os.arch})
-+--------------------------------------+
-
-* Adding Environment Variables
-
-  In Java5 the Environment Variables are accessible through <<<System.getenv()>>>
-  and <<<System.getenv("JAVA_HOME")>>>; like for Java System Properties, users
-  can adding Environment Variables simply by invoking:
-
-+--------------------------------------+
-...
-module.addEnvironmentVariables();
-+--------------------------------------+
-
-  By default Environment Variables will be referenced into the configuration
-  with the <<<env.>>> prefix, so in the <<<*.properties>>> files they can be
-  referenced as:
-
-+--------------------------------------+
-user.home=${env.HOME}
-+--------------------------------------+
-
 * $\{\}, the <Apache Ant> variables style
 
-  The <<<com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule>>> supports the well
+  The <<<com.googlecode.rocoto.configuration.ConfigurationModule>>> supports the well
   known <$\{\}> expression to define placeholders, which scope is the whole
   configuration, that means that users can define some commons properties in one
   properties file:
@@ -271,21 +276,22 @@ JDBC.schema=rocoto
   Users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}
   but take care that loading properties using this method <$\{\}> expressions won't be resolved at all.
   On the other side, specified properties in that way will be used to resolve
-  <$\{\}> expressions in properties using the <<<SimpleConfigurationModule>>>.
+  <$\{\}> expressions in properties using the <<<ConfigurationModule>>>.
 
 * Chaining methods
 
-  In order to make simpler the <<<SimpleConfigurationModule>>> creation,
-  since version 3.1 users can chain <<<SimpleConfigurationModule>>> methods:
+  In order to make simpler the <<<ConfigurationModule>>> creation, users can chain <<<ConfigurationModule>>> methods:
 
 +--------------------------------------+
-Injector injector = Guice.createInjector(new SimpleConfigurationModule()
-    .addProperties("/com/acme/ldap.properties")
-    .addProperties(new File("etc/com/acme/jdbc.properties"))
-    .addXMLProperties(new URL("http://acme.com/config/ldap.xml"))
-    .addSystemProperties()
-    .addEnvironmentVariables(),
-    ...
+Injector injector = Guice.createInjector(new ConfigurationModule()
+    .addConfigurationReader(new File("etc"),
+        new PropertiesReaderBuilder(),
+        new XMLPropertiesReaderBuilder(),
+        new INIReaderBuilder())
+    .addConfigurationReader(new EnvironmentVariablesReader())
+    .addConfigurationReader(new SystemPropertiesReader())
+    .addConfigurationReader(
+        new PropertiesURLReader("/com/googlecode/rocoto/simpleconfig/ldap.properties"));;
 );
 +--------------------------------------+
 
@@ -299,5 +305,5 @@ Injector injector = Guice.createInjector(new SimpleConfigurationModule()
 
   I didn't like that approach at all, it doesn't allow users to split configurations
   in different modules even if some keys are shared by two or more modules.
-  With <<<rocoto-simple-configuration>>> users won't have these problems at all,
+  Rocoto users won't have these problems at all,
   they can load <<<*.properties>>> files from different locations and obtain the same result.
