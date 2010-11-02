@@ -125,7 +125,8 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
         URLConnection connection = null;
         InputStream input = null;
         try {
-            connection = url.openConnection();
+            connection = this.url.openConnection();
+            connection.setUseCaches(false);
             input = connection.getInputStream();
 
             return this.process(input);
