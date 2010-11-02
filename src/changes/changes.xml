@@ -28,9 +28,13 @@
     </properties>
 
     <body>
-        <release version="4.0" date="TBD" description="Update release">
+        <release version="4.0" date="TBD" description="4.0 release">
             <action dev="simone.tripodi" type="remove">
                 Removed the 3rd party logging dependency.
+            </action>
+            <action dev="simone.tripodi" type="update">
+                Configuration has been completely rewritten, not compatible with previous versions
+                of Rocoto.
             </action>
         </release>
 
