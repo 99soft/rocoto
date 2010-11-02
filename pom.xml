@@ -490,7 +490,7 @@
                                     <uploads>
                                          <upload>
                                             <file>${project.build.directory}/${project.artifactId}-${project.version}-bundle.tar.gz</file>
-                                            <summary>Rocoto ${project.version} release</summary>
+                                            <summary>${project.name} ${project.version} release</summary>
                                             <labels>
                                                 <label>Featured</label>
                                                 <label>Type-Archive</label>
