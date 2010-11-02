@@ -438,7 +438,7 @@
 
     <profiles>
         <profile>
-            <id>deloy</id>
+            <id>deploy</id>
             <build>
                 <plugins>
                     <plugin>
