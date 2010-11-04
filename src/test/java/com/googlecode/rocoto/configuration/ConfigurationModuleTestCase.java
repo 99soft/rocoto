@@ -36,7 +36,7 @@ import com.googlecode.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
  */
 public final class ConfigurationModuleTestCase {
 
-    private final ConfigurationModule module = new ConfigurationModule()
+    private final ConfigurationModule.Builder moduleBuilder = new ConfigurationModule.Builder()
             .addConfigurationReader(new EnvironmentVariablesReader())
             .addConfigurationReader(new SystemPropertiesReader());
 
@@ -81,29 +81,29 @@ public final class ConfigurationModuleTestCase {
             groups = "load"
     )
     public void loadNonExistentResource() {
-        this.module.addConfigurationReader(new PropertiesURLReader("doesNotExist.properties"));
+        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("doesNotExist.properties"));
     }
 
     @Test(groups = "load")
     public void loadFromClasspath() {
-        this.module.addConfigurationReader(new PropertiesURLReader("/com/googlecode/rocoto/simpleconfig/ldap.properties"));
+        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("/com/googlecode/rocoto/simpleconfig/ldap.properties"));
     }
 
     @Test(groups = "load")
     public void loadFromRootClasspath() {
-        this.module.addConfigurationReader(new PropertiesURLReader("proxy.xml", true));
+        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("proxy.xml", true));
     }
 
     @Test(groups = "load")
     public void loadFromDirUsingDefaulTraversal() {
-        this.module.addConfigurationReader(new File("src/test/data"),
+        this.moduleBuilder.addConfigurationReader(new File("src/test/data"),
                 new PropertiesReaderBuilder(),
                 new XMLPropertiesReaderBuilder());
     }
 
     @Test(dependsOnGroups = "load")
     public void doInject() {
-        Injector injector = Guice.createInjector(this.module);
+        Injector injector = Guice.createInjector(this.moduleBuilder.create());
         injector.injectMembers(this);
     }
 

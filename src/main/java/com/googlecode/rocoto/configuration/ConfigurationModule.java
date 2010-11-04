@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
+import com.google.inject.Module;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.name.Names;
 import com.googlecode.rocoto.configuration.resolver.PropertiesResolver;
@@ -40,60 +41,16 @@ public final class ConfigurationModule extends AbstractModule {
     /**
      * The configuration readers list, in the user specified order.
      */
-    private final List<ConfigurationReader> readers = new ArrayList<ConfigurationReader>();
+    private final List<ConfigurationReader> readers;
 
     /**
-     * Add a configuration reader.
+     * Create a new {@link ConfigurationModule} instance on top of
+     * the configuration readers list, in the user specified order.
      *
-     * @param configurationReader the configuration reader.
-     * @return this ConfigurationModule instance.
+     * @param readers the configuration readers list, in the user specified order.
      */
-    public ConfigurationModule addConfigurationReader(ConfigurationReader configurationReader) {
-        this.readers.add(configurationReader);
-        return this;
-    }
-
-    /**
-     * Allows adding configuration files automatically by traversing a directory; while scanning the dir,
-     * if the current analyzed file satisfies one of more of the given {@link ConfigurationReaderBuilder}s
-     * requirements, then a related {@link ConfigurationReader} will be built based on the configuration
-     * file and added in the readers list.
-     *
-     * @param configurationsDir the directory has to be traversed.
-     * @param builders the {@link ConfigurationReaderBuilder} list involved in the directory traversing.
-     * @return this ConfigurationModule instance.
-     */
-    public ConfigurationModule addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
-        if (configurationsDir == null) {
-            throw new IllegalArgumentException("'configurationsDir' argument can't be null");
-        }
-        if (!configurationsDir.exists()) {
-            throw new RuntimeException("Impossible to load configurations directory '"
-                    + configurationsDir
-                    + "' because it doesn't exist");
-        }
-        if (!configurationsDir.isDirectory()) {
-            throw new RuntimeException("Impossible to traverse '"
-                    + configurationsDir
-                    + "' because it is not a directory");
-        }
-        if (builders == null || builders.length == 0) {
-            throw new RuntimeException("At least one ConfigurationReaderBuilder is required");
-        }
-
-        for (File file : configurationsDir.listFiles()) {
-            if (file.isDirectory()) {
-                this.addConfigurationReader(file, builders);
-            } else {
-                for (ConfigurationReaderBuilder builder : builders) {
-                    if (builder.accept(file)) {
-                        this.addConfigurationReader(builder.create(file));
-                    }
-                }
-            }
-        }
-
-        return this;
+    private ConfigurationModule(List<ConfigurationReader> readers) {
+        this.readers = readers;
     }
 
     /**
@@ -119,6 +76,81 @@ public final class ConfigurationModule extends AbstractModule {
                 this.addError(e);
             }
         }
+    }
+
+    /**
+     * The {@link ConfigurationModule} Builder.
+     */
+    public static final class Builder {
+
+        /**
+         * The configuration readers list, in the user specified order.
+         */
+        private final List<ConfigurationReader> readers = new ArrayList<ConfigurationReader>();
+
+        /**
+         * Add a configuration reader.
+         *
+         * @param configurationReader the configuration reader.
+         * @return this Builder instance.
+         */
+        public Builder addConfigurationReader(ConfigurationReader configurationReader) {
+            this.readers.add(configurationReader);
+            return this;
+        }
+
+        /**
+         * Allows adding configuration files automatically by traversing a directory; while scanning the dir,
+         * if the current analyzed file satisfies one of more of the given {@link ConfigurationReaderBuilder}s
+         * requirements, then a related {@link ConfigurationReader} will be built based on the configuration
+         * file and added in the readers list.
+         *
+         * @param configurationsDir the directory has to be traversed.
+         * @param builders the {@link ConfigurationReaderBuilder} list involved in the directory traversing.
+         * @return this Builder instance.
+         */
+        public Builder addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
+            if (configurationsDir == null) {
+                throw new IllegalArgumentException("'configurationsDir' argument can't be null");
+            }
+            if (!configurationsDir.exists()) {
+                throw new RuntimeException("Impossible to load configurations directory '"
+                        + configurationsDir
+                        + "' because it doesn't exist");
+            }
+            if (!configurationsDir.isDirectory()) {
+                throw new RuntimeException("Impossible to traverse '"
+                        + configurationsDir
+                        + "' because it is not a directory");
+            }
+            if (builders == null || builders.length == 0) {
+                throw new RuntimeException("At least one ConfigurationReaderBuilder is required");
+            }
+
+            for (File file : configurationsDir.listFiles()) {
+                if (file.isDirectory()) {
+                    this.addConfigurationReader(file, builders);
+                } else {
+                    for (ConfigurationReaderBuilder builder : builders) {
+                        if (builder.accept(file)) {
+                            this.addConfigurationReader(builder.create(file));
+                        }
+                    }
+                }
+            }
+
+            return this;
+        }
+
+        /**
+         * Create a new {@link ConfigurationModule} instance based on the set readers.
+         *
+         * @return a new {@link ConfigurationModule} instance based on the set readers.
+         */
+        public Module create() {
+            return new ConfigurationModule(this.readers);
+        }
+
     }
 
 }
