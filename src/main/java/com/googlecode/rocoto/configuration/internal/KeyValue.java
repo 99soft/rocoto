@@ -65,8 +65,7 @@ public final class KeyValue implements Entry<String, String> {
      * {@inheritDoc}
      */
     public String setValue(String value) {
-        // not needed in this version
-        return null;
+        throw new UnsupportedOperationException("Value is read-only in this version");
     }
 
 }
