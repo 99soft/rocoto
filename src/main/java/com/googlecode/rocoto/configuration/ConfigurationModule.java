@@ -35,7 +35,7 @@ import com.googlecode.rocoto.configuration.traversal.ConfigurationReaderBuilder;
  * @since 4.0
  * @version $Id$
  */
-public class ConfigurationModule extends AbstractModule {
+public final class ConfigurationModule extends AbstractModule {
 
     /**
      * The configuration readers list, in the user specified order.
@@ -48,7 +48,7 @@ public class ConfigurationModule extends AbstractModule {
      * @param configurationReader the configuration reader.
      * @return this ConfigurationModule instance.
      */
-    public final ConfigurationModule addConfigurationReader(ConfigurationReader configurationReader) {
+    public ConfigurationModule addConfigurationReader(ConfigurationReader configurationReader) {
         this.readers.add(configurationReader);
         return this;
     }
@@ -63,7 +63,7 @@ public class ConfigurationModule extends AbstractModule {
      * @param builders the {@link ConfigurationReaderBuilder} list involved in the directory traversing.
      * @return this ConfigurationModule instance.
      */
-    public final ConfigurationModule addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
+    public ConfigurationModule addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
         if (configurationsDir == null) {
             throw new IllegalArgumentException("'configurationsDir' argument can't be null");
         }
@@ -100,7 +100,7 @@ public class ConfigurationModule extends AbstractModule {
      * {@inheritDoc}
      */
     @Override
-    protected final void configure() {
+    protected void configure() {
         for (ConfigurationReader configurationReader : this.readers) {
             try {
                 Iterator<Entry<String, String>> properties = configurationReader.readConfiguration();
