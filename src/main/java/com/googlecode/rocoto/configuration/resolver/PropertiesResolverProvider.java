@@ -22,6 +22,7 @@ import java.util.StringTokenizer;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Provider;
+import com.google.inject.util.Providers;
 
 /**
  * 
@@ -62,17 +63,17 @@ public final class PropertiesResolverProvider implements Provider<String> {
         int pos;
         while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
             if (pos > 0) {
-                this.fragments.add(new TextFragmentProvider(pattern.substring(prev, pos)));
+                this.fragments.add(Providers.of(pattern.substring(prev, pos)));
             }
             if (pos == pattern.length() - 1) {
-                this.fragments.add(new TextFragmentProvider(VAR_BEGIN));
+                this.fragments.add(Providers.of(VAR_BEGIN));
                 prev = pos + 1;
             } else if (pattern.charAt(pos + 1) != '{') {
                 if (pattern.charAt(pos + 1) == '$') {
-                    this.fragments.add(new TextFragmentProvider(VAR_BEGIN));
+                    this.fragments.add(Providers.of(VAR_BEGIN));
                     prev = pos + 2;
                 } else {
-                    this.fragments.add(new TextFragmentProvider(pattern.substring(pos, pos + 2)));
+                    this.fragments.add(Providers.of(pattern.substring(pos, pos + 2)));
                     prev = pos + 2;
                 }
             } else {
@@ -93,7 +94,7 @@ public final class PropertiesResolverProvider implements Provider<String> {
             }
         }
         if (prev < pattern.length()) {
-            this.fragments.add(new TextFragmentProvider(pattern.substring(prev)));
+            this.fragments.add(Providers.of(pattern.substring(prev)));
         }
     }
 
