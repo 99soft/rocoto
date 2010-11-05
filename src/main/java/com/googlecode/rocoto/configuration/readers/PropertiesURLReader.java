@@ -135,4 +135,9 @@ public final class PropertiesURLReader extends AbstractConfigurationURLReader {
         return PropertiesIterator.createNew(properties);
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + (this.isXML ? "[XML]" : "");
+    }
+
 }

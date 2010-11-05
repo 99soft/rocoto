@@ -41,4 +41,12 @@ public final class EnvironmentVariablesReader implements ConfigurationReader {
         return PropertiesIterator.createNew(ENV_PREFIX, System.getenv());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "System.env";
+    }
+
 }

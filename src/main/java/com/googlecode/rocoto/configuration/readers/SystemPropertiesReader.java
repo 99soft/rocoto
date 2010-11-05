@@ -31,4 +31,12 @@ public final class SystemPropertiesReader extends PropertiesReader {
         super(System.getProperties());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "System.properties";
+    }
+
 }

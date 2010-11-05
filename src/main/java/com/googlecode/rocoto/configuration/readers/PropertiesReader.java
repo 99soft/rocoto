@@ -51,4 +51,12 @@ public class PropertiesReader implements ConfigurationReader {
         return PropertiesIterator.createNew(this.properties);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return this.properties.toString();
+    }
+
 }
