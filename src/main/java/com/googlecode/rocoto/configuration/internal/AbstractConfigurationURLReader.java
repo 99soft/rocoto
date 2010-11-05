@@ -153,4 +153,12 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
      */
     protected abstract Iterator<Entry<String, String>> process(InputStream input) throws Exception;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return this.url.toString();
+    }
+
 }

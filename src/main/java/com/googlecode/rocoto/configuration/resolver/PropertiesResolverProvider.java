@@ -30,7 +30,7 @@ import com.google.inject.Provider;
  * @since 4.0
  * @version $Id$
  */
-public final class PropertiesResolver implements Provider<String> {
+public final class PropertiesResolverProvider implements Provider<String> {
 
     /**
      * The symbol that indicates a variable begin.
@@ -45,40 +45,34 @@ public final class PropertiesResolver implements Provider<String> {
     /**
      * The appenders list have to be invoked when resolving variables, in the given order.
      */
-    private final List<Appender> appenders = new ArrayList<Appender>();
+    private final List<Provider<String>> fragments = new ArrayList<Provider<String>>();
 
     /**
-     * Flag to indicate the text fragment contains ${} keys.
+     * The list of resolvers that require the Injector reference.
      */
-    private boolean containsKeys = false;
-
-    /**
-     * The Injector instance used to resolve variables.
-     */
-    @Inject
-    private Injector injector;
+    private final List<VariableResolverProvider> resolvers = new ArrayList<VariableResolverProvider>();
 
     /**
      * Creates a new properties resolver instance.
      *
      * @param pattern the text fragment has to be parsed and extract keys.
      */
-    public PropertiesResolver(final String pattern) {
+    public PropertiesResolverProvider(final String pattern) {
         int prev = 0;
         int pos;
         while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
             if (pos > 0) {
-                this.appenders.add(new TextAppender(pattern.substring(prev, pos)));
+                this.fragments.add(new TextFragmentProvider(pattern.substring(prev, pos)));
             }
             if (pos == pattern.length() - 1) {
-                this.appenders.add(new TextAppender(VAR_BEGIN));
+                this.fragments.add(new TextFragmentProvider(VAR_BEGIN));
                 prev = pos + 1;
             } else if (pattern.charAt(pos + 1) != '{') {
                 if (pattern.charAt(pos + 1) == '$') {
-                    this.appenders.add(new TextAppender(VAR_BEGIN));
+                    this.fragments.add(new TextFragmentProvider(VAR_BEGIN));
                     prev = pos + 2;
                 } else {
-                    this.appenders.add(new TextAppender(pattern.substring(pos, pos + 2)));
+                    this.fragments.add(new TextFragmentProvider(pattern.substring(pos, pos + 2)));
                     prev = pos + 2;
                 }
             } else {
@@ -92,13 +86,14 @@ public final class PropertiesResolver implements Provider<String> {
                 if (keyTokenizer.hasMoreTokens()) {
                     defaultValue = keyTokenizer.nextToken().trim();
                 }
-                this.appenders.add(new KeyAppender(key, defaultValue));
+                VariableResolverProvider variableResolver = new VariableResolverProvider(key, defaultValue);
+                this.fragments.add(variableResolver);
+                this.resolvers.add(variableResolver);
                 prev = endName + 1;
-                this.containsKeys = true;
             }
         }
         if (prev < pattern.length()) {
-            this.appenders.add(new TextAppender(pattern.substring(prev)));
+            this.fragments.add(new TextFragmentProvider(pattern.substring(prev)));
         }
     }
 
@@ -110,7 +105,7 @@ public final class PropertiesResolver implements Provider<String> {
      *         false otherwise.
      */
     public boolean containsKeys() {
-        return this.containsKeys;
+        return !this.resolvers.isEmpty();
     }
 
     /**
@@ -118,8 +113,11 @@ public final class PropertiesResolver implements Provider<String> {
      *
      * @param injector the Injector instance used to resolve variables.
      */
+    @Inject
     public void setInjector(Injector injector) {
-        this.injector = injector;
+        for (VariableResolverProvider variableResolver : this.resolvers) {
+            variableResolver.setInjector(injector);
+        }
     }
 
     /**
@@ -127,8 +125,8 @@ public final class PropertiesResolver implements Provider<String> {
      */
     public String get() {
         StringBuilder buffer = new StringBuilder();
-        for (Appender appender : this.appenders) {
-            appender.append(buffer, this.injector);
+        for (Provider<String> appender : this.fragments) {
+            buffer.append(appender.get());
         }
         return buffer.toString();
     }
@@ -138,7 +136,7 @@ public final class PropertiesResolver implements Provider<String> {
      */
     @Override
     public String toString() {
-        return this.appenders.toString();
+        return this.fragments.toString();
     }
 
 }

@@ -26,7 +26,7 @@ import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.name.Names;
-import com.googlecode.rocoto.configuration.resolver.PropertiesResolver;
+import com.googlecode.rocoto.configuration.resolver.PropertiesResolverProvider;
 import com.googlecode.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
 /**
@@ -65,7 +65,7 @@ public final class ConfigurationModule extends AbstractModule {
                     Entry<String, String> property = properties.next();
                     LinkedBindingBuilder<String> bindingBuilder = this.bind(Key.get(String.class, Names.named(property.getKey())));
 
-                    PropertiesResolver formatter = new PropertiesResolver(property.getValue());
+                    PropertiesResolverProvider formatter = new PropertiesResolverProvider(property.getValue());
                     if (formatter.containsKeys()) {
                         bindingBuilder.toProvider(formatter);
                     } else {

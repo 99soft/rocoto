@@ -15,7 +15,7 @@
  */
 package com.googlecode.rocoto.configuration.resolver;
 
-import com.google.inject.Injector;
+import com.google.inject.Provider;
 
 /**
  * Simple text appender, just append a text fragment in the given buffer.
@@ -24,7 +24,7 @@ import com.google.inject.Injector;
  * @since 4.0
  * @version $Id$
  */
-final class TextAppender implements Appender {
+final class TextFragmentProvider implements Provider<String> {
 
     /**
      * The text fragment to append to the given buffer.
@@ -36,15 +36,15 @@ final class TextAppender implements Appender {
      *
      * @param textFragment the text fragment to append to the given buffer.
      */
-    public TextAppender(final String textFragment) {
+    public TextFragmentProvider(final String textFragment) {
         this.textFragment = textFragment;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void append(StringBuilder buffer, Injector injector) {
-        buffer.append(this.textFragment);
+    public String get() {
+        return this.textFragment;
     }
 
     /**

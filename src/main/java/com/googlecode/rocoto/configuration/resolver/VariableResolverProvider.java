@@ -17,6 +17,7 @@ package com.googlecode.rocoto.configuration.resolver;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
+import com.google.inject.Provider;
 import com.google.inject.name.Names;
 
 /**
@@ -29,7 +30,7 @@ import com.google.inject.name.Names;
  * @since 4.0
  * @version $Id$
  */
-final class KeyAppender implements Appender {
+final class VariableResolverProvider implements Provider<String> {
 
     /**
      * The key prefix, in its unresolved form.
@@ -37,9 +38,9 @@ final class KeyAppender implements Appender {
     private static final String KEY_PREFIX = "${";
 
     /**
-     * The key has to be resolved.
+     * The variable has to be resolved.
      */
-    private final String key;
+    private final String variableName;
 
     /**
      * The default value used if the key won't be resolved.
@@ -47,28 +48,42 @@ final class KeyAppender implements Appender {
     private final String defaultValue;
 
     /**
+     * 
+     */
+    private Injector injector;
+
+    /**
      * Creates a new KeyAppender with a property
      * key name and the default value.
      *
-     * @param key the property key name.
+     * @param variableName the property variable name.
      * @param defaultValue the property default value.
      */
-    public KeyAppender(final String key, final String defaultValue) {
-        this.key = key;
+    public VariableResolverProvider(final String variableName, final String defaultValue) {
+        this.variableName = variableName;
         this.defaultValue = defaultValue;
+    }
+
+    /**
+     * 
+     *
+     * @param injector
+     */
+    public void setInjector(Injector injector) {
+        this.injector = injector;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void append(StringBuilder buffer, Injector injector) {
+    public String get() {
         try {
-            buffer.append(injector.getInstance(Key.get(String.class, Names.named(this.key))));
+            return this.injector.getInstance(Key.get(String.class, Names.named(this.variableName)));
         } catch (Throwable e) {
             if (this.defaultValue != null) {
-                buffer.append(this.defaultValue);
+                return this.defaultValue;
             } else {
-                buffer.append(KEY_PREFIX).append(this.key).append('}');
+                return new StringBuilder().append(KEY_PREFIX).append(this.variableName).append('}').toString();
             }
         }
     }
@@ -78,7 +93,7 @@ final class KeyAppender implements Appender {
      */
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder(KEY_PREFIX).append(this.key);
+        StringBuilder builder = new StringBuilder(KEY_PREFIX).append(this.variableName);
         if (this.defaultValue != null) {
             builder.append('|').append(this.defaultValue);
         }
