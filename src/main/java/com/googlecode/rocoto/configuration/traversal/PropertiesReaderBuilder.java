@@ -17,7 +17,8 @@ package com.googlecode.rocoto.configuration.traversal;
 
 import java.io.File;
 
-import com.googlecode.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+
 import com.googlecode.rocoto.configuration.readers.PropertiesURLReader;
 
 /**

@@ -13,31 +13,27 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.traversal;
+package org.nnsoft.guice.rocoto.converters;
 
-import java.io.File;
-
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
-import com.googlecode.rocoto.configuration.readers.PropertiesURLReader;
+import com.google.inject.Binder;
+import com.google.inject.Module;
+import com.google.inject.TypeLiteral;
+import com.google.inject.matcher.Matchers;
+import com.google.inject.spi.TypeConverter;
 
 /**
- * 
+ * A special Google Guice converter that auto binds itself to the converted type.
  *
- * @author Simone Tripodi
  * @version $Id$
+ * @param <T> the type managed by this converter.
  */
-public final class XMLPropertiesReaderBuilder extends ConfigurationReaderBuilder {
+public abstract class AbstractConverter<T> extends TypeLiteral<T> implements Module, TypeConverter {
 
-    private static final String XML_PROPERTIES_PATTERN = "**/*.xml";
-
-    public XMLPropertiesReaderBuilder() {
-        super(XML_PROPERTIES_PATTERN);
-    }
-
-    @Override
-    public ConfigurationReader create(File configurationFile) {
-        return new PropertiesURLReader(configurationFile, true);
+    /**
+     * {@inheritDoc}
+     */
+    public final void configure(Binder binder) {
+        binder.convertToTypes(Matchers.only(TypeLiteral.get(this.getRawType())), this);
     }
 
 }

@@ -20,7 +20,8 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.googlecode.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+
 
 /**
  * The configuration reader builder creates {@link ConfigurationReader} instances if

@@ -13,41 +13,26 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.configuration;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
-
 /**
- * Environment variable reader.
+ * A configuration reader is an object able to read configuration
+ * files from classpath, file system or URLs.
  *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
-public final class EnvironmentVariablesReader implements ConfigurationReader {
+public interface ConfigurationReader {
 
     /**
-     * The environment variable prefix, {@code env.}
+     * Read the configuration file iterating over the configuration properties.
+     *
+     * @return the configuration properties iterator.
      */
-    private static final String ENV_PREFIX = "env.";
-
-    /**
-     * {@inheritDoc}
-     */
-    public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.createNew(ENV_PREFIX, System.getenv());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "System.env";
-    }
+    Iterator<Entry<String, String>> readConfiguration() throws Exception;
 
 }

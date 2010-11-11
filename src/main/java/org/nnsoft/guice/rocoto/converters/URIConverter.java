@@ -13,41 +13,33 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.converters;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
+import com.google.inject.ProvisionException;
+import com.google.inject.TypeLiteral;
 
 /**
- * Environment variable reader.
+ * Converter implementation for {@code java.net.URI}.
  *
  * @author Simone Tripodi
- * @since 4.0
  * @version $Id$
  */
-public final class EnvironmentVariablesReader implements ConfigurationReader {
-
-    /**
-     * The environment variable prefix, {@code env.}
-     */
-    private static final String ENV_PREFIX = "env.";
+public final class URIConverter extends AbstractConverter<URI> {
 
     /**
      * {@inheritDoc}
      */
-    public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.createNew(ENV_PREFIX, System.getenv());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "System.env";
+    public Object convert(String value, TypeLiteral<?> toType) {
+        try {
+            return new URI(value);
+        } catch (URISyntaxException e) {
+            throw new ProvisionException("String value '"
+                    + value
+                    + "' is not a valid URI", e);
+        }
     }
 
 }

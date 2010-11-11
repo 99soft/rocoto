@@ -13,41 +13,32 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.converters;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.util.UUID;
 
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
+import com.google.inject.ProvisionException;
+import com.google.inject.TypeLiteral;
 
 /**
- * Environment variable reader.
+ * Converter implementation for {@code java.util.UUID}.
  *
  * @author Simone Tripodi
- * @since 4.0
  * @version $Id$
  */
-public final class EnvironmentVariablesReader implements ConfigurationReader {
-
-    /**
-     * The environment variable prefix, {@code env.}
-     */
-    private static final String ENV_PREFIX = "env.";
+public final class UUIDConverter extends AbstractConverter<UUID> {
 
     /**
      * {@inheritDoc}
      */
-    public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.createNew(ENV_PREFIX, System.getenv());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "System.env";
+    public Object convert(String value, TypeLiteral<?> toType) {
+        try {
+            return UUID.fromString(value);
+        } catch (Throwable t) {
+            throw new ProvisionException("String value '"
+                    + value
+                    + "' is not a valid UUID", t);
+        }
     }
 
 }

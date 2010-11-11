@@ -19,7 +19,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import com.googlecode.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+
 
 /**
  * Simple {@link Properties} reader adapter.

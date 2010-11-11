@@ -13,31 +13,25 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.traversal;
+package org.nnsoft.guice.rocoto.converters;
 
-import java.io.File;
+import java.text.SimpleDateFormat;
 
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
-import com.googlecode.rocoto.configuration.readers.PropertiesURLReader;
+import com.google.inject.TypeLiteral;
 
 /**
- * 
+ * Converter implementation for {@code java.text.SimpleDateFormat}.
  *
- * @author Simone Tripodi
+ * @since 3.3
  * @version $Id$
  */
-public final class XMLPropertiesReaderBuilder extends ConfigurationReaderBuilder {
+public final class SimpleDateFormatConverter extends AbstractConverter<SimpleDateFormat> {
 
-    private static final String XML_PROPERTIES_PATTERN = "**/*.xml";
-
-    public XMLPropertiesReaderBuilder() {
-        super(XML_PROPERTIES_PATTERN);
-    }
-
-    @Override
-    public ConfigurationReader create(File configurationFile) {
-        return new PropertiesURLReader(configurationFile, true);
+    /**
+     * {@inheritDoc}
+     */
+    public Object convert(String value, TypeLiteral<?> toType) {
+        return new SimpleDateFormat(value);
     }
 
 }

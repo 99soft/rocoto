@@ -13,41 +13,29 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.converters;
 
-import java.util.Iterator;
-import java.util.Map.Entry;
+import java.nio.charset.Charset;
 
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
+import com.google.inject.ProvisionException;
+import com.google.inject.TypeLiteral;
 
 /**
- * Environment variable reader.
+ * Converter implementation for {@code java.nio.charset.Charset}.
  *
  * @author Simone Tripodi
- * @since 4.0
  * @version $Id$
  */
-public final class EnvironmentVariablesReader implements ConfigurationReader {
-
-    /**
-     * The environment variable prefix, {@code env.}
-     */
-    private static final String ENV_PREFIX = "env.";
+public final class CharsetConverter extends AbstractConverter<Charset> {
 
     /**
      * {@inheritDoc}
      */
-    public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.createNew(ENV_PREFIX, System.getenv());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return "System.env";
+    public Object convert(String value, TypeLiteral<?> toType) {
+        if (value.length() == 0) {
+            throw new ProvisionException("Impossible to convert an empty value to a Charset");
+        }
+        return Charset.forName(value);
     }
 
 }

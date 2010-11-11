@@ -13,13 +13,10 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.traversal;
+package org.nnsoft.guice.rocoto.configuration;
 
-import java.io.File;
-
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
-import com.googlecode.rocoto.configuration.readers.PropertiesURLReader;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 
 /**
  * 
@@ -27,17 +24,30 @@ import com.googlecode.rocoto.configuration.readers.PropertiesURLReader;
  * @author Simone Tripodi
  * @version $Id$
  */
-public final class XMLPropertiesReaderBuilder extends ConfigurationReaderBuilder {
+public final class ProxyConfiguration {
 
-    private static final String XML_PROPERTIES_PATTERN = "**/*.xml";
+    @Inject
+    @Named("proxy.host")
+    private String host;
 
-    public XMLPropertiesReaderBuilder() {
-        super(XML_PROPERTIES_PATTERN);
+    @Inject
+    @Named("proxy.port")
+    private int port;
+
+    public String getHost() {
+        return host;
     }
 
-    @Override
-    public ConfigurationReader create(File configurationFile) {
-        return new PropertiesURLReader(configurationFile, true);
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
 }

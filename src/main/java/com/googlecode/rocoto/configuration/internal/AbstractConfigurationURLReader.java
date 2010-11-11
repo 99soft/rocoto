@@ -25,7 +25,8 @@ import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import com.googlecode.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+
 
 /**
  * Abstract reusable reader able to read configuration files from classpath, file system or URLs.
