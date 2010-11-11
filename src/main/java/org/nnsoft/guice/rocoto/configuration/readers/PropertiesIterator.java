@@ -13,13 +13,14 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.configuration.readers;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.googlecode.rocoto.configuration.internal.KeyValue;
+import org.nnsoft.guice.rocoto.configuration.internal.KeyValue;
+
 
 /**
  * Simple iterator of a {@code Map<K, V>} entries, with the option of prefixing keys

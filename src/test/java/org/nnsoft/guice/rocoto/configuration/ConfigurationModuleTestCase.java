@@ -18,16 +18,16 @@ package org.nnsoft.guice.rocoto.configuration;
 import java.io.File;
 
 import org.nnsoft.guice.rocoto.configuration.ConfigurationModule;
+import org.nnsoft.guice.rocoto.configuration.readers.EnvironmentVariablesReader;
+import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
+import org.nnsoft.guice.rocoto.configuration.readers.SystemPropertiesReader;
+import org.nnsoft.guice.rocoto.configuration.traversal.PropertiesReaderBuilder;
+import org.nnsoft.guice.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 import org.testng.annotations.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.googlecode.rocoto.configuration.readers.EnvironmentVariablesReader;
-import com.googlecode.rocoto.configuration.readers.PropertiesURLReader;
-import com.googlecode.rocoto.configuration.readers.SystemPropertiesReader;
-import com.googlecode.rocoto.configuration.traversal.PropertiesReaderBuilder;
-import com.googlecode.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 
 /**
  * 

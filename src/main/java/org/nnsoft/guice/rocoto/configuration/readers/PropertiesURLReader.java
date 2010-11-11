@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.configuration.readers;
 
 import java.io.File;
 import java.io.InputStream;
@@ -22,7 +22,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import com.googlecode.rocoto.configuration.internal.AbstractConfigurationURLReader;
+import org.nnsoft.guice.rocoto.configuration.internal.AbstractConfigurationURLReader;
+
 
 /**
  * {@link Properties} reader implementation able to read configuration files from classpath, file system or URLs.

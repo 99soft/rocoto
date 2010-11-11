@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.resolver;
+package org.nnsoft.guice.rocoto.configuration.resolver;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;

@@ -21,13 +21,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
+import org.nnsoft.guice.rocoto.configuration.traversal.ConfigurationReaderBuilder;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.binder.LinkedBindingBuilder;
 import com.google.inject.name.Names;
-import com.googlecode.rocoto.configuration.resolver.PropertiesResolverProvider;
-import com.googlecode.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
 /**
  * The ConfigurationModule simplifies the task of loading configurations in Google Guice.

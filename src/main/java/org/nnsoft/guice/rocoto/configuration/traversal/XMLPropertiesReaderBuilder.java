@@ -13,30 +13,31 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.configuration.traversal;
+
+import java.io.File;
+
+import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
+
 
 /**
- * Java system properties reader.
+ * 
  *
  * @author Simone Tripodi
- * @since 4.0
  * @version $Id$
  */
-public final class SystemPropertiesReader extends PropertiesReader {
+public final class XMLPropertiesReaderBuilder extends ConfigurationReaderBuilder {
 
-    /**
-     * Creates a new Java system properties reader.
-     */
-    public SystemPropertiesReader() {
-        super(System.getProperties());
+    private static final String XML_PROPERTIES_PATTERN = "**/*.xml";
+
+    public XMLPropertiesReaderBuilder() {
+        super(XML_PROPERTIES_PATTERN);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public String toString() {
-        return "System.properties";
+    public ConfigurationReader create(File configurationFile) {
+        return new PropertiesURLReader(configurationFile, true);
     }
 
 }

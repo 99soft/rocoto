@@ -15,10 +15,10 @@
  */
 
 /**
- * Basic {@link org.nnsoft.guice.rocoto.configuration.ConfigurationReader} implementations.
+ * Contains the variable resolver implementation.
  *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
-package com.googlecode.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.configuration.resolver;

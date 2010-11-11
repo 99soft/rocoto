@@ -13,12 +13,30 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+package org.nnsoft.guice.rocoto.configuration.readers;
 
 /**
- * Utilities for directory traversal.
+ * Java system properties reader.
  *
  * @author Simone Tripodi
  * @since 4.0
  * @version $Id$
  */
-package com.googlecode.rocoto.configuration.traversal;
+public final class SystemPropertiesReader extends PropertiesReader {
+
+    /**
+     * Creates a new Java system properties reader.
+     */
+    public SystemPropertiesReader() {
+        super(System.getProperties());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "System.properties";
+    }
+
+}

@@ -13,12 +13,31 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+package org.nnsoft.guice.rocoto.configuration.traversal;
+
+import java.io.File;
+
+import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
+
 
 /**
- * Contains internal reusable stuff.
+ * 
  *
  * @author Simone Tripodi
- * @since 4.0
  * @version $Id$
  */
-package com.googlecode.rocoto.configuration.internal;
+public final class PropertiesReaderBuilder extends ConfigurationReaderBuilder {
+
+    private static final String PROPERTIES_PATTERN = "**/*.properties";
+
+    public PropertiesReaderBuilder() {
+        super(PROPERTIES_PATTERN);
+    }
+
+    @Override
+    public ConfigurationReader create(File configurationFile) {
+        return new PropertiesURLReader(configurationFile);
+    }
+
+}

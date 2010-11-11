@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package com.googlecode.rocoto.configuration.internal;
+package org.nnsoft.guice.rocoto.configuration.internal;
 
 import java.io.File;
 import java.io.IOException;
