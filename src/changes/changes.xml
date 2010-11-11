@@ -16,7 +16,7 @@
 -->
 
 <!--
-    author: Simone Tripodi (simone.tripodi)
+    author: Simone Tripodi (simonetripodi)
     version: $Id$
 -->
 <document xmlns="http://maven.apache.org/changes/1.0.0"
@@ -28,99 +28,108 @@
     </properties>
 
     <body>
+        <release version="5.0" date="TBD" description="5.0 release">
+            <action dev="simonetripodi" type="remove">
+                Code moved to GitHub.
+            </action>
+            <action dev="simonetripodi" type="update">
+                org.nnsoft.guice.rocoto.configuration.ConfigurationModule must be instantiated via Builder.
+            </action>
+        </release>
+
         <release version="4.0" date="2010-11-02" description="4.0 release">
-            <action dev="simone.tripodi" type="remove">
+            <action dev="simonetripodi" type="remove">
                 Removed the 3rd party logging dependency.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Configuration has been completely rewritten, not compatible with previous versions
                 of Rocoto.
             </action>
         </release>
 
         <release version="3.3" date="2010-10-01" description="Update release">
-             <action dev="simone.tripodi" type="update">
+             <action dev="simonetripodi" type="update">
                 Added default property value support, if key is not found the optional default value will be used
                 to replace the key.
             </action>
-             <action dev="simone.tripodi" type="update">
+             <action dev="simonetripodi" type="update">
                 No more sys. prefix for Java System Properties.
             </action>
-             <action dev="simone.tripodi" type="update">
+             <action dev="simonetripodi" type="update">
                 Added ClobConverter
             </action>
-             <action dev="simone.tripodi" type="update">
+             <action dev="simonetripodi" type="update">
                 Added DecimalFormatConverter
             </action>
-             <action dev="simone.tripodi" type="update">
+             <action dev="simonetripodi" type="update">
                 Added InetAddressConverter
             </action>
         </release>
 
         <release version="3.2" date="2010-09-24" description="Update release">
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 No more submodules, Rocoto is distribuited as unique module.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Improved the com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule APIs to allow 3RD part
                 applications loading properties.
             </action>
-            <action dev="simone.tripodi" type="remove">
+            <action dev="simonetripodi" type="remove">
                 Removed the rocoto-system support.
             </action>
         </release>
 
         <release version="3.1" date="2010-08-20" description="Update release">
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Added com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule builder API.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Added com.googlecode.rocoto.configuration.ConfigurationModule builder API.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Modularized converter package, each converter can be used as independant module.
             </action>
-            <action dev="simone.tripodi" type="remove">
+            <action dev="simonetripodi" type="remove">
                 Removed the Apache Commons Configuration support.
             </action>
-            <action dev="simone.tripodi" type="remove">
+            <action dev="simonetripodi" type="remove">
                 Removed the useless rocoto-core module.
             </action>
         </release>
 
         <release version="3.0" date="2009-06-09" description="Major release">
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Moved to Sonatype infrastructure.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Moved to com.googlecode groupId.
             </action>
         </release>
 
         <release version="2.0" date="2010-01-20" description="Update release">
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Artifacts signed using GnuPG.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Added the converter module.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Directory scan on simple-configuration module uses Ant-style
                 patterns.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Common components moved to core module.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Moved to com.google.code groupId.
             </action>
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 Added PDF manual.
             </action>
         </release>
 
         <release version="1.0" date="2010-01-03" description="First release">
-            <action dev="simone.tripodi" type="update">
+            <action dev="simonetripodi" type="update">
                 First release.
             </action>
         </release>
