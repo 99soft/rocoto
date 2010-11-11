@@ -42,14 +42,10 @@
             <item name="Converters" href="converters.html" />
         </menu>
 
-        <menu name="Miscellaneous">
-            <item name="Project stats" href="stats.html" />
-        </menu>
-
         <menu ref="reports" />
 
         <menu name="External Links">
-            <item name="Project Page" href="http://code.google.com/p/rocoto/" />
+            <item name="Project Page" href="https://github.com/99soft/Rocoto" />
             <item name="Google Guice" href="http://code.google.com/p/google-guice/" />
         </menu>
     </body>
