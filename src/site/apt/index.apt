@@ -42,7 +42,7 @@ Before starting
 <dependencies>
     ...
     <dependency>
-        <groupId>com.googlecode.rocoto</groupId>
+        <groupId>org.99soft.guice</groupId>
         <artifactId>rocoto</artifactId>
         <version>XX.XX</version>
     </dependency>
