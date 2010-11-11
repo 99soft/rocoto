@@ -24,17 +24,17 @@
 
     <test name="configuration">
         <classes>
-            <class name="com.googlecode.rocoto.configuration.ConfigurationModuleTestCase"/>
+            <class name="org.nnsoft.guice.rocoto.configuration.ConfigurationModuleTestCase"/>
         </classes>
     </test>
 
     <test name="converters">
         <classes>
-            <class name="com.googlecode.rocoto.converters.BitSetConverterTestCase" />
-            <class name="com.googlecode.rocoto.converters.CharsetConverterTestCase" />
-            <class name="com.googlecode.rocoto.converters.FileConverterTestCase" />
-            <class name="com.googlecode.rocoto.converters.LocaleConverterTestCase" />
-            <class name="com.googlecode.rocoto.converters.PropertiesConverterTestCase" />
+            <class name="org.nnsoft.guice.rocoto.converters.BitSetConverterTestCase" />
+            <class name="org.nnsoft.guice.rocoto.converters.CharsetConverterTestCase" />
+            <class name="org.nnsoft.guice.rocoto.converters.FileConverterTestCase" />
+            <class name="org.nnsoft.guice.rocoto.converters.LocaleConverterTestCase" />
+            <class name="org.nnsoft.guice.rocoto.converters.PropertiesConverterTestCase" />
         </classes>
     </test>
 

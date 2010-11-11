@@ -87,7 +87,7 @@ public final class ConfigurationModuleTestCase {
 
     @Test(groups = "load")
     public void loadFromClasspath() {
-        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("/com/googlecode/rocoto/simpleconfig/ldap.properties"));
+        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
     }
 
     @Test(groups = "load")
