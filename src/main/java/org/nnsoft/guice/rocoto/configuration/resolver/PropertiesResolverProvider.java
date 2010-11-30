@@ -15,6 +15,7 @@
  */
 package org.nnsoft.guice.rocoto.configuration.resolver;
 
+import java.security.ProviderException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -79,7 +80,7 @@ public final class PropertiesResolverProvider implements Provider<String> {
             } else {
                 int endName = pattern.indexOf('}', pos);
                 if (endName < 0) {
-                    throw new IllegalArgumentException("Syntax error in property: " + pattern);
+                    throw new ProviderException("Syntax error in property: " + pattern);
                 }
                 StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);
                 String key = keyTokenizer.nextToken().trim();
