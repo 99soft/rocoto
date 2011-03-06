@@ -19,9 +19,7 @@ import static com.google.inject.Guice.createInjector;
 
 import java.io.File;
 
-import org.nnsoft.guice.rocoto.configuration.readers.EnvironmentVariablesReader;
 import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
-import org.nnsoft.guice.rocoto.configuration.readers.SystemPropertiesReader;
 import org.nnsoft.guice.rocoto.configuration.traversal.PropertiesReaderBuilder;
 import org.nnsoft.guice.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 import org.testng.annotations.Test;
@@ -78,8 +76,8 @@ public final class ConfigurationModuleTestCase {
 
             @Override
             protected void configure() {
-                addConfigurationReader(new EnvironmentVariablesReader());
-                addConfigurationReader(new SystemPropertiesReader());
+                addEnvironmentVariables();
+                addSystemProperties();
                 addConfigurationReader(new PropertiesURLReader("/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
                 addConfigurationReader(new PropertiesURLReader("proxy.xml", true));
                 addConfigurationReader(new File("src/test/data"),

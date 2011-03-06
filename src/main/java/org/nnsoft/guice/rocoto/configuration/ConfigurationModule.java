@@ -21,6 +21,8 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.nnsoft.guice.rocoto.configuration.readers.EnvironmentVariablesReader;
+import org.nnsoft.guice.rocoto.configuration.readers.SystemPropertiesReader;
 import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
 import org.nnsoft.guice.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
@@ -96,6 +98,20 @@ public abstract class ConfigurationModule implements Module {
             }
 
         };
+    }
+
+    /**
+     * Add the Environment Variables properties, prefixed by {@code env.}.
+     */
+    protected void addEnvironmentVariables() {
+        this.addConfigurationReader(new EnvironmentVariablesReader());
+    }
+
+    /**
+     * Add the System Variables properties.
+     */
+    protected void addSystemProperties() {
+        this.addConfigurationReader(new SystemPropertiesReader());
     }
 
     /**
