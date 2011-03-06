@@ -62,6 +62,36 @@ public abstract class ConfigurationModule implements Module {
      */
     protected abstract void configure();
 
+    protected PropertyValueBindingBuilder bindProperty(final String name) {
+        if (name == null) {
+            this.binder.addError("Property name cannot be null.");
+        }
+
+        return new PropertyValueBindingBuilder() {
+
+            public void toValue(String value) {
+                if (name == null) {
+                    return;
+                }
+
+                if (value == null) {
+                    binder.addError("Null value not admitted got property %s", name);
+                    return;
+                }
+
+                LinkedBindingBuilder<String> bindingBuilder = binder.bind(Key.get(String.class, named(name)));
+
+                PropertiesResolverProvider formatter = new PropertiesResolverProvider(value);
+                if (formatter.containsKeys()) {
+                    bindingBuilder.toProvider(formatter);
+                } else {
+                    bindingBuilder.toInstance(value);
+                }
+            }
+
+        };
+    }
+
     /**
      * Add a configuration reader.
      *
@@ -72,14 +102,7 @@ public abstract class ConfigurationModule implements Module {
             Iterator<Entry<String, String>> properties = configurationReader.readConfiguration();
             while (properties.hasNext()) {
                 Entry<String, String> property = properties.next();
-                LinkedBindingBuilder<String> bindingBuilder = this.binder.bind(Key.get(String.class, named(property.getKey())));
-
-                PropertiesResolverProvider formatter = new PropertiesResolverProvider(property.getValue());
-                if (formatter.containsKeys()) {
-                    bindingBuilder.toProvider(formatter);
-                } else {
-                    bindingBuilder.toInstance(property.getValue());
-                }
+                bindProperty(property.getKey()).toValue(property.getValue());
             }
         } catch (Exception e) {
             this.binder.addError(e);
