@@ -44,6 +44,10 @@ public abstract class ConfigurationModule implements Module {
      * {@inheritDoc}
      */
     public final void configure(Binder binder) {
+        if (this.binder != null) {
+            throw new IllegalArgumentException("Re-entry is not allowed.");
+        }
+
         this.binder = binder;
 
         try {
@@ -53,6 +57,9 @@ public abstract class ConfigurationModule implements Module {
         }
     }
 
+    /**
+     * Configures a {@link Binder} via the exposed methods.
+     */
     protected abstract void configure();
 
     /**
