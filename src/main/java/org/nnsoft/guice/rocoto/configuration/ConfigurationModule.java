@@ -15,7 +15,9 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
+import static com.google.inject.Key.get;
 import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
 
 import java.io.File;
 import java.util.Iterator;
@@ -27,7 +29,6 @@ import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider
 import org.nnsoft.guice.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
 import com.google.inject.Binder;
-import com.google.inject.Key;
 import com.google.inject.Module;
 import com.google.inject.binder.LinkedBindingBuilder;
 
@@ -36,7 +37,6 @@ import com.google.inject.binder.LinkedBindingBuilder;
  *
  * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 public abstract class ConfigurationModule implements Module {
 
@@ -77,21 +77,21 @@ public abstract class ConfigurationModule implements Module {
 
         return new PropertyValueBindingBuilder() {
 
-            public void toValue(String value) {
+            public void toValue(final String value) {
                 if (name == null) {
                     return;
                 }
 
                 if (value == null) {
-                    binder.addError("Null value not admitted got property %s", name);
+                    binder.addError("Null value not admitted for property %s", name);
                     return;
                 }
 
-                LinkedBindingBuilder<String> bindingBuilder = binder.bind(Key.get(String.class, named(name)));
+                LinkedBindingBuilder<String> bindingBuilder = binder.bind(get(String.class, named(name)));
 
                 PropertiesResolverProvider formatter = new PropertiesResolverProvider(value);
                 if (formatter.containsKeys()) {
-                    bindingBuilder.toProvider(formatter);
+                    bindingBuilder.toProvider(guicify(formatter));
                 } else {
                     bindingBuilder.toInstance(value);
                 }
