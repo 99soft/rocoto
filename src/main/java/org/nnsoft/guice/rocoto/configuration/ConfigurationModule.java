@@ -62,6 +62,12 @@ public abstract class ConfigurationModule implements Module {
      */
     protected abstract void configure();
 
+    /**
+     * Binds to a property with the given name.
+     *
+     * @param name The property name
+     * @return The property value binder
+     */
     protected PropertyValueBindingBuilder bindProperty(final String name) {
         if (name == null) {
             this.binder.addError("Property name cannot be null.");
