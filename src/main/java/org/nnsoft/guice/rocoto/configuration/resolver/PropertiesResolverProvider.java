@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The Rocoto Team
+ *    Copyright 2009-2011 The Rocoto Team
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -19,9 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import com.google.inject.Inject;
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import com.google.inject.Injector;
-import com.google.inject.Provider;
 import com.google.inject.ProvisionException;
 import com.google.inject.util.Providers;
 
@@ -30,7 +31,6 @@ import com.google.inject.util.Providers;
  *
  * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 public final class PropertiesResolverProvider implements Provider<String> {
 

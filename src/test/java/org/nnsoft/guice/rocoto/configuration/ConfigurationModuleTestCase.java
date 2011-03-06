@@ -19,12 +19,12 @@ import static com.google.inject.Guice.createInjector;
 
 import java.io.File;
 
+import javax.inject.Inject;
+
 import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
 import org.nnsoft.guice.rocoto.configuration.traversal.PropertiesReaderBuilder;
 import org.nnsoft.guice.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 import org.testng.annotations.Test;
-
-import com.google.inject.Inject;
 
 /**
  * 

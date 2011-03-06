@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The Rocoto Team
+ *    Copyright 2009-2011 The Rocoto Team
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,10 +15,11 @@
  */
 package org.nnsoft.guice.rocoto.configuration.resolver;
 
+import static com.google.inject.name.Names.named;
+
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.Provider;
-import com.google.inject.name.Names;
 
 /**
  * {@link Appender} implementation that resolve the ${} variables
@@ -28,7 +29,6 @@ import com.google.inject.name.Names;
  *
  * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 final class VariableResolverProvider implements Provider<String> {
 
@@ -78,7 +78,7 @@ final class VariableResolverProvider implements Provider<String> {
      */
     public String get() {
         try {
-            return this.injector.getInstance(Key.get(String.class, Names.named(this.variableName)));
+            return this.injector.getInstance(Key.get(String.class, named(this.variableName)));
         } catch (Throwable e) {
             if (this.defaultValue != null) {
                 return this.defaultValue;

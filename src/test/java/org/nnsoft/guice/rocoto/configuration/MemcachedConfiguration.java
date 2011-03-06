@@ -15,8 +15,8 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * 

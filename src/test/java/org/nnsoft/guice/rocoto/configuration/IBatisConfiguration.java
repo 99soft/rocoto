@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The Rocoto Team
+ *    Copyright 2009-2011 The Rocoto Team
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * 
