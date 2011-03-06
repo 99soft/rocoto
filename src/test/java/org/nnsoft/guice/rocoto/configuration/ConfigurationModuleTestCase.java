@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The Rocoto Team
+ *    Copyright 2009-2011 The Rocoto Team
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,9 +15,10 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
+import static com.google.inject.Guice.createInjector;
+
 import java.io.File;
 
-import org.nnsoft.guice.rocoto.configuration.ConfigurationModule;
 import org.nnsoft.guice.rocoto.configuration.readers.EnvironmentVariablesReader;
 import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
 import org.nnsoft.guice.rocoto.configuration.readers.SystemPropertiesReader;
@@ -25,9 +26,7 @@ import org.nnsoft.guice.rocoto.configuration.traversal.PropertiesReaderBuilder;
 import org.nnsoft.guice.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 import org.testng.annotations.Test;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 /**
  * 
@@ -36,10 +35,6 @@ import com.google.inject.Injector;
  * @version $Id$
  */
 public final class ConfigurationModuleTestCase {
-
-    private final ConfigurationModule.Builder moduleBuilder = new ConfigurationModule.Builder()
-            .addConfigurationReader(new EnvironmentVariablesReader())
-            .addConfigurationReader(new SystemPropertiesReader());
 
     @Inject
     private IBatisConfiguration iBatisConfiguration;
@@ -77,35 +72,22 @@ public final class ConfigurationModuleTestCase {
         this.proxyConfiguration = proxyConfiguration;
     }
 
-    @Test(
-            expectedExceptions = IllegalArgumentException.class,
-            groups = "load"
-    )
-    public void loadNonExistentResource() {
-        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("doesNotExist.properties"));
-    }
-
-    @Test(groups = "load")
-    public void loadFromClasspath() {
-        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
-    }
-
-    @Test(groups = "load")
-    public void loadFromRootClasspath() {
-        this.moduleBuilder.addConfigurationReader(new PropertiesURLReader("proxy.xml", true));
-    }
-
-    @Test(groups = "load")
-    public void loadFromDirUsingDefaulTraversal() {
-        this.moduleBuilder.addConfigurationReader(new File("src/test/data"),
-                new PropertiesReaderBuilder(),
-                new XMLPropertiesReaderBuilder());
-    }
-
-    @Test(dependsOnGroups = "load")
+    @Test
     public void doInject() {
-        Injector injector = Guice.createInjector(this.moduleBuilder.create());
-        injector.injectMembers(this);
+        createInjector(new ConfigurationModule() {
+
+            @Override
+            protected void configure() {
+                addConfigurationReader(new EnvironmentVariablesReader());
+                addConfigurationReader(new SystemPropertiesReader());
+                addConfigurationReader(new PropertiesURLReader("/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
+                addConfigurationReader(new PropertiesURLReader("proxy.xml", true));
+                addConfigurationReader(new File("src/test/data"),
+                        new PropertiesReaderBuilder(),
+                        new XMLPropertiesReaderBuilder());
+            }
+
+        }).injectMembers(this);
     }
 
     @Test(dependsOnMethods = "doInject")
