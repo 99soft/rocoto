@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The Rocoto Team
+ *    Copyright 2009-2010 The 99 Software Foundation
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@ package org.nnsoft.guice.rocoto.configuration.traversal;
 import java.io.File;
 
 import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
-
 
 /**
  * 
@@ -37,7 +35,8 @@ public final class PropertiesReaderBuilder extends ConfigurationReaderBuilder {
 
     @Override
     public ConfigurationReader create(File configurationFile) {
-        return new PropertiesURLReader(configurationFile);
+        return null;
+        // return new PropertiesURLReader(configurationFile);
     }
 
 }
