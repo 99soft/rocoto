@@ -22,15 +22,11 @@ import java.util.logging.Logger;
 
 import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
 
-
 /**
  * The configuration reader builder creates {@link ConfigurationReader} instances if
  * the given file name matches with the user specified pattern.
  *
  * Part of this code has been kindly borrowed from Apache Ant and Spring Framework.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public abstract class ConfigurationReaderBuilder {
 

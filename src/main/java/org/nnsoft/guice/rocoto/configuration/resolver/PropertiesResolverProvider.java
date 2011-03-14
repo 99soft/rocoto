@@ -29,7 +29,6 @@ import com.google.inject.util.Providers;
 /**
  * 
  *
- * @author Simone Tripodi
  * @since 4.0
  */
 public final class PropertiesResolverProvider implements Provider<String> {

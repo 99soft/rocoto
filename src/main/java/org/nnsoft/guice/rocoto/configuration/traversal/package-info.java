@@ -17,8 +17,6 @@
 /**
  * Utilities for directory traversal.
  *
- * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 package org.nnsoft.guice.rocoto.configuration.traversal;

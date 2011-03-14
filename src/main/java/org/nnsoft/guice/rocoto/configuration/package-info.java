@@ -17,8 +17,6 @@
 /**
  * Contains utilities to simplify the task of loading configurations in Google Guice.
  *
- * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 package org.nnsoft.guice.rocoto.configuration;

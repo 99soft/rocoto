@@ -22,8 +22,7 @@ import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
 /**
  * 
  *
- * @author Simone Tripodi
- * @version $Id$
+ * 
  */
 public final class PropertiesReaderBuilder extends ConfigurationReaderBuilder {
 

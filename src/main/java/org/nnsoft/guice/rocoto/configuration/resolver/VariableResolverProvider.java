@@ -27,7 +27,6 @@ import com.google.inject.Provider;
  * won't be resolved, the default value, if any, will be used,
  * otherwise 
  *
- * @author Simone Tripodi
  * @since 4.0
  */
 final class VariableResolverProvider implements Provider<String> {

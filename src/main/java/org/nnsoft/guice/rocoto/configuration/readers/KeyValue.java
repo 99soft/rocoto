@@ -20,9 +20,7 @@ import java.util.Map.Entry;
 /**
  * A simple {@code Entry<String, String>} implementation.
  *
- * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 public class KeyValue implements Entry<String, String> {
 

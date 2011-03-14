@@ -20,9 +20,6 @@ import javax.inject.Named;
 
 /**
  * 
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class JDBCConfiguration {
 

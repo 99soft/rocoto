@@ -24,8 +24,6 @@ import com.google.inject.Module;
 
 /**
  * 
- *
- * @version $Id$
  */
 abstract class AbstractTestCase<T> {
 

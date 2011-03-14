@@ -43,9 +43,6 @@ import com.google.inject.binder.LinkedBindingBuilder;
 
 /**
  * The ConfigurationModule simplifies the task of loading configurations in Google Guice.
- *
- * @author Simone Tripodi
- * @since 4.0
  */
 public abstract class ConfigurationModule implements Module {
 

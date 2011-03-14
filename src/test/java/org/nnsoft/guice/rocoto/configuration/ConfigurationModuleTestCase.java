@@ -27,9 +27,6 @@ import org.testng.annotations.Test;
 
 /**
  * 
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class ConfigurationModuleTestCase {
 

@@ -23,9 +23,7 @@ import java.util.Map.Entry;
  * Simple iterator of a {@code Map<K, V>} entries, with the option of prefixing keys
  * with the given prefix.
  *
- * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> {
 

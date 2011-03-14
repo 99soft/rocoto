@@ -21,13 +21,10 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-
 /**
  * Simple {@link Properties} reader adapter.
  *
- * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 public final class PropertiesReader  extends AbstractConfigurationReader {
 

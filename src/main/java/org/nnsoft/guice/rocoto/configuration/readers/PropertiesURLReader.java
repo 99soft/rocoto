@@ -30,11 +30,9 @@ import java.util.Properties;
 /**
  * {@link Properties} reader implementation able to read configuration files from classpath, file system or URLs.
  *
- * Thois reader implementation support both {@code .properties} and {@code .xml} properties format.
+ * This reader implementation support both {@code .properties} and {@code .xml} properties format.
  *
- * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 public final class PropertiesURLReader extends AbstractConfigurationReader {
 

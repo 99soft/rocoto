@@ -28,8 +28,6 @@ import com.google.inject.name.Names;
 
 /**
  * 
- *
- * @version $Id$
  */
 public final class FileConverterTestCase extends AbstractTestCase<File> {
 

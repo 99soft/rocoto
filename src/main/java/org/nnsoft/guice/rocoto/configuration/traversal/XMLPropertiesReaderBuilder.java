@@ -21,9 +21,6 @@ import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
 
 /**
  * 
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class XMLPropertiesReaderBuilder extends ConfigurationReaderBuilder {
 
