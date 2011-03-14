@@ -20,15 +20,20 @@ import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.nnsoft.guice.rocoto.configuration.binder.ClassLoaderBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.binder.PrefixBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder;
+import org.nnsoft.guice.rocoto.configuration.readers.MapReader;
 import org.nnsoft.guice.rocoto.configuration.readers.PropertiesReader;
+import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
 import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
 import org.nnsoft.guice.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
@@ -95,19 +100,14 @@ public abstract class ConfigurationModule implements Module {
      */
     protected PropertyValueBindingBuilder bindProperty(final String name) {
         if (name == null) {
-            this.binder.addError("Property name cannot be null.");
+            throw new IllegalArgumentException("Property name cannot be null.");
         }
 
         return new PropertyValueBindingBuilder() {
 
             public void toValue(final String value) {
-                if (name == null) {
-                    return;
-                }
-
                 if (value == null) {
-                    binder.addError("Null value not admitted for property %s", name);
-                    return;
+                    throw new IllegalArgumentException(String.format("Null value not admitted for property '%s's", name));
                 }
 
                 LinkedBindingBuilder<String> bindingBuilder = binder.bind(get(String.class, named(name)));
@@ -123,13 +123,101 @@ public abstract class ConfigurationModule implements Module {
         };
     }
 
+    /**
+     * 
+     * @param properties
+     * @return
+     */
     protected PrefixBindingBuilder addProperties(Properties properties) {
         if (properties == null) {
             throw new IllegalArgumentException("Parameter 'properties' must be not null");
         }
 
-        final PropertiesReader reader = new PropertiesReader(properties);
-        this.readers.add(reader);
+        return this.addConfigurationReader(new PropertiesReader(properties));
+    }
+
+    protected ClassLoaderBindingBuilder addClassPathResource(final String classPathResource) {
+        if (classPathResource == null) {
+            throw new IllegalArgumentException("parameter 'classPathResource' must not be null");
+        }
+
+        return new ClassLoaderBindingBuilder() {
+
+            private boolean isXML = false;
+
+            public ClassLoaderBindingBuilder inXMLFormat() {
+                this.isXML = true;
+                return this;
+            }
+
+            public PrefixBindingBuilder usingRocotoClassLoader() {
+                return this.usingClassLoader(this.getClass().getClassLoader());
+            }
+
+            public PrefixBindingBuilder usingContextClassLoader() {
+                return this.usingClassLoader(Thread.currentThread().getContextClassLoader());
+            }
+
+            public PrefixBindingBuilder usingClassLoader(ClassLoader classLoader) {
+                if (classLoader == null) {
+                    throw new IllegalArgumentException("parameter 'classLoader' must not be null");
+                }
+
+                String resourceURL = classPathResource;
+                if ('/' == classPathResource.charAt(0)) {
+                    resourceURL = classPathResource.substring(1);
+                }
+
+                URL url = classLoader.getResource(resourceURL);
+                if (url == null) {
+                    throw new IllegalArgumentException(
+                            String.format("ClassPath resource '%s' not found, make sure it is in the ClassPath or you're using the right ClassLoader",
+                                    classPathResource));
+                }
+                return addConfigurationReader(new PropertiesURLReader(url, this.isXML));
+            }
+
+        };
+    }
+
+    /**
+     * 
+     * @param properties
+     * @return
+     */
+    protected PrefixBindingBuilder addProperties(Map<String, String> properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+        }
+
+        return this.addConfigurationReader(new MapReader(properties));
+    }
+
+    /**
+     * Add the Environment Variables properties, prefixed by {@code env.}.
+     */
+    protected void addSystemProperties() {
+        this.addProperties(System.getProperties());
+    }
+
+    /**
+     * Add the System Variables properties.
+     */
+    protected void addEnvironmentVariables() {
+        this.addProperties(System.getenv()).withPrefix(ENV_PREFIX);
+    }
+
+    /**
+     * Add a configuration reader.
+     *
+     * @param configurationReader the configuration reader.
+     */
+    protected final PrefixBindingBuilder addConfigurationReader(final ConfigurationReader configurationReader) {
+        if (configurationReader == null) {
+            throw new IllegalArgumentException("Parameter 'configurationReader' must be not null");
+        }
+
+        this.readers.add(configurationReader);
 
         return new PrefixBindingBuilder() {
 
@@ -138,33 +226,10 @@ public abstract class ConfigurationModule implements Module {
                     throw new IllegalArgumentException("Parameter 'prefix' must be not null or not empty");
                 }
 
-                reader.setPrefix(prefix);
+                configurationReader.setPrefix(prefix);
             }
 
         };
-    }
-
-    /**
-     * Add the Environment Variables properties, prefixed by {@code env.}.
-     */
-    protected PrefixBindingBuilder addSystemProperties() {
-        return this.addProperties(System.getProperties());
-    }
-
-    /**
-     * Add the System Variables properties.
-     */
-    protected void addEnvironmentVariables() {
-        // this.addConfigurationReader(new PropertiesReader(System.getenv()));
-    }
-
-    /**
-     * Add a configuration reader.
-     *
-     * @param configurationReader the configuration reader.
-     */
-    protected final void addConfigurationReader(ConfigurationReader configurationReader) {
-        this.readers.add(configurationReader);
     }
 
     /**

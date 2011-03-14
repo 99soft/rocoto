@@ -22,11 +22,16 @@ import java.util.Map.Entry;
  * A configuration reader is an object able to read configuration
  * files from classpath, file system or URLs.
  *
- * @author Simone Tripodi
  * @since 4.0
- * @version $Id$
  */
 public interface ConfigurationReader {
+
+    /**
+     * Add an aux prefix to property keys while iterating.
+     *
+     * @param prefix The aux prefix to property keys while iterating
+     */
+    void setPrefix(String prefix);
 
     /**
      * Read the configuration file iterating over the configuration properties.

@@ -21,7 +21,6 @@ import java.io.File;
 
 import javax.inject.Inject;
 
-import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
 import org.nnsoft.guice.rocoto.configuration.traversal.PropertiesReaderBuilder;
 import org.nnsoft.guice.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 import org.testng.annotations.Test;
@@ -78,8 +77,11 @@ public final class ConfigurationModuleTestCase {
             protected void configure() {
                 addEnvironmentVariables();
                 addSystemProperties();
-                addConfigurationReader(new PropertiesURLReader("/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
-                addConfigurationReader(new PropertiesURLReader("proxy.xml", true));
+
+                addClassPathResource("/org/nnsoft/guice/rocoto/configuration/ldap.properties").usingRocotoClassLoader();
+                addClassPathResource("/org/nnsoft/guice/rocoto/configuration/ldap.properties").usingRocotoClassLoader();
+                addClassPathResource("proxy.xml").inXMLFormat().usingRocotoClassLoader();
+
                 addConfigurationReader(new File("src/test/data"),
                         new PropertiesReaderBuilder(),
                         new XMLPropertiesReaderBuilder());

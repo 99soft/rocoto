@@ -15,7 +15,8 @@
  */
 package org.nnsoft.guice.rocoto.configuration.readers;
 
-import java.io.File;
+import static org.nnsoft.guice.rocoto.configuration.internal.PropertiesIterator.newPropertiesIterator;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
@@ -42,76 +43,6 @@ public final class PropertiesURLReader extends AbstractConfigurationURLReader {
     private final boolean isXML;
 
     /**
-     * Create a new {@code .properties} reader of a in resource the file system.
-     * 
-     * @param file the resource in the file system.
-     */
-    public PropertiesURLReader(File file) {
-        this(file, false);
-    }
-
-    /**
-     * Create a new {@code .properties} reader of a in resource the file system.
-     * 
-     * @param file the resource in the file system.
-     * @param isXML to mark if the properties file is in XML format or not.
-     */
-    public PropertiesURLReader(File file, boolean isXML) {
-        super(file);
-        this.isXML = isXML;
-    }
-
-    /**
-     * Create a new {@code .properties} reader of a classpath resource using the current thread classloader.
-     *
-     * @param classpathResource the classpath resource has to be read.
-     */
-    public PropertiesURLReader(String classpathResource) {
-        this(classpathResource, Thread.currentThread().getContextClassLoader());
-    }
-
-    /**
-     * Create a new {@code .properties} reader of a classpath resource using the current thread classloader.
-     *
-     * @param classpathResource the classpath resource has to be read.
-     * @param isXML to mark if the properties file is in XML format or not.
-     */
-    public PropertiesURLReader(String classpathResource, boolean isXML) {
-        this(classpathResource, Thread.currentThread().getContextClassLoader(), isXML);
-    }
-
-    /**
-     * Create a new {@code .properties} reader of a classpath resource using the given classloader.
-     *
-     * @param classpathResource the classpath resource has to be read.
-     * @param classLoader the class loader to read the resource.
-     */
-    public PropertiesURLReader(String classpathResource, ClassLoader classLoader) {
-        this(classpathResource, classLoader, false);
-    }
-
-    /**
-     * Create a new {@code .properties} reader of a classpath resource using the given classloader.
-     *
-     * @param classpathResource the classpath resource has to be read.
-     * @param classLoader the class loader to read the resource.
-     * @param isXML to mark if the properties file is in XML format or not.
-     */
-    public PropertiesURLReader(String classpathResource, ClassLoader classLoader, boolean isXML) {
-        super(classpathResource, classLoader);
-        this.isXML = isXML;
-    }
-
-    /**
-     * Create a new {@code .properties} reader of a resource located in the given URL.
-     *
-     * @param url the URL that locates the configuration resource.
-     */
-    public PropertiesURLReader(URL url) {
-        this(url, false);
-    }
-
-    /**
      * Create a new {@code .properties} reader of a resource located in the given URL.
      *
      * @param url the URL that locates the configuration resource.
@@ -133,7 +64,7 @@ public final class PropertiesURLReader extends AbstractConfigurationURLReader {
         } else {
             properties.load(input);
         }
-        return PropertiesIterator.newPropertiesIterator(properties);
+        return newPropertiesIterator(getPrefix(), properties);
     }
 
     @Override

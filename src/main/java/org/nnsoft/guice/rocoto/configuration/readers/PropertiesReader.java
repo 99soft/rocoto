@@ -15,13 +15,13 @@
  */
 package org.nnsoft.guice.rocoto.configuration.readers;
 
-import static org.nnsoft.guice.rocoto.configuration.readers.PropertiesIterator.newPropertiesIterator;
+import static org.nnsoft.guice.rocoto.configuration.internal.PropertiesIterator.newPropertiesIterator;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.internal.AbstractConfigurationReader;
 
 /**
  * Simple {@link Properties} reader adapter.
@@ -30,17 +30,12 @@ import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
  * @since 4.0
  * @version $Id$
  */
-public class PropertiesReader implements ConfigurationReader {
+public class PropertiesReader  extends AbstractConfigurationReader {
 
     /**
      * The properties have to be read.
      */
     private final Properties properties;
-
-    /**
-     * 
-     */
-    private String prefix = null;
 
     /**
      * Creates a new properties reader adapter.
@@ -51,23 +46,11 @@ public class PropertiesReader implements ConfigurationReader {
         this.properties = properties;
     }
 
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
-
     /**
      * {@inheritDoc}
      */
     public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return newPropertiesIterator(this.prefix, this.properties);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return this.properties.toString();
+        return newPropertiesIterator(getPrefix(), properties);
     }
 
 }

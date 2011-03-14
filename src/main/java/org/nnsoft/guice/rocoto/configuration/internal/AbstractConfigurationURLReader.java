@@ -15,17 +15,13 @@
  */
 package org.nnsoft.guice.rocoto.configuration.internal;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
-import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
 
 
 /**
@@ -35,7 +31,7 @@ import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
  * @since 4.0
  * @version $Id$
  */
-public abstract class AbstractConfigurationURLReader implements ConfigurationReader {
+public abstract class AbstractConfigurationURLReader extends AbstractConfigurationReader {
 
     /**
      * The URL has to be open.
@@ -46,7 +42,7 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
      * Create a new reader of a classpath resource using the current thread classloader.
      *
      * @param classpathResource the classpath resource has to be read.
-     */
+     *
     public AbstractConfigurationURLReader(String classpathResource) {
         this(classpathResource, Thread.currentThread().getContextClassLoader());
     }
@@ -56,7 +52,7 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
      *
      * @param classpathResource the classpath resource has to be read.
      * @param classLoader the class loader to read the resource.
-     */
+     *
     public AbstractConfigurationURLReader(String classpathResource, ClassLoader classLoader) {
         if (classpathResource == null) {
             throw new IllegalArgumentException("'classpathResource' argument can't be null");
@@ -82,7 +78,7 @@ public abstract class AbstractConfigurationURLReader implements ConfigurationRea
      * Create a new reader of a resource in the file system.
      *
      * @param file the resource in the file system.
-     */
+     *
     public AbstractConfigurationURLReader(File file) {
         if (file == null) {
             throw new IllegalArgumentException("'configurationFile' argument can't be null");
