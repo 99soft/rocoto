@@ -20,6 +20,8 @@ import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -40,6 +42,8 @@ import com.google.inject.binder.LinkedBindingBuilder;
  */
 public abstract class ConfigurationModule implements Module {
 
+    private final Collection<ConfigurationReader> readers = new ArrayList<ConfigurationReader>();
+
     private Binder binder;
 
     /**
@@ -54,6 +58,18 @@ public abstract class ConfigurationModule implements Module {
 
         try {
             this.configure();
+
+            for (ConfigurationReader configurationReader : this.readers) {
+                try {
+                    Iterator<Entry<String, String>> properties = configurationReader.readConfiguration();
+                    while (properties.hasNext()) {
+                        Entry<String, String> property = properties.next();
+                        bindProperty(property.getKey()).toValue(property.getValue());
+                    }
+                } catch (Exception e) {
+                    this.binder.addError(e);
+                }
+            }
         } finally {
             this.binder = null;
         }
@@ -120,15 +136,7 @@ public abstract class ConfigurationModule implements Module {
      * @param configurationReader the configuration reader.
      */
     protected final void addConfigurationReader(ConfigurationReader configurationReader) {
-        try {
-            Iterator<Entry<String, String>> properties = configurationReader.readConfiguration();
-            while (properties.hasNext()) {
-                Entry<String, String> property = properties.next();
-                bindProperty(property.getKey()).toValue(property.getValue());
-            }
-        } catch (Exception e) {
-            this.binder.addError(e);
-        }
+        this.readers.add(configurationReader);
     }
 
     /**
