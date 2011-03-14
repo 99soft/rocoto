@@ -79,6 +79,7 @@ public final class PropertiesURLReader extends AbstractConfigurationReader {
             } else {
                 properties.load(input);
             }
+
             return newPropertiesIterator(getPrefix(), properties);
         } finally {
             if (connection != null && (connection instanceof HttpURLConnection)) {
