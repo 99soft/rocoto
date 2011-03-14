@@ -21,19 +21,11 @@
 -->
 <project name="${project.name}">
 
-    <skin>
-        <groupId>com.googlecode.fluido-skin</groupId>
-        <artifactId>fluido-skin</artifactId>
-        <version>1.3</version>
-    </skin>
-
     <bannerLeft>
         <name>Add some spice to Google Guice through configuration files!</name>
         <src>images/logo.png</src>
         <href>${project.url}/index.html</href>
     </bannerLeft>
-
-    <version position="left" />
 
     <body>
         <menu name="${project.name}">
@@ -41,8 +33,6 @@
             <item name="Configuration" href="configuration.html" />
             <item name="Converters" href="converters.html" />
         </menu>
-
-        <menu ref="reports" />
 
         <menu name="External Links">
             <item name="Project Page" href="https://github.com/99soft/Rocoto" />
