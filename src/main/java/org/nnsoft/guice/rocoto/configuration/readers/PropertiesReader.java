@@ -15,12 +15,13 @@
  */
 package org.nnsoft.guice.rocoto.configuration.readers;
 
+import static org.nnsoft.guice.rocoto.configuration.readers.PropertiesIterator.newPropertiesIterator;
+
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
-
 
 /**
  * Simple {@link Properties} reader adapter.
@@ -49,7 +50,7 @@ public class PropertiesReader implements ConfigurationReader {
      * {@inheritDoc}
      */
     public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.newPropertiesIterator(this.properties);
+        return newPropertiesIterator(this.properties);
     }
 
     /**
