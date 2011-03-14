@@ -24,7 +24,7 @@ import java.util.Map.Entry;
  * @since 4.0
  * @version $Id$
  */
-public final class KeyValue implements Entry<String, String> {
+public class KeyValue implements Entry<String, String> {
 
     /**
      * The entry key.
