@@ -40,8 +40,8 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> 
      * @param properties the map configuration has to be read.
      * @return a map confguration iterator.
      */
-    public static final <K, V> PropertiesIterator<K, V> createNew(Map<K, V> properties) {
-        return createNew(null, properties);
+    public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator(Map<K, V> properties) {
+        return newPropertiesIterator(null, properties);
     }
 
     /**
@@ -53,7 +53,7 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> 
      * @param properties the map configuration has to be read.
      * @return a map confguration iterator.
      */
-    public static final <K, V> PropertiesIterator<K, V> createNew(String keyPrefix, Map<K, V> properties) {
+    public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator(String keyPrefix, Map<K, V> properties) {
         return new PropertiesIterator<K, V>(keyPrefix, properties);
     }
 

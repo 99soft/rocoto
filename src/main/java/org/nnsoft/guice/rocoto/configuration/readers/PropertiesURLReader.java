@@ -133,7 +133,7 @@ public final class PropertiesURLReader extends AbstractConfigurationURLReader {
         } else {
             properties.load(input);
         }
-        return PropertiesIterator.createNew(properties);
+        return PropertiesIterator.newPropertiesIterator(properties);
     }
 
     @Override

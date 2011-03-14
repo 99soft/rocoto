@@ -49,7 +49,7 @@ public class PropertiesReader implements ConfigurationReader {
      * {@inheritDoc}
      */
     public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.createNew(this.properties);
+        return PropertiesIterator.newPropertiesIterator(this.properties);
     }
 
     /**

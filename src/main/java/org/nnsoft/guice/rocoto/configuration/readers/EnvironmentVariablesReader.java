@@ -39,7 +39,7 @@ public final class EnvironmentVariablesReader implements ConfigurationReader {
      * {@inheritDoc}
      */
     public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return PropertiesIterator.createNew(ENV_PREFIX, System.getenv());
+        return PropertiesIterator.newPropertiesIterator(ENV_PREFIX, System.getenv());
     }
 
     /**
