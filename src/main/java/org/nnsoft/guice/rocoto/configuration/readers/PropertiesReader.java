@@ -15,13 +15,12 @@
  */
 package org.nnsoft.guice.rocoto.configuration.readers;
 
-import static org.nnsoft.guice.rocoto.configuration.internal.PropertiesIterator.newPropertiesIterator;
+import static org.nnsoft.guice.rocoto.configuration.readers.PropertiesIterator.newPropertiesIterator;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import org.nnsoft.guice.rocoto.configuration.internal.AbstractConfigurationReader;
 
 /**
  * Simple {@link Properties} reader adapter.
@@ -30,7 +29,7 @@ import org.nnsoft.guice.rocoto.configuration.internal.AbstractConfigurationReade
  * @since 4.0
  * @version $Id$
  */
-public class PropertiesReader  extends AbstractConfigurationReader {
+public final class PropertiesReader  extends AbstractConfigurationReader {
 
     /**
      * The properties have to be read.

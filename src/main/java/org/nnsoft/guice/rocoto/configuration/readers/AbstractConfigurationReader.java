@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.internal;
+package org.nnsoft.guice.rocoto.configuration.readers;
 
 import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
 
@@ -22,7 +22,7 @@ import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
  *
  * @since 5.0
  */
-public abstract class AbstractConfigurationReader implements ConfigurationReader {
+abstract class AbstractConfigurationReader implements ConfigurationReader {
 
     private String prefix;
 

@@ -1,12 +1,11 @@
 package org.nnsoft.guice.rocoto.configuration.readers;
 
-import static org.nnsoft.guice.rocoto.configuration.internal.PropertiesIterator.newPropertiesIterator;
+import static org.nnsoft.guice.rocoto.configuration.readers.PropertiesIterator.newPropertiesIterator;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.nnsoft.guice.rocoto.configuration.internal.AbstractConfigurationReader;
 
 public final class MapReader extends AbstractConfigurationReader {
 

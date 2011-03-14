@@ -15,15 +15,16 @@
  */
 package org.nnsoft.guice.rocoto.configuration.readers;
 
-import static org.nnsoft.guice.rocoto.configuration.internal.PropertiesIterator.newPropertiesIterator;
+import static org.nnsoft.guice.rocoto.configuration.readers.PropertiesIterator.newPropertiesIterator;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
-
-import org.nnsoft.guice.rocoto.configuration.internal.AbstractConfigurationURLReader;
 
 
 /**
@@ -35,7 +36,12 @@ import org.nnsoft.guice.rocoto.configuration.internal.AbstractConfigurationURLRe
  * @since 4.0
  * @version $Id$
  */
-public final class PropertiesURLReader extends AbstractConfigurationURLReader {
+public final class PropertiesURLReader extends AbstractConfigurationReader {
+
+    /**
+     * The URL has to be open.
+     */
+    private final URL url;
 
     /**
      * Flag to mark properties are in XML format.
@@ -49,27 +55,43 @@ public final class PropertiesURLReader extends AbstractConfigurationURLReader {
      * @param isXML to mark if the properties file is in XML format or not.
      */
     public PropertiesURLReader(URL url, boolean isXML) {
-        super(url);
+        if (url == null) {
+            throw new IllegalArgumentException("'url' argument can't be null");
+        }
+        this.url = url;
         this.isXML = isXML;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
-    protected Iterator<Entry<String, String>> process(InputStream input) throws Exception {
-        Properties properties = new Properties();
-        if (this.isXML) {
-            properties.loadFromXML(input);
-        } else {
-            properties.load(input);
-        }
-        return newPropertiesIterator(getPrefix(), properties);
-    }
+    public final Iterator<Entry<String, String>> readConfiguration() throws Exception {
+        URLConnection connection = null;
+        InputStream input = null;
+        try {
+            connection = this.url.openConnection();
+            connection.setUseCaches(false);
+            input = connection.getInputStream();
 
-    @Override
-    public String toString() {
-        return super.toString() + (this.isXML ? "[XML]" : "");
+            Properties properties = new Properties();
+            if (this.isXML) {
+                properties.loadFromXML(input);
+            } else {
+                properties.load(input);
+            }
+            return newPropertiesIterator(getPrefix(), properties);
+        } finally {
+            if (connection != null && (connection instanceof HttpURLConnection)) {
+                ((HttpURLConnection) connection).disconnect();
+            }
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    // close quietly
+                }
+            }
+        }
     }
 
 }

@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.internal;
+package org.nnsoft.guice.rocoto.configuration.readers;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -27,7 +27,7 @@ import java.util.Map.Entry;
  * @since 4.0
  * @version $Id$
  */
-public final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> {
+final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> {
 
     /**
      * Creates a new iterator over a map configuration with prefixing the keys with the given prefix.

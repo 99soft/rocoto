@@ -136,6 +136,11 @@ public abstract class ConfigurationModule implements Module {
         return this.addConfigurationReader(new PropertiesReader(properties));
     }
 
+    /**
+     * 
+     * @param classPathResource
+     * @return
+     */
     protected ClassLoaderBindingBuilder addClassPathResource(final String classPathResource) {
         if (classPathResource == null) {
             throw new IllegalArgumentException("parameter 'classPathResource' must not be null");
