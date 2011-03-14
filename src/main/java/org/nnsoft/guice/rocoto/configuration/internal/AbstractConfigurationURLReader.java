@@ -39,42 +39,6 @@ public abstract class AbstractConfigurationURLReader extends AbstractConfigurati
     private final URL url;
 
     /**
-     * Create a new reader of a classpath resource using the current thread classloader.
-     *
-     * @param classpathResource the classpath resource has to be read.
-     *
-    public AbstractConfigurationURLReader(String classpathResource) {
-        this(classpathResource, Thread.currentThread().getContextClassLoader());
-    }
-
-    /**
-     * Create a new reader of a classpath resource using the given classloader.
-     *
-     * @param classpathResource the classpath resource has to be read.
-     * @param classLoader the class loader to read the resource.
-     *
-    public AbstractConfigurationURLReader(String classpathResource, ClassLoader classLoader) {
-        if (classpathResource == null) {
-            throw new IllegalArgumentException("'classpathResource' argument can't be null");
-        }
-        if (classLoader == null) {
-            throw new IllegalArgumentException("'classLoader' argument can't be null");
-        }
-
-        if ('/' == classpathResource.charAt(0)) {
-            classpathResource = classpathResource.substring(1);
-        }
-
-        URL url = classLoader.getResource(classpathResource);
-        if (url == null) {
-            throw new IllegalArgumentException("classpath resource '"
-                    + classpathResource
-                    + "' doesn't exist");
-        }
-        this.url = url;
-    }
-
-    /**
      * Create a new reader of a resource in the file system.
      *
      * @param file the resource in the file system.
