@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.readers.EnvironmentVariablesReader;
 import org.nnsoft.guice.rocoto.configuration.readers.SystemPropertiesReader;
 import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
