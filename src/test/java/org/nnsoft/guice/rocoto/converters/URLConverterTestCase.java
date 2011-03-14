@@ -15,16 +15,16 @@
  */
 package org.nnsoft.guice.rocoto.converters;
 
+import static com.google.inject.name.Names.named;
+
 import java.net.URL;
 
-import org.nnsoft.guice.rocoto.converters.URLConverter;
 import org.testng.annotations.Test;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 import com.google.inject.name.Named;
-import com.google.inject.name.Names;
 
 /**
  * 
@@ -42,7 +42,7 @@ public final class URLConverterTestCase extends AbstractTestCase<URL> {
         return new Module[] { new URLConverter(), new AbstractModule() {
             protected void configure() {
                 this.bindConstant()
-                    .annotatedWith(Names.named("classpathResource"))
+                    .annotatedWith(named("classpathResource"))
                     .to("classpath:///testng.xml");
             };
         } };

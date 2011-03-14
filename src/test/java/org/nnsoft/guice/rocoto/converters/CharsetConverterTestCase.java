@@ -15,16 +15,16 @@
  */
 package org.nnsoft.guice.rocoto.converters;
 
+import static com.google.inject.name.Names.named;
+
 import java.nio.charset.Charset;
 
-import org.nnsoft.guice.rocoto.converters.CharsetConverter;
 import org.testng.annotations.Test;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 import com.google.inject.name.Named;
-import com.google.inject.name.Names;
 
 /**
  * 
@@ -42,7 +42,7 @@ public final class CharsetConverterTestCase extends AbstractTestCase<Charset> {
         return new Module[] { new CharsetConverter(), new AbstractModule() {
             protected void configure() {
                 this.bindConstant()
-                    .annotatedWith(Names.named("charset"))
+                    .annotatedWith(named("charset"))
                     .to("UTF-8");
             };
         } };

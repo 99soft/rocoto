@@ -15,16 +15,16 @@
  */
 package org.nnsoft.guice.rocoto.converters;
 
+import static com.google.inject.name.Names.named;
+
 import java.util.Locale;
 
-import org.nnsoft.guice.rocoto.converters.LocaleConverter;
 import org.testng.annotations.Test;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 import com.google.inject.name.Named;
-import com.google.inject.name.Names;
 
 /**
  * 
@@ -42,7 +42,7 @@ public final class LocaleConverterTestCase extends AbstractTestCase<Locale> {
         return new Module[] { new LocaleConverter(), new AbstractModule() {
             protected void configure() {
                 this.bindConstant()
-                    .annotatedWith(Names.named("locale"))
+                    .annotatedWith(named("locale"))
                     .to("en_US");
             };
         } };

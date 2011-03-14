@@ -15,11 +15,11 @@
  */
 package org.nnsoft.guice.rocoto.converters;
 
-import org.testng.Assert;
+import static com.google.inject.Guice.createInjector;
+import static org.testng.Assert.assertEquals;
+
 import org.testng.annotations.BeforeClass;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Module;
 
 /**
@@ -35,14 +35,13 @@ abstract class AbstractTestCase<T> {
 
     @BeforeClass
     protected final void init() {
-        Injector injector = Guice.createInjector(this.getModules());
-        injector.injectMembers(this);
+        createInjector(this.getModules()).injectMembers(this);
     }
 
     protected abstract Module[] getModules();
 
     protected final void verifyConversion(T expected) {
-        Assert.assertEquals(expected, this.convertedField);
+        assertEquals(expected, this.convertedField);
     }
 
 }

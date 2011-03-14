@@ -15,16 +15,16 @@
  */
 package org.nnsoft.guice.rocoto.converters;
 
+import static com.google.inject.name.Names.named;
+
 import java.util.BitSet;
 
-import org.nnsoft.guice.rocoto.converters.BitSetConverter;
 import org.testng.annotations.Test;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 import com.google.inject.name.Named;
-import com.google.inject.name.Names;
 
 /**
  * 
@@ -42,7 +42,7 @@ public final class BitSetConverterTestCase extends AbstractTestCase<BitSet> {
         return new Module[] { new BitSetConverter(), new AbstractModule() {
             protected void configure() {
                 this.bindConstant()
-                    .annotatedWith(Names.named("bitset"))
+                    .annotatedWith(named("bitset"))
                     .to("a, 123, ~");
             };
         } };
