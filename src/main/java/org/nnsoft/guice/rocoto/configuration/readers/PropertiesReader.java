@@ -38,6 +38,11 @@ public class PropertiesReader implements ConfigurationReader {
     private final Properties properties;
 
     /**
+     * 
+     */
+    private String prefix = null;
+
+    /**
      * Creates a new properties reader adapter.
      *
      * @param properties the properties have to be read.
@@ -46,11 +51,15 @@ public class PropertiesReader implements ConfigurationReader {
         this.properties = properties;
     }
 
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
+
     /**
      * {@inheritDoc}
      */
     public Iterator<Entry<String, String>> readConfiguration() throws Exception {
-        return newPropertiesIterator(this.properties);
+        return newPropertiesIterator(this.prefix, this.properties);
     }
 
     /**

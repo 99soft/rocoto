@@ -24,10 +24,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Properties;
 
+import org.nnsoft.guice.rocoto.configuration.binder.PrefixBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder;
-import org.nnsoft.guice.rocoto.configuration.readers.EnvironmentVariablesReader;
-import org.nnsoft.guice.rocoto.configuration.readers.SystemPropertiesReader;
+import org.nnsoft.guice.rocoto.configuration.readers.PropertiesReader;
 import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
 import org.nnsoft.guice.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
@@ -42,6 +43,11 @@ import com.google.inject.binder.LinkedBindingBuilder;
  * @since 4.0
  */
 public abstract class ConfigurationModule implements Module {
+
+    /**
+     * The environment variable prefix, {@code env.}
+     */
+    private static final String ENV_PREFIX = "env.";
 
     private final Collection<ConfigurationReader> readers = new ArrayList<ConfigurationReader>();
 
@@ -117,18 +123,39 @@ public abstract class ConfigurationModule implements Module {
         };
     }
 
+    protected PrefixBindingBuilder addProperties(Properties properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+        }
+
+        final PropertiesReader reader = new PropertiesReader(properties);
+        this.readers.add(reader);
+
+        return new PrefixBindingBuilder() {
+
+            public void withPrefix(String prefix) {
+                if (prefix == null || prefix.length() == 0) {
+                    throw new IllegalArgumentException("Parameter 'prefix' must be not null or not empty");
+                }
+
+                reader.setPrefix(prefix);
+            }
+
+        };
+    }
+
     /**
      * Add the Environment Variables properties, prefixed by {@code env.}.
      */
-    protected void addEnvironmentVariables() {
-        this.addConfigurationReader(new EnvironmentVariablesReader());
+    protected PrefixBindingBuilder addSystemProperties() {
+        return this.addProperties(System.getProperties());
     }
 
     /**
      * Add the System Variables properties.
      */
-    protected void addSystemProperties() {
-        this.addConfigurationReader(new SystemPropertiesReader());
+    protected void addEnvironmentVariables() {
+        // this.addConfigurationReader(new PropertiesReader(System.getenv()));
     }
 
     /**
