@@ -1,0 +1,1059 @@
+<api>
+<package name="org.nnsoft.guice.rocoto.configuration"
+>
+<class name="ConfigurationModule"
+ extends="com.google.inject.AbstractModule"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ConfigurationModule"
+ type="org.nnsoft.guice.rocoto.configuration.ConfigurationModule"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="bindConfigurations"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
+<method name="bindEnvironmentVariables"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
+<method name="bindProperties"
+ return="org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="propertiesResource" type="java.io.File">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="properties" type="java.lang.Iterable&lt;java.util.Map.Entry&lt;java.lang.String, java.lang.String&gt;&gt;">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="classPathResource" type="java.lang.String">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="classPathResource" type="java.lang.String">
+</parameter>
+<parameter name="classLoader" type="java.lang.ClassLoader">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="propertiesResource" type="java.net.URI">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="propertiesResource" type="java.net.URL">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="properties" type="java.util.Iterator&lt;java.util.Map.Entry&lt;java.lang.String, java.lang.String&gt;&gt;">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="properties" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+</method>
+<method name="bindProperties"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="properties" type="java.util.Properties">
+</parameter>
+</method>
+<method name="bindProperty"
+ return="org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="bindSystemProperties"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
+<method name="configure"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="protected"
+>
+</method>
+</class>
+</package>
+<package name="org.nnsoft.guice.rocoto.configuration.binder"
+>
+<interface name="PropertyValueBindingBuilder"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="toValue"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+</method>
+</interface>
+<interface name="XMLPropertiesFormatBindingBuilder"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="inXMLFormat"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+</package>
+<package name="org.nnsoft.guice.rocoto.configuration.resolver"
+>
+<class name="PropertiesResolverProvider"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="javax.inject.Provider">
+</implements>
+<constructor name="PropertiesResolverProvider"
+ type="org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="pattern" type="java.lang.String">
+</parameter>
+</constructor>
+<method name="containsKeys"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="get"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setInjector"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="injector" type="com.google.inject.Injector">
+</parameter>
+</method>
+</class>
+</package>
+<package name="org.nnsoft.guice.rocoto.converters"
+>
+<class name="AbstractConverter"
+ extends="com.google.inject.TypeLiteral"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="com.google.inject.Module">
+</implements>
+<implements name="com.google.inject.spi.TypeConverter">
+</implements>
+<constructor name="AbstractConverter"
+ type="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="configure"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="binder" type="com.google.inject.Binder">
+</parameter>
+</method>
+</class>
+<class name="BigDecimalConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="BigDecimalConverter"
+ type="org.nnsoft.guice.rocoto.converters.BigDecimalConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="BigIntegerConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="BigIntegerConverter"
+ type="org.nnsoft.guice.rocoto.converters.BigIntegerConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="BitSetConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="BitSetConverter"
+ type="org.nnsoft.guice.rocoto.converters.BitSetConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="CharsetConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="CharsetConverter"
+ type="org.nnsoft.guice.rocoto.converters.CharsetConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="ClobConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ClobConverter"
+ type="org.nnsoft.guice.rocoto.converters.ClobConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="CurrencyConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="CurrencyConverter"
+ type="org.nnsoft.guice.rocoto.converters.CurrencyConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="DateConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DateConverter"
+ type="org.nnsoft.guice.rocoto.converters.DateConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="addPattern"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="pattern" type="java.lang.String">
+</parameter>
+</method>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+<method name="setLocale"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="locale" type="java.util.Locale">
+</parameter>
+</method>
+<method name="setTimeZone"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="timeZone" type="java.util.TimeZone">
+</parameter>
+</method>
+</class>
+<class name="DecimalFormatConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DecimalFormatConverter"
+ type="org.nnsoft.guice.rocoto.converters.DecimalFormatConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="FileConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="FileConverter"
+ type="org.nnsoft.guice.rocoto.converters.FileConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="InetAddressConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="InetAddressConverter"
+ type="org.nnsoft.guice.rocoto.converters.InetAddressConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="LocaleConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="LocaleConverter"
+ type="org.nnsoft.guice.rocoto.converters.LocaleConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="PatternConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="PatternConverter"
+ type="org.nnsoft.guice.rocoto.converters.PatternConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="PropertiesConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="PropertiesConverter"
+ type="org.nnsoft.guice.rocoto.converters.PropertiesConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="SQLDateConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="SQLDateConverter"
+ type="org.nnsoft.guice.rocoto.converters.SQLDateConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="SQLTimeConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="SQLTimeConverter"
+ type="org.nnsoft.guice.rocoto.converters.SQLTimeConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="SQLTimestampConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="SQLTimestampConverter"
+ type="org.nnsoft.guice.rocoto.converters.SQLTimestampConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="SimpleDateFormatConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="SimpleDateFormatConverter"
+ type="org.nnsoft.guice.rocoto.converters.SimpleDateFormatConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="TimeZoneConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="TimeZoneConverter"
+ type="org.nnsoft.guice.rocoto.converters.TimeZoneConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="URIConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="URIConverter"
+ type="org.nnsoft.guice.rocoto.converters.URIConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+<class name="URLConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="URLConverter"
+ type="org.nnsoft.guice.rocoto.converters.URLConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+<field name="CLASSPATH_URL_PREFIX"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;classpath://&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="UUIDConverter"
+ extends="org.nnsoft.guice.rocoto.converters.AbstractConverter"
+ abstract="false"
+ static="false"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="UUIDConverter"
+ type="org.nnsoft.guice.rocoto.converters.UUIDConverter"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="convert"
+ return="java.lang.Object"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="value" type="java.lang.String">
+</parameter>
+<parameter name="toType" type="com.google.inject.TypeLiteral&lt;?&gt;">
+</parameter>
+</method>
+</class>
+</package>
+</api>

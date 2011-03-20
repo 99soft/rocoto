@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.2.5" timestamp="2011-03-20T23:22:49.376">
+<file name="/Users/simonetripodi/Documents/99soft/rocoto/target/checkout/src/main/java/org/nnsoft/guice/rocoto/configuration/ConfigurationModule.java">
+<violation beginline="16" endline="284" begincolumn="1" endcolumn="2" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="org.nnsoft.guice.rocoto.configuration" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
+Too many static imports may lead to messy code
+</violation>
+</file>
+<file name="/Users/simonetripodi/Documents/99soft/rocoto/target/checkout/src/main/java/org/nnsoft/guice/rocoto/configuration/PropertiesIterator.java">
+<violation beginline="37" endline="39" begincolumn="25" endcolumn="5" rule="UnnecessaryFinalModifier" ruleset="Basic Rules" package="org.nnsoft.guice.rocoto.configuration" class="PropertiesIterator" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryFinalModifier" priority="3">
+Unnecessary final modifier in final class
+</violation>
+<violation beginline="50" endline="52" begincolumn="25" endcolumn="5" rule="UnnecessaryFinalModifier" ruleset="Basic Rules" package="org.nnsoft.guice.rocoto.configuration" class="PropertiesIterator" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryFinalModifier" priority="3">
+Unnecessary final modifier in final class
+</violation>
+</file>
+<file name="/Users/simonetripodi/Documents/99soft/rocoto/target/checkout/src/main/java/org/nnsoft/guice/rocoto/configuration/PropertiesURLReader.java">
+<violation beginline="78" endline="106" begincolumn="18" endcolumn="5" rule="UnnecessaryFinalModifier" ruleset="Basic Rules" package="org.nnsoft.guice.rocoto.configuration" class="PropertiesURLReader" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryFinalModifier" priority="3">
+Unnecessary final modifier in final class
+</violation>
+<violation beginline="101" endline="103" begincolumn="19" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.nnsoft.guice.rocoto.configuration" class="PropertiesURLReader" method="readConfiguration" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/Users/simonetripodi/Documents/99soft/rocoto/target/checkout/src/main/java/org/nnsoft/guice/rocoto/converters/PropertiesConverter.java">
+<violation beginline="56" endline="58" begincolumn="19" endcolumn="17" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.nnsoft.guice.rocoto.converters" class="PropertiesConverter" method="convert" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+<file name="/Users/simonetripodi/Documents/99soft/rocoto/target/checkout/src/main/java/org/nnsoft/guice/rocoto/converters/URLConverter.java">
+<violation beginline="47" endline="49" begincolumn="15" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.nnsoft.guice.rocoto.converters" class="URLConverter" method="convert" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+Avoid empty catch blocks
+</violation>
+</file>
+</pmd>
