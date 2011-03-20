@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The 99 Software Foundation
+ *    Copyright 2009-2011 The 99 Software Foundation
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,19 +13,30 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.configuration;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+
 /**
  * Simple iterator of a {@code Map<K, V>} entries, with the option of prefixing keys
  * with the given prefix.
- *
- * @since 4.0
  */
 final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> {
+
+    /**
+     * Creates a new iterator over a map configuration with prefixing the keys with the given prefix.
+     *
+     * @param <K> The map entry key type
+     * @param <V> The map entry value type
+     * @param properties The map configuration has to be read
+     * @return A map configuration iterator
+     */
+    public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator(Map<K, V> properties) {
+        return new PropertiesIterator<K, V>(null, properties);
+    }
 
     /**
      * Creates a new iterator over a map configuration with prefixing the keys with the given prefix.
@@ -34,7 +45,7 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> 
      * @param <V> the map entry value type.
      * @param keyPrefix the prefix for key entries.
      * @param properties the map configuration has to be read.
-     * @return a map confguration iterator.
+     * @return a map configuration iterator.
      */
     public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator(String keyPrefix, Map<K, V> properties) {
         return new PropertiesIterator<K, V>(keyPrefix, properties);

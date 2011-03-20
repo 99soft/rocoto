@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The 99 Software Foundation
+ *    Copyright 2009-2011 The 99 Software Foundation
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,16 +13,14 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.readers;
+package org.nnsoft.guice.rocoto.configuration;
 
 import java.util.Map.Entry;
 
 /**
  * A simple {@code Entry<String, String>} implementation.
- *
- * @since 4.0
  */
-public class KeyValue implements Entry<String, String> {
+final class KeyValue implements Entry<String, String> {
 
     /**
      * The entry key.

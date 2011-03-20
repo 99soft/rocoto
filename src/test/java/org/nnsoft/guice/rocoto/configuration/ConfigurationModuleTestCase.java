@@ -70,17 +70,17 @@ public final class ConfigurationModuleTestCase {
         createInjector(new ConfigurationModule() {
 
             @Override
-            protected void loadConfigurations() {
-                addEnvironmentVariables();
-                addSystemProperties();
+            protected void bindConfigurations() {
+                bindEnvironmentVariables();
+                bindSystemProperties();
 
-                addProperties(URI.create("classpath:/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
-                addProperties("proxy.xml").inXMLFormat();
+                bindProperties(URI.create("classpath:/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
+                bindProperties("proxy.xml").inXMLFormat();
 
                 File parentConf = new File("src/test/data/org/nnsoft");
-                addProperties(new File(parentConf, "ibatis.properties"));
-                addProperties(new File(parentConf, "guice/jdbc.properties"));
-                addProperties(new File(parentConf, "guice/rocoto/configuration/memcached.xml")).inXMLFormat();
+                bindProperties(new File(parentConf, "ibatis.properties"));
+                bindProperties(new File(parentConf, "guice/jdbc.properties"));
+                bindProperties(new File(parentConf, "guice/rocoto/configuration/memcached.xml")).inXMLFormat();
             }
 
         }).injectMembers(this);

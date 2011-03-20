@@ -17,8 +17,6 @@ package org.nnsoft.guice.rocoto.configuration.binder;
 
 /**
  * Define a properties file is in the XML format.
- *
- * @param <T>
  */
 public interface XMLPropertiesFormatBindingBuilder {
 
@@ -27,6 +25,6 @@ public interface XMLPropertiesFormatBindingBuilder {
      *
      * @return
      */
-    XMLPropertiesFormatBindingBuilder inXMLFormat();
+    void inXMLFormat();
 
 }

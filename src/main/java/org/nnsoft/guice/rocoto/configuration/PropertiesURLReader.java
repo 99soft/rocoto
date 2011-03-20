@@ -1,5 +1,5 @@
 /*
- *    Copyright 2009-2010 The 99 Software Foundation
+ *    Copyright 2009-2011 The 99 Software Foundation
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,17 +13,13 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.readers;
-
-import static org.nnsoft.guice.rocoto.configuration.readers.PropertiesIterator.newPropertiesIterator;
+package org.nnsoft.guice.rocoto.configuration;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder;
@@ -32,10 +28,8 @@ import org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBu
  * {@link Properties} reader implementation able to read configuration files from classpath, file system or URLs.
  *
  * This reader implementation support both {@code .properties} and {@code .xml} properties format.
- *
- * @since 4.0
  */
-public final class PropertiesURLReader extends AbstractConfigurationReader implements XMLPropertiesFormatBindingBuilder {
+final class PropertiesURLReader implements XMLPropertiesFormatBindingBuilder {
 
     /**
      * The URL has to be open.
@@ -60,15 +54,28 @@ public final class PropertiesURLReader extends AbstractConfigurationReader imple
         this.url = url;
     }
 
-    public PropertiesURLReader inXMLFormat() {
-        this.isXML = true;
-        return this;
-    }
-
     /**
      * {@inheritDoc}
      */
-    public final Iterator<Entry<String, String>> readConfiguration() throws Exception {
+    public void inXMLFormat() {
+        this.isXML = true;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public URL getUrl() {
+        return url;
+    }
+
+    /**
+     * 
+     *
+     * @return
+     * @throws Exception
+     */
+    public final Properties readConfiguration() throws Exception {
         URLConnection connection = null;
         InputStream input = null;
         try {
@@ -83,7 +90,7 @@ public final class PropertiesURLReader extends AbstractConfigurationReader imple
                 properties.load(input);
             }
 
-            return newPropertiesIterator(getPrefix(), properties);
+            return properties;
         } finally {
             if (connection != null && (connection instanceof HttpURLConnection)) {
                 ((HttpURLConnection) connection).disconnect();

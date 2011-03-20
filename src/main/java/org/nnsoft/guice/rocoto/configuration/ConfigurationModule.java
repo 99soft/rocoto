@@ -18,24 +18,21 @@ package org.nnsoft.guice.rocoto.configuration;
 import static com.google.inject.Key.get;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
+import static org.nnsoft.guice.rocoto.configuration.PropertiesIterator.newPropertiesIterator;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import org.nnsoft.guice.rocoto.configuration.binder.PrefixBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder;
-import org.nnsoft.guice.rocoto.configuration.readers.MapReader;
-import org.nnsoft.guice.rocoto.configuration.readers.PropertiesReader;
-import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
 import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
 
 import com.google.inject.AbstractModule;
@@ -57,42 +54,37 @@ public abstract class ConfigurationModule extends AbstractModule {
      */
     private static final String CLASSPATH_SCHEME = "classpath";
 
-    private Collection<ConfigurationReader> readers;
+    private List<PropertiesURLReader> readers;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public final void configure() {
-        if (this.readers != null) {
-            throw new IllegalStateException("Re-entry is not allowed.");
+    protected final void configure() {
+        if (readers != null) {
+            throw new IllegalStateException("Re-entry not allowed");
         }
 
-        this.readers = new ArrayList<ConfigurationReader>();
+        readers = new LinkedList<PropertiesURLReader>();
+
+        bindConfigurations();
 
         try {
-            this.loadConfigurations();
-
-            for (ConfigurationReader configurationReader : this.readers) {
+            for (PropertiesURLReader reader : readers) {
                 try {
-                    Iterator<Entry<String, String>> properties = configurationReader.readConfiguration();
-                    while (properties.hasNext()) {
-                        Entry<String, String> property = properties.next();
-                        bindProperty(property.getKey()).toValue(property.getValue());
-                    }
+                    bindProperties(reader.readConfiguration());
                 } catch (Exception e) {
-                    this.addError(e);
+                    addError("An error occurred while reading '%s' properties: %s",
+                            reader.getUrl(),
+                            e.getMessage());
                 }
             }
         } finally {
-            this.readers = null;
+            readers = null;
         }
     }
 
     /**
      * 
      */
-    protected abstract void loadConfigurations();
+    protected abstract void bindConfigurations();
 
     /**
      * Binds to a property with the given name.
@@ -130,12 +122,66 @@ public abstract class ConfigurationModule extends AbstractModule {
      * @param properties
      * @return
      */
-    protected PrefixBindingBuilder addProperties(Properties properties) {
+    protected void bindProperties(Properties properties) {
         if (properties == null) {
             throw new IllegalArgumentException("Parameter 'properties' must be not null");
         }
 
-        return this.addConfigurationReader(new PropertiesReader(properties));
+        bindProperties(newPropertiesIterator(properties));
+    }
+
+    /**
+     * 
+     * @param properties
+     */
+    protected void bindProperties(Iterable<Entry<String, String>> properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+        }
+
+        bindProperties(properties.iterator());
+    }
+
+    /**
+     * 
+     * @param properties
+     */
+    protected void bindProperties(Iterator<Entry<String, String>> properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+        }
+
+        while (properties.hasNext()) {
+            Entry<String, String> property = properties.next();
+            bindProperty(property.getKey()).toValue(property.getValue());
+        }
+    }
+
+    /**
+     * Add the Environment Variables properties, prefixed by {@code env.}.
+     */
+    protected void bindSystemProperties() {
+        this.bindProperties(System.getProperties());
+    }
+
+    /**
+     * 
+     * @param properties
+     * @return
+     */
+    protected void bindProperties(Map<String, String> properties) {
+        if (properties == null) {
+            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+        }
+
+        bindProperties(newPropertiesIterator(properties));
+    }
+
+    /**
+     * Add the System Variables properties.
+     */
+    protected void bindEnvironmentVariables() {
+        bindProperties(newPropertiesIterator(ENV_PREFIX, System.getenv()));
     }
 
     /**
@@ -144,12 +190,12 @@ public abstract class ConfigurationModule extends AbstractModule {
      * @param propertiesResource
      * @return
      */
-    protected XMLPropertiesFormatBindingBuilder addProperties(final File propertiesResource) {
+    protected XMLPropertiesFormatBindingBuilder bindProperties(final File propertiesResource) {
         if (propertiesResource == null) {
             throw new IllegalArgumentException("parameter 'propertiesResource' must not be null");
         }
 
-        return addProperties(propertiesResource.toURI());
+        return bindProperties(propertiesResource.toURI());
     }
 
     /**
@@ -158,7 +204,7 @@ public abstract class ConfigurationModule extends AbstractModule {
      * @param propertiesResource
      * @return
      */
-    protected XMLPropertiesFormatBindingBuilder addProperties(final URI propertiesResource) {
+    protected XMLPropertiesFormatBindingBuilder bindProperties(final URI propertiesResource) {
         if (propertiesResource == null) {
             throw new IllegalArgumentException("parameter 'propertiesResource' must not be null");
         }
@@ -168,11 +214,11 @@ public abstract class ConfigurationModule extends AbstractModule {
             if (propertiesResource.getHost() != null) {
                 path = propertiesResource.getHost() + path;
             }
-            return addProperties(path);
+            return bindProperties(path);
         }
 
         try {
-            return addProperties(propertiesResource.toURL());
+            return bindProperties(propertiesResource.toURL());
         } catch (MalformedURLException e) {
             throw new ProvisionException(String.format("URI '%s' not supported: %s",
                     propertiesResource,
@@ -182,19 +228,11 @@ public abstract class ConfigurationModule extends AbstractModule {
 
     /**
      * 
-     * @param propertiesResource
+     * @param classPathResource
      * @return
      */
-    protected XMLPropertiesFormatBindingBuilder addProperties(final URL propertiesResource) {
-        if (propertiesResource == null) {
-            throw new IllegalArgumentException("parameter 'propertiesResource' must not be null");
-        }
-
-        return addConfigurationReader(new PropertiesURLReader(propertiesResource));
-    }
-
-    protected XMLPropertiesFormatBindingBuilder addProperties(final String classPathResource) {
-        return addProperties(classPathResource, getClass().getClassLoader());
+    protected XMLPropertiesFormatBindingBuilder bindProperties(final String classPathResource) {
+        return bindProperties(classPathResource, getClass().getClassLoader());
     }
 
     /**
@@ -203,7 +241,7 @@ public abstract class ConfigurationModule extends AbstractModule {
      * @param classLoader
      * @return
      */
-    protected XMLPropertiesFormatBindingBuilder addProperties(final String classPathResource,
+    protected XMLPropertiesFormatBindingBuilder bindProperties(final String classPathResource,
             final ClassLoader classLoader) {
         if (classPathResource == null) {
             throw new IllegalArgumentException("parameter 'classPathResource' must not be null");
@@ -224,48 +262,22 @@ public abstract class ConfigurationModule extends AbstractModule {
                             classPathResource));
         }
 
-        return addConfigurationReader(new PropertiesURLReader(url));
+        return bindProperties(url);
     }
 
     /**
      * 
-     * @param properties
+     * @param propertiesResource
      * @return
      */
-    protected PrefixBindingBuilder addProperties(Map<String, String> properties) {
-        if (properties == null) {
-            throw new IllegalArgumentException("Parameter 'properties' must be not null");
+    protected XMLPropertiesFormatBindingBuilder bindProperties(final URL propertiesResource) {
+        if (propertiesResource == null) {
+            throw new IllegalArgumentException("parameter 'propertiesResource' must not be null");
         }
 
-        return this.addConfigurationReader(new MapReader(properties));
-    }
-
-    /**
-     * Add the Environment Variables properties, prefixed by {@code env.}.
-     */
-    protected void addSystemProperties() {
-        this.addProperties(System.getProperties());
-    }
-
-    /**
-     * Add the System Variables properties.
-     */
-    protected void addEnvironmentVariables() {
-        this.addProperties(System.getenv()).withPrefix(ENV_PREFIX);
-    }
-
-    /**
-     * Add a configuration reader.
-     *
-     * @param configurationReader the configuration reader.
-     */
-    protected final <T extends ConfigurationReader> T addConfigurationReader(final T configurationReader) {
-        if (configurationReader == null) {
-            throw new IllegalArgumentException("Parameter 'configurationReader' must be not null");
-        }
-
-        this.readers.add(configurationReader);
-        return configurationReader;
+        PropertiesURLReader reader = new PropertiesURLReader(propertiesResource);
+        readers.add(reader);
+        return reader;
     }
 
 }
