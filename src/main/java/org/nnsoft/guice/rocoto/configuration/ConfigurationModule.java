@@ -15,6 +15,7 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
+import static java.lang.String.format;
 import static com.google.inject.Key.get;
 import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
@@ -101,7 +102,7 @@ public abstract class ConfigurationModule extends AbstractModule {
 
             public void toValue(final String value) {
                 if (value == null) {
-                    throw new IllegalArgumentException(String.format("Null value not admitted for property '%s's", name));
+                    throw new IllegalArgumentException(format("Null value not admitted for property '%s's", name));
                 }
 
                 LinkedBindingBuilder<String> bindingBuilder = bind(get(String.class, named(name)));
@@ -220,7 +221,7 @@ public abstract class ConfigurationModule extends AbstractModule {
         try {
             return bindProperties(propertiesResource.toURL());
         } catch (MalformedURLException e) {
-            throw new ProvisionException(String.format("URI '%s' not supported: %s",
+            throw new ProvisionException(format("URI '%s' not supported: %s",
                     propertiesResource,
                     e.getMessage()));
         }
@@ -258,7 +259,7 @@ public abstract class ConfigurationModule extends AbstractModule {
         URL url = classLoader.getResource(resourceURL);
         if (url == null) {
             throw new IllegalArgumentException(
-                    String.format("ClassPath resource '%s' not found, make sure it is in the ClassPath or you're using the right ClassLoader",
+                    format("ClassPath resource '%s' not found, make sure it is in the ClassPath or you're using the right ClassLoader",
                             classPathResource));
         }
 
