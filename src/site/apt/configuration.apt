@@ -66,7 +66,7 @@ Injector injector = Guice.createInjector(new ConfigurationModule() {
 * Implementing your own configuration loader
 
   If users want to load configuration files in different format, all they have to do is implementing
-  the Iterable<Entry<String, String>> or Iterator<Entry<String, String>> interfaces:
+  the Iterable\<Entry\<String, String\>\> or Iterator\<Entry\<String, String\>\> interfaces:
 
 +--------------------------------------+
 class INIReader implements Iterable<Entry<String, String>> {
