@@ -19,8 +19,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
- * A configuration reader is an object able to read configuration
- * files from classpath, file system or URLs.
+ * A configuration reader is an object able to read configuration files.
  *
  * @since 4.0
  */
