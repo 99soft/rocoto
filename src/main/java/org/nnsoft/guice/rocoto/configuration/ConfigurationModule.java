@@ -37,36 +37,34 @@ import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
 import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
 import org.nnsoft.guice.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
-import com.google.inject.Binder;
-import com.google.inject.Module;
+import com.google.inject.AbstractModule;
 import com.google.inject.binder.LinkedBindingBuilder;
 
 /**
  * The ConfigurationModule simplifies the task of loading configurations in Google Guice.
  */
-public abstract class ConfigurationModule implements Module {
+public abstract class ConfigurationModule extends AbstractModule {
 
     /**
      * The environment variable prefix, {@code env.}
      */
     private static final String ENV_PREFIX = "env.";
 
-    private final Collection<ConfigurationReader> readers = new ArrayList<ConfigurationReader>();
-
-    private Binder binder;
+    private Collection<ConfigurationReader> readers;
 
     /**
      * {@inheritDoc}
      */
-    public final void configure(Binder binder) {
-        if (this.binder != null) {
-            throw new IllegalArgumentException("Re-entry is not allowed.");
+    @Override
+    public final void configure() {
+        if (this.readers != null) {
+            throw new IllegalStateException("Re-entry is not allowed.");
         }
 
-        this.binder = binder;
+        this.readers = new ArrayList<ConfigurationReader>();
 
         try {
-            this.configure();
+            this.loadConfigurations();
 
             for (ConfigurationReader configurationReader : this.readers) {
                 try {
@@ -76,18 +74,18 @@ public abstract class ConfigurationModule implements Module {
                         bindProperty(property.getKey()).toValue(property.getValue());
                     }
                 } catch (Exception e) {
-                    this.binder.addError(e);
+                    this.addError(e);
                 }
             }
         } finally {
-            this.binder = null;
+            this.readers = null;
         }
     }
 
     /**
-     * Configures a {@link Binder} via the exposed methods.
+     * 
      */
-    protected abstract void configure();
+    protected abstract void loadConfigurations();
 
     /**
      * Binds to a property with the given name.
@@ -107,7 +105,7 @@ public abstract class ConfigurationModule implements Module {
                     throw new IllegalArgumentException(String.format("Null value not admitted for property '%s's", name));
                 }
 
-                LinkedBindingBuilder<String> bindingBuilder = binder.bind(get(String.class, named(name)));
+                LinkedBindingBuilder<String> bindingBuilder = bind(get(String.class, named(name)));
 
                 PropertiesResolverProvider formatter = new PropertiesResolverProvider(value);
                 if (formatter.containsKeys()) {
@@ -245,23 +243,22 @@ public abstract class ConfigurationModule implements Module {
      */
     protected final void addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
         if (configurationsDir == null) {
-            this.binder.addError("'configurationsDir' argument can't be null");
-            return;
+            throw new IllegalArgumentException("'configurationsDir' argument can't be null");
         }
 
         if (!configurationsDir.exists()) {
-            this.binder.addError("Impossible to load configurations directory '%s' because it doesn't exist", configurationsDir);
-            return;
+            throw new IllegalArgumentException(
+                    String.format("Impossible to load configurations directory '%s' because it doesn't exist",
+                            configurationsDir));
         }
 
         if (!configurationsDir.isDirectory()) {
-            this.binder.addError("Impossible to traverse '%s' because it is not a directory", configurationsDir);
-            return;
+            throw new IllegalArgumentException(
+                    String.format("Impossible to traverse '%s' because it is not a directory", configurationsDir));
         }
 
         if (builders == null || builders.length == 0) {
-            this.binder.addError("At least one ConfigurationReaderBuilder is required");
-            return;
+            throw new IllegalArgumentException("At least one ConfigurationReaderBuilder is required");
         }
 
         for (File file : configurationsDir.listFiles()) {

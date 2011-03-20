@@ -71,7 +71,7 @@ public final class ConfigurationModuleTestCase {
         createInjector(new ConfigurationModule() {
 
             @Override
-            protected void configure() {
+            protected void loadConfigurations() {
                 addEnvironmentVariables();
                 addSystemProperties();
 
