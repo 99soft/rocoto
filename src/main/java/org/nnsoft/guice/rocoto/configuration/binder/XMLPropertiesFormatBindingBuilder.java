@@ -20,13 +20,13 @@ package org.nnsoft.guice.rocoto.configuration.binder;
  *
  * @param <T>
  */
-interface XMLPropertiesFormatBindingBuilder<T> {
+public interface XMLPropertiesFormatBindingBuilder {
 
     /**
      * 
      *
      * @return
      */
-    T inXMLFormat();
+    XMLPropertiesFormatBindingBuilder inXMLFormat();
 
 }

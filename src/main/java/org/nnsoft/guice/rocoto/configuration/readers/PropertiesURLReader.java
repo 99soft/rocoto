@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder;
 
 /**
  * {@link Properties} reader implementation able to read configuration files from classpath, file system or URLs.
@@ -34,7 +35,7 @@ import java.util.Properties;
  *
  * @since 4.0
  */
-public final class PropertiesURLReader extends AbstractConfigurationReader {
+public final class PropertiesURLReader extends AbstractConfigurationReader implements XMLPropertiesFormatBindingBuilder {
 
     /**
      * The URL has to be open.
@@ -44,7 +45,7 @@ public final class PropertiesURLReader extends AbstractConfigurationReader {
     /**
      * Flag to mark properties are in XML format.
      */
-    private final boolean isXML;
+    private boolean isXML = false;
 
     /**
      * Create a new {@code .properties} reader of a resource located in the given URL.
@@ -52,12 +53,16 @@ public final class PropertiesURLReader extends AbstractConfigurationReader {
      * @param url the URL that locates the configuration resource.
      * @param isXML to mark if the properties file is in XML format or not.
      */
-    public PropertiesURLReader(URL url, boolean isXML) {
+    public PropertiesURLReader(URL url) {
         if (url == null) {
             throw new IllegalArgumentException("'url' argument can't be null");
         }
         this.url = url;
-        this.isXML = isXML;
+    }
+
+    public PropertiesURLReader inXMLFormat() {
+        this.isXML = true;
+        return this;
     }
 
     /**

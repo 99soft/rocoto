@@ -16,20 +16,21 @@
 package org.nnsoft.guice.rocoto.configuration.readers;
 
 import org.nnsoft.guice.rocoto.configuration.ConfigurationReader;
+import org.nnsoft.guice.rocoto.configuration.binder.PrefixBindingBuilder;
 
 /**
  * An abstract reader implementation.
  *
  * @since 5.0
  */
-abstract class AbstractConfigurationReader implements ConfigurationReader {
+abstract class AbstractConfigurationReader implements ConfigurationReader, PrefixBindingBuilder {
 
     private String prefix;
 
     /**
      * {@inheritDoc}
      */
-    public final void setPrefix(String prefix) {
+    public final void withPrefix(String prefix) {
         this.prefix = prefix;
     }
 

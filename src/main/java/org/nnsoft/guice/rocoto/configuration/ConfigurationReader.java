@@ -26,13 +26,6 @@ import java.util.Map.Entry;
 public interface ConfigurationReader {
 
     /**
-     * Add an aux prefix to property keys while iterating.
-     *
-     * @param prefix The aux prefix to property keys while iterating
-     */
-    void setPrefix(String prefix);
-
-    /**
      * Read the configuration file iterating over the configuration properties.
      *
      * @return the configuration properties iterator.

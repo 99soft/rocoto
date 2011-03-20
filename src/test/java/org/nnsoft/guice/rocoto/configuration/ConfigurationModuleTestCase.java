@@ -18,11 +18,10 @@ package org.nnsoft.guice.rocoto.configuration;
 import static com.google.inject.Guice.createInjector;
 
 import java.io.File;
+import java.net.URI;
 
 import javax.inject.Inject;
 
-import org.nnsoft.guice.rocoto.configuration.traversal.PropertiesReaderBuilder;
-import org.nnsoft.guice.rocoto.configuration.traversal.XMLPropertiesReaderBuilder;
 import org.testng.annotations.Test;
 
 /**
@@ -75,13 +74,13 @@ public final class ConfigurationModuleTestCase {
                 addEnvironmentVariables();
                 addSystemProperties();
 
-                addClassPathResource("/org/nnsoft/guice/rocoto/configuration/ldap.properties").usingRocotoClassLoader();
-                addClassPathResource("/org/nnsoft/guice/rocoto/configuration/ldap.properties").usingRocotoClassLoader();
-                addClassPathResource("proxy.xml").inXMLFormat().usingRocotoClassLoader();
+                addProperties(URI.create("classpath:/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
+                addProperties("proxy.xml").inXMLFormat();
 
-                addConfigurationReader(new File("src/test/data"),
-                        new PropertiesReaderBuilder(),
-                        new XMLPropertiesReaderBuilder());
+                File parentConf = new File("src/test/data/org/nnsoft");
+                addProperties(new File(parentConf, "ibatis.properties"));
+                addProperties(new File(parentConf, "guice/jdbc.properties"));
+                addProperties(new File(parentConf, "guice/rocoto/configuration/memcached.xml")).inXMLFormat();
             }
 
         }).injectMembers(this);

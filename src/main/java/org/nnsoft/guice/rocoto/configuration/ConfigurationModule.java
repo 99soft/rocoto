@@ -20,6 +20,8 @@ import static com.google.inject.name.Names.named;
 import static com.google.inject.util.Providers.guicify;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,16 +30,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-import org.nnsoft.guice.rocoto.configuration.binder.ClassLoaderBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.binder.PrefixBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder;
+import org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder;
 import org.nnsoft.guice.rocoto.configuration.readers.MapReader;
 import org.nnsoft.guice.rocoto.configuration.readers.PropertiesReader;
 import org.nnsoft.guice.rocoto.configuration.readers.PropertiesURLReader;
 import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider;
-import org.nnsoft.guice.rocoto.configuration.traversal.ConfigurationReaderBuilder;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.ProvisionException;
 import com.google.inject.binder.LinkedBindingBuilder;
 
 /**
@@ -49,6 +51,11 @@ public abstract class ConfigurationModule extends AbstractModule {
      * The environment variable prefix, {@code env.}
      */
     private static final String ENV_PREFIX = "env.";
+
+    /**
+     * The {@code classpath} URL scheme constant
+     */
+    private static final String CLASSPATH_SCHEME = "classpath";
 
     private Collection<ConfigurationReader> readers;
 
@@ -133,51 +140,91 @@ public abstract class ConfigurationModule extends AbstractModule {
 
     /**
      * 
-     * @param classPathResource
+     *
+     * @param propertiesResource
      * @return
      */
-    protected ClassLoaderBindingBuilder addClassPathResource(final String classPathResource) {
+    protected XMLPropertiesFormatBindingBuilder addProperties(final File propertiesResource) {
+        if (propertiesResource == null) {
+            throw new IllegalArgumentException("parameter 'propertiesResource' must not be null");
+        }
+
+        return addProperties(propertiesResource.toURI());
+    }
+
+    /**
+     * 
+     *
+     * @param propertiesResource
+     * @return
+     */
+    protected XMLPropertiesFormatBindingBuilder addProperties(final URI propertiesResource) {
+        if (propertiesResource == null) {
+            throw new IllegalArgumentException("parameter 'propertiesResource' must not be null");
+        }
+
+        if (CLASSPATH_SCHEME.equals(propertiesResource.getScheme())) {
+            String path = propertiesResource.getPath();
+            if (propertiesResource.getHost() != null) {
+                path = propertiesResource.getHost() + path;
+            }
+            return addProperties(path);
+        }
+
+        try {
+            return addProperties(propertiesResource.toURL());
+        } catch (MalformedURLException e) {
+            throw new ProvisionException(String.format("URI '%s' not supported: %s",
+                    propertiesResource,
+                    e.getMessage()));
+        }
+    }
+
+    /**
+     * 
+     * @param propertiesResource
+     * @return
+     */
+    protected XMLPropertiesFormatBindingBuilder addProperties(final URL propertiesResource) {
+        if (propertiesResource == null) {
+            throw new IllegalArgumentException("parameter 'propertiesResource' must not be null");
+        }
+
+        return addConfigurationReader(new PropertiesURLReader(propertiesResource));
+    }
+
+    protected XMLPropertiesFormatBindingBuilder addProperties(final String classPathResource) {
+        return addProperties(classPathResource, getClass().getClassLoader());
+    }
+
+    /**
+     * 
+     * @param classPathResource
+     * @param classLoader
+     * @return
+     */
+    protected XMLPropertiesFormatBindingBuilder addProperties(final String classPathResource,
+            final ClassLoader classLoader) {
         if (classPathResource == null) {
             throw new IllegalArgumentException("parameter 'classPathResource' must not be null");
         }
+        if (classLoader == null) {
+            throw new IllegalArgumentException("parameter 'classLoader' must not be null");
+        }
 
-        return new ClassLoaderBindingBuilder() {
+        String resourceURL = classPathResource;
+        if ('/' == classPathResource.charAt(0)) {
+            resourceURL = classPathResource.substring(1);
+        }
 
-            private boolean isXML = false;
+        URL url = classLoader.getResource(resourceURL);
+        if (url == null) {
+            throw new IllegalArgumentException(
+                    String.format("ClassPath resource '%s' not found, make sure it is in the ClassPath or you're using the right ClassLoader",
+                            classPathResource));
+        }
 
-            public ClassLoaderBindingBuilder inXMLFormat() {
-                this.isXML = true;
-                return this;
-            }
-
-            public PrefixBindingBuilder usingRocotoClassLoader() {
-                return this.usingClassLoader(this.getClass().getClassLoader());
-            }
-
-            public PrefixBindingBuilder usingContextClassLoader() {
-                return this.usingClassLoader(Thread.currentThread().getContextClassLoader());
-            }
-
-            public PrefixBindingBuilder usingClassLoader(ClassLoader classLoader) {
-                if (classLoader == null) {
-                    throw new IllegalArgumentException("parameter 'classLoader' must not be null");
-                }
-
-                String resourceURL = classPathResource;
-                if ('/' == classPathResource.charAt(0)) {
-                    resourceURL = classPathResource.substring(1);
-                }
-
-                URL url = classLoader.getResource(resourceURL);
-                if (url == null) {
-                    throw new IllegalArgumentException(
-                            String.format("ClassPath resource '%s' not found, make sure it is in the ClassPath or you're using the right ClassLoader",
-                                    classPathResource));
-                }
-                return addConfigurationReader(new PropertiesURLReader(url, this.isXML));
-            }
-
-        };
+        return addConfigurationReader(new PropertiesURLReader(url));
     }
 
     /**
@@ -212,66 +259,13 @@ public abstract class ConfigurationModule extends AbstractModule {
      *
      * @param configurationReader the configuration reader.
      */
-    protected final PrefixBindingBuilder addConfigurationReader(final ConfigurationReader configurationReader) {
+    protected final <T extends ConfigurationReader> T addConfigurationReader(final T configurationReader) {
         if (configurationReader == null) {
             throw new IllegalArgumentException("Parameter 'configurationReader' must be not null");
         }
 
         this.readers.add(configurationReader);
-
-        return new PrefixBindingBuilder() {
-
-            public void withPrefix(String prefix) {
-                if (prefix == null || prefix.length() == 0) {
-                    throw new IllegalArgumentException("Parameter 'prefix' must be not null or not empty");
-                }
-
-                configurationReader.setPrefix(prefix);
-            }
-
-        };
-    }
-
-    /**
-     * Allows adding configuration files automatically by traversing a directory; while scanning the dir,
-     * if the current analyzed file satisfies one of more of the given {@link ConfigurationReaderBuilder}s
-     * requirements, then a related {@link ConfigurationReader} will be built based on the configuration
-     * file and added in the readers list.
-     *
-     * @param configurationsDir The directory has to be traversed
-     * @param builders The {@link ConfigurationReaderBuilder} list involved in the directory traversing
-     */
-    protected final void addConfigurationReader(File configurationsDir, ConfigurationReaderBuilder...builders) {
-        if (configurationsDir == null) {
-            throw new IllegalArgumentException("'configurationsDir' argument can't be null");
-        }
-
-        if (!configurationsDir.exists()) {
-            throw new IllegalArgumentException(
-                    String.format("Impossible to load configurations directory '%s' because it doesn't exist",
-                            configurationsDir));
-        }
-
-        if (!configurationsDir.isDirectory()) {
-            throw new IllegalArgumentException(
-                    String.format("Impossible to traverse '%s' because it is not a directory", configurationsDir));
-        }
-
-        if (builders == null || builders.length == 0) {
-            throw new IllegalArgumentException("At least one ConfigurationReaderBuilder is required");
-        }
-
-        for (File file : configurationsDir.listFiles()) {
-            if (file.isDirectory()) {
-                this.addConfigurationReader(file, builders);
-            } else {
-                for (ConfigurationReaderBuilder builder : builders) {
-                    if (builder.accept(file)) {
-                        this.addConfigurationReader(builder.create(file));
-                    }
-                }
-            }
-        }
+        return configurationReader;
     }
 
 }
