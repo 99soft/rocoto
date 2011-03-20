@@ -72,7 +72,7 @@ public abstract class ConfigurationModule extends AbstractModule {
                 try {
                     bindProperties(reader.readConfiguration());
                 } catch (Exception e) {
-                    addError("An error occurred while reading '%s' properties: %s",
+                    addError("An error occurred while reading properties from '%s': %s",
                             reader.getUrl(),
                             e.getMessage());
                 }
