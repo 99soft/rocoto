@@ -22,9 +22,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.nio.charset.Charset}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class CharsetConverter extends AbstractConverter<Charset> {
 

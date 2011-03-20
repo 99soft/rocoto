@@ -29,11 +29,7 @@ import com.google.inject.ProvisionException;
 import com.google.inject.TypeLiteral;
 
 /**
- * Converter implementation for {@code java.util.Calendar} and
- * {@code java.util.Date}.
- *
- * @author Simone Tripodi
- * @version $Id$
+ * Converter implementation for {@code java.util.Calendar} and {@code java.util.Date}.
  */
 public final class DateConverter extends AbstractConverter<Date> {
 

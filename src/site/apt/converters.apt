@@ -21,9 +21,6 @@
 ~~   limitations under the License.
 ~~
 
-~~author: Simone Tripodi
-~~version: $Id$
-
 The Converters module
 
   The <Converters> module adds some string-to-type converters not already present

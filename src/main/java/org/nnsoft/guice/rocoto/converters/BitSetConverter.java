@@ -23,9 +23,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.util.UUID}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class BitSetConverter extends AbstractConverter<BitSet> {
 

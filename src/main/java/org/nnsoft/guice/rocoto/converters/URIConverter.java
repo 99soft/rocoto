@@ -23,9 +23,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.net.URI}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class URIConverter extends AbstractConverter<URI> {
 

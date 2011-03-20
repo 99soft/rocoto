@@ -21,9 +21,6 @@
 ~~   limitations under the License.
 ~~
 
-~~author: Simone Tripodi
-~~version: $Id$
-
 The Configuration module
 
   The <ConfigurationModule> is a dependencies-less but open to support 3rd party libraries,

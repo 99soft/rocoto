@@ -15,10 +15,6 @@
  */
 
 /**
- * Contains the Guice {@link ConvertersModule} and
- * {@code com.google.inject.spi.TypeConverter} implementations.
- *
- * @author Simone Tripodi
- * @version $Id$
+ * Contains the Guice {@link ConvertersModule} and {@code com.google.inject.spi.TypeConverter} implementations.
  */
 package org.nnsoft.guice.rocoto.converters;

@@ -21,9 +21,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.util.regex.Pattern}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class PatternConverter extends AbstractConverter<Pattern> {
 

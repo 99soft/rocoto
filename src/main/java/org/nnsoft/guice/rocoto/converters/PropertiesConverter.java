@@ -24,9 +24,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.util.Properties}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class PropertiesConverter extends AbstractConverter<Properties> {
 

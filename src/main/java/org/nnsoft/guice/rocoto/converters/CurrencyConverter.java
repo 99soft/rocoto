@@ -21,9 +21,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.util.Currency}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class CurrencyConverter extends AbstractConverter<Currency> {
 

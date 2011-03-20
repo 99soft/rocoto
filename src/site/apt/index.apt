@@ -21,9 +21,6 @@
 ~~   limitations under the License.
 ~~
 
-~~author: Simone Tripodi
-~~version: $Id: caching.apt 924 2009-12-31 10:11:36Z simone.tripodi $
-
 Welcome to Rocoto!
 
   Rocoto is a small collection of reusable Modules for <Google Guice> to make

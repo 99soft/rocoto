@@ -21,9 +21,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.util.Locale}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class LocaleConverter extends AbstractConverter<Locale> {
 

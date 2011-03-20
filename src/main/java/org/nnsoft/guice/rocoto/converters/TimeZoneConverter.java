@@ -21,9 +21,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.util.TimeZone}.
- *
- * @author Simone Tripodi
- * @version $Id$
  */
 public final class TimeZoneConverter extends AbstractConverter<TimeZone> {
 
