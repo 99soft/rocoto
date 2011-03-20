@@ -32,22 +32,22 @@
     <url>http://www.99soft.org/projects/rocoto/${project.version}</url>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:99soft/Rocoto.git</developerConnection>
-        <connection>scm:git:git@github.com:99soft/Rocoto.git</connection>
-        <url>git@github.com:99soft/Rocoto.git</url>
+        <url>http://github.com/99soft/rocoto</url>
+        <connection>scm:git:ssh://github.com/99soft/rocoto.git</connection>
+        <developerConnection>scm:git:git+ssh://git@github.com/99soft/rocoto.git</developerConnection>
     </scm>
+
+    <distributionManagement>
+        <site>
+            <id>github</id>
+            <url>gitsite:git@github.com/99soft/rocoto.git</url>
+        </site>
+    </distributionManagement>
 
     <issueManagement>
         <system>GitHub Issue Management</system>
         <url>https://github.com/99soft/Rocoto/issues</url>
     </issueManagement>
-
-    <distributionManagement>
-        <site>
-            <id>99soft.org</id>
-            <url>ftp://ftp.99soft.org/htdocs/projects/rocoto/${project.version}</url>
-        </site>
-    </distributionManagement>
 
     <contributors>
         <contributor>
