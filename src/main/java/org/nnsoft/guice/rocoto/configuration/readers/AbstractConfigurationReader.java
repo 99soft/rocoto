@@ -23,7 +23,7 @@ import org.nnsoft.guice.rocoto.configuration.binder.PrefixBindingBuilder;
  *
  * @since 5.0
  */
-abstract class AbstractConfigurationReader implements ConfigurationReader, PrefixBindingBuilder {
+public abstract class AbstractConfigurationReader implements ConfigurationReader, PrefixBindingBuilder {
 
     private String prefix;
 
