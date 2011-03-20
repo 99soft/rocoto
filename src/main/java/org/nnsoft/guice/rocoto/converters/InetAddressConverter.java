@@ -25,7 +25,6 @@ import com.google.inject.TypeLiteral;
  * Converter implementation for {@code java.net.InetAddress}.
  *
  * @since 3.3
- * @version $Id$
  */
 public final class InetAddressConverter extends AbstractConverter<InetAddress> {
 

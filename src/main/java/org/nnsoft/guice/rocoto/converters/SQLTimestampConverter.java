@@ -22,8 +22,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.sql.Date}.
- *
- * @version $Id$
  */
 public final class SQLTimestampConverter extends AbstractConverter<Timestamp> {
 

@@ -21,8 +21,6 @@ import com.google.inject.TypeLiteral;
 
 /**
  * Converter implementation for {@code java.math.BigDecimal}.
- *
- * @version $Id$
  */
 public final class BigIntegerConverter extends AbstractConverter<BigInteger> {
 

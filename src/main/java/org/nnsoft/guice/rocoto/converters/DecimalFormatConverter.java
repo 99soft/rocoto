@@ -23,7 +23,6 @@ import com.google.inject.TypeLiteral;
  * Converter implementation for {@code java.text.DecimalFormat}.
  *
  * @since 3.3
- * @version $Id$
  */
 public final class DecimalFormatConverter extends AbstractConverter<DecimalFormat> {
 

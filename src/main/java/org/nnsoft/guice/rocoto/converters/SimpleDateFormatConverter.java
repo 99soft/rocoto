@@ -23,7 +23,6 @@ import com.google.inject.TypeLiteral;
  * Converter implementation for {@code java.text.SimpleDateFormat}.
  *
  * @since 3.3
- * @version $Id$
  */
 public final class SimpleDateFormatConverter extends AbstractConverter<SimpleDateFormat> {
 

@@ -24,7 +24,6 @@ import com.google.inject.spi.TypeConverter;
 /**
  * A special Google Guice converter that auto binds itself to the converted type.
  *
- * @version $Id$
  * @param <T> the type managed by this converter.
  */
 public abstract class AbstractConverter<T> extends TypeLiteral<T> implements Module, TypeConverter {
