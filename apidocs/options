@@ -1,7 +1,7 @@
 -bootclasspath
 '/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsfd.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:/System/Library/Frameworks/JavaVM.framework/Frameworks/JavaRuntimeSupport.framework/Resources/Java/JavaRuntimeSupport.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/ui.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/laf.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/sunrsasign.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jsse.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/jce.jar:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/charsets.jar'
 -classpath
-'/Users/simonetripodi/Documents/99soft/rocoto/target/checkout/target/classes:/Users/simonetripodi/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/simonetripodi/.m2/repository/com/google/inject/guice/3.0-rc3/guice-3.0-rc3.jar:/Users/simonetripodi/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar'
+'/Users/simonetripodi/Documents/99soft/rocoto/target/checkout/target/classes:/Users/simonetripodi/.m2/repository/aopalliance/aopalliance/1.0/aopalliance-1.0.jar:/Users/simonetripodi/.m2/repository/com/google/inject/guice/3.0/guice-3.0.jar:/Users/simonetripodi/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar'
 -doclet
 'com.google.doclava.Doclava'
 -docletpath
