@@ -26,7 +26,7 @@
     <groupId>org.99soft.guice</groupId>
     <artifactId>rocoto</artifactId>
     <packaging>jar</packaging>
-    <version>5.0.1-SNAPSHOT</version>
+    <version>5.0.1</version>
     <name>99soft :: Rocoto</name>
     <description>Add some spice to Google Guice through configuration files!</description>
     <url>http://www.99soft.org/projects/rocoto/${project.version}</url>
