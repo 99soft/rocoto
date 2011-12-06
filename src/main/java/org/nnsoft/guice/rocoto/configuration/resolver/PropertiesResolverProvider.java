@@ -68,23 +68,23 @@ public final class PropertiesResolverProvider
         {
             if ( pos > 0 )
             {
-                this.fragments.add( Providers.of( pattern.substring( prev, pos ) ) );
+                fragments.add( Providers.of( pattern.substring( prev, pos ) ) );
             }
             if ( pos == pattern.length() - 1 )
             {
-                this.fragments.add( Providers.of( VAR_BEGIN ) );
+                fragments.add( Providers.of( VAR_BEGIN ) );
                 prev = pos + 1;
             }
             else if ( pattern.charAt( pos + 1 ) != '{' )
             {
                 if ( pattern.charAt( pos + 1 ) == '$' )
                 {
-                    this.fragments.add( Providers.of( VAR_BEGIN ) );
+                    fragments.add( Providers.of( VAR_BEGIN ) );
                     prev = pos + 2;
                 }
                 else
                 {
-                    this.fragments.add( Providers.of( pattern.substring( pos, pos + 2 ) ) );
+                    fragments.add( Providers.of( pattern.substring( pos, pos + 2 ) ) );
                     prev = pos + 2;
                 }
             }
@@ -104,14 +104,14 @@ public final class PropertiesResolverProvider
                     defaultValue = keyTokenizer.nextToken().trim();
                 }
                 VariableResolverProvider variableResolver = new VariableResolverProvider( key, defaultValue );
-                this.fragments.add( variableResolver );
-                this.resolvers.add( variableResolver );
+                fragments.add( variableResolver );
+                resolvers.add( variableResolver );
                 prev = endName + 1;
             }
         }
         if ( prev < pattern.length() )
         {
-            this.fragments.add( Providers.of( pattern.substring( prev ) ) );
+            fragments.add( Providers.of( pattern.substring( prev ) ) );
         }
     }
 
@@ -124,7 +124,7 @@ public final class PropertiesResolverProvider
      */
     public boolean containsKeys()
     {
-        return !this.resolvers.isEmpty();
+        return !resolvers.isEmpty();
     }
 
     /**
@@ -135,7 +135,7 @@ public final class PropertiesResolverProvider
     @Inject
     public void setInjector( Injector injector )
     {
-        for ( VariableResolverProvider variableResolver : this.resolvers )
+        for ( VariableResolverProvider variableResolver : resolvers )
         {
             variableResolver.setInjector( injector );
         }
@@ -147,7 +147,7 @@ public final class PropertiesResolverProvider
     public String get()
     {
         StringBuilder buffer = new StringBuilder();
-        for ( Provider<String> appender : this.fragments )
+        for ( Provider<String> appender : fragments )
         {
             buffer.append( appender.get() );
         }
@@ -160,7 +160,7 @@ public final class PropertiesResolverProvider
     @Override
     public String toString()
     {
-        return this.fragments.toString();
+        return fragments.toString();
     }
 
 }
