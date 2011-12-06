@@ -15,6 +15,8 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
+import static com.google.inject.internal.util.$Preconditions.checkNotNull;
+import static com.google.inject.internal.util.$Preconditions.checkState;
 import static com.google.inject.name.Names.named;
 import static java.lang.String.format;
 import static org.nnsoft.guice.rocoto.configuration.PropertiesIterator.newPropertiesIterator;
@@ -60,10 +62,7 @@ public abstract class ConfigurationModule
     @Override
     protected final void configure()
     {
-        if ( readers != null )
-        {
-            throw new IllegalStateException( "Re-entry not allowed" );
-        }
+        checkState( readers != null, "Re-entry not allowed" );
 
         readers = new LinkedList<PropertiesURLReader>();
 
@@ -103,20 +102,14 @@ public abstract class ConfigurationModule
      */
     protected PropertyValueBindingBuilder bindProperty( final String name )
     {
-        if ( name == null )
-        {
-            throw new IllegalArgumentException( "Property name cannot be null." );
-        }
+        checkNotNull( name, "Property name cannot be null." );
 
         return new PropertyValueBindingBuilder()
         {
 
             public void toValue( final String value )
             {
-                if ( value == null )
-                {
-                    throw new IllegalArgumentException( format( "Null value not admitted for property '%s's", name ) );
-                }
+                checkNotNull( value, "Null value not admitted for property '%s's", name );
 
                 ConstantBindingBuilder builder = bindConstant().annotatedWith( named( name ) );
 
@@ -142,10 +135,7 @@ public abstract class ConfigurationModule
      */
     protected void bindProperties( Properties properties )
     {
-        if ( properties == null )
-        {
-            throw new IllegalArgumentException( "Parameter 'properties' must be not null" );
-        }
+        checkNotNull( properties, "Parameter 'properties' must be not null" );
 
         bindProperties( newPropertiesIterator( properties ) );
     }
@@ -156,10 +146,7 @@ public abstract class ConfigurationModule
      */
     protected void bindProperties( Iterable<Entry<String, String>> properties )
     {
-        if ( properties == null )
-        {
-            throw new IllegalArgumentException( "Parameter 'properties' must be not null" );
-        }
+        checkNotNull( properties, "Parameter 'properties' must be not null" );
 
         bindProperties( properties.iterator() );
     }
@@ -170,10 +157,7 @@ public abstract class ConfigurationModule
      */
     protected void bindProperties( Iterator<Entry<String, String>> properties )
     {
-        if ( properties == null )
-        {
-            throw new IllegalArgumentException( "Parameter 'properties' must be not null" );
-        }
+        checkNotNull( properties, "Parameter 'properties' must be not null" );
 
         while ( properties.hasNext() )
         {
@@ -187,7 +171,7 @@ public abstract class ConfigurationModule
      */
     protected void bindSystemProperties()
     {
-        this.bindProperties( System.getProperties() );
+        bindProperties( System.getProperties() );
     }
 
     /**
@@ -197,10 +181,7 @@ public abstract class ConfigurationModule
      */
     protected void bindProperties( Map<String, String> properties )
     {
-        if ( properties == null )
-        {
-            throw new IllegalArgumentException( "Parameter 'properties' must be not null" );
-        }
+        checkNotNull( properties, "Parameter 'properties' must be not null" );
 
         bindProperties( newPropertiesIterator( properties ) );
     }
@@ -221,10 +202,7 @@ public abstract class ConfigurationModule
      */
     protected XMLPropertiesFormatBindingBuilder bindProperties( final File propertiesResource )
     {
-        if ( propertiesResource == null )
-        {
-            throw new IllegalArgumentException( "parameter 'propertiesResource' must not be null" );
-        }
+        checkNotNull( propertiesResource, "Parameter 'propertiesResource' must be not null" );
 
         return bindProperties( propertiesResource.toURI() );
     }
@@ -237,10 +215,7 @@ public abstract class ConfigurationModule
      */
     protected XMLPropertiesFormatBindingBuilder bindProperties( final URI propertiesResource )
     {
-        if ( propertiesResource == null )
-        {
-            throw new IllegalArgumentException( "parameter 'propertiesResource' must not be null" );
-        }
+        checkNotNull( propertiesResource, "Parameter 'propertiesResource' must be not null" );
 
         if ( CLASSPATH_SCHEME.equals( propertiesResource.getScheme() ) )
         {
@@ -281,14 +256,8 @@ public abstract class ConfigurationModule
     protected XMLPropertiesFormatBindingBuilder bindProperties( final String classPathResource,
                                                                 final ClassLoader classLoader )
     {
-        if ( classPathResource == null )
-        {
-            throw new IllegalArgumentException( "parameter 'classPathResource' must not be null" );
-        }
-        if ( classLoader == null )
-        {
-            throw new IllegalArgumentException( "parameter 'classLoader' must not be null" );
-        }
+        checkNotNull( classPathResource, "Parameter 'classPathResource' must be not null" );
+        checkNotNull( classLoader, "Parameter 'classLoader' must be not null" );
 
         String resourceURL = classPathResource;
         if ( '/' == classPathResource.charAt( 0 ) )
@@ -297,12 +266,9 @@ public abstract class ConfigurationModule
         }
 
         URL url = classLoader.getResource( resourceURL );
-        if ( url == null )
-        {
-            throw new IllegalArgumentException(
-                                                format( "ClassPath resource '%s' not found, make sure it is in the ClassPath or you're using the right ClassLoader",
-                                                        classPathResource ) );
-        }
+        checkNotNull( url,
+                      "ClassPath resource '%s' not found, make sure it is in the ClassPath or you're using the right ClassLoader",
+                      classPathResource );
 
         return bindProperties( url );
     }
@@ -314,10 +280,7 @@ public abstract class ConfigurationModule
      */
     protected XMLPropertiesFormatBindingBuilder bindProperties( final URL propertiesResource )
     {
-        if ( propertiesResource == null )
-        {
-            throw new IllegalArgumentException( "parameter 'propertiesResource' must not be null" );
-        }
+        checkNotNull( propertiesResource, "parameter 'propertiesResource' must not be null" );
 
         PropertiesURLReader reader = new PropertiesURLReader( propertiesResource );
         readers.add( reader );
