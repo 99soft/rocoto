@@ -15,10 +15,8 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
-import static java.lang.String.format;
-import static com.google.inject.Key.get;
 import static com.google.inject.name.Names.named;
-import static com.google.inject.util.Providers.guicify;
+import static java.lang.String.format;
 import static org.nnsoft.guice.rocoto.configuration.PropertiesIterator.newPropertiesIterator;
 
 import java.io.File;
@@ -38,7 +36,7 @@ import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider
 
 import com.google.inject.AbstractModule;
 import com.google.inject.ProvisionException;
-import com.google.inject.binder.LinkedBindingBuilder;
+import com.google.inject.binder.ConstantBindingBuilder;
 
 /**
  * The ConfigurationModule simplifies the task of loading configurations in Google Guice.
@@ -120,16 +118,17 @@ public abstract class ConfigurationModule
                     throw new IllegalArgumentException( format( "Null value not admitted for property '%s's", name ) );
                 }
 
-                LinkedBindingBuilder<String> bindingBuilder = bind( get( String.class, named( name ) ) );
+                ConstantBindingBuilder builder = bindConstant().annotatedWith( named( name ) );
 
                 PropertiesResolverProvider formatter = new PropertiesResolverProvider( value );
                 if ( formatter.containsKeys() )
                 {
-                    bindingBuilder.toProvider( guicify( formatter ) );
+                    requestInjection( formatter );
+                    builder.to( formatter.get() );
                 }
                 else
                 {
-                    bindingBuilder.toInstance( value );
+                    builder.to( value );
                 }
             }
 
