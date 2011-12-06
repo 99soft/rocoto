@@ -27,30 +27,35 @@ import com.google.inject.Module;
 import com.google.inject.name.Named;
 
 /**
- * 
+ *
  */
-public final class URLConverterTestCase extends AbstractTestCase<URL> {
+public final class URLConverterTestCase
+    extends AbstractTestCase<URL>
+{
 
     @Override
     @Inject
-    public void setConvertedField(@Named("classpathResource") URL convertedField) {
-        super.setConvertedField(convertedField);
+    public void setConvertedField( @Named( "classpathResource" ) URL convertedField )
+    {
+        super.setConvertedField( convertedField );
     }
 
     @Override
-    protected Module[] getModules() {
-        return new Module[] { new URLConverter(), new AbstractModule() {
-            protected void configure() {
-                this.bindConstant()
-                    .annotatedWith(named("classpathResource"))
-                    .to("classpath:///testng.xml");
+    protected Module[] getModules()
+    {
+        return new Module[] { new URLConverter(), new AbstractModule()
+        {
+            protected void configure()
+            {
+                bindConstant().annotatedWith( named( "classpathResource" ) ).to( "classpath:///testng.xml" );
             };
         } };
     }
 
     @Test
-    public void classpathResource() {
-        this.verifyConversion(this.getClass().getResource("/testng.xml"));
+    public void classpathResource()
+    {
+        verifyConversion( getClass().getResource( "/testng.xml" ) );
     }
 
 }

@@ -23,16 +23,22 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.sql.Date}.
  */
-public final class SQLDateConverter extends AbstractConverter<Date> {
+public final class SQLDateConverter
+    extends AbstractConverter<Date>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        try {
-            return Date.valueOf(value);
-        } catch (Throwable t) {
-            throw new ProvisionException("String must be in JDBC format [yyyy-MM-dd] to create a java.sql.Date");
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        try
+        {
+            return Date.valueOf( value );
+        }
+        catch ( Throwable t )
+        {
+            throw new ProvisionException( "String must be in JDBC format [yyyy-MM-dd] to create a java.sql.Date" );
         }
     }
 

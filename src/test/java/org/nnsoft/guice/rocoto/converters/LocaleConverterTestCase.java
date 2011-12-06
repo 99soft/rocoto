@@ -27,30 +27,35 @@ import com.google.inject.Module;
 import com.google.inject.name.Named;
 
 /**
- * 
+ *
  */
-public final class LocaleConverterTestCase extends AbstractTestCase<Locale> {
+public final class LocaleConverterTestCase
+    extends AbstractTestCase<Locale>
+{
 
     @Override
     @Inject
-    public void setConvertedField(@Named("locale") Locale convertedField) {
-        super.setConvertedField(convertedField);
+    public void setConvertedField( @Named( "locale" ) Locale convertedField )
+    {
+        super.setConvertedField( convertedField );
     }
 
     @Override
-    protected Module[] getModules() {
-        return new Module[] { new LocaleConverter(), new AbstractModule() {
-            protected void configure() {
-                this.bindConstant()
-                    .annotatedWith(named("locale"))
-                    .to("en_US");
+    protected Module[] getModules()
+    {
+        return new Module[] { new LocaleConverter(), new AbstractModule()
+        {
+            protected void configure()
+            {
+                bindConstant().annotatedWith( named( "locale" ) ).to( "en_US" );
             };
         } };
     }
 
     @Test
-    public void locale() {
-        this.verifyConversion(new Locale("en", "US"));
+    public void locale()
+    {
+        verifyConversion( new Locale( "en", "US" ) );
     }
 
 }

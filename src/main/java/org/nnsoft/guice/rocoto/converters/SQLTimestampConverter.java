@@ -23,16 +23,22 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.sql.Date}.
  */
-public final class SQLTimestampConverter extends AbstractConverter<Timestamp> {
+public final class SQLTimestampConverter
+    extends AbstractConverter<Timestamp>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        try {
-            return Timestamp.valueOf(value);
-        } catch (Throwable t) {
-            throw new ProvisionException("String must be in JDBC format [yyyy-MM-dd HH:mm:ss.fffffffff] to create a java.sql.Timestamp");
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        try
+        {
+            return Timestamp.valueOf( value );
+        }
+        catch ( Throwable t )
+        {
+            throw new ProvisionException( "String must be in JDBC format [yyyy-MM-dd HH:mm:ss.fffffffff] to create a java.sql.Timestamp" );
         }
     }
 

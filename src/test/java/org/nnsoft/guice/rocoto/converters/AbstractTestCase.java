@@ -23,25 +23,29 @@ import org.testng.annotations.BeforeClass;
 import com.google.inject.Module;
 
 /**
- * 
+ *
  */
-abstract class AbstractTestCase<T> {
+abstract class AbstractTestCase<T>
+{
 
     private T convertedField;
 
-    protected void setConvertedField(T convertedField) {
+    protected void setConvertedField( T convertedField )
+    {
         this.convertedField = convertedField;
     }
 
     @BeforeClass
-    protected final void init() {
-        createInjector(this.getModules()).injectMembers(this);
+    protected final void init()
+    {
+        createInjector( this.getModules() ).injectMembers( this );
     }
 
     protected abstract Module[] getModules();
 
-    protected final void verifyConversion(T expected) {
-        assertEquals(expected, this.convertedField);
+    protected final void verifyConversion( T expected )
+    {
+        assertEquals( expected, this.convertedField );
     }
 
 }

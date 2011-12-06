@@ -27,30 +27,35 @@ import com.google.inject.Module;
 import com.google.inject.name.Named;
 
 /**
- * 
+ *
  */
-public final class CharsetConverterTestCase extends AbstractTestCase<Charset> {
+public final class CharsetConverterTestCase
+    extends AbstractTestCase<Charset>
+{
 
     @Override
     @Inject
-    public void setConvertedField(@Named("charset") Charset convertedField) {
-        super.setConvertedField(convertedField);
+    public void setConvertedField( @Named( "charset" ) Charset convertedField )
+    {
+        super.setConvertedField( convertedField );
     }
 
     @Override
-    protected Module[] getModules() {
-        return new Module[] { new CharsetConverter(), new AbstractModule() {
-            protected void configure() {
-                this.bindConstant()
-                    .annotatedWith(named("charset"))
-                    .to("UTF-8");
+    protected Module[] getModules()
+    {
+        return new Module[] { new CharsetConverter(), new AbstractModule()
+        {
+            protected void configure()
+            {
+                bindConstant().annotatedWith( named( "charset" ) ).to( "UTF-8" );
             };
         } };
     }
 
     @Test
-    public void charset() {
-        this.verifyConversion(Charset.forName("UTF-8"));
+    public void charset()
+    {
+        verifyConversion( Charset.forName( "UTF-8" ) );
     }
 
 }

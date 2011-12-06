@@ -26,13 +26,17 @@ import com.google.inject.spi.TypeConverter;
  *
  * @param <T> the type managed by this converter.
  */
-public abstract class AbstractConverter<T> extends TypeLiteral<T> implements Module, TypeConverter {
+public abstract class AbstractConverter<T>
+    extends TypeLiteral<T>
+    implements Module, TypeConverter
+{
 
     /**
      * {@inheritDoc}
      */
-    public final void configure(Binder binder) {
-        binder.convertToTypes(Matchers.only(TypeLiteral.get(this.getRawType())), this);
+    public final void configure( Binder binder )
+    {
+        binder.convertToTypes( Matchers.only( TypeLiteral.get( this.getRawType() ) ), this );
     }
 
 }

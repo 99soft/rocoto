@@ -18,10 +18,11 @@ package org.nnsoft.guice.rocoto.configuration.binder;
 /**
  * Define a properties file is in the XML format.
  */
-public interface XMLPropertiesFormatBindingBuilder {
+public interface XMLPropertiesFormatBindingBuilder
+{
 
     /**
-     * 
+     *
      *
      * @return
      */

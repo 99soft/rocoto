@@ -24,7 +24,9 @@ import java.util.Map.Entry;
  * Simple iterator of a {@code Map<K, V>} entries, with the option of prefixing keys
  * with the given prefix.
  */
-final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> {
+final class PropertiesIterator<K, V>
+    implements Iterator<Entry<String, String>>
+{
 
     /**
      * Creates a new iterator over a map configuration with prefixing the keys with the given prefix.
@@ -34,8 +36,9 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> 
      * @param properties The map configuration has to be read
      * @return A map configuration iterator
      */
-    public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator(Map<K, V> properties) {
-        return new PropertiesIterator<K, V>(null, properties);
+    public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator( Map<K, V> properties )
+    {
+        return new PropertiesIterator<K, V>( null, properties );
     }
 
     /**
@@ -47,8 +50,9 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> 
      * @param properties the map configuration has to be read.
      * @return a map configuration iterator.
      */
-    public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator(String keyPrefix, Map<K, V> properties) {
-        return new PropertiesIterator<K, V>(keyPrefix, properties);
+    public static final <K, V> PropertiesIterator<K, V> newPropertiesIterator( String keyPrefix, Map<K, V> properties )
+    {
+        return new PropertiesIterator<K, V>( keyPrefix, properties );
     }
 
     /**
@@ -67,7 +71,8 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> 
      * @param keyPrefix the key prefix. It can be {@code null}.
      * @param properties the wrapped configuration.
      */
-    private PropertiesIterator(String keyPrefix, Map<K, V> properties) {
+    private PropertiesIterator( String keyPrefix, Map<K, V> properties )
+    {
         this.keyPrefix = keyPrefix;
         this.propertiesIterator = properties.entrySet().iterator();
     }
@@ -75,20 +80,23 @@ final class PropertiesIterator<K, V> implements Iterator<Entry<String, String>> 
     /**
      * {@inheritDoc}
      */
-    public boolean hasNext() {
+    public boolean hasNext()
+    {
         return this.propertiesIterator.hasNext();
     }
 
     /**
      * {@inheritDoc}
      */
-    public Entry<String, String> next() {
+    public Entry<String, String> next()
+    {
         Entry<K, V> next = this.propertiesIterator.next();
-        String key = String.valueOf(next.getKey());
-        if (this.keyPrefix != null && this.keyPrefix.length() > 0) {
+        String key = String.valueOf( next.getKey() );
+        if ( this.keyPrefix != null && this.keyPrefix.length() > 0 )
+        {
             key = this.keyPrefix + key;
         }
-        return new KeyValue(key, String.valueOf(next.getValue()));
+        return new KeyValue( key, String.valueOf( next.getValue() ) );
     }
 
     /**

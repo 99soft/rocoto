@@ -27,18 +27,22 @@ import com.google.inject.TypeLiteral;
  *
  * @since 3.3
  */
-public final class ClobConverter extends AbstractConverter<Clob> {
+public final class ClobConverter
+    extends AbstractConverter<Clob>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        try {
-            return new SerialClob(value.toCharArray());
-        } catch (Exception e) {
-            throw new ProvisionException("String value '"
-                    + value
-                    + "' is not a valid InetAddress", e);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        try
+        {
+            return new SerialClob( value.toCharArray() );
+        }
+        catch ( Exception e )
+        {
+            throw new ProvisionException( "String value '" + value + "' is not a valid InetAddress", e );
         }
     }
 

@@ -18,13 +18,14 @@ package org.nnsoft.guice.rocoto.configuration.binder;
 /**
  * Binds to a property value.
  */
-public interface PropertyValueBindingBuilder {
+public interface PropertyValueBindingBuilder
+{
 
     /**
      * Binds property to the given value.
      *
      * @param value The property value
      */
-    void toValue(String value);
+    void toValue( String value );
 
 }

@@ -27,30 +27,35 @@ import com.google.inject.Module;
 import com.google.inject.name.Named;
 
 /**
- * 
+ *
  */
-public final class FileConverterTestCase extends AbstractTestCase<File> {
+public final class FileConverterTestCase
+    extends AbstractTestCase<File>
+{
 
     @Override
     @Inject
-    public void setConvertedField(@Named("file") File convertedField) {
-        super.setConvertedField(convertedField);
+    public void setConvertedField( @Named( "file" ) File convertedField )
+    {
+        super.setConvertedField( convertedField );
     }
 
     @Override
-    protected Module[] getModules() {
-        return new Module[] { new FileConverter(), new AbstractModule() {
-            protected void configure() {
-                this.bindConstant()
-                    .annotatedWith(named("file"))
-                    .to("/tmp");
+    protected Module[] getModules()
+    {
+        return new Module[] { new FileConverter(), new AbstractModule()
+        {
+            protected void configure()
+            {
+                bindConstant().annotatedWith( named( "file" ) ).to( "/tmp" );
             };
         } };
     }
 
     @Test
-    public void file() {
-        this.verifyConversion(new File("/tmp"));
+    public void file()
+    {
+        verifyConversion( new File( "/tmp" ) );
     }
 
 }

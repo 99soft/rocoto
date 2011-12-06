@@ -24,18 +24,22 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.net.URI}.
  */
-public final class URIConverter extends AbstractConverter<URI> {
+public final class URIConverter
+    extends AbstractConverter<URI>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        try {
-            return new URI(value);
-        } catch (URISyntaxException e) {
-            throw new ProvisionException("String value '"
-                    + value
-                    + "' is not a valid URI", e);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        try
+        {
+            return new URI( value );
+        }
+        catch ( URISyntaxException e )
+        {
+            throw new ProvisionException( "String value '" + value + "' is not a valid URI", e );
         }
     }
 

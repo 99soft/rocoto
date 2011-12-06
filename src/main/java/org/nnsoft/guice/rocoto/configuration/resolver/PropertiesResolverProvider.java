@@ -27,11 +27,13 @@ import com.google.inject.ProvisionException;
 import com.google.inject.util.Providers;
 
 /**
- * 
+ *
  *
  * @since 4.0
  */
-public final class PropertiesResolverProvider implements Provider<String> {
+public final class PropertiesResolverProvider
+    implements Provider<String>
+{
 
     /**
      * The symbol that indicates a variable begin.
@@ -58,43 +60,58 @@ public final class PropertiesResolverProvider implements Provider<String> {
      *
      * @param pattern the text fragment has to be parsed and extract keys.
      */
-    public PropertiesResolverProvider(final String pattern) {
+    public PropertiesResolverProvider( final String pattern )
+    {
         int prev = 0;
         int pos;
-        while ((pos = pattern.indexOf(VAR_BEGIN, prev)) >= 0) {
-            if (pos > 0) {
-                this.fragments.add(Providers.of(pattern.substring(prev, pos)));
+        while ( ( pos = pattern.indexOf( VAR_BEGIN, prev ) ) >= 0 )
+        {
+            if ( pos > 0 )
+            {
+                this.fragments.add( Providers.of( pattern.substring( prev, pos ) ) );
             }
-            if (pos == pattern.length() - 1) {
-                this.fragments.add(Providers.of(VAR_BEGIN));
+            if ( pos == pattern.length() - 1 )
+            {
+                this.fragments.add( Providers.of( VAR_BEGIN ) );
                 prev = pos + 1;
-            } else if (pattern.charAt(pos + 1) != '{') {
-                if (pattern.charAt(pos + 1) == '$') {
-                    this.fragments.add(Providers.of(VAR_BEGIN));
-                    prev = pos + 2;
-                } else {
-                    this.fragments.add(Providers.of(pattern.substring(pos, pos + 2)));
+            }
+            else if ( pattern.charAt( pos + 1 ) != '{' )
+            {
+                if ( pattern.charAt( pos + 1 ) == '$' )
+                {
+                    this.fragments.add( Providers.of( VAR_BEGIN ) );
                     prev = pos + 2;
                 }
-            } else {
-                int endName = pattern.indexOf('}', pos);
-                if (endName < 0) {
-                    throw new ProvisionException("Syntax error in property: " + pattern);
+                else
+                {
+                    this.fragments.add( Providers.of( pattern.substring( pos, pos + 2 ) ) );
+                    prev = pos + 2;
                 }
-                StringTokenizer keyTokenizer = new StringTokenizer(pattern.substring(pos + 2, endName), PIPE_SEPARATOR);
+            }
+            else
+            {
+                int endName = pattern.indexOf( '}', pos );
+                if ( endName < 0 )
+                {
+                    throw new ProvisionException( "Syntax error in property: " + pattern );
+                }
+                StringTokenizer keyTokenizer =
+                    new StringTokenizer( pattern.substring( pos + 2, endName ), PIPE_SEPARATOR );
                 String key = keyTokenizer.nextToken().trim();
                 String defaultValue = null;
-                if (keyTokenizer.hasMoreTokens()) {
+                if ( keyTokenizer.hasMoreTokens() )
+                {
                     defaultValue = keyTokenizer.nextToken().trim();
                 }
-                VariableResolverProvider variableResolver = new VariableResolverProvider(key, defaultValue);
-                this.fragments.add(variableResolver);
-                this.resolvers.add(variableResolver);
+                VariableResolverProvider variableResolver = new VariableResolverProvider( key, defaultValue );
+                this.fragments.add( variableResolver );
+                this.resolvers.add( variableResolver );
                 prev = endName + 1;
             }
         }
-        if (prev < pattern.length()) {
-            this.fragments.add(Providers.of(pattern.substring(prev)));
+        if ( prev < pattern.length() )
+        {
+            this.fragments.add( Providers.of( pattern.substring( prev ) ) );
         }
     }
 
@@ -105,7 +122,8 @@ public final class PropertiesResolverProvider implements Provider<String> {
      * @return true, if the text contains at least one key in the ${} pattern,
      *         false otherwise.
      */
-    public boolean containsKeys() {
+    public boolean containsKeys()
+    {
         return !this.resolvers.isEmpty();
     }
 
@@ -115,19 +133,23 @@ public final class PropertiesResolverProvider implements Provider<String> {
      * @param injector the Injector instance used to resolve variables.
      */
     @Inject
-    public void setInjector(Injector injector) {
-        for (VariableResolverProvider variableResolver : this.resolvers) {
-            variableResolver.setInjector(injector);
+    public void setInjector( Injector injector )
+    {
+        for ( VariableResolverProvider variableResolver : this.resolvers )
+        {
+            variableResolver.setInjector( injector );
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public String get() {
+    public String get()
+    {
         StringBuilder buffer = new StringBuilder();
-        for (Provider<String> appender : this.fragments) {
-            buffer.append(appender.get());
+        for ( Provider<String> appender : this.fragments )
+        {
+            buffer.append( appender.get() );
         }
         return buffer.toString();
     }
@@ -136,7 +158,8 @@ public final class PropertiesResolverProvider implements Provider<String> {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
+    public String toString()
+    {
         return this.fragments.toString();
     }
 

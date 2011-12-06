@@ -20,7 +20,9 @@ import java.util.Map.Entry;
 /**
  * A simple {@code Entry<String, String>} implementation.
  */
-final class KeyValue implements Entry<String, String> {
+final class KeyValue
+    implements Entry<String, String>
+{
 
     /**
      * The entry key.
@@ -38,7 +40,8 @@ final class KeyValue implements Entry<String, String> {
      * @param key the entry key.
      * @param value the entry value.
      */
-    public KeyValue(String key, String value) {
+    public KeyValue( String key, String value )
+    {
         this.key = key;
         this.value = value;
     }
@@ -46,22 +49,25 @@ final class KeyValue implements Entry<String, String> {
     /**
      * {@inheritDoc}
      */
-    public String getKey() {
+    public String getKey()
+    {
         return this.key;
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getValue() {
+    public String getValue()
+    {
         return this.value;
     }
 
     /**
      * {@inheritDoc}
      */
-    public String setValue(String value) {
-        throw new UnsupportedOperationException("Value is read-only in this version");
+    public String setValue( String value )
+    {
+        throw new UnsupportedOperationException( "Value is read-only in this version" );
     }
 
 }

@@ -25,7 +25,9 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.Properties}.
  */
-public final class PropertiesConverter extends AbstractConverter<Properties> {
+public final class PropertiesConverter
+    extends AbstractConverter<Properties>
+{
 
     /**
      * Default properties encoding {@code ISO-8859-1}.
@@ -37,23 +39,31 @@ public final class PropertiesConverter extends AbstractConverter<Properties> {
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
         Properties properties = new Properties();
         ByteArrayInputStream bais = null;
 
-        try {
-            bais = new ByteArrayInputStream(value.getBytes(PROPERTIES_ENCODING));
-            properties.load(bais);
-        } catch (IOException e) {
+        try
+        {
+            bais = new ByteArrayInputStream( value.getBytes( PROPERTIES_ENCODING ) );
+            properties.load( bais );
+        }
+        catch ( IOException e )
+        {
             // Should never happen.
-            throw new ProvisionException("Failed to parse "
-                    + value
-                    + "' into Properties", e);
-        } finally {
-            if (bais != null) {
-                try {
+            throw new ProvisionException( "Failed to parse " + value + "' into Properties", e );
+        }
+        finally
+        {
+            if ( bais != null )
+            {
+                try
+                {
                     bais.close();
-                } catch (IOException e) {
+                }
+                catch ( IOException e )
+                {
                     // close quietly
                 }
             }

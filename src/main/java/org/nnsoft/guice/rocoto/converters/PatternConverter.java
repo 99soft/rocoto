@@ -22,13 +22,16 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.regex.Pattern}.
  */
-public final class PatternConverter extends AbstractConverter<Pattern> {
+public final class PatternConverter
+    extends AbstractConverter<Pattern>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return Pattern.compile(value);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        return Pattern.compile( value );
     }
 
 }

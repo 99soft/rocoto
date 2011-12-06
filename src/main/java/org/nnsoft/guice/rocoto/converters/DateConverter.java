@@ -31,7 +31,9 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.Calendar} and {@code java.util.Date}.
  */
-public final class DateConverter extends AbstractConverter<Date> {
+public final class DateConverter
+    extends AbstractConverter<Date>
+{
 
     private final List<String> patterns = new ArrayList<String>();
 
@@ -39,93 +41,110 @@ public final class DateConverter extends AbstractConverter<Date> {
 
     private TimeZone timeZone;
 
-    public DateConverter() {
+    public DateConverter()
+    {
         // ISO date formats
-        this.addPattern("yyyy");
-        this.addPattern("yyyy-MM");
-        this.addPattern("yyyy-MM-dd");
-        this.addPattern("yyyy-MM-dd'T'hh:mmZ");
-        this.addPattern("yyyy-MM-dd'T'hh:mm:ssZ");
-        this.addPattern("yyyy-MM-dd'T'hh:mm:ss.sZ");
+        this.addPattern( "yyyy" );
+        this.addPattern( "yyyy-MM" );
+        this.addPattern( "yyyy-MM-dd" );
+        this.addPattern( "yyyy-MM-dd'T'hh:mmZ" );
+        this.addPattern( "yyyy-MM-dd'T'hh:mm:ssZ" );
+        this.addPattern( "yyyy-MM-dd'T'hh:mm:ss.sZ" );
     }
 
-    public void setLocale(Locale locale) {
+    public void setLocale( Locale locale )
+    {
         this.locale = locale;
     }
 
-    public void setTimeZone(TimeZone timeZone) {
+    public void setTimeZone( TimeZone timeZone )
+    {
         this.timeZone = timeZone;
     }
 
-    public void addPattern(String pattern) {
-        this.patterns.add(pattern);
+    public void addPattern( String pattern )
+    {
+        this.patterns.add( pattern );
     }
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
         Exception firstEx = null;
-        for (String pattern : this.patterns) {
-            try {
+        for ( String pattern : this.patterns )
+        {
+            try
+            {
                 DateFormat format;
-                if (this.locale != null) {
-                    format = new SimpleDateFormat(pattern, this.locale);
-                } else {
-                    format = new SimpleDateFormat(pattern);
+                if ( this.locale != null )
+                {
+                    format = new SimpleDateFormat( pattern, this.locale );
                 }
-                if (this.timeZone != null) {
-                    format.setTimeZone(this.timeZone);
+                else
+                {
+                    format = new SimpleDateFormat( pattern );
                 }
-                format.setLenient(false);
-                Date date = this.parse(value, format);
+                if ( this.timeZone != null )
+                {
+                    format.setTimeZone( this.timeZone );
+                }
+                format.setLenient( false );
+                Date date = this.parse( value, format );
 
-                if (Calendar.class == toType.getType()) {
+                if ( Calendar.class == toType.getType() )
+                {
                     Calendar calendar = null;
-                    if (this.locale == null && this.timeZone == null) {
+                    if ( this.locale == null && this.timeZone == null )
+                    {
                         calendar = Calendar.getInstance();
-                    } else if (this.locale == null) {
-                        calendar = Calendar.getInstance(this.timeZone);
-                    } else if (this.timeZone == null) {
-                        calendar = Calendar.getInstance(this.locale);
-                    } else {
-                        calendar = Calendar.getInstance(this.timeZone, this.locale);
                     }
-                    calendar.setTime(date);
-                    calendar.setLenient(false);
+                    else if ( this.locale == null )
+                    {
+                        calendar = Calendar.getInstance( this.timeZone );
+                    }
+                    else if ( this.timeZone == null )
+                    {
+                        calendar = Calendar.getInstance( this.locale );
+                    }
+                    else
+                    {
+                        calendar = Calendar.getInstance( this.timeZone, this.locale );
+                    }
+                    calendar.setTime( date );
+                    calendar.setLenient( false );
                     return calendar;
                 }
 
                 return date;
-            } catch (Exception ex) {
-                if (firstEx == null) {
+            }
+            catch ( Exception ex )
+            {
+                if ( firstEx == null )
+                {
                     firstEx = ex;
                 }
             }
         }
 
-        throw new IllegalArgumentException("Error converting '"
-            + value
-            + "' using  patterns "
-            + this.patterns, firstEx);
+        throw new IllegalArgumentException( "Error converting '" + value + "' using  patterns " + this.patterns,
+                                            firstEx );
     }
 
-    private Date parse(String value, DateFormat format) {
-        ParsePosition pos = new ParsePosition(0);
-        Date parsedDate = format.parse(value, pos); // ignore the result (use the Calendar)
+    private Date parse( String value, DateFormat format )
+    {
+        ParsePosition pos = new ParsePosition( 0 );
+        Date parsedDate = format.parse( value, pos ); // ignore the result (use the Calendar)
 
-        if (pos.getErrorIndex() >= 0
-                || pos.getIndex() != value.length()
-                || parsedDate == null) {
-            String msg = "Error converting '"
-                + value
-                + "'";
-            if (format instanceof SimpleDateFormat) {
-                msg += " using pattern '"
-                    + ((SimpleDateFormat) format).toPattern()
-                    + "'";
+        if ( pos.getErrorIndex() >= 0 || pos.getIndex() != value.length() || parsedDate == null )
+        {
+            String msg = "Error converting '" + value + "'";
+            if ( format instanceof SimpleDateFormat )
+            {
+                msg += " using pattern '" + ( (SimpleDateFormat) format ).toPattern() + "'";
             }
-            throw new ProvisionException(msg);
+            throw new ProvisionException( msg );
         }
 
         return parsedDate;

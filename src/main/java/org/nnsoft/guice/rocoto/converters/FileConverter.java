@@ -22,13 +22,16 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.io.File}.
  */
-public final class FileConverter extends AbstractConverter<File> {
+public final class FileConverter
+    extends AbstractConverter<File>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return new File(value);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        return new File( value );
     }
 
 }

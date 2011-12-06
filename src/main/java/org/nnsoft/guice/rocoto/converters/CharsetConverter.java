@@ -23,16 +23,20 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.nio.charset.Charset}.
  */
-public final class CharsetConverter extends AbstractConverter<Charset> {
+public final class CharsetConverter
+    extends AbstractConverter<Charset>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        if (value.length() == 0) {
-            throw new ProvisionException("Impossible to convert an empty value to a Charset");
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        if ( value.length() == 0 )
+        {
+            throw new ProvisionException( "Impossible to convert an empty value to a Charset" );
         }
-        return Charset.forName(value);
+        return Charset.forName( value );
     }
 
 }

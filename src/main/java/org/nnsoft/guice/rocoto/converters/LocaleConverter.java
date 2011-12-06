@@ -22,19 +22,23 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.Locale}.
  */
-public final class LocaleConverter extends AbstractConverter<Locale> {
+public final class LocaleConverter
+    extends AbstractConverter<Locale>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        int separator = value.indexOf('_');
-        if (separator != -1) {
-            String language = value.substring(0, separator);
-            String country = value.substring(separator + 1);
-            return new Locale(language, country);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        int separator = value.indexOf( '_' );
+        if ( separator != -1 )
+        {
+            String language = value.substring( 0, separator );
+            String country = value.substring( separator + 1 );
+            return new Locale( language, country );
         }
-        return new Locale(value);
+        return new Locale( value );
     }
 
 }

@@ -24,7 +24,9 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.UUID}.
  */
-public final class BitSetConverter extends AbstractConverter<BitSet> {
+public final class BitSetConverter
+    extends AbstractConverter<BitSet>
+{
 
     private static final String DEFAULT_SEPARATOR = ",";
 
@@ -33,37 +35,42 @@ public final class BitSetConverter extends AbstractConverter<BitSet> {
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
         BitSet bitSet = new BitSet();
 
         int currentIndex = 0;
-        StringTokenizer tokenizer = new StringTokenizer(value, DEFAULT_SEPARATOR);
-        while (tokenizer.hasMoreTokens()) {
+        StringTokenizer tokenizer = new StringTokenizer( value, DEFAULT_SEPARATOR );
+        while ( tokenizer.hasMoreTokens() )
+        {
             String current = tokenizer.nextToken().trim();
 
-            if (current.length() == 0) {
-                throw new ProvisionException("Input '"
-                        + value
-                        + "' is not a valid java.util.BitSet, fragment at position "
-                        + currentIndex
-                        + " is empty");
+            if ( current.length() == 0 )
+            {
+                throw new ProvisionException( "Input '" + value
+                    + "' is not a valid java.util.BitSet, fragment at position " + currentIndex + " is empty" );
             }
 
-            if (CHAR_LENGTH == current.length() && !Character.isDigit(current.charAt(0))) {
-                bitSet.set(current.charAt(0));
-            } else {
-                for (int i = 0; i < current.length(); i++) {
-                    if (!Character.isDigit(current.charAt(i))) {
-                        throw new ProvisionException("Input '"
-                                + value
-                                + "' is not a valid java.util.BitSet, fragment '"
-                                + current
-                                + "' at position "
-                                + currentIndex
-                                + " is not a valid integer");
+            if ( CHAR_LENGTH == current.length() && !Character.isDigit( current.charAt( 0 ) ) )
+            {
+                bitSet.set( current.charAt( 0 ) );
+            }
+            else
+            {
+                for ( int i = 0; i < current.length(); i++ )
+                {
+                    if ( !Character.isDigit( current.charAt( i ) ) )
+                    {
+                        throw new ProvisionException( "Input '"
+                                                      + value
+                                                      + "' is not a valid java.util.BitSet, fragment '"
+                                                      + current
+                                                      + "' at position "
+                                                      + currentIndex
+                                                      + " is not a valid integer" );
                     }
                 }
-                bitSet.set(Integer.parseInt(current));
+                bitSet.set( Integer.parseInt( current ) );
             }
 
             currentIndex++;

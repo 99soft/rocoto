@@ -29,7 +29,9 @@ import org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBu
  *
  * This reader implementation support both {@code .properties} and {@code .xml} properties format.
  */
-final class PropertiesURLReader implements XMLPropertiesFormatBindingBuilder {
+final class PropertiesURLReader
+    implements XMLPropertiesFormatBindingBuilder
+{
 
     /**
      * The URL has to be open.
@@ -47,9 +49,11 @@ final class PropertiesURLReader implements XMLPropertiesFormatBindingBuilder {
      * @param url the URL that locates the configuration resource.
      * @param isXML to mark if the properties file is in XML format or not.
      */
-    public PropertiesURLReader(URL url) {
-        if (url == null) {
-            throw new IllegalArgumentException("'url' argument can't be null");
+    public PropertiesURLReader( URL url )
+    {
+        if ( url == null )
+        {
+            throw new IllegalArgumentException( "'url' argument can't be null" );
         }
         this.url = url;
     }
@@ -57,48 +61,63 @@ final class PropertiesURLReader implements XMLPropertiesFormatBindingBuilder {
     /**
      * {@inheritDoc}
      */
-    public void inXMLFormat() {
+    public void inXMLFormat()
+    {
         this.isXML = true;
     }
 
     /**
-     * 
+     *
      * @return
      */
-    public URL getUrl() {
+    public URL getUrl()
+    {
         return url;
     }
 
     /**
-     * 
+     *
      *
      * @return
      * @throws Exception
      */
-    public final Properties readConfiguration() throws Exception {
+    public final Properties readConfiguration()
+        throws Exception
+    {
         URLConnection connection = null;
         InputStream input = null;
-        try {
+        try
+        {
             connection = this.url.openConnection();
-            connection.setUseCaches(false);
+            connection.setUseCaches( false );
             input = connection.getInputStream();
 
             Properties properties = new Properties();
-            if (this.isXML) {
-                properties.loadFromXML(input);
-            } else {
-                properties.load(input);
+            if ( this.isXML )
+            {
+                properties.loadFromXML( input );
+            }
+            else
+            {
+                properties.load( input );
             }
 
             return properties;
-        } finally {
-            if (connection != null && (connection instanceof HttpURLConnection)) {
-                ((HttpURLConnection) connection).disconnect();
+        }
+        finally
+        {
+            if ( connection != null && ( connection instanceof HttpURLConnection ) )
+            {
+                ( (HttpURLConnection) connection ).disconnect();
             }
-            if (input != null) {
-                try {
+            if ( input != null )
+            {
+                try
+                {
                     input.close();
-                } catch (IOException e) {
+                }
+                catch ( IOException e )
+                {
                     // close quietly
                 }
             }

@@ -27,34 +27,39 @@ import com.google.inject.Module;
 import com.google.inject.name.Named;
 
 /**
- * 
+ *
  */
-public final class BitSetConverterTestCase extends AbstractTestCase<BitSet> {
+public final class BitSetConverterTestCase
+    extends AbstractTestCase<BitSet>
+{
 
     @Override
     @Inject
-    public void setConvertedField(@Named("bitset") BitSet convertedField) {
-        super.setConvertedField(convertedField);
+    public void setConvertedField( @Named( "bitset" ) BitSet convertedField )
+    {
+        super.setConvertedField( convertedField );
     }
 
     @Override
-    protected Module[] getModules() {
-        return new Module[] { new BitSetConverter(), new AbstractModule() {
-            protected void configure() {
-                this.bindConstant()
-                    .annotatedWith(named("bitset"))
-                    .to("a, 123, ~");
+    protected Module[] getModules()
+    {
+        return new Module[] { new BitSetConverter(), new AbstractModule()
+        {
+            protected void configure()
+            {
+                bindConstant().annotatedWith( named( "bitset" ) ).to( "a, 123, ~" );
             };
         } };
     }
 
     @Test
-    public void bitset() {
+    public void bitset()
+    {
         BitSet expected = new BitSet();
-        expected.set('a');
-        expected.set(123);
-        expected.set('~');
-        this.verifyConversion(expected);
+        expected.set( 'a' );
+        expected.set( 123 );
+        expected.set( '~' );
+        verifyConversion( expected );
     }
 
 }

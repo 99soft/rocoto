@@ -22,13 +22,16 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.Currency}.
  */
-public final class CurrencyConverter extends AbstractConverter<Currency> {
+public final class CurrencyConverter
+    extends AbstractConverter<Currency>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return Currency.getInstance(value);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        return Currency.getInstance( value );
     }
 
 }

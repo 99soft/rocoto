@@ -24,13 +24,16 @@ import com.google.inject.TypeLiteral;
  *
  * @since 3.3
  */
-public final class SimpleDateFormatConverter extends AbstractConverter<SimpleDateFormat> {
+public final class SimpleDateFormatConverter
+    extends AbstractConverter<SimpleDateFormat>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return new SimpleDateFormat(value);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        return new SimpleDateFormat( value );
     }
 
 }

@@ -24,13 +24,16 @@ import com.google.inject.TypeLiteral;
  *
  * @since 3.3
  */
-public final class DecimalFormatConverter extends AbstractConverter<DecimalFormat> {
+public final class DecimalFormatConverter
+    extends AbstractConverter<DecimalFormat>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return new DecimalFormat(value);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        return new DecimalFormat( value );
     }
 
 }

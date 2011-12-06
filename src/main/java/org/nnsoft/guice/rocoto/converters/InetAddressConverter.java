@@ -26,18 +26,22 @@ import com.google.inject.TypeLiteral;
  *
  * @since 3.3
  */
-public final class InetAddressConverter extends AbstractConverter<InetAddress> {
+public final class InetAddressConverter
+    extends AbstractConverter<InetAddress>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        try {
-            return InetAddress.getByName(value);
-        } catch (UnknownHostException e) {
-            throw new ProvisionException("String value '"
-                    + value
-                    + "' is not a valid InetAddress", e);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        try
+        {
+            return InetAddress.getByName( value );
+        }
+        catch ( UnknownHostException e )
+        {
+            throw new ProvisionException( "String value '" + value + "' is not a valid InetAddress", e );
         }
     }
 

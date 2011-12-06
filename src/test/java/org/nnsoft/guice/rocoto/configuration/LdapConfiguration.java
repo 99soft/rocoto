@@ -19,43 +19,50 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- * 
+ *
  */
-public final class LdapConfiguration {
+public final class LdapConfiguration
+{
 
     @Inject
-    @Named("ldap.host")
+    @Named( "ldap.host" )
     private String host;
 
     @Inject
-    @Named("ldap.port")
+    @Named( "ldap.port" )
     private int port;
 
     @Inject
-    @Named("ldap.baseDN")
+    @Named( "ldap.baseDN" )
     private String baseDN;
 
-    public String getHost() {
+    public String getHost()
+    {
         return host;
     }
 
-    public void setHost(String host) {
+    public void setHost( String host )
+    {
         this.host = host;
     }
 
-    public int getPort() {
+    public int getPort()
+    {
         return port;
     }
 
-    public void setPort(int port) {
+    public void setPort( int port )
+    {
         this.port = port;
     }
 
-    public String getBaseDN() {
+    public String getBaseDN()
+    {
         return baseDN;
     }
 
-    public void setBaseDN(String baseDN) {
+    public void setBaseDN( String baseDN )
+    {
         this.baseDN = baseDN;
     }
 

@@ -22,13 +22,16 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.TimeZone}.
  */
-public final class TimeZoneConverter extends AbstractConverter<TimeZone> {
+public final class TimeZoneConverter
+    extends AbstractConverter<TimeZone>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return TimeZone.getTimeZone(value);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        return TimeZone.getTimeZone( value );
     }
 
 }

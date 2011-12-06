@@ -23,18 +23,22 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.util.UUID}.
  */
-public final class UUIDConverter extends AbstractConverter<UUID> {
+public final class UUIDConverter
+    extends AbstractConverter<UUID>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        try {
-            return UUID.fromString(value);
-        } catch (Throwable t) {
-            throw new ProvisionException("String value '"
-                    + value
-                    + "' is not a valid UUID", t);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        try
+        {
+            return UUID.fromString( value );
+        }
+        catch ( Throwable t )
+        {
+            throw new ProvisionException( "String value '" + value + "' is not a valid UUID", t );
         }
     }
 

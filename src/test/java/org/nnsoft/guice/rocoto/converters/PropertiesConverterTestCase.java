@@ -27,33 +27,38 @@ import com.google.inject.Module;
 import com.google.inject.name.Named;
 
 /**
- * 
+ *
  */
-public final class PropertiesConverterTestCase extends AbstractTestCase<Properties> {
+public final class PropertiesConverterTestCase
+    extends AbstractTestCase<Properties>
+{
 
     @Override
     @Inject
-    public void setConvertedField(@Named("properties") Properties convertedField) {
-        super.setConvertedField(convertedField);
+    public void setConvertedField( @Named( "properties" ) Properties convertedField )
+    {
+        super.setConvertedField( convertedField );
     }
 
     @Override
-    protected Module[] getModules() {
-        return new Module[] { new PropertiesConverter(), new AbstractModule() {
-            protected void configure() {
-                this.bindConstant()
-                    .annotatedWith(named("properties"))
-                    .to("useUnicode=true\ncharacterEncoding=UTF-8");
+    protected Module[] getModules()
+    {
+        return new Module[] { new PropertiesConverter(), new AbstractModule()
+        {
+            protected void configure()
+            {
+                bindConstant().annotatedWith( named( "properties" ) ).to( "useUnicode=true\ncharacterEncoding=UTF-8" );
             };
         } };
     }
 
     @Test
-    public void properties() {
+    public void properties()
+    {
         Properties expected = new Properties();
-        expected.setProperty("useUnicode", "true");
-        expected.setProperty("characterEncoding", "UTF-8");
-        this.verifyConversion(expected);
+        expected.setProperty( "useUnicode", "true" );
+        expected.setProperty( "characterEncoding", "UTF-8" );
+        verifyConversion( expected );
     }
 
 }

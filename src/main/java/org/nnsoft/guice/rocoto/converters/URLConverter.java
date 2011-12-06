@@ -24,7 +24,9 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.net.URL}.
  */
-public final class URLConverter extends AbstractConverter<URL> {
+public final class URLConverter
+    extends AbstractConverter<URL>
+{
 
     /**
      * Pseudo URL prefix for loading from the class path: "classpath://"
@@ -34,39 +36,48 @@ public final class URLConverter extends AbstractConverter<URL> {
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        if (value.startsWith(CLASSPATH_URL_PREFIX)) {
-            String path = value.substring(CLASSPATH_URL_PREFIX.length());
-            while ('/' == path.charAt(0)) {
-                path = path.substring(1);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        if ( value.startsWith( CLASSPATH_URL_PREFIX ) )
+        {
+            String path = value.substring( CLASSPATH_URL_PREFIX.length() );
+            while ( '/' == path.charAt( 0 ) )
+            {
+                path = path.substring( 1 );
             }
 
             ClassLoader classLoader = null;
-            try {
+            try
+            {
                 classLoader = Thread.currentThread().getContextClassLoader();
-            } catch (Throwable t) {
+            }
+            catch ( Throwable t )
+            {
                 // Cannot access thread context ClassLoader - falling back to system class loader...
             }
-            if (classLoader == null) {
+            if ( classLoader == null )
+            {
                 // No thread context class loader -> use class loader of this class.
                 classLoader = URLConverter.class.getClassLoader();
             }
-            URL url = classLoader.getResource(path);
-            if (url == null) {
-                throw new ProvisionException("class path resource '"
-                        + path
-                        + "' cannot be resolved to URL because it does not exist");
+            URL url = classLoader.getResource( path );
+            if ( url == null )
+            {
+                throw new ProvisionException( "class path resource '"
+                                              + path
+                                              + "' cannot be resolved to URL because it does not exist" );
             }
 
             return url;
         }
 
-        try {
-            return new URL(value);
-        } catch (MalformedURLException e) {
-            throw new ProvisionException("String value '"
-                    + value
-                    + "' is not a valid URL", e);
+        try
+        {
+            return new URL( value );
+        }
+        catch ( MalformedURLException e )
+        {
+            throw new ProvisionException( "String value '" + value + "' is not a valid URL", e );
         }
     }
 

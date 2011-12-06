@@ -22,13 +22,16 @@ import com.google.inject.TypeLiteral;
 /**
  * Converter implementation for {@code java.math.BigDecimal}.
  */
-public final class BigDecimalConverter extends AbstractConverter<BigDecimal> {
+public final class BigDecimalConverter
+    extends AbstractConverter<BigDecimal>
+{
 
     /**
      * {@inheritDoc}
      */
-    public Object convert(String value, TypeLiteral<?> toType) {
-        return new BigDecimal(value);
+    public Object convert( String value, TypeLiteral<?> toType )
+    {
+        return new BigDecimal( value );
     }
 
 }
