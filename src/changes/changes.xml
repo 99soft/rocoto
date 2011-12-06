@@ -23,6 +23,8 @@
   </properties>
 
   <body>
+    <release version="5.0.1" date="2011-03-27" description="maintenance release" />
+
     <release version="5.0" date="2011-03-20" description="5.0 release">
       <action dev="simonetripodi" type="remove">
         Code moved to GitHub.
