@@ -62,7 +62,7 @@ public abstract class ConfigurationModule
     @Override
     protected final void configure()
     {
-        checkState( readers != null, "Re-entry not allowed" );
+        checkState( readers == null, "Re-entry not allowed" );
 
         readers = new LinkedList<PropertiesURLReader>();
 
