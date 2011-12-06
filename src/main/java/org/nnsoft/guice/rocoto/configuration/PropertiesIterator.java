@@ -82,7 +82,7 @@ final class PropertiesIterator<K, V>
      */
     public boolean hasNext()
     {
-        return this.propertiesIterator.hasNext();
+        return propertiesIterator.hasNext();
     }
 
     /**
@@ -90,11 +90,11 @@ final class PropertiesIterator<K, V>
      */
     public Entry<String, String> next()
     {
-        Entry<K, V> next = this.propertiesIterator.next();
+        Entry<K, V> next = propertiesIterator.next();
         String key = String.valueOf( next.getKey() );
-        if ( this.keyPrefix != null && this.keyPrefix.length() > 0 )
+        if ( keyPrefix != null && keyPrefix.length() > 0 )
         {
-            key = this.keyPrefix + key;
+            key = keyPrefix + key;
         }
         return new KeyValue( key, String.valueOf( next.getValue() ) );
     }

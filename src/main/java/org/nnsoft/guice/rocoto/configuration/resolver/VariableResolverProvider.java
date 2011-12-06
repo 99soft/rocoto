@@ -25,11 +25,13 @@ import com.google.inject.Provider;
  * {@link Appender} implementation that resolve the ${} variables
  * and append the result to the given buffer; if the variable
  * won't be resolved, the default value, if any, will be used,
- * otherwise 
+ * otherwise
  *
  * @since 4.0
  */
-final class VariableResolverProvider implements Provider<String> {
+final class VariableResolverProvider
+    implements Provider<String>
+{
 
     /**
      * The key prefix, in its unresolved form.
@@ -47,7 +49,7 @@ final class VariableResolverProvider implements Provider<String> {
     private final String defaultValue;
 
     /**
-     * 
+     *
      */
     private Injector injector;
 
@@ -58,31 +60,40 @@ final class VariableResolverProvider implements Provider<String> {
      * @param variableName the property variable name.
      * @param defaultValue the property default value.
      */
-    public VariableResolverProvider(final String variableName, final String defaultValue) {
+    public VariableResolverProvider( final String variableName, final String defaultValue )
+    {
         this.variableName = variableName;
         this.defaultValue = defaultValue;
     }
 
     /**
-     * 
+     *
      *
      * @param injector
      */
-    public void setInjector(Injector injector) {
+    public void setInjector( Injector injector )
+    {
         this.injector = injector;
     }
 
     /**
      * {@inheritDoc}
      */
-    public String get() {
-        try {
-            return this.injector.getInstance(Key.get(String.class, named(this.variableName)));
-        } catch (Throwable e) {
-            if (this.defaultValue != null) {
-                return this.defaultValue;
-            } else {
-                return new StringBuilder().append(KEY_PREFIX).append(this.variableName).append('}').toString();
+    public String get()
+    {
+        try
+        {
+            return this.injector.getInstance( Key.get( String.class, named( variableName ) ) );
+        }
+        catch ( Throwable e )
+        {
+            if ( defaultValue != null )
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return new StringBuilder().append( KEY_PREFIX ).append( variableName ).append( '}' ).toString();
             }
         }
     }
@@ -91,12 +102,14 @@ final class VariableResolverProvider implements Provider<String> {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder(KEY_PREFIX).append(this.variableName);
-        if (this.defaultValue != null) {
-            builder.append('|').append(this.defaultValue);
+    public String toString()
+    {
+        StringBuilder builder = new StringBuilder( KEY_PREFIX ).append( variableName );
+        if ( defaultValue != null )
+        {
+            builder.append( '|' ).append( defaultValue );
         }
-        builder.append('}');
+        builder.append( '}' );
         return builder.toString();
     }
 

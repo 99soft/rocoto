@@ -51,7 +51,7 @@ final class KeyValue
      */
     public String getKey()
     {
-        return this.key;
+        return key;
     }
 
     /**
@@ -59,7 +59,7 @@ final class KeyValue
      */
     public String getValue()
     {
-        return this.value;
+        return value;
     }
 
     /**

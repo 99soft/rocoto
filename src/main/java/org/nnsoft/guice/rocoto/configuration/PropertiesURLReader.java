@@ -15,6 +15,7 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
+import static com.google.inject.internal.util.$Preconditions.checkNotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -51,10 +52,8 @@ final class PropertiesURLReader
      */
     public PropertiesURLReader( URL url )
     {
-        if ( url == null )
-        {
-            throw new IllegalArgumentException( "'url' argument can't be null" );
-        }
+        checkNotNull( url, "'url' argument can't be null" );
+
         this.url = url;
     }
 
@@ -63,7 +62,7 @@ final class PropertiesURLReader
      */
     public void inXMLFormat()
     {
-        this.isXML = true;
+        isXML = true;
     }
 
     /**
@@ -88,12 +87,12 @@ final class PropertiesURLReader
         InputStream input = null;
         try
         {
-            connection = this.url.openConnection();
+            connection = url.openConnection();
             connection.setUseCaches( false );
             input = connection.getInputStream();
 
             Properties properties = new Properties();
-            if ( this.isXML )
+            if ( isXML )
             {
                 properties.loadFromXML( input );
             }
