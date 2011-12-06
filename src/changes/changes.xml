@@ -1,133 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright 2009-2011 The 99 Software Foundation
+  Copyright 2009-2011 The 99 Software Foundation
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-        http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
 -->
 <document xmlns="http://maven.apache.org/changes/1.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
-    <properties>
-        <author email="simone dot tripodi at gmail dot com">Simone Tripodi</author>
-        <title>Changes</title>
-    </properties>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/changes/1.0.0 http://maven.apache.org/plugins/maven-changes-plugin/xsd/changes-1.0.0.xsd">
+  <properties>
+    <author email="simone dot tripodi at gmail dot com">Simone Tripodi</author>
+    <title>Changes</title>
+  </properties>
 
-    <body>
-        <release version="5.0" date="2011-03-20" description="5.0 release">
-            <action dev="simonetripodi" type="remove">
-                Code moved to GitHub.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Almost complete redesign.
-            </action>
-        </release>
+  <body>
+    <release version="5.0" date="2011-03-20" description="5.0 release">
+      <action dev="simonetripodi" type="remove">
+        Code moved to GitHub.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Almost complete redesign.
+      </action>
+    </release>
 
-        <release version="4.0" date="2010-11-02" description="4.0 release">
-            <action dev="simonetripodi" type="remove">
-                Removed the 3rd party logging dependency.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Configuration has been completely rewritten, not compatible with previous versions
-                of Rocoto.
-            </action>
-        </release>
+    <release version="4.0" date="2010-11-02" description="4.0 release">
+      <action dev="simonetripodi" type="remove">
+        Removed the 3rd party logging dependency.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Configuration has been completely rewritten, not compatible with previous versions
+        of Rocoto.
+      </action>
+    </release>
 
-        <release version="3.3" date="2010-10-01" description="Update release">
-             <action dev="simonetripodi" type="update">
-                Added default property value support, if key is not found the optional default value will be used
-                to replace the key.
-            </action>
-             <action dev="simonetripodi" type="update">
-                No more sys. prefix for Java System Properties.
-            </action>
-             <action dev="simonetripodi" type="update">
-                Added ClobConverter
-            </action>
-             <action dev="simonetripodi" type="update">
-                Added DecimalFormatConverter
-            </action>
-             <action dev="simonetripodi" type="update">
-                Added InetAddressConverter
-            </action>
-        </release>
+    <release version="3.3" date="2010-10-01" description="Update release">
+       <action dev="simonetripodi" type="update">
+        Added default property value support, if key is not found the optional default value will be used
+        to replace the key.
+      </action>
+       <action dev="simonetripodi" type="update">
+        No more sys. prefix for Java System Properties.
+      </action>
+       <action dev="simonetripodi" type="update">
+        Added ClobConverter
+      </action>
+       <action dev="simonetripodi" type="update">
+        Added DecimalFormatConverter
+      </action>
+       <action dev="simonetripodi" type="update">
+        Added InetAddressConverter
+      </action>
+    </release>
 
-        <release version="3.2" date="2010-09-24" description="Update release">
-            <action dev="simonetripodi" type="update">
-                No more submodules, Rocoto is distribuited as unique module.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Improved the com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule APIs to allow 3RD part
-                applications loading properties.
-            </action>
-            <action dev="simonetripodi" type="remove">
-                Removed the rocoto-system support.
-            </action>
-        </release>
+    <release version="3.2" date="2010-09-24" description="Update release">
+      <action dev="simonetripodi" type="update">
+        No more submodules, Rocoto is distribuited as unique module.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Improved the com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule APIs to allow 3RD part
+        applications loading properties.
+      </action>
+      <action dev="simonetripodi" type="remove">
+        Removed the rocoto-system support.
+      </action>
+    </release>
 
-        <release version="3.1" date="2010-08-20" description="Update release">
-            <action dev="simonetripodi" type="update">
-                Added com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule builder API.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Added com.googlecode.rocoto.configuration.ConfigurationModule builder API.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Modularized converter package, each converter can be used as independant module.
-            </action>
-            <action dev="simonetripodi" type="remove">
-                Removed the Apache Commons Configuration support.
-            </action>
-            <action dev="simonetripodi" type="remove">
-                Removed the useless rocoto-core module.
-            </action>
-        </release>
+    <release version="3.1" date="2010-08-20" description="Update release">
+      <action dev="simonetripodi" type="update">
+        Added com.googlecode.rocoto.simpleconfig.SimpleConfigurationModule builder API.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Added com.googlecode.rocoto.configuration.ConfigurationModule builder API.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Modularized converter package, each converter can be used as independant module.
+      </action>
+      <action dev="simonetripodi" type="remove">
+        Removed the Apache Commons Configuration support.
+      </action>
+      <action dev="simonetripodi" type="remove">
+        Removed the useless rocoto-core module.
+      </action>
+    </release>
 
-        <release version="3.0" date="2009-06-09" description="Major release">
-            <action dev="simonetripodi" type="update">
-                Moved to Sonatype infrastructure.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Moved to com.googlecode groupId.
-            </action>
-        </release>
+    <release version="3.0" date="2009-06-09" description="Major release">
+      <action dev="simonetripodi" type="update">
+        Moved to Sonatype infrastructure.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Moved to com.googlecode groupId.
+      </action>
+    </release>
 
-        <release version="2.0" date="2010-01-20" description="Update release">
-            <action dev="simonetripodi" type="update">
-                Artifacts signed using GnuPG.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Added the converter module.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Directory scan on simple-configuration module uses Ant-style
-                patterns.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Common components moved to core module.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Moved to com.google.code groupId.
-            </action>
-            <action dev="simonetripodi" type="update">
-                Added PDF manual.
-            </action>
-        </release>
+    <release version="2.0" date="2010-01-20" description="Update release">
+      <action dev="simonetripodi" type="update">
+        Artifacts signed using GnuPG.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Added the converter module.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Directory scan on simple-configuration module uses Ant-style
+        patterns.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Common components moved to core module.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Moved to com.google.code groupId.
+      </action>
+      <action dev="simonetripodi" type="update">
+        Added PDF manual.
+      </action>
+    </release>
 
-        <release version="1.0" date="2010-01-03" description="First release">
-            <action dev="simonetripodi" type="update">
-                First release.
-            </action>
-        </release>
-    </body>
+    <release version="1.0" date="2010-01-03" description="First release">
+      <action dev="simonetripodi" type="update">
+        First release.
+      </action>
+    </release>
+  </body>
 
 </document>
