@@ -15,9 +15,11 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
+import static com.google.inject.Key.get;
 import static com.google.inject.internal.util.$Preconditions.checkNotNull;
 import static com.google.inject.internal.util.$Preconditions.checkState;
 import static com.google.inject.name.Names.named;
+import static com.google.inject.util.Providers.guicify;
 import static java.lang.String.format;
 import static org.nnsoft.guice.rocoto.configuration.PropertiesIterator.newPropertiesIterator;
 
@@ -38,7 +40,7 @@ import org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider
 
 import com.google.inject.AbstractModule;
 import com.google.inject.ProvisionException;
-import com.google.inject.binder.ConstantBindingBuilder;
+import com.google.inject.binder.LinkedBindingBuilder;
 
 /**
  * The ConfigurationModule simplifies the task of loading configurations in Google Guice.
@@ -111,17 +113,17 @@ public abstract class ConfigurationModule
             {
                 checkNotNull( value, "Null value not admitted for property '%s's", name );
 
-                ConstantBindingBuilder builder = bindConstant().annotatedWith( named( name ) );
+                LinkedBindingBuilder<String> builder = binder().skipSources( getClass() ).bind( get( String.class,
+                                                                                                     named( name ) ) );
 
                 PropertiesResolverProvider formatter = new PropertiesResolverProvider( value );
                 if ( formatter.containsKeys() )
                 {
-                    requestInjection( formatter );
-                    builder.to( formatter.get() );
+                    builder.toProvider( guicify( formatter ) );
                 }
                 else
                 {
-                    builder.to( value );
+                    builder.toInstance( value );
                 }
             }
 
