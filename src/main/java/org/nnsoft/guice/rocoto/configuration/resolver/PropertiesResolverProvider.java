@@ -15,6 +15,8 @@
  */
 package org.nnsoft.guice.rocoto.configuration.resolver;
 
+import static com.google.inject.util.Providers.of;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -24,7 +26,6 @@ import javax.inject.Provider;
 
 import com.google.inject.Injector;
 import com.google.inject.ProvisionException;
-import com.google.inject.util.Providers;
 
 /**
  *
@@ -68,23 +69,23 @@ public final class PropertiesResolverProvider
         {
             if ( pos > 0 )
             {
-                fragments.add( Providers.of( pattern.substring( prev, pos ) ) );
+                fragments.add( of( pattern.substring( prev, pos ) ) );
             }
             if ( pos == pattern.length() - 1 )
             {
-                fragments.add( Providers.of( VAR_BEGIN ) );
+                fragments.add( of( VAR_BEGIN ) );
                 prev = pos + 1;
             }
             else if ( pattern.charAt( pos + 1 ) != '{' )
             {
                 if ( pattern.charAt( pos + 1 ) == '$' )
                 {
-                    fragments.add( Providers.of( VAR_BEGIN ) );
+                    fragments.add( of( VAR_BEGIN ) );
                     prev = pos + 2;
                 }
                 else
                 {
-                    fragments.add( Providers.of( pattern.substring( pos, pos + 2 ) ) );
+                    fragments.add( of( pattern.substring( pos, pos + 2 ) ) );
                     prev = pos + 2;
                 }
             }
@@ -111,7 +112,7 @@ public final class PropertiesResolverProvider
         }
         if ( prev < pattern.length() )
         {
-            fragments.add( Providers.of( pattern.substring( prev ) ) );
+            fragments.add( of( pattern.substring( prev ) ) );
         }
     }
 

@@ -15,10 +15,11 @@
  */
 package org.nnsoft.guice.rocoto.converters;
 
+import static com.google.inject.matcher.Matchers.only;
+
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.google.inject.TypeLiteral;
-import com.google.inject.matcher.Matchers;
 import com.google.inject.spi.TypeConverter;
 
 /**
@@ -36,7 +37,7 @@ public abstract class AbstractConverter<T>
      */
     public final void configure( Binder binder )
     {
-        binder.convertToTypes( Matchers.only( TypeLiteral.get( this.getRawType() ) ), this );
+        binder.convertToTypes( only( get( getRawType() ) ), this );
     }
 
 }
