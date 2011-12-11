@@ -91,10 +91,7 @@ final class VariableResolverProvider
             {
                 return defaultValue;
             }
-            else
-            {
-                return new StringBuilder().append( KEY_PREFIX ).append( variableName ).append( '}' ).toString();
-            }
+            return new StringBuilder().append( KEY_PREFIX ).append( variableName ).append( '}' ).toString();
         }
     }
 
