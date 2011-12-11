@@ -83,7 +83,7 @@ final class VariableResolverProvider
     {
         try
         {
-            return this.injector.getInstance( Key.get( String.class, named( variableName ) ) );
+            return injector.getInstance( Key.get( String.class, named( variableName ) ) );
         }
         catch ( Throwable e )
         {
