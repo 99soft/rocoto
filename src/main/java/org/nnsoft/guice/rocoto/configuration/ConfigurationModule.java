@@ -113,7 +113,7 @@ public abstract class ConfigurationModule
             {
                 checkNotNull( value, "Null value not admitted for property '%s's", name );
 
-                LinkedBindingBuilder<String> builder = binder().bind( get( String.class, named( name ) ) );
+                LinkedBindingBuilder<String> builder = bind( get( String.class, named( name ) ) );
 
                 PropertiesResolverProvider formatter = new PropertiesResolverProvider( value );
                 if ( formatter.containsKeys() )
