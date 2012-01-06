@@ -98,7 +98,7 @@ public final class PropertiesResolverProvider
                 String key = pattern.substring( pos + 2, endName ).trim();
                 String defaultValue = null;
                 int pipeIndex = key.indexOf( PIPE_SEPARATOR );
-                if (pipeIndex >= 0)
+                if ( pipeIndex >= 0 )
                 {
                     defaultValue = key.substring( pipeIndex + 1 ).trim();
                     key = key.substring( 0, pipeIndex ).trim();
