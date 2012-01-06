@@ -117,6 +117,7 @@ public final class ConfigurationModuleTestCase
         assert "ldap.${not.found}".equals( this.ldapConfiguration.getHost() );
         assert 389 == this.ldapConfiguration.getPort();
         assert this.ldapConfiguration.getBaseDN().indexOf( '$' ) < 0;
+        assert "".equals( this.ldapConfiguration.getUser() );
     }
 
     @Test( dependsOnMethods = "doInject" )

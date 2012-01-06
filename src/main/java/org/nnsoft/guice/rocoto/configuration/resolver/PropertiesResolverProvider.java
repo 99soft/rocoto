@@ -19,7 +19,6 @@ import static com.google.inject.util.Providers.of;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -96,13 +95,13 @@ public final class PropertiesResolverProvider
                 {
                     throw new ProvisionException( "Syntax error in property: " + pattern );
                 }
-                StringTokenizer keyTokenizer =
-                    new StringTokenizer( pattern.substring( pos + 2, endName ), PIPE_SEPARATOR );
-                String key = keyTokenizer.nextToken().trim();
+                String key = pattern.substring( pos + 2, endName ).trim();
                 String defaultValue = null;
-                if ( keyTokenizer.hasMoreTokens() )
+                int pipeAt = key.indexOf( PIPE_SEPARATOR );
+                if (pipeAt >= 0)
                 {
-                    defaultValue = keyTokenizer.nextToken().trim();
+                    key = key.substring( 0, pipeAt ).trim();
+                    defaultValue = key.substring( pipeAt, key.length() ).trim();
                 }
                 VariableResolverProvider variableResolver = new VariableResolverProvider( key, defaultValue );
                 fragments.add( variableResolver );
