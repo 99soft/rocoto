@@ -16,13 +16,16 @@
 package org.nnsoft.guice.rocoto.configuration;
 
 import static com.google.inject.Guice.createInjector;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.net.URI;
 
 import javax.inject.Inject;
 
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -70,7 +73,7 @@ public final class ConfigurationModuleTestCase
         this.proxyConfiguration = proxyConfiguration;
     }
 
-    @Test
+    @Before
     public void doInject()
     {
         createInjector( new ConfigurationModule()
@@ -94,44 +97,44 @@ public final class ConfigurationModuleTestCase
         } ).injectMembers( this );
     }
 
-    @Test( dependsOnMethods = "doInject" )
+    @Test
     public void verifyIBatisConfiguration()
     {
-        assert "test".equals( this.iBatisConfiguration.getEnvironmentId() );
-        assert this.iBatisConfiguration.isLazyLoadingEnabled();
+        assertEquals( "test", iBatisConfiguration.getEnvironmentId() );
+        assertTrue( iBatisConfiguration.isLazyLoadingEnabled() );
     }
 
-    @Test( dependsOnMethods = "doInject" )
+    @Test
     public void verifyJDBCConfiguration()
     {
-        assert "com.mysql.jdbc.Driver".equals( this.jdbcConfiguration.getDriver() );
-        assert "jdbc:mysql://localhost:3306/rocoto".equals( this.jdbcConfiguration.getUrl() );
-        assert "simone".equals( this.jdbcConfiguration.getUsername() );
-        assert "rocoto2010".equals( this.jdbcConfiguration.getPassword() );
-        assert this.jdbcConfiguration.isAutoCommit();
+        assertEquals( "com.mysql.jdbc.Driver", jdbcConfiguration.getDriver() );
+        assertEquals( "jdbc:mysql://localhost:3306/rocoto", jdbcConfiguration.getUrl() );
+        assertEquals( "simone", jdbcConfiguration.getUsername() );
+        assertEquals( "rocoto2010", jdbcConfiguration.getPassword() );
+        assertTrue( jdbcConfiguration.isAutoCommit() );
     }
 
-    @Test( dependsOnMethods = "doInject" )
+    @Test
     public void verifyLdapConfiguration()
     {
-        assert "ldap.${not.found}".equals( this.ldapConfiguration.getHost() );
-        assert 389 == this.ldapConfiguration.getPort();
-        assert this.ldapConfiguration.getBaseDN().indexOf( '$' ) < 0;
-        assert "".equals( this.ldapConfiguration.getUser() );
+        assertEquals( "ldap.${not.found}", ldapConfiguration.getHost() );
+        assertEquals( 389, ldapConfiguration.getPort() );
+        assertTrue( ldapConfiguration.getBaseDN().indexOf( '$' ) < 0 );
+        assertEquals( "", ldapConfiguration.getUser() );
     }
 
-    @Test( dependsOnMethods = "doInject" )
+    @Test
     public void verifyMemcachedConfiguration()
     {
-        assert "test_".equals( this.memcachedConfiguration.getKeyPrefix() );
-        assert this.memcachedConfiguration.isCompressionEnabled();
+        assertEquals( "test_", memcachedConfiguration.getKeyPrefix() );
+        assertTrue( memcachedConfiguration.isCompressionEnabled() );
     }
 
-    @Test( dependsOnMethods = "doInject" )
+    @Test
     public void verifyProxyConfiguration()
     {
-        assert "localhost".equals( this.proxyConfiguration.getHost() );
-        assert 8180 == this.proxyConfiguration.getPort();
+        assertEquals( "localhost", proxyConfiguration.getHost() );
+        assertEquals( 8180, proxyConfiguration.getPort() );
     }
 
 }

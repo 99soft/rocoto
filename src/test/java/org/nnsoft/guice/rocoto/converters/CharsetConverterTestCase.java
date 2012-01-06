@@ -19,7 +19,7 @@ import static com.google.inject.name.Names.named;
 
 import java.nio.charset.Charset;
 
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;

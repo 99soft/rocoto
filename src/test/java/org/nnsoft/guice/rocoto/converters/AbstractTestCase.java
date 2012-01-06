@@ -16,9 +16,9 @@
 package org.nnsoft.guice.rocoto.converters;
 
 import static com.google.inject.Guice.createInjector;
-import static org.testng.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-import org.testng.annotations.BeforeClass;
+import org.junit.Before;
 
 import com.google.inject.Module;
 
@@ -35,7 +35,7 @@ abstract class AbstractTestCase<T>
         this.convertedField = convertedField;
     }
 
-    @BeforeClass
+    @Before
     protected final void init()
     {
         createInjector( this.getModules() ).injectMembers( this );
