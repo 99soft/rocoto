@@ -97,11 +97,11 @@ public final class PropertiesResolverProvider
                 }
                 String key = pattern.substring( pos + 2, endName ).trim();
                 String defaultValue = null;
-                int pipeAt = key.indexOf( PIPE_SEPARATOR );
-                if (pipeAt >= 0)
+                int pipeIndex = key.indexOf( PIPE_SEPARATOR );
+                if (pipeIndex >= 0)
                 {
-                    key = key.substring( 0, pipeAt ).trim();
-                    defaultValue = key.substring( pipeAt, key.length() ).trim();
+                    defaultValue = key.substring( pipeIndex + 1 ).trim();
+                    key = key.substring( 0, pipeIndex ).trim();
                 }
                 VariableResolverProvider variableResolver = new VariableResolverProvider( key, defaultValue );
                 fragments.add( variableResolver );
