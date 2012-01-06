@@ -25,7 +25,7 @@ import com.google.inject.Module;
 /**
  *
  */
-abstract class AbstractTestCase<T>
+public abstract class AbstractTestCase<T>
 {
 
     private T convertedField;
@@ -36,7 +36,7 @@ abstract class AbstractTestCase<T>
     }
 
     @Before
-    protected final void init()
+    public final void init()
     {
         createInjector( this.getModules() ).injectMembers( this );
     }
