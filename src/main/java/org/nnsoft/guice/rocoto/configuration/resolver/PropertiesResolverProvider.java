@@ -17,7 +17,7 @@ package org.nnsoft.guice.rocoto.configuration.resolver;
 
 import static com.google.inject.util.Providers.of;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -48,12 +48,12 @@ public final class PropertiesResolverProvider
     /**
      * The appenders list have to be invoked when resolving variables, in the given order.
      */
-    private final List<Provider<String>> fragments = new ArrayList<Provider<String>>();
+    private final List<Provider<String>> fragments = new LinkedList<Provider<String>>();
 
     /**
      * The list of resolvers that require the Injector reference.
      */
-    private final List<VariableResolverProvider> resolvers = new ArrayList<VariableResolverProvider>();
+    private final List<VariableResolverProvider> resolvers = new LinkedList<VariableResolverProvider>();
 
     /**
      * Creates a new properties resolver instance.
