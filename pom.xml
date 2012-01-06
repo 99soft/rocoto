@@ -29,7 +29,7 @@
   <version>5.0.2-SNAPSHOT</version>
   <name>99soft :: Rocoto</name>
   <description>Add some spice to Google Guice through configuration files!</description>
-  <url>http://www.99soft.org/projects/rocoto/${project.version}</url>
+  <url>http://99soft.github.com/rocoto/</url>
 
   <scm>
     <url>http://github.com/99soft/rocoto</url>
