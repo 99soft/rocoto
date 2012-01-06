@@ -36,6 +36,10 @@ public final class LdapConfiguration
     @Named( "ldap.baseDN" )
     private String baseDN;
 
+    @Inject
+    @Named( "ldap.user" )
+    private String user;
+
     public String getHost()
     {
         return host;
@@ -64,6 +68,16 @@ public final class LdapConfiguration
     public void setBaseDN( String baseDN )
     {
         this.baseDN = baseDN;
+    }
+
+    public String getUser()
+    {
+        return user;
+    }
+
+    public void setUser( String user )
+    {
+        this.user = user;
     }
 
 }
