@@ -34,7 +34,7 @@ public final class ConfigurationModuleTestCase
 {
 
     @Inject
-    private IBatisConfiguration iBatisConfiguration;
+    private MyBatisConfiguration myBatisConfiguration;
 
     @Inject
     private JDBCConfiguration jdbcConfiguration;
@@ -48,9 +48,9 @@ public final class ConfigurationModuleTestCase
     @Inject
     private ProxyConfiguration proxyConfiguration;
 
-    public void setiBatisConfiguration( IBatisConfiguration iBatisConfiguration )
+    public void setMyBatisConfiguration( MyBatisConfiguration myBatisConfiguration )
     {
-        this.iBatisConfiguration = iBatisConfiguration;
+        this.myBatisConfiguration = myBatisConfiguration;
     }
 
     public void setJdbcConfiguration( JDBCConfiguration jdbcConfiguration )
@@ -100,8 +100,8 @@ public final class ConfigurationModuleTestCase
     @Test
     public void verifyIBatisConfiguration()
     {
-        assertEquals( "test", iBatisConfiguration.getEnvironmentId() );
-        assertTrue( iBatisConfiguration.isLazyLoadingEnabled() );
+        assertEquals( "test", myBatisConfiguration.getEnvironmentId() );
+        assertTrue( myBatisConfiguration.isLazyLoadingEnabled() );
     }
 
     @Test

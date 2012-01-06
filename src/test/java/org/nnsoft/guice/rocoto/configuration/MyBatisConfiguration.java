@@ -21,7 +21,7 @@ import javax.inject.Named;
 /**
  *
  */
-public final class IBatisConfiguration
+public final class MyBatisConfiguration
 {
 
     @Inject
