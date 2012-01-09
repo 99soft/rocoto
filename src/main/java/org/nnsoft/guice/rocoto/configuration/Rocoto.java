@@ -33,7 +33,6 @@ import com.google.inject.TypeLiteral;
 import com.google.inject.name.Named;
 import com.google.inject.spi.DefaultElementVisitor;
 import com.google.inject.spi.Element;
-import com.google.inject.spi.InjectionRequest;
 
 /**
  * @since 6.0
@@ -73,23 +72,6 @@ public final class Rocoto
         {
             element.acceptVisitor( new DefaultElementVisitor<Void>()
             {
-
-                @Override
-                public Void visit( InjectionRequest<?> injectionRequest )
-                {
-                    /* TODO check propertyKey
-                    String propertyKey;
-
-                    if ( Named.class.isAssignableFrom( bindingKey.getAnnotationType() ) )
-                    {
-                        propertyKey = ( (Named) bindingKey.getAnnotation() ).value();
-                    }
-                    else
-                    {
-                        propertyKey = ( (javax.inject.Named) bindingKey.getAnnotation() ).value();
-                    } */
-                    return super.visit( injectionRequest );
-                }
 
                 @Override
                 public <T> Void visit( Binding<T> binding )
