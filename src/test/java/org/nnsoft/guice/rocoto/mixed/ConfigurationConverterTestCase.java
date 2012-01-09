@@ -24,6 +24,7 @@ import java.io.File;
 import java.util.Properties;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +32,6 @@ import org.nnsoft.guice.rocoto.configuration.ConfigurationModule;
 import org.nnsoft.guice.rocoto.converters.FileConverter;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.name.Named;
 
 public final class ConfigurationConverterTestCase
 {
