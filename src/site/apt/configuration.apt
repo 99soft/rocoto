@@ -21,10 +21,74 @@
 ~~   limitations under the License.
 ~~
 
+Variable expansion
+
+  The <Rocoto> library is a small <Google Guice> extension that allows expanding <<<com.google.inject.name.Names>>>
+  variables. That means that users can define properties with placeholders and let <Guice> resolve them to be injected
+  with replaced values.
+
+  Users have just to invoke the <<<org.nnsoft.guice.rocoto.configuration.Rocoto.Rocoto.expandVariables>>> methods
+  grouping the <<<Module>>>s where properties have been bound, like in the sample below:
+
++--------------------------------------+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.name.Names;
+
+import org.nnsoft.guice.rocoto.configuration.Rocoto;
+
+...
+
+Injector injector = Guice.createInjector( Rocoto.expandVariables( new AbstractModule()
+        {
+
+            @Override
+            protected void configure()
+            {
+                Properties properties = new Properties();
+                properties.put( "JDBC.host", "localhost" );
+                properties.put( "JDBC.port", "3306" );
+                properties.put( "JDBC.schema", "test" );
+                ...
+
+                Names.bindProperties( binder(), properties );
+            }
+
+        }, new AbstractModule()
+        {
+
+            @Override
+            protected void configure()
+            {
+                bindConstant()
+                    .annotatedWith( Names.named( "JDBC.url" ) )
+                    .to( "jdbc:derby://${JDBC.host}:${JDBC.port}/${JDBC.schema}" );
+            }
+
+        }
+        ...
+        ) );
++--------------------------------------+
+
+  That's all! When requesting the injection of <<<JDBC.url>>>, properties will be correctly expanded:
+
++--------------------------------------+
+public final class JdbcConfiguration
+{
+
+    @Inject
+    @Named( "JDBC.url" )
+    private String jdbcUrl; // jdbc:derby://localhost:3306/test
+
+    ...
+
+}
++--------------------------------------+
+
 The Configuration module
 
-  The <ConfigurationModule> is a dependencies-less but open to support 3rd party libraries,
-  lightweight yet powerful <Guice> module to easy load configurations and bind them to the <Guice Binder>.
+  The <<<com.googlecode.rocoto.configuration.ConfigurationModule>>> is a dependencies-less, lightweight yet powerful
+  <Guice> module to simplify the task of loading configurations and bind them to the <Guice Binder>.
 
   With this tool users are now ready to load properties files, creating and configuring the module:
 
@@ -36,22 +100,24 @@ import com.googlecode.rocoto.configuration.ConfigurationModule;
 
 ...
 
-Injector injector = Guice.createInjector(new ConfigurationModule() {
+Injector injector = Guice.createInjector( new ConfigurationModule()
+{
 
         @Override
-        protected void bindConfigurations() {
+        protected void bindConfigurations()
+        {
             bindEnvironmentVariables();
             bindSystemProperties();
 
-            bindProperties(URI.create("classpath:/org/nnsoft/guice/rocoto/configuration/ldap.properties"));
-            bindProperties("proxy.xml").inXMLFormat();
+            bindProperties( URI.create( "classpath:/org/nnsoft/guice/rocoto/configuration/ldap.properties" ) );
+            bindProperties( "proxy.xml" ).inXMLFormat();
 
-            File parentConf = new File("src/test/data/org/nnsoft");
-            bindProperties(new File(parentConf, "ibatis.properties"));
-            bindProperties(new File(parentConf, "guice/jdbc.properties"));
-            bindProperties(new File(parentConf, "guice/rocoto/configuration/memcached.xml")).inXMLFormat();
+            File parentConf = new File( "src/test/data/org/nnsoft" );
+            bindProperties( new File( parentConf, "ibatis.properties" ) );
+            bindProperties( new File( parentConf, "guice/jdbc.properties" ) );
+            bindProperties( new File( parentConf, "guice/rocoto/configuration/memcached.xml" ) ).inXMLFormat();
 
-            bindProperty("JDBC.url").toValue("jdbc:mysql://${JDBC.host|localhost}:${JDBC.port}/${JDBC.schema}");
+            bindProperty( "JDBC.url").toValue( "jdbc:mysql://${JDBC.host|localhost}:${JDBC.port}/${JDBC.schema}" );
         }
 
     },
@@ -63,38 +129,7 @@ Injector injector = Guice.createInjector(new ConfigurationModule() {
 
   <<NOTE>> Environment Variables will be referred with the <<<env.>>> prefix.
 
-* Implementing your own configuration loader
-
-  If users want to load configuration files in different format, all they have to do is implementing
-  the Iterable\<Entry\<String, String\>\> or Iterator\<Entry\<String, String\>\> interfaces:
-
-+--------------------------------------+
-class INIReader implements Iterable<Entry<String, String>> {
-
-    /**
-     * {@inheritDoc}
-     */
-    public Iterator<Entry<String, String>> iterator() throws Exception {
-        return // next INI configuration entry
-    }
-
-}
-+--------------------------------------+
-
-  then bind it:
-
-+--------------------------------------+
-new ConfigurationModule() {
-
-    @Override
-    protected void bindConfigurations() {
-        bindProperties(new INIReader("whenever/jdbc.ini"));
-    }
-
-}
-+--------------------------------------+
-
-* $\{\}, the <Apache Ant> variables style
+$\{\}, the <Apache Ant> variables style
 
   The <<<com.googlecode.rocoto.configuration.ConfigurationModule>>> supports the well
   known <$\{\}> expression to define placeholders, which scope is the whole
@@ -153,14 +188,11 @@ JDBC.schema=rocoto
 
 ** com.google.inject.name.Names compatibility
 
-  Users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}
-  but take care that loading properties using this method <$\{\}> expressions won't be resolved at all.
-  On the other side, specified properties in that way will be used to resolve
-  <$\{\}> expressions in properties using the <<<ConfigurationModule>>>.
+  Users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}.
 
 * More flexible than the Spring Framework!
 
-  I had a not so good experience with the Spring's {{{http://static.springsource.org/spring/docs/2.0.2/api/org/springframework/beans/factory/config/PropertyPlaceholderConfigurer.html}PropertyPlaceholderConfigurer}}
+  I had a not so good experience with the Spring 2 {{{http://static.springsource.org/spring/docs/2.0.2/api/org/springframework/beans/factory/config/PropertyPlaceholderConfigurer.html}PropertyPlaceholderConfigurer}}
   because it forces users to centralize the properties files loading; I mean,
   to make things working, in the way that <$\{\}> expressions were correctly
   resolved, I had to declare just one <<<PropertyPlaceholderConfigurer>>> for the whole
