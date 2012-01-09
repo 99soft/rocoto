@@ -15,21 +15,18 @@
  */
 package org.nnsoft.guice.rocoto.configuration;
 
-import static com.google.inject.Guice.createInjector;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.net.URI;
-
 import javax.inject.Inject;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
- *
+ * @since 6.0
  */
+@RunWith( ConfigurationRunner.class )
 public final class ConfigurationModuleTestCase
 {
 
@@ -71,30 +68,6 @@ public final class ConfigurationModuleTestCase
     public void setProxyConfiguration( ProxyConfiguration proxyConfiguration )
     {
         this.proxyConfiguration = proxyConfiguration;
-    }
-
-    @Before
-    public void doInject()
-    {
-        createInjector( new ConfigurationModule()
-        {
-
-            @Override
-            protected void bindConfigurations()
-            {
-                bindEnvironmentVariables();
-                bindSystemProperties();
-
-                bindProperties( URI.create( "classpath:/org/nnsoft/guice/rocoto/configuration/ldap.properties" ) );
-                bindProperties( "proxy.xml" ).inXMLFormat();
-
-                File parentConf = new File( "src/test/data/org/nnsoft" );
-                bindProperties( new File( parentConf, "ibatis.properties" ) );
-                bindProperties( new File( parentConf, "guice/jdbc.properties" ) );
-                bindProperties( new File( parentConf, "guice/rocoto/configuration/memcached.xml" ) ).inXMLFormat();
-            }
-
-        } ).injectMembers( this );
     }
 
     @Test
