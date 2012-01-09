@@ -23,7 +23,7 @@
   </properties>
 
   <body>
-    <release version="5.0.2" date="2012-??-??" description="maintenance release">
+    <release version="6.0" date="2012-??-??" description="maintenance release">
       <action dev="simonetripodi" due-to="Cody Ray" type="fix">
         Resolve properties such as ${reference|} to an empty string - push request from Cody Ray.
       </action>
