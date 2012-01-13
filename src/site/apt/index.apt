@@ -3,7 +3,7 @@
                                     ------
                                     The 99 Software Foundation
                                     ------
-                                     2010
+                                     2010-2012
 
 ~~
 ~~   Copyright 2009-2012 The 99 Software Foundation
@@ -37,20 +37,21 @@ Before starting
 
 +--------------------------------------+
 <dependencies>
-    ...
-    <dependency>
-        <groupId>org.99soft.guice</groupId>
-        <artifactId>rocoto</artifactId>
-        <version>XX.XX</version>
-    </dependency>
-    ...
+  ...
+  <dependency>
+    <groupId>org.99soft.guice</groupId>
+    <artifactId>rocoto</artifactId>
+    <version>XX.XX</version>
+  </dependency>
+  ...
 </dependencies>
 +--------------------------------------+
 
 Acknowledgements
 
-  A big <Thank You> goes to {{{http://devsurf.wordpress.com/}Daniel Manzke}}, thanks to his suggestion under the user
-  point of view, helped me making the new Rocoto design much more flexible.
+  A big <Thank You> goes to: {{{http://devsurf.wordpress.com/}Daniel Manzke}}, thanks to his suggestion under the user
+  point of view, helped me making the new Rocoto design much more flexible; Marzia Forli, for testing and bug reporting;
+  {{{http://mcculls.blogspot.com/}Stuart McCulloch}} for priceless suggestions for the design.
 
   This work is dedicated to our city, L'Aquila, destroyed by a terrible
   earthquake the 6th April, 2009... That day more than 300 people were killed
