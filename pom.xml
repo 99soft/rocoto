@@ -14,7 +14,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.99soft</groupId>
@@ -22,32 +24,14 @@
     <version>5</version>
   </parent>
 
-  <modelVersion>4.0.0</modelVersion>
   <groupId>org.99soft.guice</groupId>
   <artifactId>rocoto</artifactId>
-  <packaging>jar</packaging>
   <version>6.0-SNAPSHOT</version>
+
   <name>99soft :: Rocoto</name>
   <description>Add some spice to Google Guice through configuration files!</description>
   <url>http://99soft.github.com/rocoto/</url>
-
-  <scm>
-    <url>http://github.com/99soft/rocoto</url>
-    <connection>scm:git:ssh://github.com/99soft/rocoto.git</connection>
-    <developerConnection>scm:git:git+ssh://git@github.com/99soft/rocoto.git</developerConnection>
-  </scm>
-
-  <distributionManagement>
-    <site>
-      <id>github</id>
-      <url>gitsite:git@github.com/99soft/rocoto.git</url>
-    </site>
-  </distributionManagement>
-
-  <issueManagement>
-    <system>GitHub Issue Management</system>
-    <url>https://github.com/99soft/Rocoto/issues</url>
-  </issueManagement>
+  <inceptionYear>2010</inceptionYear>
 
   <contributors>
     <contributor>
@@ -66,6 +50,22 @@
       <email>marzia dot forli at yahoo dot com</email>
     </contributor>
   </contributors>
+
+  <scm>
+    <url>http://github.com/99soft/rocoto</url>
+    <connection>scm:git:ssh://github.com/99soft/rocoto.git</connection>
+    <developerConnection>scm:git:git+ssh://git@github.com/99soft/rocoto.git</developerConnection>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issue Management</system>
+    <url>https://github.com/99soft/Rocoto/issues</url>
+  </issueManagement>
+  <distributionManagement>
+    <site>
+      <id>github</id>
+      <url>gitsite:git@github.com/99soft/rocoto.git</url>
+    </site>
+  </distributionManagement>
 
   <dependencies>
     <dependency>
