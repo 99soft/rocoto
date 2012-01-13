@@ -18,7 +18,7 @@ package org.nnsoft.guice.rocoto.mixed;
 import static com.google.inject.Guice.createInjector;
 import static com.google.inject.name.Names.bindProperties;
 import static org.junit.Assert.assertTrue;
-import static org.nnsoft.guice.rocoto.configuration.Rocoto.expandVariables;
+import static org.nnsoft.guice.rocoto.Rocoto.expandVariables;
 
 import java.io.File;
 import java.util.Properties;

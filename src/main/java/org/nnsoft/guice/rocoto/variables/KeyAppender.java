@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.variables;
+package org.nnsoft.guice.rocoto.variables;
 
 import java.util.Map;
 

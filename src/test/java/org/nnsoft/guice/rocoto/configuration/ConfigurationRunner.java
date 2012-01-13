@@ -16,7 +16,7 @@
 package org.nnsoft.guice.rocoto.configuration;
 
 import static com.google.inject.Guice.createInjector;
-import static org.nnsoft.guice.rocoto.configuration.Rocoto.expandVariables;
+import static org.nnsoft.guice.rocoto.Rocoto.expandVariables;
 
 import java.io.File;
 import java.net.URI;

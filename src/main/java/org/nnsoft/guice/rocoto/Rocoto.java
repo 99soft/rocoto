@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration;
+package org.nnsoft.guice.rocoto;
 
 import static com.google.inject.name.Names.named;
 import static com.google.inject.spi.Elements.getElements;
@@ -23,7 +23,7 @@ import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.nnsoft.guice.rocoto.configuration.variables.VariablesMap;
+import org.nnsoft.guice.rocoto.variables.VariablesMap;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Binding;

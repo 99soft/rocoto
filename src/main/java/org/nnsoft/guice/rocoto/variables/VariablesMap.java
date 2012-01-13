@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.variables;
+package org.nnsoft.guice.rocoto.variables;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,15 +21,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-
 /**
  * @since 6.0
  */
 public final class VariablesMap
     implements Map<String, String>
 {
-
-    private static final long serialVersionUID = 1L;
 
     private final Map<String, Resolver> resolvers = new HashMap<String, Resolver>();
 

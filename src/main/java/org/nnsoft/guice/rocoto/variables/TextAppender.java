@@ -13,16 +13,33 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.configuration.variables;
+package org.nnsoft.guice.rocoto.variables;
 
 import java.util.Map;
 
 /**
  * @since 6.0
  */
-interface Appender
+final class TextAppender
+    implements Appender
 {
 
-    void append( StringBuilder buffer, Map<String, String> configuration );
+    private final String textFragment;
+
+    public TextAppender( final String textFragment )
+    {
+        this.textFragment = textFragment;
+    }
+
+    public void append( StringBuilder buffer, Map<String, String> configuration )
+    {
+        buffer.append( textFragment );
+    }
+
+    @Override
+    public String toString()
+    {
+        return textFragment;
+    }
 
 }
