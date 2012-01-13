@@ -67,6 +67,10 @@
     </site>
   </distributionManagement>
 
+  <properties>
+    <project.previousVersion>5.0.1</project.previousVersion>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>javax.inject</groupId>
