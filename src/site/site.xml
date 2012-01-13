@@ -25,6 +25,7 @@
   <body>
     <menu name="${project.name}">
       <item name="Home" href="index.html" />
+      <item name="Getting started" href="getting-started.html" />
       <item name="Configuration" href="configuration.html" />
       <item name="Converters" href="converters.html" />
     </menu>

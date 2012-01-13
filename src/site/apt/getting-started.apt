@@ -1,0 +1,142 @@
+                                    ------
+                                    Home
+                                    ------
+                                    The 99 Software Foundation
+                                    ------
+                                     2010-2012
+
+~~
+~~   Copyright 2009-2012 The 99 Software Foundation
+~~
+~~   Licensed under the Apache License, Version 2.0 (the "License");
+~~   you may not use this file except in compliance with the License.
+~~   You may obtain a copy of the License at
+~~
+~~       http://www.apache.org/licenses/LICENSE-2.0
+~~
+~~   Unless required by applicable law or agreed to in writing, software
+~~   distributed under the License is distributed on an "AS IS" BASIS,
+~~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~~   See the License for the specific language governing permissions and
+~~   limitations under the License.
+~~
+
+Rocoto getting started
+
+  The <Rocoto> library is a small <Google Guice> extension that allows expanding <<<com.google.inject.name.Names>>>
+  variables. That means that users can define properties with placeholders and let <Guice> resolve them to be injected
+  with replaced values.
+
+  Users have just to invoke the <<<org.nnsoft.guice.rocoto.Rocoto.expandVariables>>> method
+  grouping the <<<Module>>>s where properties have been bound, like in the sample below:
+
++--------------------------------------+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.name.Names;
+
+import org.nnsoft.guice.rocoto.Rocoto;
+
+...
+
+Injector injector = Guice.createInjector( Rocoto.expandVariables( new AbstractModule()
+        {
+
+            @Override
+            protected void configure()
+            {
+                Properties properties = new Properties();
+                properties.put( "JDBC.host", "localhost" );
+                properties.put( "JDBC.port", "3306" );
+                properties.put( "JDBC.schema", "test" );
+                ...
+
+                Names.bindProperties( binder(), properties );
+            }
+
+        }, new AbstractModule()
+        {
+
+            @Override
+            protected void configure()
+            {
+                bindConstant()
+                    .annotatedWith( Names.named( "JDBC.url" ) )
+                    .to( "jdbc:derby://${JDBC.host}:${JDBC.port}/${JDBC.schema}" );
+            }
+
+        }
+        ...
+        ) );
++--------------------------------------+
+
+  That's all! When requesting the injection of <<<JDBC.url>>>, properties will be correctly expanded:
+
++--------------------------------------+
+public final class JdbcConfiguration
+{
+
+    @Inject
+    @Named( "JDBC.url" )
+    private String jdbcUrl; // jdbc:derby://localhost:3306/test
+
+    ...
+
+}
++--------------------------------------+
+
+$\{\}, the <Apache Ant> variables style
+
+  Rocoto supports the well known <$\{\}> expression to define placeholders, which scope is the whole
+  configuration, that means that users can define some commons properties in one properties file:
+
++--------------------------------------+
+commons.host=localhost
+commons.port=8080
+...
++--------------------------------------+
+
+  then referencing them in different files:
+
++--------------------------------------+
+ldap.host=${commons.host}
+ldap.port=${commons.port}
+...
++--------------------------------------+
+
+** Default Values
+
+  In Java code users can retrieve a property from <<<java.util.Properties>>> specifying the <<default>> value if the
+  input key is not present, using the
+  {{{http://download.oracle.com/javase/6/docs/api/java/util/Properties.html#getProperty(java.lang.String, java.lang.String)}Properties#getProperty(java.lang.String, java.lang.String)}}
+  method.
+
+  Rocoto allows doing the same, users can specify a key using the pipe character <<<|>>> to separate the key name from
+  the default value:
+
++--------------------------------------+
+JDBC.url=jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}
++--------------------------------------+
+
+  that means if <<<JDBC.host>>> and <<<JDBC.port>>> won't be specified, they will be replaced by the default values;
+  given the following properties:
+
++--------------------------------------+
+JDBC.url=jdbc:derby://${JDBC.host|localhost}:${JDBC.port|1527}/${JDBC.schema}
+JDBC.schema=rocoto
++--------------------------------------+
+
+  the <<<JDBC.url>>> property value will be <<<jdbc:derby://localhost:1527/rocoto>>>.
+
+* More flexible than the Spring Framework v2!
+
+  I had a not so good experience with the Spring 2 {{{http://static.springsource.org/spring/docs/2.0.2/api/org/springframework/beans/factory/config/PropertyPlaceholderConfigurer.html}PropertyPlaceholderConfigurer}}
+  because it forces users to centralize the properties files loading; I mean,
+  to make things working, in the way that <$\{\}> expressions were correctly
+  resolved, I had to declare just one <<<PropertyPlaceholderConfigurer>>> for the whole
+  context, list all the <<<*.properties>>> files for the all modules.
+
+  I didn't like that approach at all, it doesn't allow users to split configurations
+  in different modules even if some keys are shared by two or more modules.
+  Rocoto users won't have these problems at all,
+  they can load <<<*.properties>>> files from different locations and obtain the same result.
