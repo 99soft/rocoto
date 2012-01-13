@@ -65,6 +65,6 @@ Injector injector = Guice.createInjector( new ConfigurationModule()
 
   <<NOTE>> Environment Variables will be referred with the <<<env.>>> prefix.
 
-** com.google.inject.name.Names compatibility
+* com.google.inject.name.Names compatibility
 
   Users can still load properties using the Google Guice {{{http://google-guice.googlecode.com/svn/trunk/javadoc/com/google/inject/name/Names.html}Names}}.

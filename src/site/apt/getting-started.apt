@@ -85,7 +85,7 @@ public final class JdbcConfiguration
 }
 +--------------------------------------+
 
-$\{\}, the <Apache Ant> variables style
+* $\{\}, the <Apache Ant> variables style
 
   Rocoto supports the well known <$\{\}> expression to define placeholders, which scope is the whole
   configuration, that means that users can define some commons properties in one properties file:
@@ -104,7 +104,7 @@ ldap.port=${commons.port}
 ...
 +--------------------------------------+
 
-** Default Values
+* Default Values
 
   In Java code users can retrieve a property from <<<java.util.Properties>>> specifying the <<default>> value if the
   input key is not present, using the
