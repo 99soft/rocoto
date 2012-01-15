@@ -1,11 +1,11 @@
 var DATA = [
-      { id:0, label:"org.nnsoft.guice.rocoto.configuration", link:"org/nnsoft/guice/rocoto/configuration/package-summary.html", type:"package" },
-      { id:1, label:"org.nnsoft.guice.rocoto.configuration.ConfigurationModule", link:"org/nnsoft/guice/rocoto/configuration/ConfigurationModule.html", type:"class" },
-      { id:2, label:"org.nnsoft.guice.rocoto.configuration.binder", link:"org/nnsoft/guice/rocoto/configuration/binder/package-summary.html", type:"package" },
-      { id:3, label:"org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder", link:"org/nnsoft/guice/rocoto/configuration/binder/PropertyValueBindingBuilder.html", type:"class" },
-      { id:4, label:"org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder", link:"org/nnsoft/guice/rocoto/configuration/binder/XMLPropertiesFormatBindingBuilder.html", type:"class" },
-      { id:5, label:"org.nnsoft.guice.rocoto.configuration.resolver", link:"org/nnsoft/guice/rocoto/configuration/resolver/package-summary.html", type:"package" },
-      { id:6, label:"org.nnsoft.guice.rocoto.configuration.resolver.PropertiesResolverProvider", link:"org/nnsoft/guice/rocoto/configuration/resolver/PropertiesResolverProvider.html", type:"class" },
+      { id:0, label:"org.nnsoft.guice.rocoto", link:"org/nnsoft/guice/rocoto/package-summary.html", type:"package" },
+      { id:1, label:"org.nnsoft.guice.rocoto.Rocoto", link:"org/nnsoft/guice/rocoto/Rocoto.html", type:"class" },
+      { id:2, label:"org.nnsoft.guice.rocoto.configuration", link:"org/nnsoft/guice/rocoto/configuration/package-summary.html", type:"package" },
+      { id:3, label:"org.nnsoft.guice.rocoto.configuration.ConfigurationModule", link:"org/nnsoft/guice/rocoto/configuration/ConfigurationModule.html", type:"class" },
+      { id:4, label:"org.nnsoft.guice.rocoto.configuration.binder", link:"org/nnsoft/guice/rocoto/configuration/binder/package-summary.html", type:"package" },
+      { id:5, label:"org.nnsoft.guice.rocoto.configuration.binder.PropertyValueBindingBuilder", link:"org/nnsoft/guice/rocoto/configuration/binder/PropertyValueBindingBuilder.html", type:"class" },
+      { id:6, label:"org.nnsoft.guice.rocoto.configuration.binder.XMLPropertiesFormatBindingBuilder", link:"org/nnsoft/guice/rocoto/configuration/binder/XMLPropertiesFormatBindingBuilder.html", type:"class" },
       { id:7, label:"org.nnsoft.guice.rocoto.converters", link:"org/nnsoft/guice/rocoto/converters/package-summary.html", type:"package" },
       { id:8, label:"org.nnsoft.guice.rocoto.converters.AbstractConverter", link:"org/nnsoft/guice/rocoto/converters/AbstractConverter.html", type:"class" },
       { id:9, label:"org.nnsoft.guice.rocoto.converters.BigDecimalConverter", link:"org/nnsoft/guice/rocoto/converters/BigDecimalConverter.html", type:"class" },
@@ -28,6 +28,8 @@ var DATA = [
       { id:26, label:"org.nnsoft.guice.rocoto.converters.TimeZoneConverter", link:"org/nnsoft/guice/rocoto/converters/TimeZoneConverter.html", type:"class" },
       { id:27, label:"org.nnsoft.guice.rocoto.converters.URIConverter", link:"org/nnsoft/guice/rocoto/converters/URIConverter.html", type:"class" },
       { id:28, label:"org.nnsoft.guice.rocoto.converters.URLConverter", link:"org/nnsoft/guice/rocoto/converters/URLConverter.html", type:"class" },
-      { id:29, label:"org.nnsoft.guice.rocoto.converters.UUIDConverter", link:"org/nnsoft/guice/rocoto/converters/UUIDConverter.html", type:"class" }
+      { id:29, label:"org.nnsoft.guice.rocoto.converters.UUIDConverter", link:"org/nnsoft/guice/rocoto/converters/UUIDConverter.html", type:"class" },
+      { id:30, label:"org.nnsoft.guice.rocoto.variables", link:"org/nnsoft/guice/rocoto/variables/package-summary.html", type:"package" },
+      { id:31, label:"org.nnsoft.guice.rocoto.variables.VariablesMap", link:"org/nnsoft/guice/rocoto/variables/VariablesMap.html", type:"class" }
 
     ];

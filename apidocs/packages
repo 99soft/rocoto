@@ -1,4 +1,5 @@
-org.nnsoft.guice.rocoto.configuration.binder
+org.nnsoft.guice.rocoto
 org.nnsoft.guice.rocoto.configuration
-org.nnsoft.guice.rocoto.configuration.resolver
+org.nnsoft.guice.rocoto.configuration.binder
 org.nnsoft.guice.rocoto.converters
+org.nnsoft.guice.rocoto.variables
