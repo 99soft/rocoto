@@ -16,6 +16,16 @@
 -->
 <project name="${project.name}">
 
+  <custom>
+    <fluidoSkin>
+      <gitHub>
+        <projectId>99soft/rocoto</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>red</ribbonColor>
+      </gitHub>
+    </fluidoSkin>
+  </custom>
+
   <bannerLeft>
     <name>Add some spice to Google Guice through configuration files!</name>
     <src>images/logo.png</src>
