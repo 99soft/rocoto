@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.5" timestamp="2012-01-15T19:00:13.695">
+<pmd version="4.2.5" timestamp="2012-02-06T12:45:33.355">
 <file name="/Users/simonetripodi/Documents/workspace/rocoto/target/checkout/src/main/java/org/nnsoft/guice/rocoto/configuration/ConfigurationModule.java">
 <violation beginline="16" endline="277" begincolumn="1" endcolumn="2" rule="TooManyStaticImports" ruleset="Import Statement Rules" package="org.nnsoft.guice.rocoto.configuration" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#TooManyStaticImports" priority="3">
 Too many static imports may lead to messy code
