@@ -26,6 +26,7 @@
   <groupId>org.99soft.guice</groupId>
   <artifactId>rocoto</artifactId>
   <version>6.1-SNAPSHOT</version>
+  <packaging>bundle</packaging>
 
   <name>99soft :: Rocoto</name>
   <description>Add some spice to Google Guice through configuration files!</description>
@@ -74,6 +75,32 @@
   <properties>
     <project.previousVersion>5.0.1</project.previousVersion>
   </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>2.3.6</version>
+        <extensions>true</extensions>
+        <inherited>true</inherited>
+        <configuration>
+          <instructions>
+            <Bundle-Name>${project.name}</Bundle-Name>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+            <Export-Package>org.nnsoft.guice*;version="${project.version}"</Export-Package>
+            <Import-Package>
+              javax.*,
+              !com.google.inject*,
+              *
+            </Import-Package>
+            <Fragment-Host>com.google.inject;bundle-version="[3.0.0,4)"</Fragment-Host>
+          </instructions>
+          <unpackBundle>true</unpackBundle>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
   <dependencies>
     <dependency>
