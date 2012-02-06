@@ -41,7 +41,7 @@ Before starting
   <dependency>
     <groupId>org.99soft.guice</groupId>
     <artifactId>rocoto</artifactId>
-    <version>XX.XX</version>
+    <version>${project.version}</version>
   </dependency>
   ...
 </dependencies>
