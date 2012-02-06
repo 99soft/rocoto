@@ -61,6 +61,16 @@
     </contributor>
   </contributors>
 
+  <mailingLists>
+    <mailingList>
+      <name>rocoto</name>
+      <archive>http://groups.google.com/group/rocoto/topics</archive>
+      <subscribe>http://groups.google.com/group/rocoto/subscribe</subscribe>
+      <unsubscribe>http://groups.google.com/group/rocoto/subscribe</unsubscribe>
+      <post>rocoto@googlegroups.com</post>
+    </mailingList>
+  </mailingLists>
+
   <scm>
     <url>http://github.com/99soft/rocoto</url>
     <connection>scm:git:ssh://github.com/99soft/rocoto.git</connection>
