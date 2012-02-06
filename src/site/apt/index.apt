@@ -51,7 +51,8 @@ Acknowledgements
 
   A big <Thank You> goes to: {{{http://devsurf.wordpress.com/}Daniel Manzke}}, thanks to his suggestion under the user
   point of view, helped me making the new Rocoto design much more flexible; Marzia Forli, for testing and bug reporting;
-  {{{http://mcculls.blogspot.com/}Stuart McCulloch}} for priceless suggestions for the design.
+  {{{http://mcculls.blogspot.com/}Stuart McCulloch}} for priceless suggestions for the design;
+  Ioannis Canellos for making Rocoto as a valid OSGi bundle.
 
   This work is dedicated to our city, L'Aquila, destroyed by a terrible
   earthquake the 6th April, 2009... That day more than 300 people were killed
