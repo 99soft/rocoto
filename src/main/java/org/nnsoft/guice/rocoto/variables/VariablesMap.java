@@ -97,10 +97,10 @@ public final class VariablesMap
     {
         data.put( key, value );
 
-        Resolver formatter = new Resolver( value );
-        if ( formatter.containsKeys() )
+        Resolver resolver = new Resolver( value );
+        if ( resolver.containsKeys() )
         {
-            resolvers.put( key, formatter );
+            resolvers.put( key, resolver );
         }
         else
         {
