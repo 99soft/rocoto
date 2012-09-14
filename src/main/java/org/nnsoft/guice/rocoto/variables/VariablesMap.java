@@ -121,10 +121,14 @@ public final class VariablesMap
 
     public String remove( Object key )
     {
-        String value = data.get( key );
-        data.remove( key );
-        resolvers.remove( key );
-        return value;
+    	String value = null;
+		if (containsKey(key))
+		{
+			value = data.remove(key);
+			resolvers.remove(key);
+			resolveVariables();
+		}
+		return value;
     }
 
     public int size()
