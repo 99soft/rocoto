@@ -16,50 +16,127 @@
 package org.nnsoft.guice.rocoto.variables;
 
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * @since 6.0
  */
-final class KeyAppender
-    implements Appender
+final class KeyAppender extends AbstractAppender
 {
+	/** Logger */
+	private static final Logger logger = Logger.getLogger(KeyAppender.class.getName());
 
-    private final String key;
+	/**
+	 * Appender which will resolve key (add the possibility for dynamic
+	 * variable)
+	 */
+	private final Appender key;
+	/** Appender which will resolve default value */
+	private Appender defaultValue;
 
-    private final String defaultValue;
+	/**
+	 * Constructor for key without default value.
+	 * 
+	 * @param key
+	 */
+	public KeyAppender( final Appender key )
+	{
+		this(key, null);
+	}
 
-    public KeyAppender( final String key )
-    {
-        this( key, null );
-    }
+	/**
+	 * Constructor for key with default value.
+	 * 
+	 * @param key
+	 * @param defaultValue
+	 *            nullable
+	 */
+	public KeyAppender( final Appender key, final Appender defaultValue )
+	{
+		this.key = key;
+		this.defaultValue = defaultValue;
+	}
 
-    public KeyAppender( final String key, final String defaultValue )
-    {
-        this.key = key;
-        this.defaultValue = defaultValue;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context )
+	{
 
-    public void append( StringBuilder buffer, Map<String, String> configuration )
-    {
-        String value = configuration.get( key );
-        if ( value != null )
-        {
-            buffer.append( value );
-        }
-        else if ( defaultValue != null )
-        {
-            buffer.append( defaultValue );
-        }
-        else
-        {
-            buffer.append( "${" ).append( key ).append( '}' );
-        }
-    }
+		// Resolve key eventually
+		StringBuilder keyBuffer = new StringBuilder();
+		key.append(keyBuffer, configuration, context);
+		String resolvedKey = keyBuffer.toString();
 
-    @Override
-    public String toString()
-    {
-        return "${" + key + "}";
-    }
+		String resolvedValue = configuration.get(resolvedKey);
+		if ( resolvedValue != null )
+		{
+			// Resolved value from the configuration may have variable
+			// unresolved
+			Resolver value = new Resolver(resolvedValue);
+			if ( !value.containsKeys() )
+			{
+				buffer.append(resolvedValue);
 
+			}
+			// Processed appenders already contain a similar appender, there is
+			// a recursion somewhere
+			else if ( context.inAncestors(value) )
+			{
+				// For the moment just log a warning, and stop the resolving
+				context.addLeaf(value);
+				logger.warning(new StringBuilder("Recursion detected within variable resolving:\n").append(context.getRoot().toString()).toString());
+
+				// Append resolved value with its variables unresolved
+				buffer.append(resolvedValue);
+			}
+			// Process value
+			else
+			{
+				value.append(buffer, configuration, context);
+				// Update the configuration
+				configuration.put(resolvedKey, resolvedValue);
+			}
+		}
+		// No value found from configuration, take default one
+		else if ( defaultValue != null )
+		{
+			defaultValue.append(buffer, configuration, context);
+		}
+		// Fallback, print variable itself, will let the possibility to resolve
+		// it later
+		else
+		{
+			buffer.append("${").append(resolvedKey).append('}');
+		}
+	}
+
+	@Override
+	public String toString()
+	{
+		return "${" + key + (defaultValue != null ? "|" + defaultValue : "") + "}";
+	}
+
+	@Override
+	public boolean equals( Object obj )
+	{
+		if ( obj == this )
+		{
+			return true;
+		}
+		if ( obj instanceof KeyAppender )
+		{
+			KeyAppender other = (KeyAppender) obj;
+			return (key != null ? key.equals(other.key) : other.key == null)
+					&& (defaultValue != null ? defaultValue.equals(other.defaultValue) : other.defaultValue == null);
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return (key != null ? key.hashCode() : 0) + (defaultValue != null ? defaultValue.hashCode() * 31 : 0);
+	}
 }

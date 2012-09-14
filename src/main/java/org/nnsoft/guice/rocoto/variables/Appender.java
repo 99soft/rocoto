@@ -18,11 +18,27 @@ package org.nnsoft.guice.rocoto.variables;
 import java.util.Map;
 
 /**
+ * Implementation classes must define proper {@link #equals(Object)} and
+ * {@link #hashCode()}.
+ * 
  * @since 6.0
  */
 interface Appender
 {
+	/**
+	 * Append something to the provided buffer for the given configuration.<br>
+	 * Implementation should add themselves in the context tree.
+	 * 
+	 * @param buffer
+	 * @param configuration
+	 * @param context
+	 */
+	void append( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context );
 
-    void append( StringBuilder buffer, Map<String, String> configuration );
+	@Override
+	boolean equals( Object obj );
+
+	@Override
+	int hashCode();
 
 }

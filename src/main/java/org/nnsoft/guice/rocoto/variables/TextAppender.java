@@ -20,26 +20,47 @@ import java.util.Map;
 /**
  * @since 6.0
  */
-final class TextAppender
-    implements Appender
+final class TextAppender extends AbstractAppender
 {
 
-    private final String textFragment;
+	private final String textFragment;
 
-    public TextAppender( final String textFragment )
-    {
-        this.textFragment = textFragment;
-    }
+	public TextAppender( final String textFragment )
+	{
+		this.textFragment = textFragment;
+	}
 
-    public void append( StringBuilder buffer, Map<String, String> configuration )
-    {
-        buffer.append( textFragment );
-    }
+	@Override
+	public void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context )
+	{
+		buffer.append(textFragment);
+	}
 
-    @Override
-    public String toString()
-    {
-        return textFragment;
-    }
+	@Override
+	public String toString()
+	{
+		return textFragment;
+	}
+
+	@Override
+	public boolean equals( Object obj )
+	{
+		if ( obj == this )
+		{
+			return true;
+		}
+		if ( obj instanceof TextAppender )
+		{
+			TextAppender other = (TextAppender) obj;
+			return textFragment != null ? textFragment.equals(other.textFragment) : other.textFragment == null;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return textFragment != null ? textFragment.hashCode() : 0;
+	}
 
 }
