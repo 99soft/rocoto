@@ -23,7 +23,7 @@ import java.util.List;
  * 
  * @param <T>
  */
-public class Tree<T>
+class Tree<T>
 {
 	/** Current tree node data */
 	private T data;
