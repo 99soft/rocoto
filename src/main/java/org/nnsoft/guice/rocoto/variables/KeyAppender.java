@@ -94,7 +94,9 @@ final class KeyAppender extends AbstractAppender
 			// Process value
 			else
 			{
-				value.append(buffer, configuration, context);
+				StringBuilder resolvedValueBuffer = new StringBuilder();
+				value.append(resolvedValueBuffer, configuration, context);
+				resolvedValue = resolvedValueBuffer.toString();
 				// Update the configuration
 				configuration.put(resolvedKey, resolvedValue);
 			}
