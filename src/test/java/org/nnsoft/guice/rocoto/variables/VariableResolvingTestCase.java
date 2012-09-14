@@ -51,7 +51,7 @@ public class VariableResolvingTestCase
 		variablesMap.put("Three", "yeah");
 
 		variablesMap.put("simple", "${prop.1}, ${prop.2}, ${prop.3}");
-		variablesMap.put("delegate", "${real}");
+		variablesMap.put("delegate", "${real|fallback value}");
 		variablesMap.put("withDefault", "${not.found|default value}");
 		variablesMap.put("withVariableDefault", "${not.found|${found}}");
 		variablesMap.put("withDelegatedVariableDefault", "${not.found|${delegate}}");
@@ -340,6 +340,17 @@ public class VariableResolvingTestCase
 	{
 		assertEquals("$", variablesMap.get("dollarSymbol"));
 		assertEquals("$$$ Prey the $ god! $$$", variablesMap.get("dollarGod"));
+	}
+
+	/**
+	 * Test variables removal.
+	 */
+	@Test
+	public void verifyVariablesRemoval()
+	{
+		assertEquals("delegated value", variablesMap.get("delegate"));
+		variablesMap.remove("real");
+		Assert.assertEquals("fallback value", variablesMap.get("delegate"));
 	}
 
 	/**
