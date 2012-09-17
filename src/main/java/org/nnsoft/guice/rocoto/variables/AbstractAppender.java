@@ -15,8 +15,10 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
+import static java.util.logging.Level.FINEST;
+import static java.util.logging.Logger.getLogger;
+
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -26,7 +28,7 @@ import java.util.logging.Logger;
 abstract class AbstractAppender implements Appender
 {
 	/** Logger */
-	private static final Logger logger = Logger.getLogger(AbstractAppender.class.getName());
+	private static final Logger logger = getLogger(AbstractAppender.class.getName());
 
 	/**
 	 * Move provided context to current appender and call
@@ -37,7 +39,7 @@ abstract class AbstractAppender implements Appender
 		Tree<Appender> currentContext = context == null ? new Tree<Appender>(this) : context.addLeaf(this);
 		doAppend(buffer, configuration, currentContext);
 		// Dump some info on resolution if this is a root appender
-		if ( currentContext.isRoot() && logger.isLoggable(Level.FINEST) )
+		if ( currentContext.isRoot() && logger.isLoggable(FINEST) )
 		{
 			logger.finest(new StringBuilder("Resolving variables:\n").append(currentContext.toString()).toString());
 		}

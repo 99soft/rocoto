@@ -350,7 +350,7 @@ public class VariableResolvingTestCase
 	{
 		assertEquals("delegated value", variablesMap.get("delegate"));
 		variablesMap.remove("real");
-		Assert.assertEquals("fallback value", variablesMap.get("delegate"));
+		assertEquals("fallback value", variablesMap.get("delegate"));
 	}
 
 	/**

@@ -15,6 +15,7 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
+import static java.lang.String.valueOf;
 import static java.text.MessageFormat.format;
 
 import java.util.ArrayList;
@@ -27,17 +28,17 @@ import java.util.Map;
 final class Resolver extends AbstractAppender
 {
 
-	private static final char VAR_BEGIN = '$';
-	private static final char VAR_OPEN = '{';
-	private static final char VAR_CLOSE = '}';
+	static final char VAR_BEGIN = '$';
+	static final char VAR_OPEN = '{';
+	static final char VAR_CLOSE = '}';
 
 	/** ${ */
-	private static final String VAR_START = String.valueOf(new char[] { VAR_BEGIN, VAR_OPEN });
+	static final String VAR_START = valueOf(new char[] { VAR_BEGIN, VAR_OPEN });
 
 	/**
 	 * The symbol that separates the key name to the default value.
 	 */
-	private static final char PIPE_SEPARATOR = '|';
+	static final char PIPE_SEPARATOR = '|';
 
 	private final List<Appender> appenders = new ArrayList<Appender>();
 

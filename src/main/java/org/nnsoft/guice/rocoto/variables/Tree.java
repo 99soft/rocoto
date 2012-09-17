@@ -120,11 +120,13 @@ class Tree<T>
 	 */
 	public int getDepth()
 	{
-		if ( isRoot() )
+		int depth = 0;
+		Tree<T> curr = this.parent;
+		while (curr != null)
 		{
-			return 0;
+			depth++;
 		}
-		return 1 + getParent().getDepth();
+		return depth;
 	}
 
 	/**
@@ -210,15 +212,32 @@ class Tree<T>
 	private void toString( StringBuilder buffer, int level )
 	{
 		// Create proper indent
-		for ( int i = 0; i < level; i++ )
+		// Search for next cousins in each level
+		StringBuilder indent = new StringBuilder();
+		Tree<T> prev;
+		Tree<T> curr = this;
+		for ( int i = level - 1; i >= 0; i-- )
 		{
-			buffer.append("  ").append(" ");
-		}
+			prev = curr;
+			curr = prev.parent;
+			if ( i == level - 1 )
+			{
+				indent.append(" _|");
+			} else
+			{
+				indent.append("  ");
 
-		if ( !isRoot() )
-		{
-			buffer.append("|_ ");
+				if ( i < level && curr.children.indexOf(prev) < curr.children.size() - 1 )
+				{
+					indent.append("|");
+				} else
+				{
+					indent.append(" ");
+				}
+			}
 		}
+		buffer.append(indent.reverse());
+
 		// Print data
 		buffer.append(getData()).append("\n");
 

@@ -15,6 +15,12 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
+import static java.lang.String.valueOf;
+import static java.util.logging.Logger.getLogger;
+import static org.nnsoft.guice.rocoto.variables.Resolver.PIPE_SEPARATOR;
+import static org.nnsoft.guice.rocoto.variables.Resolver.VAR_CLOSE;
+import static org.nnsoft.guice.rocoto.variables.Resolver.VAR_START;
+
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -24,7 +30,7 @@ import java.util.logging.Logger;
 final class KeyAppender extends AbstractAppender
 {
 	/** Logger */
-	private static final Logger logger = Logger.getLogger(KeyAppender.class.getName());
+	private static final Logger logger = getLogger(KeyAppender.class.getName());
 
 	/**
 	 * Appender which will resolve key (add the possibility for dynamic
@@ -111,14 +117,14 @@ final class KeyAppender extends AbstractAppender
 		// it later
 		else
 		{
-			buffer.append("${").append(resolvedKey).append('}');
+			buffer.append(VAR_START).append(resolvedKey).append(VAR_CLOSE);
 		}
 	}
 
 	@Override
 	public String toString()
 	{
-		return "${" + key + (defaultValue != null ? "|" + defaultValue : "") + "}";
+		return VAR_START + key + (defaultValue != null ? valueOf(PIPE_SEPARATOR) + defaultValue : "") + VAR_CLOSE;
 	}
 
 	@Override
