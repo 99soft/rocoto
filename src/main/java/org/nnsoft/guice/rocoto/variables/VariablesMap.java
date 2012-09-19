@@ -24,127 +24,137 @@ import java.util.Set;
 /**
  * @since 6.0
  */
-public final class VariablesMap
-    implements Map<String, String>
+public final class VariablesMap implements Map<String, String>
 {
+	/** Parser to use for variables resolving */
+	private Parser parser;
 
-    private final Map<String, Resolver> resolvers = new HashMap<String, Resolver>();
+	public VariablesMap( Parser parser )
+	{
+		this.parser = parser;
+	}
 
-    private final Map<String, String> data = new HashMap<String, String>();
+	public VariablesMap()
+	{
+		this(new AntStyleParser());
+	}
 
-    public void clear()
-    {
-        resolvers.clear();
-        data.clear();
-    }
+	private final Map<String, Resolver> resolvers = new HashMap<String, Resolver>();
 
-    public boolean containsKey( Object key )
-    {
-        return data.containsKey( key );
-    }
+	private final Map<String, String> data = new HashMap<String, String>();
 
-    public boolean containsValue( Object value )
-    {
-        return data.containsValue( value );
-    }
+	public void clear()
+	{
+		resolvers.clear();
+		data.clear();
+	}
 
-    public Set<Entry<String, String>> entrySet()
-    {
-        return data.entrySet();
-    }
+	public boolean containsKey( Object key )
+	{
+		return data.containsKey(key);
+	}
 
-    public String get( Object key )
-    {
-        return data.get( key );
-    }
+	public boolean containsValue( Object value )
+	{
+		return data.containsValue(value);
+	}
 
-    public boolean isEmpty()
-    {
-        return data.isEmpty();
-    }
+	public Set<Entry<String, String>> entrySet()
+	{
+		return data.entrySet();
+	}
 
-    public Set<String> keySet()
-    {
-        return data.keySet();
-    }
+	public String get( Object key )
+	{
+		return data.get(key);
+	}
 
-    public String put( String key, String value )
-    {
-        putValue( key, value );
-        resolveVariables();
-        return data.get( key );
-    }
+	public boolean isEmpty()
+	{
+		return data.isEmpty();
+	}
 
-    public void putAll( Map<? extends String, ? extends String> t )
-    {
-        for ( Entry<? extends String, ? extends String> entry : t.entrySet() )
-        {
-            putValue( entry.getKey(), entry.getValue() );
-        }
-        resolveVariables();
-    }
+	public Set<String> keySet()
+	{
+		return data.keySet();
+	}
 
-    public void putAll( Properties properties )
-    {
-        for ( Entry<Object, Object> entry : properties.entrySet() )
-        {
-            putValue( entry.getKey().toString(), entry.getValue().toString() );
-        }
-        resolveVariables();
-    }
+	public String put( String key, String value )
+	{
+		putValue(key, value);
+		resolveVariables();
+		return data.get(key);
+	}
 
-    private void putValue( String key, String value )
-    {
-        data.put( key, value );
+	public void putAll( Map<? extends String, ? extends String> t )
+	{
+		for ( Entry<? extends String, ? extends String> entry : t.entrySet() )
+		{
+			putValue(entry.getKey(), entry.getValue());
+		}
+		resolveVariables();
+	}
 
-        Resolver resolver = new Resolver( value );
-        if ( resolver.containsKeys() )
-        {
-            resolvers.put( key, resolver );
-        }
-        else
-        {
-            if ( resolvers.containsKey( key ) )
-            {
-                resolvers.remove( key );
-            }
-        }
-    }
+	public void putAll( Properties properties )
+	{
+		for ( Entry<Object, Object> entry : properties.entrySet() )
+		{
+			putValue(entry.getKey().toString(), entry.getValue().toString());
+		}
+		resolveVariables();
+	}
 
-    private void resolveVariables()
-    {
-        for ( Entry<String, Resolver> entry : resolvers.entrySet() )
-        {
-            data.put( entry.getKey(), entry.getValue().resolve( data ) );
-        }
-    }
+	private void putValue( String key, String value )
+	{
+		data.put(key, value);
 
-    public String remove( Object key )
-    {
-    	String value = null;
-		if (containsKey(key))
+		Resolver resolver = parser.parse(value);
+		if ( resolver.needsResolving() )
+		{
+			resolvers.put(key, resolver);
+		} else
+		{
+			if ( resolvers.containsKey(key) )
+			{
+				resolvers.remove(key);
+			}
+		}
+	}
+
+	private void resolveVariables()
+	{
+		for ( Entry<String, Resolver> entry : resolvers.entrySet() )
+		{
+			data.put(entry.getKey(), entry.getValue().resolve(data));
+		}
+	}
+
+	public String remove( Object key )
+	{
+		String value = null;
+		if ( containsKey(key) )
 		{
 			value = data.remove(key);
 			resolvers.remove(key);
 			resolveVariables();
 		}
 		return value;
-    }
+	}
 
-    public int size()
-    {
-        return data.size();
-    }
+	public int size()
+	{
+		return data.size();
+	}
 
-    public Collection<String> values()
-    {
-        return data.values();
-    }
+	public Collection<String> values()
+	{
+		return data.values();
+	}
 
-    @Override
-    public String toString()
-    {
-        return data.toString();
-    }
+	@Override
+	public String toString()
+	{
+		return data.toString();
+	}
 
 }

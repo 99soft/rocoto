@@ -22,31 +22,78 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Abstract appender implementation.<br>
- * TODO: Move to a visitor pattern?
+ * Abstract Appender implementation handling resolving context management.
  */
 abstract class AbstractAppender implements Appender
 {
+
 	/** Logger */
 	private static final Logger logger = getLogger(AbstractAppender.class.getName());
 
+	/** Original chunk to process by this appender */
+	protected final String chunk;
+
 	/**
-	 * Move provided context to current appender and call
-	 * {@link #doAppend(StringBuilder, Map, Tree)}.
+	 * Default constructor
+	 * 
+	 * @param chunk The chunk this appender has to process.
+	 */
+	protected AbstractAppender( String chunk )
+	{
+		this.chunk = chunk;
+	}
+
+	/**
+	 * Move provided context to current appender and call {@link #doAppend(StringBuilder, Map, Tree, Parser)} if no recursion has been detected.
+	 * 
+	 * @param buffer
+	 * @param configuration
+	 * @param context
 	 */
 	public final void append( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context )
 	{
+		// Create context if needed
 		Tree<Appender> currentContext = context == null ? new Tree<Appender>(this) : context.addLeaf(this);
-		doAppend(buffer, configuration, currentContext);
-		// Dump some info on resolution if this is a root appender
-		if ( currentContext.isRoot() && logger.isLoggable(FINEST) )
+
+		// Check recursion
+		if ( currentContext.inAncestors(this) )
 		{
-			logger.finest(new StringBuilder("Resolving variables:\n").append(currentContext.toString()).toString());
+			// For the moment just log a warning, and stop the resolving by appending original chunk
+			buffer.append(chunk);
+
+			logger.warning(new StringBuilder("Recursion detected within variable resolving:\n").append(currentContext.getRoot().toString())
+					.toString());
+		}
+		// Process real appending
+		else
+		{
+			doAppend(buffer, configuration, currentContext);
+			// Dump some info on resolution if this is a root appender
+			if ( currentContext.isRoot() && logger.isLoggable(FINEST) )
+			{
+				logger.finest(new StringBuilder("Resolving variables:\n").append(currentContext.toString()).toString());
+			}
 		}
 	}
 
-	/** Do something */
-	protected abstract void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> passed );
+	/**
+	 * Begin resolving process with this appender against the provided configuration.
+	 */
+	public String resolve( Map<String, String> configuration )
+	{
+		StringBuilder buffer = new StringBuilder();
+		append(buffer, configuration, null);
+		return buffer.toString();
+	}
+
+	/**
+	 * Append something to the provided buffer for the given configuration.<br>
+	 * 
+	 * @param buffer
+	 * @param configuration
+	 * @param passed Resolving context, current element is the appender itself.
+	 */
+	protected abstract void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context );
 
 	/**
 	 * Abstract to force subclasses to re-implement.
@@ -59,4 +106,13 @@ abstract class AbstractAppender implements Appender
 	 */
 	@Override
 	public abstract int hashCode();
+
+	/**
+	 * @return original chunk
+	 */
+	@Override
+	public final String toString()
+	{
+		return chunk;
+	}
 }

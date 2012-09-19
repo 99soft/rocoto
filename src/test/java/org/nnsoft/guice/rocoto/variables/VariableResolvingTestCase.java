@@ -25,8 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test variable resolving, default value, variables in default value, dynamic
- * variable, recursive variable, etc.
+ * Test variable resolving with {@link AntStyleParser}: default value, variables in default value, dynamic variable, recursive variable, etc.
  * 
  */
 public class VariableResolvingTestCase
@@ -39,7 +38,7 @@ public class VariableResolvingTestCase
 	@Before
 	public void setUp()
 	{
-		variablesMap = new VariablesMap();
+		variablesMap = new VariablesMap(new AntStyleParser());
 
 		variablesMap.put("prop.1", "One");
 		variablesMap.put("prop.2", "Two");
@@ -53,6 +52,8 @@ public class VariableResolvingTestCase
 		variablesMap.put("simple", "${prop.1}, ${prop.2}, ${prop.3}");
 		variablesMap.put("delegate", "${real|fallback value}");
 		variablesMap.put("withDefault", "${not.found|default value}");
+		variablesMap.put("withEmptyDefault", "${not.found|}");
+
 		variablesMap.put("withVariableDefault", "${not.found|${found}}");
 		variablesMap.put("withDelegatedVariableDefault", "${not.found|${delegate}}");
 		variablesMap.put("withMixinDefault", "${not.found|${found}, and i'm hungry}");
@@ -68,6 +69,14 @@ public class VariableResolvingTestCase
 		variablesMap.put("hello.en", "Hi!");
 		variablesMap.put("hello.fr", "Salut !");
 		variablesMap.put("hello.i18n", "${hello.${locale|en}}");
+
+		variablesMap.put("trimKey", "${prop.1}");
+		variablesMap.put("notrimKey", "${     prop.1	 }");
+		variablesMap.put("trimDefault", "${not.found|default}");
+		variablesMap.put("notrimDefault", "${not.found|    default	  }");
+		variablesMap.put("trimDynamic", "${${prop.3}}");
+		variablesMap.put("notrimDynamic", "${   ${   prop.3		}	}");
+
 	}
 
 	/**
@@ -98,6 +107,18 @@ public class VariableResolvingTestCase
 		assertEquals("default value", variablesMap.get("withDefault"));
 		variablesMap.put("not.found", "Surprise!");
 		assertEquals("Surprise!", variablesMap.get("withDefault"));
+	}
+
+	/**
+	 * Test variables with empty default value.
+	 */
+	@Test
+	public void verifyVariablesWithEmptyDefault()
+	{
+		assertNull(variablesMap.get("not.found"));
+		assertEquals("", variablesMap.get("withEmptyDefault"));
+		variablesMap.put("not.found", "Surprise!");
+		assertEquals("Surprise!", variablesMap.get("withEmptyDefault"));
 	}
 
 	/**
@@ -259,13 +280,13 @@ public class VariableResolvingTestCase
 	/**
 	 * Check no infinite loop on direct recursion.<br>
 	 * Check recursive variable grow each time variables are resolved.<br>
-	 * TODO: What to do?
 	 */
 	@Test
 	public void verifyVariablesWithNerdyStuffLikeRecursion()
 	{
 		try
 		{
+			variablesMap.clear();
 			variablesMap.put("GNU", "${GNU}'s Not UNIX");
 
 			String one = variablesMap.get("GNU");
@@ -284,7 +305,6 @@ public class VariableResolvingTestCase
 	/**
 	 * Check no infinite loop on indirect recursion.<br>
 	 * Check recursive variable grow each time variables are resolved.<br>
-	 * TODO: What to do?
 	 */
 	@Test
 	public void verifyVariablesWithNerdyStuffLikeIndirectRecursion()
@@ -309,8 +329,7 @@ public class VariableResolvingTestCase
 
 	/**
 	 * Check no infinite loop on indirect recursion.<br>
-	 * Check recursive variable grow each time variables are resolved.<br>
-	 * TODO: What to do?
+	 * Check recursive variable doesn't grow each time variables are resolved.<br>
 	 */
 	@Test
 	public void verifyDynamicVariablesRecursion()
@@ -324,8 +343,8 @@ public class VariableResolvingTestCase
 			variablesMap.put("whatever", "we just want to force map to resolve variables again...");
 
 			String two = variablesMap.get("divideByZero");
-
-			assertTrue(one.length() < two.length());
+			// Variable must have the same length here
+			assertTrue(one.length() == two.length());
 		} catch (Error ouch)
 		{
 			fail(ouch.getMessage());
@@ -351,6 +370,59 @@ public class VariableResolvingTestCase
 		assertEquals("delegated value", variablesMap.get("delegate"));
 		variablesMap.remove("real");
 		assertEquals("fallback value", variablesMap.get("delegate"));
+	}
+
+	/**
+	 * Test trimming on variable key
+	 */
+	@Test
+	public void verifyTrimOnKey()
+	{
+		assertEquals(variablesMap.get("trimKey"), variablesMap.get("notrimKey"));
+
+		variablesMap.put("trimedDefault", "${not.found|default}");
+		variablesMap.put("untrimedDefault", "${not.found|    default	  }");
+		variablesMap.put("untrimedDynamic", "${${prop.3}}");
+		variablesMap.put("trimedDynamic", "${   ${   prop3		}	}");
+	}
+
+	/**
+	 * Test trimming on variable default value
+	 */
+	@Test
+	public void verifyTrimOnDefault()
+	{
+		assertNull(variablesMap.get("not.found"));
+		assertEquals(variablesMap.get("trimDefault"), variablesMap.get("notrimDefault"));
+		variablesMap.put("not.found", "Surprise!");
+		assertEquals("Surprise!", variablesMap.get("trimDefault"));
+		assertEquals(variablesMap.get("trimDefault"), variablesMap.get("notrimDefault"));
+	}
+
+	/**
+	 * Test trimming on dynamic variable
+	 */
+	@Test
+	public void verifyTrimOnDynamic()
+	{
+		assertEquals("yeah", variablesMap.get("trimDynamic"));
+		assertEquals(variablesMap.get("trimDynamic"), variablesMap.get("notrimDynamic"));
+	}
+
+	/**
+	 * Test trimming on recursive variable
+	 */
+	@Test
+	public void verifyTrimOnRecursion()
+	{
+		try
+		{
+			variablesMap.put("GNU", "${ GNU   	}'s Not UNIX");
+
+		} catch (Error ouch)
+		{
+			fail(ouch.getMessage());
+		}
 	}
 
 	/**

@@ -15,50 +15,48 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
-import static java.lang.String.valueOf;
-import static java.util.logging.Logger.getLogger;
-import static org.nnsoft.guice.rocoto.variables.Resolver.PIPE_SEPARATOR;
-import static org.nnsoft.guice.rocoto.variables.Resolver.VAR_CLOSE;
-import static org.nnsoft.guice.rocoto.variables.Resolver.VAR_START;
-
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
+ * Appender which relies on another appender to provides a configuration key, and a fallback appender in case no configuration value is found.
+ * 
  * @since 6.0
  */
 final class KeyAppender extends AbstractAppender
 {
-	/** Logger */
-	private static final Logger logger = getLogger(KeyAppender.class.getName());
-
-	/**
-	 * Appender which will resolve key (add the possibility for dynamic
-	 * variable)
-	 */
+	/** Appender which will resolve key (add the possibility for dynamic variable) */
 	private final Appender key;
+
 	/** Appender which will resolve default value */
 	private Appender defaultValue;
+
+	/** Parser to use if dynamic resolution is needed */
+	private Parser parser;
 
 	/**
 	 * Constructor for key without default value.
 	 * 
-	 * @param key
+	 * @param parser The parser from which this appender has been created.
+	 * @param chunk
+	 * @param key Appender to resolve configuration key.
 	 */
-	public KeyAppender( final Appender key )
+	public KeyAppender( final Parser parser, final String chunk, final Appender key )
 	{
-		this(key, null);
+		this(parser, chunk, key, null);
 	}
 
 	/**
-	 * Constructor for key with default value.
+	 * Constructor for key without default value.
 	 * 
-	 * @param key
-	 * @param defaultValue
-	 *            nullable
+	 * @param parser The parser from which this appender has been created.
+	 * @param chunk
+	 * @param key Appender to resolve configuration key.
+	 * @param defaultValue Appender to resolve default value, may be null.
 	 */
-	public KeyAppender( final Appender key, final Appender defaultValue )
+	public KeyAppender( final Parser parser, final String chunk, final Appender key, final Appender defaultValue )
 	{
+		super(chunk);
+		this.parser = parser;
 		this.key = key;
 		this.defaultValue = defaultValue;
 	}
@@ -80,29 +78,25 @@ final class KeyAppender extends AbstractAppender
 		{
 			// Resolved value from the configuration may have variable
 			// unresolved
-			Resolver value = new Resolver(resolvedValue);
-			if ( !value.containsKeys() )
+			Resolver value = parser.parse(resolvedValue);
+			if ( !value.needsResolving() )
 			{
 				buffer.append(resolvedValue);
 
-			}
-			// Processed appenders already contain a similar appender, there is
-			// a recursion somewhere
-			else if ( context.inAncestors(value) )
-			{
-				// For the moment just log a warning, and stop the resolving
-				context.addLeaf(value);
-				logger.warning(new StringBuilder("Recursion detected within variable resolving:\n").append(context.getRoot().toString()).toString());
-
-				// Append resolved value with its variables unresolved
-				buffer.append(resolvedValue);
 			}
 			// Process value
 			else
 			{
-				StringBuilder resolvedValueBuffer = new StringBuilder();
-				value.append(resolvedValueBuffer, configuration, context);
-				resolvedValue = resolvedValueBuffer.toString();
+				if ( !(value instanceof Appender) )
+				{
+					resolvedValue = value.resolve(configuration);
+				} else
+				{
+					StringBuilder resolvedValueBuffer = new StringBuilder();
+					((Appender) value).append(resolvedValueBuffer, configuration, context);
+					resolvedValue = resolvedValueBuffer.toString();
+				}
+
 				buffer.append(resolvedValue);
 				// Update the configuration
 				configuration.put(resolvedKey, resolvedValue);
@@ -113,18 +107,12 @@ final class KeyAppender extends AbstractAppender
 		{
 			defaultValue.append(buffer, configuration, context);
 		}
-		// Fallback, print variable itself, will let the possibility to resolve
+		// Fallback, print original chunk, will let the possibility to resolve
 		// it later
 		else
 		{
-			buffer.append(VAR_START).append(resolvedKey).append(VAR_CLOSE);
+			buffer.append(chunk);
 		}
-	}
-
-	@Override
-	public String toString()
-	{
-		return VAR_START + key + (defaultValue != null ? valueOf(PIPE_SEPARATOR) + defaultValue : "") + VAR_CLOSE;
 	}
 
 	@Override
@@ -147,5 +135,13 @@ final class KeyAppender extends AbstractAppender
 	public int hashCode()
 	{
 		return (key != null ? key.hashCode() : 0) + (defaultValue != null ? defaultValue.hashCode() * 31 : 0);
+	}
+
+	/**
+	 * @return Always true
+	 */
+	public boolean needsResolving()
+	{
+		return true;
 	}
 }

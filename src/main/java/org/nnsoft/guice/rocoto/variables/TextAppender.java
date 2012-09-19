@@ -18,28 +18,21 @@ package org.nnsoft.guice.rocoto.variables;
 import java.util.Map;
 
 /**
+ * Appender which just wraps a text fragment to render as is.
+ * 
  * @since 6.0
  */
 final class TextAppender extends AbstractAppender
 {
-
-	private final String textFragment;
-
-	public TextAppender( final String textFragment )
+	public TextAppender( final String chunk )
 	{
-		this.textFragment = textFragment;
+		super(chunk);
 	}
 
 	@Override
-	public void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context )
+	protected void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context )
 	{
-		buffer.append(textFragment);
-	}
-
-	@Override
-	public String toString()
-	{
-		return textFragment;
+		buffer.append(chunk);
 	}
 
 	@Override
@@ -52,7 +45,7 @@ final class TextAppender extends AbstractAppender
 		if ( obj instanceof TextAppender )
 		{
 			TextAppender other = (TextAppender) obj;
-			return textFragment != null ? textFragment.equals(other.textFragment) : other.textFragment == null;
+			return chunk != null ? chunk.equals(other.chunk) : other.chunk == null;
 		}
 		return false;
 	}
@@ -60,7 +53,15 @@ final class TextAppender extends AbstractAppender
 	@Override
 	public int hashCode()
 	{
-		return textFragment != null ? textFragment.hashCode() : 0;
+		return chunk != null ? chunk.hashCode() : 0;
+	}
+
+	/**
+	 * @return Always false
+	 */
+	public boolean needsResolving()
+	{
+		return false;
 	}
 
 }

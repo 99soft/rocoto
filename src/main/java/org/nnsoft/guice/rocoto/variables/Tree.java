@@ -152,8 +152,7 @@ class Tree<T>
 
 	/**
 	 * @param element
-	 * @return true if element is the tree node data or is contained in its
-	 *         subtrees.
+	 * @return true if element is contained in this node subtrees.
 	 */
 	public boolean inSubtrees( T element )
 	{
@@ -172,19 +171,24 @@ class Tree<T>
 	}
 
 	/**
+	 * @param element
+	 * @return True if element is equal to this node data.
+	 */
+	public boolean isElement( T element )
+	{
+		return (this.data.equals(element));
+	}
+
+	/**
 	 * 
 	 * @param element
-	 * @return true if element is the tree node data or is in the ancestors
+	 * @return true if element is is in the ancestors of this node
 	 */
 	public boolean inAncestors( T element )
 	{
-		if ( this.data.equals(element) )
-		{
-			return true;
-		}
 		if ( !isRoot() )
 		{
-			return getParent().inAncestors(element);
+			return getParent().isElement(element) || getParent().inAncestors(element);
 		}
 		return false;
 	}
