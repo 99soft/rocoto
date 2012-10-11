@@ -156,13 +156,9 @@ class Tree<T>
 	 */
 	public boolean inSubtrees( T element )
 	{
-		if ( this.data.equals(element) )
-		{
-			return true;
-		}
 		for ( Tree<T> child : getChildren() )
 		{
-			if ( child.inSubtrees(element) )
+			if ( child.isElement(element) || child.inSubtrees(element) )
 			{
 				return true;
 			}
