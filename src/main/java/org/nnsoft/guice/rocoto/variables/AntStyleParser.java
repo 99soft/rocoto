@@ -131,7 +131,7 @@ public class AntStyleParser implements Parser
 					{
 						// ff${fdf}|${f}
 						int nextEndKeyVariable = key.indexOf(VAR_CLOSE, nextStartKeyVariable + VAR_START_LEN);
-						pipeIndex = key.indexOf(PIPE_SEPARATOR, pipeIndex + PIPE_SEPARATOR_LEN);
+						pipeIndex = key.indexOf(PIPE_SEPARATOR, nextEndKeyVariable + VAR_CLOSE_LEN);
 						while (pipeIndex >= 0 && pipeIndex > nextStartKeyVariable)
 						{
 							pipeIndex = key.indexOf(PIPE_SEPARATOR, nextEndKeyVariable + VAR_CLOSE_LEN);

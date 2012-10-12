@@ -52,7 +52,7 @@ public final class VariablesMap implements Map<String, String>
 		@Override
 		public String toString()
 		{
-			return format("VariableValue[original=''{0}'',resolver=''{2}'']", original, resolver);
+			return format("VariableValue[original=''{0}'',resolver=''{1}'']", original, resolver);
 		}
 
 		public String getOriginal()

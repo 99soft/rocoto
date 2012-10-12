@@ -98,7 +98,7 @@ final class KeyAppender extends AbstractAppender
 				}
 
 				buffer.append(resolvedValue);
-				// Update the configuration
+				// Update the configuration (not necessary, but can speed up a little when complex dependency between variables)
 				configuration.put(resolvedKey, resolvedValue);
 			}
 		}

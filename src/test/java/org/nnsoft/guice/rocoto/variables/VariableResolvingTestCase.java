@@ -21,6 +21,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -275,6 +278,22 @@ public class VariableResolvingTestCase
 		assertEquals("Two", variablesMap.get("dynamicDefaultVariableWithDefaultDynamicVariable"));
 		variablesMap.put("prop.4", "prop.1");
 		assertEquals("One", variablesMap.get("dynamicDefaultVariableWithDefaultDynamicVariable"));
+	}
+
+	@Test
+	public void verifyGreatAnswer()
+	{
+		Map<String, String> t = new HashMap<String, String>();
+		t.put("g", "2g");
+		t.put("gg2", "2");
+		t.put("h", "${${${g}4|${g}2}}");
+		t.put("2g", "gg");
+		t.put("2g2", "4");
+		t.put("gg", "${h}${4|${${2g}2}}");
+		variablesMap.clear();
+		variablesMap.putAll(t);
+		assertEquals("42", variablesMap.get("gg"));
+		assertEquals(6, variablesMap.size());
 	}
 
 	/**
