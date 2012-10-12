@@ -373,6 +373,19 @@ public class VariableResolvingTestCase
 	}
 
 	/**
+	 * Test parser change
+	 */
+	@Test
+	public void verifyParserChange()
+	{
+		assertEquals("One", variablesMap.get("prop.1"));
+		variablesMap.setParser(new DummyParser());
+		assertEquals("enO", variablesMap.get("prop.1"));
+		variablesMap.setParser(new AntStyleParser());
+		assertEquals("One", variablesMap.get("prop.1"));
+	}
+
+	/**
 	 * Test trimming on variable key
 	 */
 	@Test

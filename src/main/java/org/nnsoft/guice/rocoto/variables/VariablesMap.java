@@ -15,6 +15,8 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
+import static java.text.MessageFormat.format;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +28,55 @@ import java.util.Set;
  */
 public final class VariablesMap implements Map<String, String>
 {
+	/**
+	 * Object representing a variable value
+	 */
+	private static class VariableValue implements Resolver
+	{
+		/** Original final value */
+		private final String original;
+		/** Current resolver for current parser */
+		private final Resolver resolver;
+
+		/**
+		 * Default constructor
+		 * 
+		 * @param original
+		 */
+		private VariableValue( String original, Resolver resolver )
+		{
+			this.original = original;
+			this.resolver = resolver;
+		}
+
+		@Override
+		public String toString()
+		{
+			return format("VariableValue[original=''{0}'',resolver=''{2}'']", original, resolver);
+		}
+
+		public String getOriginal()
+		{
+			return original;
+		}
+
+		public String resolve( Map<String, String> data )
+		{
+			return resolver.resolve(data);
+		}
+
+		public boolean needsResolving()
+		{
+			return resolver.needsResolving();
+		}
+	}
+
 	/** Parser to use for variables resolving */
 	private Parser parser;
 
 	public VariablesMap( Parser parser )
 	{
-		this.parser = parser;
+		setParser(parser);
 	}
 
 	public VariablesMap()
@@ -39,51 +84,51 @@ public final class VariablesMap implements Map<String, String>
 		this(new AntStyleParser());
 	}
 
-	private final Map<String, Resolver> resolvers = new HashMap<String, Resolver>();
+	private final Map<String, VariableValue> resolvers = new HashMap<String, VariableValue>();
 
-	private final Map<String, String> data = new HashMap<String, String>();
+	private final Map<String, String> snapshot = new HashMap<String, String>();
 
 	public void clear()
 	{
 		resolvers.clear();
-		data.clear();
+		snapshot.clear();
 	}
 
 	public boolean containsKey( Object key )
 	{
-		return data.containsKey(key);
+		return snapshot.containsKey(key);
 	}
 
 	public boolean containsValue( Object value )
 	{
-		return data.containsValue(value);
+		return snapshot.containsValue(value);
 	}
 
 	public Set<Entry<String, String>> entrySet()
 	{
-		return data.entrySet();
+		return snapshot.entrySet();
 	}
 
 	public String get( Object key )
 	{
-		return data.get(key);
+		return snapshot.get(key);
 	}
 
 	public boolean isEmpty()
 	{
-		return data.isEmpty();
+		return snapshot.isEmpty();
 	}
 
 	public Set<String> keySet()
 	{
-		return data.keySet();
+		return snapshot.keySet();
 	}
 
 	public String put( String key, String value )
 	{
 		putValue(key, value);
 		resolveVariables();
-		return data.get(key);
+		return snapshot.get(key);
 	}
 
 	public void putAll( Map<? extends String, ? extends String> t )
@@ -106,26 +151,18 @@ public final class VariablesMap implements Map<String, String>
 
 	private void putValue( String key, String value )
 	{
-		data.put(key, value);
-
-		Resolver resolver = parser.parse(value);
-		if ( resolver.needsResolving() )
-		{
-			resolvers.put(key, resolver);
-		} else
-		{
-			if ( resolvers.containsKey(key) )
-			{
-				resolvers.remove(key);
-			}
-		}
+		snapshot.put(key, value);
+		resolvers.put(key, new VariableValue(value, parser.parse(value)));
 	}
 
 	private void resolveVariables()
 	{
-		for ( Entry<String, Resolver> entry : resolvers.entrySet() )
+		for ( Entry<String, VariableValue> entry : resolvers.entrySet() )
 		{
-			data.put(entry.getKey(), entry.getValue().resolve(data));
+			if ( entry.getValue().needsResolving() )
+			{
+				snapshot.put(entry.getKey(), entry.getValue().resolve(snapshot));
+			}
 		}
 	}
 
@@ -134,7 +171,7 @@ public final class VariablesMap implements Map<String, String>
 		String value = null;
 		if ( containsKey(key) )
 		{
-			value = data.remove(key);
+			value = snapshot.remove(key);
 			resolvers.remove(key);
 			resolveVariables();
 		}
@@ -143,18 +180,42 @@ public final class VariablesMap implements Map<String, String>
 
 	public int size()
 	{
-		return data.size();
+		return snapshot.size();
 	}
 
 	public Collection<String> values()
 	{
-		return data.values();
+		return snapshot.values();
 	}
 
 	@Override
 	public String toString()
 	{
-		return data.toString();
+		return snapshot.toString();
 	}
 
+	public Parser getParser()
+	{
+		return parser;
+	}
+
+	public void setParser( Parser parser )
+	{
+		this.parser = parser == null ? new AntStyleParser() : parser;
+		applyParser();
+	}
+
+	/**
+	 * Re apply parser on all entries in map
+	 */
+	private void applyParser()
+	{
+		this.snapshot.clear();
+		Map<String, String> originals = new HashMap<String, String>(this.resolvers.size());
+		for ( Entry<String, VariableValue> resolver : this.resolvers.entrySet() )
+		{
+			originals.put(resolver.getKey(), resolver.getValue().getOriginal());
+		}
+		putAll(originals);
+	}
 }
