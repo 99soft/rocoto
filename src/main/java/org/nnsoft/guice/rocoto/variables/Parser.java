@@ -15,21 +15,11 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
-import java.util.Map;
-
 /**
- * Resolve what should be resolved against a configuration.
+ * Produce a Resolver object from a raw input.
+ * 
  */
-public interface Resolver
+public interface Parser
 {
-	/**
-	 * @param data
-	 * @return Resolved value
-	 */
-	String resolve( Map<String, String> data );
-
-	/**
-	 * @return False if it's not worth to call {@link #resolve(Map)}.
-	 */
-	boolean needsResolving();
+	Resolver parse( String input ) throws IllegalArgumentException;
 }
