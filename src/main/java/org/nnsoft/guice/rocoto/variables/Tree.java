@@ -124,6 +124,7 @@ class Tree<T>
 		Tree<T> curr = this.parent;
 		while (curr != null)
 		{
+			curr = curr.parent;
 			depth++;
 		}
 		return depth;
@@ -242,10 +243,9 @@ class Tree<T>
 		buffer.append(getData()).append("\n");
 
 		// Print subtrees
-		level++;
 		for ( Tree<T> child : getChildren() )
 		{
-			child.toString(buffer, level);
+			child.toString(buffer, level+1);
 		}
 	}
 }
