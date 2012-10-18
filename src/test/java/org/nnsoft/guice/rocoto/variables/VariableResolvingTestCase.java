@@ -79,7 +79,6 @@ public class VariableResolvingTestCase
         variablesMap.put( "notrimDefault", "${not.found|    default      }" );
         variablesMap.put( "trimDynamic", "${${prop.3}}" );
         variablesMap.put( "notrimDynamic", "${   ${   prop.3        }    }" );
-
     }
 
     /**
