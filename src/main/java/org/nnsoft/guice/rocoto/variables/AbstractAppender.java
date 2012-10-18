@@ -15,6 +15,7 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
+import static java.lang.String.format;
 import static java.util.logging.Level.FINEST;
 import static java.util.logging.Logger.getLogger;
 
@@ -64,7 +65,7 @@ abstract class AbstractAppender
             // For the moment just log a warning, and stop the resolving by appending original chunk
             buffer.append( chunk );
 
-            logger.warning( new StringBuilder( "Recursion detected within variable resolving:\n" ).append( currentContext.getRoot().toString() ).toString() );
+            logger.warning( format( "Recursion detected within variable resolving:%n%s", currentContext.getRoot() ) );
         }
         // Process real appending
         else
@@ -73,7 +74,7 @@ abstract class AbstractAppender
             // Dump some info on resolution if this is a root appender
             if ( currentContext.isRoot() && logger.isLoggable( FINEST ) )
             {
-                logger.finest( new StringBuilder( "Resolving variables:\n" ).append( currentContext.toString() ).toString() );
+                logger.finest( format( "Resolving variables:%n%s", currentContext ) );
             }
         }
     }

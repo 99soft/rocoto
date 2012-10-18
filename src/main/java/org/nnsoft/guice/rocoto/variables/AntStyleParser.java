@@ -15,7 +15,7 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
-import static java.text.MessageFormat.format;
+import static java.lang.String.format;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +84,7 @@ public class AntStyleParser
             int endVariable = pattern.indexOf( VAR_CLOSE, pos );
             if ( endVariable < 0 )
             {
-                throw new IllegalArgumentException( format( "Syntax error in property value ''{0}'', missing close bracket ''{1}'' for variable beginning at col {2}: ''{3}''",
+                throw new IllegalArgumentException( format( "Syntax error in property value '%s', missing close bracket '%s' for variable beginning at col %s: ''{3}''",
                                                             pattern, VAR_CLOSE, pos - VAR_START_LEN, pattern.substring( pos - VAR_START_LEN ) ) );
             }
 
@@ -100,7 +100,7 @@ public class AntStyleParser
                 // Something is badly closed
                 if ( endVariable < 0 )
                 {
-                    throw new IllegalArgumentException( format( "Syntax error in property value ''{0}'', missing close bracket ''{1}'' for variable beginning at col {2}: ''{3}''",
+                    throw new IllegalArgumentException( format( "Syntax error in property value '%s', missing close bracket '%s' for variable beginning at col %s: '%s'",
                                                                 pattern, VAR_CLOSE, nextVariable, pattern.substring( nextVariable, lastEndVariable ) ) );
                 }
                 nextVariable = pattern.indexOf( VAR_START, nextVariable + VAR_START_LEN );
@@ -150,7 +150,7 @@ public class AntStyleParser
                             nextEndKeyVariable = key.indexOf( VAR_CLOSE, nextEndKeyVariable + VAR_CLOSE_LEN );
                             if ( nextEndKeyVariable < 0 )
                             {
-                                throw new IllegalArgumentException( format( "Syntax error in property value ''{0}'', missing close bracket ''{1}'' for variable beginning at col {2}: ''{3}''",
+                                throw new IllegalArgumentException( format( "Syntax error in property value '%s', missing close bracket '%s' for variable beginning at col %s: '%s'",
                                                                             pattern, VAR_CLOSE, nextStartKeyVariable, key.substring( nextStartKeyVariable ) ) );
                             }
                         }
