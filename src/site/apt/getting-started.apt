@@ -128,6 +128,52 @@ JDBC.schema=rocoto
 
   the <<<JDBC.url>>> property value will be <<<jdbc:derby://localhost:1527/rocoto>>>.
 
+* Add support for variables in default value (since 6.2)
+
++--------------------------------------+
+property=${not.found|${not.found.again|Crap!}}
+
+# property = Crap!
+
+not.found.again=Fallback!
+
+# property = Fallback!
++--------------------------------------+
+
+* Add support for dynamic variables (since 6.2)
+
++--------------------------------------+
+hello.en=Hi!
+hello.fr=Salut !
+hello.i18n=${hello.${locale|en}}
+
+# hello.i18n = Hi!
+
+locale=fr
+
+# hello.i18n = Salut!
++--------------------------------------+
+
+* Prevent infinite loop for recursive variables (since 6.2)
+
++--------------------------------------+
+# Will not thow a stack overflow
+GNU=${GNU}'s Not UNIX
++--------------------------------------+
+
+* Add support for configuration hell and free headaches (since 6.2)
+
++--------------------------------------+
+g=2g
+gg2=2
+h=${${${g}4|${g}2}}
+2g=gg
+2g2=4
+gg=${h}${4|${${2g}2}}
+
+# gg=42
++--------------------------------------+
+
 * More flexible than the Spring Framework v2!
 
   I had a not so good experience with the Spring 2 {{{http://static.springsource.org/spring/docs/2.0.2/api/org/springframework/beans/factory/config/PropertyPlaceholderConfigurer.html}PropertyPlaceholderConfigurer}}
