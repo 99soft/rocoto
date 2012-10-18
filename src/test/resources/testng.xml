@@ -32,5 +32,11 @@
       <class name="org.nnsoft.guice.rocoto.converters.PropertiesConverterTestCase" />
     </classes>
   </test>
+  
+  <test name="variables">
+    <classes>
+      <class name="org.nnsoft.guice.rocoto.variables.VariableResolvingTestCase"/>
+    </classes>
+  </test>
 
 </suite>
