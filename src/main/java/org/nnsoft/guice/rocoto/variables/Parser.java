@@ -17,9 +17,11 @@ package org.nnsoft.guice.rocoto.variables;
 
 /**
  * Produce a Resolver object from a raw input.
- * 
+ *
  */
 public interface Parser
 {
-	Resolver parse( String input ) throws IllegalArgumentException;
+
+    Resolver parse( String input );
+
 }

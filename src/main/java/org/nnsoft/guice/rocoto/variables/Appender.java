@@ -19,20 +19,21 @@ import java.util.Map;
 
 /**
  * Resolver extension to implement resolving process by chunk.
- * 
+ *
  * @since 6.0
  */
-interface Appender extends Resolver
+interface Appender
+    extends Resolver
 {
-	/**
-	 * Append something to the provided buffer for the given configuration.<br>
-	 * Implementation should add themselves in the context tree.
-	 * 
-	 * @param buffer
-	 * @param configuration
-	 * @param context
-	 */
-	void append( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context );
 
+    /**
+     * Append something to the provided buffer for the given configuration.<br>
+     * Implementation should add themselves in the context tree.
+     *
+     * @param buffer
+     * @param configuration
+     * @param context
+     */
+    void append( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context );
 
 }

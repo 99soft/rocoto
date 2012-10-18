@@ -19,49 +19,50 @@ import java.util.Map;
 
 /**
  * Appender which just wraps a text fragment to render as is.
- * 
+ *
  * @since 6.0
  */
 final class TextAppender extends AbstractAppender
 {
-	public TextAppender( final String chunk )
-	{
-		super(chunk);
-	}
 
-	@Override
-	protected void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context )
-	{
-		buffer.append(chunk);
-	}
+    public TextAppender( final String chunk )
+    {
+        super( chunk );
+    }
 
-	@Override
-	public boolean equals( Object obj )
-	{
-		if ( obj == this )
-		{
-			return true;
-		}
-		if ( obj instanceof TextAppender )
-		{
-			TextAppender other = (TextAppender) obj;
-			return chunk != null ? chunk.equals(other.chunk) : other.chunk == null;
-		}
-		return false;
-	}
+    @Override
+    protected void doAppend( StringBuilder buffer, Map<String, String> configuration, Tree<Appender> context )
+    {
+        buffer.append( chunk );
+    }
 
-	@Override
-	public int hashCode()
-	{
-		return chunk != null ? chunk.hashCode() : 0;
-	}
+    @Override
+    public boolean equals( Object obj )
+    {
+        if ( obj == this )
+        {
+            return true;
+        }
+        if ( obj instanceof TextAppender )
+        {
+            TextAppender other = (TextAppender) obj;
+            return chunk != null ? chunk.equals( other.chunk ) : other.chunk == null;
+        }
+        return false;
+    }
 
-	/**
-	 * @return Always false
-	 */
-	public boolean needsResolving()
-	{
-		return false;
-	}
+    @Override
+    public int hashCode()
+    {
+        return chunk != null ? chunk.hashCode() : 0;
+    }
+
+    /**
+     * @return Always false
+     */
+    public boolean needsResolving()
+    {
+        return false;
+    }
 
 }
