@@ -50,7 +50,7 @@ final class Tree<T>
      */
     public boolean isRoot()
     {
-        return this.parent == null;
+        return parent == null;
     }
 
     /**
@@ -58,7 +58,7 @@ final class Tree<T>
      */
     public boolean isLeaf()
     {
-        return this.children.isEmpty();
+        return children.isEmpty();
     }
 
     /**
@@ -80,7 +80,7 @@ final class Tree<T>
      */
     public Tree<T> getParent()
     {
-        return this.parent;
+        return parent;
     }
 
     /**
@@ -101,7 +101,7 @@ final class Tree<T>
      */
     public void removeSubtree( Tree<T> subtree )
     {
-        if ( this.children.remove( subtree ) )
+        if ( children.remove( subtree ) )
         {
             subtree.parent = null;
         }
@@ -112,7 +112,7 @@ final class Tree<T>
      */
     public T getData()
     {
-        return this.data;
+        return data;
     }
 
     /**
@@ -122,7 +122,7 @@ final class Tree<T>
     public int getDepth()
     {
         int depth = 0;
-        Tree<T> curr = this.parent;
+        Tree<T> curr = parent;
         while ( curr != null )
         {
             curr = curr.parent;
@@ -136,7 +136,7 @@ final class Tree<T>
      */
     public List<Tree<T>> getChildren()
     {
-        return this.children;
+        return children;
     }
 
     /**
@@ -174,7 +174,7 @@ final class Tree<T>
      */
     public boolean isElement( T element )
     {
-        return ( this.data.equals( element ) );
+        return ( data.equals( element ) );
     }
 
     /**
