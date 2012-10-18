@@ -1,3 +1,5 @@
+package org.nnsoft.guice.rocoto.converters;
+
 /*
  *    Copyright 2009-2012 The 99 Software Foundation
  *
@@ -13,7 +15,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.converters;
 
 import java.net.MalformedURLException;
 import java.net.URL;
