@@ -1,3 +1,5 @@
+package org.nnsoft.guice.rocoto.variables;
+
 /*
  *    Copyright 2009-2012 The 99 Software Foundation
  *
@@ -13,7 +15,6 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.variables;
 
 import java.util.Map;
 
@@ -22,14 +23,16 @@ import java.util.Map;
  */
 public interface Resolver
 {
-	/**
-	 * @param data
-	 * @return Resolved value
-	 */
-	String resolve( Map<String, String> data );
 
-	/**
-	 * @return False if it's not worth to call {@link #resolve(Map)}.
-	 */
-	boolean needsResolving();
+    /**
+     * @param data
+     * @return Resolved value
+     */
+    String resolve( Map<String, String> data );
+
+    /**
+     * @return False if it's not worth to call {@link #resolve(Map)}.
+     */
+    boolean needsResolving();
+
 }

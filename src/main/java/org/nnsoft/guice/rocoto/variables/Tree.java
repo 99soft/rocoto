@@ -1,3 +1,5 @@
+package org.nnsoft.guice.rocoto.variables;
+
 /*
  *    Copyright 2009-2012 The 99 Software Foundation
  *
@@ -13,239 +15,242 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package org.nnsoft.guice.rocoto.variables;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Basic implementation of a tree.
- * 
+ *
  * @param <T>
  */
-class Tree<T>
+final class Tree<T>
 {
-	/** Current tree node data */
-	private T data;
 
-	/** Parent node */
-	private Tree<T> parent = null;
+    /** Current tree node data */
+    private T data;
 
-	/** Children */
-	private List<Tree<T>> children = new ArrayList<Tree<T>>();
+    /** Parent node */
+    private Tree<T> parent = null;
 
-	/**
-	 * Default constructor
-	 * 
-	 * @param data
-	 */
-	public Tree( T data )
-	{
-		this.data = data;
-	}
+    /** Children */
+    private List<Tree<T>> children = new ArrayList<Tree<T>>();
 
-	/**
-	 * @return True if parent is not null
-	 */
-	public boolean isRoot()
-	{
-		return this.parent == null;
-	}
+    /**
+     * Default constructor
+     *
+     * @param data
+     */
+    public Tree( T data )
+    {
+        this.data = data;
+    }
 
-	/**
-	 * @return True if no children
-	 */
-	public boolean isLeaf()
-	{
-		return this.children.isEmpty();
-	}
+    /**
+     * @return True if parent is not null
+     */
+    public boolean isRoot()
+    {
+        return parent == null;
+    }
 
-	/**
-	 * Add a new leaf to this tree
-	 * 
-	 * @param child
-	 * @return Tree node of the newly added leaf
-	 */
-	public Tree<T> addLeaf( T child )
-	{
-		Tree<T> leaf = new Tree<T>(child);
-		leaf.parent = this;
-		children.add(leaf);
-		return leaf;
-	}
+    /**
+     * @return True if no children
+     */
+    public boolean isLeaf()
+    {
+        return children.isEmpty();
+    }
 
-	/**
-	 * @return Parent node, or null if this node is root
-	 */
-	public Tree<T> getParent()
-	{
-		return this.parent;
-	}
+    /**
+     * Add a new leaf to this tree
+     *
+     * @param child
+     * @return Tree node of the newly added leaf
+     */
+    public Tree<T> addLeaf( T child )
+    {
+        Tree<T> leaf = new Tree<T>( child );
+        leaf.parent = this;
+        children.add( leaf );
+        return leaf;
+    }
 
-	/**
-	 * Remove this tree from its parent, if any.
-	 */
-	public void removeFromParent()
-	{
-		if ( !isRoot() )
-		{
-			getParent().removeSubtree(this);
-		}
-	}
+    /**
+     * @return Parent node, or null if this node is root
+     */
+    public Tree<T> getParent()
+    {
+        return parent;
+    }
 
-	/**
-	 * Remove given subtree
-	 * 
-	 * @param subtree
-	 */
-	public void removeSubtree( Tree<T> subtree )
-	{
-		if ( this.children.remove(subtree) )
-		{
-			subtree.parent = null;
-		}
-	}
+    /**
+     * Remove this tree from its parent, if any.
+     */
+    public void removeFromParent()
+    {
+        if ( !isRoot() )
+        {
+            getParent().removeSubtree( this );
+        }
+    }
 
-	/**
-	 * @return Node data
-	 */
-	public T getData()
-	{
-		return this.data;
-	}
+    /**
+     * Remove given subtree
+     *
+     * @param subtree
+     */
+    public void removeSubtree( Tree<T> subtree )
+    {
+        if ( children.remove( subtree ) )
+        {
+            subtree.parent = null;
+        }
+    }
 
-	/**
-	 * 
-	 * @return Node depth
-	 */
-	public int getDepth()
-	{
-		int depth = 0;
-		Tree<T> curr = this.parent;
-		while (curr != null)
-		{
-			curr = curr.parent;
-			depth++;
-		}
-		return depth;
-	}
+    /**
+     * @return Node data
+     */
+    public T getData()
+    {
+        return data;
+    }
 
-	/**
-	 * @return Subtrees
-	 */
-	public List<Tree<T>> getChildren()
-	{
-		return this.children;
-	}
+    /**
+     *
+     * @return Node depth
+     */
+    public int getDepth()
+    {
+        int depth = 0;
+        Tree<T> curr = parent;
+        while ( curr != null )
+        {
+            curr = curr.parent;
+            depth++;
+        }
+        return depth;
+    }
 
-	/**
-	 * Add a subtree, provided tree is not modified.
-	 * 
-	 * @param subtree
-	 * @return subtree copy added
-	 */
-	public Tree<T> addSubtree( Tree<T> subtree )
-	{
-		Tree<T> copy = addLeaf(subtree.data);
-		copy.children = new ArrayList<Tree<T>>(subtree.children);
-		return copy;
-	}
+    /**
+     * @return Subtrees
+     */
+    public List<Tree<T>> getChildren()
+    {
+        return children;
+    }
 
-	/**
-	 * @param element
-	 * @return true if element is contained in this node subtrees.
-	 */
-	public boolean inSubtrees( T element )
-	{
-		for ( Tree<T> child : getChildren() )
-		{
-			if ( child.isElement(element) || child.inSubtrees(element) )
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     * Add a subtree, provided tree is not modified.
+     *
+     * @param subtree
+     * @return subtree copy added
+     */
+    public Tree<T> addSubtree( Tree<T> subtree )
+    {
+        Tree<T> copy = addLeaf( subtree.data );
+        copy.children = new ArrayList<Tree<T>>( subtree.children );
+        return copy;
+    }
 
-	/**
-	 * @param element
-	 * @return True if element is equal to this node data.
-	 */
-	public boolean isElement( T element )
-	{
-		return (this.data.equals(element));
-	}
+    /**
+     * @param element
+     * @return true if element is contained in this node subtrees.
+     */
+    public boolean inSubtrees( T element )
+    {
+        for ( Tree<T> child : getChildren() )
+        {
+            if ( child.isElement( element ) || child.inSubtrees( element ) )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	/**
-	 * 
-	 * @param element
-	 * @return true if element is is in the ancestors of this node
-	 */
-	public boolean inAncestors( T element )
-	{
-		if ( !isRoot() )
-		{
-			return getParent().isElement(element) || getParent().inAncestors(element);
-		}
-		return false;
-	}
+    /**
+     * @param element
+     * @return True if element is equal to this node data.
+     */
+    public boolean isElement( T element )
+    {
+        return ( data.equals( element ) );
+    }
 
-	/**
-	 * @return Root node, this if current node is root
-	 */
-	public Tree<T> getRoot()
-	{
-		if ( isRoot() )
-		{
-			return this;
-		}
-		return getParent().getRoot();
-	}
+    /**
+     *
+     * @param element
+     * @return true if element is is in the ancestors of this node
+     */
+    public boolean inAncestors( T element )
+    {
+        if ( !isRoot() )
+        {
+            return getParent().isElement( element ) || getParent().inAncestors( element );
+        }
+        return false;
+    }
 
-	@Override
-	public String toString()
-	{
-		StringBuilder buffer = new StringBuilder();
-		toString(buffer, 0);
-		return buffer.toString();
-	}
+    /**
+     * @return Root node, this if current node is root
+     */
+    public Tree<T> getRoot()
+    {
+        if ( isRoot() )
+        {
+            return this;
+        }
+        return getParent().getRoot();
+    }
 
-	private void toString( StringBuilder buffer, int level )
-	{
-		// Create proper indent
-		// Search for next cousins in each level
-		StringBuilder indent = new StringBuilder();
-		Tree<T> prev;
-		Tree<T> curr = this;
-		for ( int i = level - 1; i >= 0; i-- )
-		{
-			prev = curr;
-			curr = prev.parent;
-			if ( i == level - 1 )
-			{
-				indent.append(" _|");
-			} else
-			{
-				indent.append("  ");
+    @Override
+    public String toString()
+    {
+        StringBuilder buffer = new StringBuilder();
+        toString( buffer, 0 );
+        return buffer.toString();
+    }
 
-				if ( i < level && curr.children.indexOf(prev) < curr.children.size() - 1 )
-				{
-					indent.append("|");
-				} else
-				{
-					indent.append(" ");
-				}
-			}
-		}
-		buffer.append(indent.reverse());
+    private void toString( StringBuilder buffer, int level )
+    {
+        // Create proper indent
+        // Search for next cousins in each level
+        StringBuilder indent = new StringBuilder();
+        Tree<T> prev;
+        Tree<T> curr = this;
+        for ( int i = level - 1; i >= 0; i-- )
+        {
+            prev = curr;
+            curr = prev.parent;
+            if ( i == level - 1 )
+            {
+                indent.append( " _|" );
+            }
+            else
+            {
+                indent.append( "  " );
 
-		// Print data
-		buffer.append(getData()).append("\n");
+                if ( i < level && curr.children.indexOf( prev ) < curr.children.size() - 1 )
+                {
+                    indent.append( "|" );
+                }
+                else
+                {
+                    indent.append( " " );
+                }
+            }
+        }
+        buffer.append( indent.reverse() );
 
-		// Print subtrees
-		for ( Tree<T> child : getChildren() )
-		{
-			child.toString(buffer, level+1);
-		}
-	}
+        // Print data
+        buffer.append( getData() ).append( "\n" );
+
+        // Print subtrees
+        for ( Tree<T> child : getChildren() )
+        {
+            child.toString( buffer, level + 1 );
+        }
+    }
+
 }
