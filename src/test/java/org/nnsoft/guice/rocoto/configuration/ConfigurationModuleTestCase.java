@@ -30,84 +30,83 @@ import org.junit.runner.RunWith;
 public final class ConfigurationModuleTestCase
 {
 
-    @Inject
-    private MyBatisConfiguration myBatisConfiguration;
+	@Inject
+	private MyBatisConfiguration myBatisConfiguration;
 
-    @Inject
-    private JDBCConfiguration jdbcConfiguration;
+	@Inject
+	private JDBCConfiguration jdbcConfiguration;
 
-    @Inject
-    private LdapConfiguration ldapConfiguration;
+	@Inject
+	private LdapConfiguration ldapConfiguration;
 
-    @Inject
-    private MemcachedConfiguration memcachedConfiguration;
+	@Inject
+	private MemcachedConfiguration memcachedConfiguration;
 
-    @Inject
-    private ProxyConfiguration proxyConfiguration;
+	@Inject
+	private ProxyConfiguration proxyConfiguration;
 
-    public void setMyBatisConfiguration( MyBatisConfiguration myBatisConfiguration )
-    {
-        this.myBatisConfiguration = myBatisConfiguration;
-    }
+	public void setMyBatisConfiguration( MyBatisConfiguration myBatisConfiguration )
+	{
+		this.myBatisConfiguration = myBatisConfiguration;
+	}
 
-    public void setJdbcConfiguration( JDBCConfiguration jdbcConfiguration )
-    {
-        this.jdbcConfiguration = jdbcConfiguration;
-    }
+	public void setJdbcConfiguration( JDBCConfiguration jdbcConfiguration )
+	{
+		this.jdbcConfiguration = jdbcConfiguration;
+	}
 
-    public void setLdapConfiguration( LdapConfiguration ldapConfiguration )
-    {
-        this.ldapConfiguration = ldapConfiguration;
-    }
+	public void setLdapConfiguration( LdapConfiguration ldapConfiguration )
+	{
+		this.ldapConfiguration = ldapConfiguration;
+	}
 
-    public void setMemcachedConfiguration( MemcachedConfiguration memcachedConfiguration )
-    {
-        this.memcachedConfiguration = memcachedConfiguration;
-    }
+	public void setMemcachedConfiguration( MemcachedConfiguration memcachedConfiguration )
+	{
+		this.memcachedConfiguration = memcachedConfiguration;
+	}
 
-    public void setProxyConfiguration( ProxyConfiguration proxyConfiguration )
-    {
-        this.proxyConfiguration = proxyConfiguration;
-    }
+	public void setProxyConfiguration( ProxyConfiguration proxyConfiguration )
+	{
+		this.proxyConfiguration = proxyConfiguration;
+	}
 
-    @Test
-    public void verifyIBatisConfiguration()
-    {
-        assertEquals( "test", myBatisConfiguration.getEnvironmentId() );
-        assertTrue( myBatisConfiguration.isLazyLoadingEnabled() );
-    }
+	@Test
+	public void verifyIBatisConfiguration()
+	{
+		assertEquals("test", myBatisConfiguration.getEnvironmentId());
+		assertTrue(myBatisConfiguration.isLazyLoadingEnabled());
+	}
 
-    @Test
-    public void verifyJDBCConfiguration()
-    {
-        assertEquals( "com.mysql.jdbc.Driver", jdbcConfiguration.getDriver() );
-        assertEquals( "jdbc:mysql://localhost:3306/rocoto", jdbcConfiguration.getUrl() );
-        assertEquals( "simone", jdbcConfiguration.getUsername() );
-        assertEquals( "rocoto2010", jdbcConfiguration.getPassword() );
-        assertTrue( jdbcConfiguration.isAutoCommit() );
-    }
+	@Test
+	public void verifyJDBCConfiguration()
+	{
+		assertEquals("com.mysql.jdbc.Driver", jdbcConfiguration.getDriver());
+		assertEquals("jdbc:mysql://localhost:3306/rocoto", jdbcConfiguration.getUrl());
+		assertEquals("simone", jdbcConfiguration.getUsername());
+		assertEquals("rocoto2010", jdbcConfiguration.getPassword());
+		assertTrue(jdbcConfiguration.isAutoCommit());
+	}
 
-    @Test
-    public void verifyLdapConfiguration()
-    {
-        assertEquals( "ldap.${not.found}", ldapConfiguration.getHost() );
-        assertEquals( 389, ldapConfiguration.getPort() );
-        assertTrue( ldapConfiguration.getBaseDN().indexOf( '$' ) < 0 );
-        assertEquals( "", ldapConfiguration.getUser() );
-    }
+	@Test
+	public void verifyLdapConfiguration()
+	{
+		assertEquals("ldap.${not.found}", ldapConfiguration.getHost());
+		assertEquals(389, ldapConfiguration.getPort());
+		assertTrue(ldapConfiguration.getBaseDN().indexOf('$') < 0);
+		assertEquals("", ldapConfiguration.getUser());
+	}
 
-    @Test
-    public void verifyMemcachedConfiguration()
-    {
-        assertEquals( "test_", memcachedConfiguration.getKeyPrefix() );
-        assertTrue( memcachedConfiguration.isCompressionEnabled() );
-    }
+	@Test
+	public void verifyMemcachedConfiguration()
+	{
+		assertEquals("test_", memcachedConfiguration.getKeyPrefix());
+		assertTrue(memcachedConfiguration.isCompressionEnabled());
+	}
 
-    @Test
-    public void verifyProxyConfiguration()
-    {
-        assertEquals( "localhost", proxyConfiguration.getHost() );
-        assertEquals( 8180, proxyConfiguration.getPort() );
-    }
-
+	@Test
+	public void verifyProxyConfiguration()
+	{
+		assertEquals("localhost", proxyConfiguration.getHost());
+		assertEquals(8180, proxyConfiguration.getPort());
+	}
 }
