@@ -20,6 +20,7 @@
   <test name="configuration">
     <classes>
       <class name="org.nnsoft.guice.rocoto.configuration.ConfigurationModuleTestCase"/>
+      <class name="org.nnsoft.guice.rocoto.configuration.PropertiesIteratorTestCase"/>
     </classes>
   </test>
 
