@@ -25,7 +25,7 @@
 
   <groupId>org.99soft.guice</groupId>
   <artifactId>rocoto</artifactId>
-  <version>6.3</version>
+  <version>6.4-SNAPSHOT</version>
   <packaging>bundle</packaging>
 
   <name>99soft :: Rocoto</name>
@@ -79,7 +79,7 @@
     <url>http://github.com/99soft/rocoto</url>
     <connection>scm:git:ssh://github.com/99soft/rocoto.git</connection>
     <developerConnection>scm:git:git+ssh://git@github.com/99soft/rocoto.git</developerConnection>
-    <tag>rocoto-6.3</tag>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Management</system>
