@@ -16,8 +16,8 @@ package org.nnsoft.guice.rocoto.configuration;
  *    limitations under the License.
  */
 
-import static com.google.inject.internal.util.$Preconditions.checkNotNull;
-import static com.google.inject.internal.util.$Preconditions.checkState;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 import static com.google.inject.name.Names.named;
 import static java.lang.String.format;
 import static org.nnsoft.guice.rocoto.configuration.PropertiesIterator.newPropertiesIterator;

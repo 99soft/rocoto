@@ -16,7 +16,7 @@ package org.nnsoft.guice.rocoto.configuration;
  *    limitations under the License.
  */
 
-import static com.google.inject.internal.util.$Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkNotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
