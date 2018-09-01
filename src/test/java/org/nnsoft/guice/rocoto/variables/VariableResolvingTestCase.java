@@ -15,7 +15,7 @@
  */
 package org.nnsoft.guice.rocoto.variables;
 
-import static java.text.MessageFormat.format;
+import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -476,7 +476,7 @@ public class VariableResolvingTestCase
 		try
 		{
 			variablesMap.put("mustFail", value);
-			fail(format("Expected an IllegalArgumentException for syntaxically incorrect variable value ''{0}''.", value));
+			fail(format("Expected an IllegalArgumentException for syntaxically incorrect variable value '%s'.", value));
 		} catch (IllegalArgumentException expected)
 		{
 			// ok
